@@ -1,0 +1,46 @@
+* {
+    padding: 20px;
+  }
+
+  h2 {
+    color: #EFB810;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 30px;
+  }
+
+  img {
+    height: auto;
+    width: 350px;
+  }
+
+  p {
+    font-size: large;
+  }
+
+  .logotipe {
+    text-align: center;
+  }
+
+  .error-container {
+    background-color: #202124;
+    color: #fff;
+    width: 800px;
+    height: 550px;
+    padding: 70px;
+    border-radius: 8px;
+    margin: auto;
+    margin-top: 50px;
+  }
+
+  .btn {
+    border-color: #D25454;
+    color: black;
+    background-color: #EFB810;
+  }
+
+  .btn:hover {
+    color: white;
+    background-color: #141416;
+    border-color: white;
+  }

@@ -1,0 +1,111 @@
+// src\app\pages\homepage\homepage.component.scss
+* {
+  padding: 4px;
+}
+
+h2 {
+  color: #EFB810;
+  text-align: center;
+}
+
+.contenedor {
+  margin: 2rem auto;
+  border-radius: 25px;
+  background-color: #202124;
+  width: 900px;
+  padding: 20px;
+  color: white;
+  outline: none;
+  box-shadow: none;
+  font-weight: 700;
+  font-size: large;
+
+  & input:focus,
+  & textarea:focus,
+  & select:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: #EFB810;
+  }
+
+  & input,
+  textarea {
+    border-style: none;
+    border-bottom: 1px solid white;
+    border-radius: 0;
+    background-color: #202124;
+    color: white;
+  }
+
+  & select {
+    color: red !important;
+    background-color: red;
+  }
+
+  &:active {
+    border-color: white !important;
+  }
+}
+
+.btn {
+  border-color: #D25454;
+  color: black;
+  background-color: #EFB810;
+
+
+  &:hover {
+    color: white;
+    background-color: #141416;
+    border-color: white;
+  }
+}
+
+.logotipe {
+  text-align: center;
+
+
+  img {
+    width: 350px;
+    height: auto;
+    border-radius: 10px;
+  }
+
+
+  .preview-image {
+    width: 150px;
+    height: auto;
+    border-radius: 10px;
+
+  }
+}
+
+.errorMsg {
+  color: green;
+  text-align: center;
+}
+
+
+@media screen and (max-width: 992px) {
+  .contenedor {
+    width: 100%;
+    height: auto;
+    margin-top: 0;
+    margin: 0;
+    padding: 20px;
+    border-radius: 0;
+
+  }
+
+
+}
+
+@media screen and (max-width: 600px) {
+  .contenedor {
+    width: 100%;
+    padding: 20px;
+    border-radius: 0;
+    height: auto;
+    margin: 0;
+
+  }
+}

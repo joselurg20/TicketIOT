@@ -1,0 +1,77 @@
+
+h1{
+    color: #EFB810;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 30px;
+}
+    
+.container{
+    background-color: #202124;
+    color: white;
+    width: 800px;
+    height: 580px;
+    padding: 70px;
+    border-radius:25px ;
+    
+}
+
+.container input{
+    border-style: none;
+    border-bottom: 1px solid white;
+    background-color: #202124;
+    color: white;
+}
+
+/* Estilizando el marcador de posición para todos los inputs */
+input::placeholder {
+    color: #999; /* Color del texto del marcador de posición */
+    font-style: italic; /* Estilo de fuente del marcador de posición */
+  }
+  
+  /* Estilizando el marcador de posición para un input específico */
+  #myInput::placeholder {
+    font-weight: bold; /* Otro estilo de fuente del marcador de posición */
+  }
+
+.container input:focus,
+.container textarea:focus,
+.container select:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: #EFB810;
+
+}
+
+.btn{
+    background-color: #EFB810;
+    font-size: small;
+    border-radius: 8px;
+    border-style:none;
+    color: black;
+
+}
+
+.btn:hover{
+    color:#fff
+}
+
+.link{
+    color: white;
+    text-align: center;
+    align-items: center;
+}
+
+img{
+    width: 350px; 
+    height: auto;
+}
+     
+.logotipe{
+    text-align: center;
+}
+
+.errorMsg {
+    color: darkred;
+    text-align: center;
+}

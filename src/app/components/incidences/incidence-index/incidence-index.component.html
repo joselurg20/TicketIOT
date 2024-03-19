@@ -4,9 +4,23 @@
 
         <h2>Crear Incidencia</h2>
 
+        <form [formGroup]="ticketForm" (submit)="onSubmit()" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="Name"><i class="fa-solid fa-user"></i>Nombre:</label>
+                <input type="text" class="form-control form-control-lg" id="Name" placeholder="Ingrese su nombre"
+                    formControlName="Name">
+            </div>
+
+            <div class="form-group">
+                <label for="Email"><i class="fa-solid fa-envelope"></i>Email:</label>
+                <input type="Email" class="form-control form-control-lg" id="Email" placeholder="Ingrese su email"
+                    formControlName="Email">
+            </div>
+
             <div class="form-group">
                 <label for="Title"><i class="fa-solid fa-pen"></i>Título:</label>
-                <input type="text" class="form-control form-control-lg" id="Title" placeholder="Ingrese el título" formControlName="Title">
+                <input type="text" class="form-control form-control-lg" id="Title" placeholder="Ingrese el título"
+                    formControlName="Title">
             </div>
 
             <div class="form-group">
@@ -14,37 +28,37 @@
                 <textarea class="form-control  form-control-lg" id="Content" rows="3"
                     placeholder="Ingrese la descripción" formControlName="Content"></textarea>
             </div>
-
+            
             <div class="form-group">
                 <label for="Attachments"><i class="fa-solid fa-folder"></i>Adjuntar Archivos:</label> <br>
-                <input type="file" class="form-control form-control-lg" id="Attachments" formControlName="Attachments" multiple (change)="onFileChange($event)">
+                <input type="file" id="Attachments" formControlName="Attachments" multiple
+                    (change)="onFileChange($event)" style="display: none;">
+                <button type="button" onclick="document.getElementById('Attachments').click()"
+                    class="custom-file-button">Seleccionar Archivos</button>
 
                 <div *ngIf="previewUrl" class="logotipe">
-                    <img [src]="previewUrl" *ngIf="isImageSelected" alt="Vista previa del archivo" class="preview-image">
-                    <a [href]="previewUrl" *ngIf="!isImageSelected" target="_blank">Ver Archivo Adjunto</a>
+                    <img [src]="previewUrl" *ngIf="isImageSelected" alt="Vista previa del archivo"
+                        class="preview-image">
+                    <a class="preview-link" [href]="previewUrl" *ngIf="!isImageSelected" target="_blank">Ver Archivo Adjunto</a>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label for="Name"><i class="fa-solid fa-user"></i>Nombre:</label>
-                <input type="text" class="form-control form-control-lg" id="Name" placeholder="Ingrese su nombre" formControlName="Name">
-            </div>
-
-
-            <div class="form-group">
-                <label for="Email"><i class="fa-solid fa-envelope"></i>Email:</label>
-                <input type="Email" class="form-control form-control-lg" id="Email" placeholder="Ingrese su email" formControlName="Email">
-            </div>
 
             <div class="mb-3">
                 <p class="errorMsg">
                     {{ successMsg }}
                 </p>
             </div>
-            
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button type="submit" class="btn btn-lg ">Enviar Incidencia</button>
+
+            <div *ngIf="successMessage" class="alert alert-success">
+                {{ successMessage }}
             </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button [disabled]="!ticketForm.valid" type="submit" class="btn btn-lg">Enviar Incidencia</button>
+            </div>
+
+        </form>
     </div>
 
     <div class="logotipe">

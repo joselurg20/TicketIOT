@@ -1,128 +1,126 @@
+@import "../../../../style/variables.scss";
 
-h1{
-    color: #EFB810;
-    text-align: center;
-    padding: 10px;
-    margin-bottom: 30px;
-}
-    
-.container{
-    background-color: #202124;
-    color: white;
-    width: 800px;
-    height: auto;
-    padding: 70px;
-    border-radius:25px;
-    align-items: center;
-    
+h1 {
+  color: $text-color-dark;
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 30px;
 }
 
-.container input{
-    border-style: none;
-    border-bottom: 1px solid white;
-    background-color: #202124;
-    color: white;
+.container {
+  background-color: $bg-color-mid;
+  color: $text-color-mid;
+  width: 800px;
+  height: auto;
+  padding: 70px;
+  border-radius: 25px;
+  align-items: center;
+
 }
 
-/* Estilizando el marcador de posición para todos los inputs */
+.container input {
+  border-color: $text-color-warning;
+  background-color: $bg-color-mid;
+  color: $text-color-warning;
+}
+
 input::placeholder {
-    color: #999; /* Color del texto del marcador de posición */
-    font-style: italic; /* Estilo de fuente del marcador de posición */
-  }
-  
-  /* Estilizando el marcador de posición para un input específico */
-  #myInput::placeholder {
-    font-weight: bold; /* Otro estilo de fuente del marcador de posición */
-  }
+  color: $text-color-warning;
+  font-style: italic;
+}
+
+#myInput::placeholder {
+  font-weight: bold;
+}
 
 .container input:focus,
 .container textarea:focus,
 .container select:focus {
   outline: none !important;
   box-shadow: none !important;
-  border-color: #EFB810;
+  border-color: $color-warning;
 
 }
 
-.btn{
-    background-color: #EFB810;
-    font-size: small;
-    border-radius: 8px;
-    border-style:none;
-    color: black;
+.btn {
+  background-color: $bg-color-warning;
+  font-size: small;
+  border-radius: 6px;
+  border-style: none;
+  color: $color-dark;
 
 }
 
-.btn:hover{
-    color:#fff
+.btn:hover {
+  color: $color-light;
 }
 
-.link{
-    color: white;
-    text-align: center;
-    align-items: center;
+.link {
+  color: $color-light;
+  text-align: center;
+  align-items: center;
 }
 
-img{
-    width: 350px; 
-    height: auto;
+img {
+  width: 350px;
+  height: auto;
 }
-     
-.logotipe{
-    text-align: center;
+
+.logotipe {
+  text-align: center;
 }
 
 .errorMsg {
-    color: darkred;
-    text-align: center;
+  color: $color-danger;
+  text-align: center;
 }
 
 @media screen and (max-width: 992px) {
-    .container{
-        color: white;
-        width: 800px;
-        height: auto;
-        margin-top: 50px;
-        padding: 20px;
-        border-radius:25px;
-        
-    }
-        
+  .container {
+    color: $text-color-mid;
+    width: 800px;
+    height: auto;
+    margin-top: 50px;
+    padding: 20px;
+    border-radius: 25px;
+
+  }
+
 
 }
 
 @media screen and (max-width: 600px) {
-    .container {
-        width: 100%;
-        padding: 20px;
-        border-radius: 0;
-        height: auto;
-        margin: 0;
-        margin-top: 50px;
-        margin-bottom: 50px;
-        display: flex;
-        flex-direction: column; 
-        align-items: center;
-    }
+  .container {
+    width: 100%;
+    padding: 20px;
+    border-radius: 0;
+    height: auto;
+    margin: 0;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .logotipe {
-        margin-top: 50px;
-        margin-bottom: 50px;
-        text-align: center;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-    }
+  .logotipe {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 
-    img {
-        width: 100%;
-        height: auto;
-        margin-bottom: 50px;
-        margin-top: 50px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0;
-    }
-    
+  img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 50px;
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+  }
+
 }

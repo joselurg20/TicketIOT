@@ -1,30 +1,48 @@
 <div class="container mt-lg-5">
+
     <div class="row justify-content-center">
+
         <div class="col-md-6">
-            
-                <h1 class="mb-3 text-align-center">Inicio de Sesión</h1>
+
+            <form [formGroup]="loginForm" (submit)="onSubmit()">
+
+                <h1 class="mb-3">Inicio de Sesión</h1>
+
                 <div class="mb-3">
                     <label for="email" class="form-label"><i class="fa-solid fa-at"></i> Email</label>
-                    <input type="text" class="form-control" id="email" placeholder="Ingrese su email"
+                    <input type="text" class="form-control form-control-lg" id="email" placeholder="Ingrese su email"
                         formControlName="email">
                 </div>
+
                 <div class="mb-3">
                     <label for="password" class="form-label"><i class="fa-solid fa-lock"></i> Contraseña</label>
-                    <input type="password" class="form-control" id="password" placeholder="Ingrese su contraseña"
+                    <input type="password" class="form-control form-control-lg" id="password" placeholder="Ingrese su contraseña"
                         formControlName="password">
                 </div>
-               
+
+                <div class="mb-3">
+                    <p class="errorMsg">
+                        {{ errorMsg }}
+                    </p>
+                </div>
+
                 <div class="d-grid mb-3">
-                    <button class="btn btn-primary" type="submit"
+                    <button class="btn btn-primary" [disabled]="!loginForm.valid" type="submit"
                         class="btn btn-lg">Acceder</button>
                 </div>
+
                 <div class="link mb-3">
-                    <a href="#" class="link-primary-light">¿Olvidó su contraseña? Recupérela aquí</a>
+                    <a href="/recuperar" class="link-primary-light">¿Olvidó su contraseña? Recupérela aquí</a>
                 </div>
-            
+
+            </form>
+
         </div>
+
         <div class="logotipe">
-            <img src="assets/images/logo/IoTlogo.png" alt="logo-image">
+            <img src="assets/images/logo/IoTlogo.png" alt="">
         </div>
+
     </div>
+
 </div>

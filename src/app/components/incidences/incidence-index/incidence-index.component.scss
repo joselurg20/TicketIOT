@@ -1,20 +1,21 @@
+@import "../../../../style/variables.scss";
 // src\app\pages\homepage\homepage.component.scss
 * {
   padding: 4px;
 }
 
 h2 {
-  color: #EFB810;
+  color:$text-color-dark ;
   text-align: center;
 }
 
 .contenedor {
   margin: 2rem auto;
   border-radius: 25px;
-  background-color: #202124;
+  background-color: $bg-color-mid;
   width: 900px;
   padding: 20px;
-  color: white;
+  color: $text-color-mid;
   outline: none;
   box-shadow: none;
   font-weight: 700;
@@ -25,38 +26,66 @@ h2 {
   & select:focus {
     outline: none !important;
     box-shadow: none !important;
-    border-color: #EFB810;
+    border-color: $color-warning;
   }
+  input.placeholder, textarea.placeholder, select.placeholder {
+    color: $text-color-warning;   
+  }
+  
+.custom-file-button {
+  display: block;
+  margin: 0 auto;
+  color: $text-color-light;
+  background-color: $bg-color-warning;
+  border: 1px solid $color-warning;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+
+  &:hover {
+    color: $color-light;
+    background-color: $bg-color-dark;
+    border-color: $color-light;
+  }
+
+}
+
+.preview-link{
+  color: $text-color-dark;
+}
+ 
 
   & input,
   textarea {
-    border-style: none;
-    border-bottom: 1px solid white;
-    border-radius: 0;
-    background-color: #202124;
-    color: white;
+    border-radius: 10px;
+    background-color: $bg-color-mid;
+    color: $text-color-warning !important;
+  }
+
+  input::placeholder, textarea::placeholder, select::placeholder {
+    color: $text-color-warning;
   }
 
   & select {
-    color: red !important;
-    background-color: red;
+    color: $color-danger !important;
+    background-color: $bg-color-danger;
   }
 
   &:active {
-    border-color: white !important;
+    border-color: $text-color-mid !important;
   }
 }
 
 .btn {
-  border-color: #D25454;
-  color: black;
-  background-color: #EFB810;
+  border-radius:5px ;
+  color: $color-dark;
+  background-color: $bg-color-warning;
 
 
   &:hover {
-    color: white;
-    background-color: #141416;
-    border-color: white;
+    color:  $color-light;
+    background-color: $bg-color-dark;
+    border-color:  $color-light;
   }
 }
 

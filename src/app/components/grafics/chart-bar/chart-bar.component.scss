@@ -1,0 +1,46 @@
+@import "../../../../style/variables.scss";
+
+#section3 {
+  background-color: $bg-color-mid;
+  width: 800px;
+  height: auto;
+  margin: 0;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+#myChart {
+  width: 20%;
+  height: auto;
+}
+
+@media screen and (max-width: 992px) {
+  .container {
+    width: 100%;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 600px) {
+
+  .container {
+    width: 100%;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}

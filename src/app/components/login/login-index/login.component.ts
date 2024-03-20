@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginService } from '../../../services/login.service';
 import { Router } from '@angular/router';
+import { LenguageComponent } from "../../lenguage/lenguage.component";
 
 function passwordValidator(control: FormControl): { [key: string]: any } | null {
   const hasUppercase = /[A-Z]/.test(control.value); // Verifica si hay al menos una letra mayúscula
@@ -18,11 +19,11 @@ function passwordValidator(control: FormControl): { [key: string]: any } | null 
 }
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+    selector: 'app-login',
+    standalone: true,
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    imports: [CommonModule, ReactiveFormsModule, LenguageComponent]
 })
 export class LoginComponent implements OnInit {
   public loginForm!: FormGroup; // Define loginForm como un FormGroup

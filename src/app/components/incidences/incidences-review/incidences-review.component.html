@@ -1,4 +1,3 @@
-<a class="btn btn2"  type="button"><i class="fa-solid fa-chevron-left"></i></a>
 <div class="container">
     <h1 class="my-4">Incidencia</h1>
     <form>
@@ -42,7 +41,7 @@
             <div class="col-12">
                 <div class="p-3">
                     <label class="ticketdata">Técnico Asignado</label>
-                    <p class="font"> user.id  -  user.userName </p>
+                    <p class="font"> user.id - user.userName </p>
                 </div>
             </div>
         </div>
@@ -57,10 +56,10 @@
         <!--<div class="d-grid gap-2">
             <button type="submit" class="btn btn-lg" >Asignar técnico</button>
         </div>-->
-        
+
         <div class="mb-3">
             <label for="prioridad" class="form-label"><i class="fa-solid fa-bell"></i>Prioridad</label>
-            <select class="form-select form-select-lg" id="prioridad" required  name="prioridad">
+            <select class="form-select form-select-lg" id="prioridad" required name="prioridad">
                 <option value="">Seleccione un grado de prioridad</option>
                 <option>p</option>
             </select>
@@ -69,10 +68,10 @@
             <button type="submit" class="btn btn-lg" >Modificar Prioridad</button>
         </div>
        -->
-       
+
         <div class="mb-3">
             <label for="estado" class="form-label"><i class="fa-solid fa-traffic-light"></i>Estado</label>
-            <select class="form-select form-select-lg" id="estado" required  name="estado">
+            <select class="form-select form-select-lg" id="estado" required name="estado">
                 <option value="">Seleccione un estado</option>
                 <option>s</option>
             </select>
@@ -83,38 +82,39 @@
         </div>
     -->
         <div class="d-grid gap-2">
-            <button type="submit" class="btn btn-lg">Reasignar formulario</button>
+            <button type="submit" class="btn btn-lg"><i class="fa-solid fa-floppy-disk"></i> Reasignar
+                formulario</button>
         </div>
 
 
 
     </form>
-        <hr>
-    <form  enctype="multipart/form-data">
+    <hr>
+    <form enctype="multipart/form-data">
         <h1>Comentarios</h1>
         <div class="form-group">
             <label for="Attachments"><i class="fa-solid fa-folder"></i>Adjuntar Archivos:</label> <br>
-            <input type="file" id="Attachments" formControlName="Attachments" multiple
-                (change)="onFileChange($event)" style="display: none;">
-            <button type="button" onclick="document.getElementById('Attachments').click()"
-                class="custom-file-button">Seleccionar Archivos</button>
+            <input type="file" id="Attachments" formControlName="Attachments" multiple (change)="onFileChange($event)"
+                style="display: none;">
+            <button type="button" onclick="document.getElementById('Attachments').click()" class="custom-file-button btn btn-lg"><i class="fa-solid fa-arrow-up-from-bracket"></i> Seleccionar Archivos</button>
 
             <div *ngIf="previewUrl" class="logotipe">
-                <img [src]="previewUrl" *ngIf="isImageSelected" alt="Vista previa del archivo"
-                    class="preview-image">
-                <a class="preview-link" [href]="previewUrl" *ngIf="!isImageSelected" target="_blank">Ver Archivo Adjunto</a>
+                <img [src]="previewUrl" *ngIf="isImageSelected" alt="Vista previa del archivo" class="preview-image">
+                <a class="preview-link" [href]="previewUrl" *ngIf="!isImageSelected" target="_blank">Ver Archivo
+                    Adjunto</a>
             </div>
         </div>
         <div class="mb-3 form-group">
             <label for="Content" class="form-label"><i class="fa-solid fa-message"></i> Mensaje</label>
-            <textarea class="form-control  form-control-lg" id="Content" rows="3"
-                    placeholder="Ingrese un mensaje" formControlName="Content"></textarea>
+            <textarea class="form-control  form-control-lg" id="Content" rows="3" placeholder="Ingrese un mensaje"
+                formControlName="Content"></textarea>
         </div>
         <p *ngIf="successMsg" class="success">{{ successMsg }}</p>
         <p *ngIf="!successMsg" class="error">{{ successMsg }}</p>
         <div class="mt-3 d-md-flex justify-content-end">
-            <button  [disabled]="!messageForm.valid" type="submit" class="mt-1 btn btn-lg coment">Enviar Comentario</button>
-           
+            <button [disabled]="!messageForm.valid" type="submit" class="mt-1 btn btn-lg coment">Enviar
+                Comentario</button>
+
         </div>
         <div class="logotipe">
             <img src="assets/images/logo/IoTlogo.png" alt="">

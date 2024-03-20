@@ -3,14 +3,17 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { ChartBarComponent } from "../../grafics/chart-bar/chart-bar.component";
+import { ChartPieComponent } from "../../grafics/chart-pie/chart-pie.component";
+import { ChartDoughnutComponent } from "../../grafics/chart-doughnut/chart-doughnut.component";
 
 
 @Component({
   selector: 'app-incidence-index',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './incidence-index.component.html',
-  styleUrls: ['./incidence-index.component.scss']
+  styleUrls: ['./incidence-index.component.scss'],
+  imports: [CommonModule, ReactiveFormsModule, ChartBarComponent, ChartPieComponent, ChartDoughnutComponent]
 })
 export class IncidenceIndexComponent implements OnInit {
   public ticketForm!: FormGroup;
@@ -19,10 +22,10 @@ export class IncidenceIndexComponent implements OnInit {
   successMessage: string = "";
   previewUrl: string | ArrayBuffer | null = null;
   isImageSelected: boolean = false;
-  
 
 
-  constructor(private http: HttpClient){}
+
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
     this.ticketForm = new FormGroup({
@@ -34,31 +37,31 @@ export class IncidenceIndexComponent implements OnInit {
     });
   }
 
-  
+
 
   onSubmit() {
-    if(this.ticketForm.valid) {
-        console.log('Datos del formulario:', this.ticketForm.value);
-        const Title = this.ticketForm.value.Title;
-        const Content = this.ticketForm.value.Content;
-        const Name = this.ticketForm.value.Name;
-        const Email = this.ticketForm.value.Email;
-        
-        this.createTicket(Title, Content, Name, Email)
-            .subscribe({
-                next: (response) => {
-                    console.log('Ticket creado con éxito', response);
-                    this.successMsg = "Incidencia creada con éxito. Espere a que un técnico se ponga en contacto con usted mediante el email que ha proporcionado.";
-                    this.successMessage = "Incidencia enviada correctamente. ¡Gracias!";
-                    this.ticketForm.reset(); // Clear form fields
-                },
-                error: (error) => {
-                    console.error('Error en la solicitud', error);
-                    this.successMsg = "Error al crear la incidencia.";
-                }
-            });
+    if (this.ticketForm.valid) {
+      console.log('Datos del formulario:', this.ticketForm.value);
+      const Title = this.ticketForm.value.Title;
+      const Content = this.ticketForm.value.Content;
+      const Name = this.ticketForm.value.Name;
+      const Email = this.ticketForm.value.Email;
+
+      this.createTicket(Title, Content, Name, Email)
+        .subscribe({
+          next: (response) => {
+            console.log('Ticket creado con éxito', response);
+            this.successMsg = "Incidencia creada con éxito. Espere a que un técnico se ponga en contacto con usted mediante el email que ha proporcionado.";
+            this.successMessage = "Incidencia enviada correctamente. ¡Gracias!";
+            this.ticketForm.reset(); // Clear form fields
+          },
+          error: (error) => {
+            console.error('Error en la solicitud', error);
+            this.successMsg = "Error al crear la incidencia.";
+          }
+        });
     }
-}
+  }
 
   createTicket(Title: string, Content: string, Name: string, Email: string): Observable<any> {
     const formData = new FormData();
@@ -66,12 +69,12 @@ export class IncidenceIndexComponent implements OnInit {
     formData.append('TicketDTO.Name', Name);
     formData.append('TicketDTO.Email', Email);
     formData.append('MessageDTO.Content', Content);
-    
+
     const attachmentsControl = this.ticketForm.get('Attachments');
-  
+
     if (attachmentsControl) {
       const attachments = attachmentsControl.value;
-      
+
       if (typeof attachments === 'string') {
         const fileInput = <HTMLInputElement>document.getElementById('Attachments');
         if (fileInput && fileInput.files && fileInput.files.length > 0) {
@@ -83,7 +86,7 @@ export class IncidenceIndexComponent implements OnInit {
         }
       }
     }
-  
+
     return this.http.post<any>(this.apiUrl, formData);
   }
 

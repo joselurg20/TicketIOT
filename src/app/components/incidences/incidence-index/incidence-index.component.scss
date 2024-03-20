@@ -1,11 +1,12 @@
 @import "../../../../style/variables.scss";
+
 // src\app\pages\homepage\homepage.component.scss
 * {
   padding: 4px;
 }
 
 h2 {
-  color:$text-color-dark ;
+  color: $text-color-dark;
   text-align: center;
 }
 
@@ -28,32 +29,35 @@ h2 {
     box-shadow: none !important;
     border-color: $color-warning;
   }
-  input.placeholder, textarea.placeholder, select.placeholder {
-    color: $text-color-warning;   
-  }
-  
-.custom-file-button {
-  display: block;
-  margin: 0 auto;
-  color: $text-color-light;
-  background-color: $bg-color-warning;
-  border: 1px solid $color-warning;
-  border-radius: 5px;
-  padding: 5px 10px;
-  cursor: pointer;
 
-  &:hover {
-    color: $color-light;
-    background-color: $bg-color-dark;
-    border-color: $color-light;
+  input.placeholder,
+  textarea.placeholder,
+  select.placeholder {
+    color: $text-color-warning;
   }
 
-}
+  .custom-file-button {
+    display: block;
+    margin: 0 auto;
+    color: $text-color-light;
+    background-color: $bg-color-warning;
+    border: 1px solid $color-warning;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
 
-.preview-link{
-  color: $text-color-dark;
-}
- 
+    &:hover {
+      color: $color-light;
+      background-color: $bg-color-dark;
+      border-color: $color-light;
+    }
+
+  }
+
+  .preview-link {
+    color: $text-color-dark;
+  }
+
 
   & input,
   textarea {
@@ -62,7 +66,9 @@ h2 {
     color: $text-color-warning !important;
   }
 
-  input::placeholder, textarea::placeholder, select::placeholder {
+  input::placeholder,
+  textarea::placeholder,
+  select::placeholder {
     color: $text-color-warning;
   }
 
@@ -77,15 +83,15 @@ h2 {
 }
 
 .btn {
-  border-radius:5px ;
+  border-radius: 5px;
   color: $color-dark;
   background-color: $bg-color-warning;
 
 
   &:hover {
-    color:  $color-light;
+    color: $color-light;
     background-color: $bg-color-dark;
-    border-color:  $color-light;
+    border-color: $color-light;
   }
 }
 

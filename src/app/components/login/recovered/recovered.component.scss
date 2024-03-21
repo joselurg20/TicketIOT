@@ -1,10 +1,13 @@
-@import "../../../../style/variables.scss";
+@import "../../../../style/imports.scss";
 
-h1 {
+ *{
+  page-break-inside: avoid;
+ }
+
+h2 {
   color: $text-color-dark;
   text-align: center;
-  padding: 10px;
-  margin-bottom: 30px;
+  align-self: center;
 }
 
 .container {
@@ -40,19 +43,6 @@ input::placeholder {
   box-shadow: none !important;
   border-color: $color-warning;
 
-}
-
-.btn {
-  background-color: $bg-color-warning;
-  font-size: small;
-  border-radius: 6px;
-  border-style: none;
-  color: $color-dark;
-
-}
-
-.btn:hover {
-  color: $color-light;
 }
 
 .link {

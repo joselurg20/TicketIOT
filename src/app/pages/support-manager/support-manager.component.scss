@@ -1,0 +1,28 @@
+@import "../../../style/imports.scss";
+
+*{
+    padding: 10px;
+    margin: 0;
+}
+h1{
+    color: #EFB810;
+    text-align: center;
+}
+.btn {
+    border-radius: 5px;
+    color: $color-dark;
+    background-color: $bg-color-warning;
+    padding: 10px;
+    margin: 0px 10px 0px 10px;
+  
+    &:hover {
+      color: $color-light;
+      background-color: $bg-color-dark;
+      border-color: $color-light;
+    }
+  }
+
+img {
+    width: 30vw;
+  }
+  

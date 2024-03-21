@@ -1,4 +1,4 @@
-@import "../../../../style/variables.scss";
+@import "../../../../style/imports.scss";
 
 * {
   padding: 5px;
@@ -168,10 +168,8 @@ p {
   color: red;
 }
 
-/* Media queries */
 @media screen and (max-width: 900px) {
 
-  /* Estilos para tablets */
   .container {
     width: 100%;
   }
@@ -190,12 +188,11 @@ p {
 }
 
 
-/* Media queries */
 @media screen and (max-width: 600px) {
 
-  /* Estilos para pantallas más pequeñas */
   .container {
     width: 100%;
+    border-radius: 0px;
   }
 
   .btn {

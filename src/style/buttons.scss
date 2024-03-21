@@ -1,0 +1,48 @@
+@import './variables.scss';
+
+
+.iot-log-btn {
+  background-color: $bg-color-warning;
+  font-size: larger;
+  border-radius: 6px;
+  border-style: none;
+  color: $color-dark;
+  padding: 10px;
+
+  &:hover {
+    color: $color-light;
+  }
+}
+
+
+
+.iot-btn {
+  border-radius: 5px;
+  color: $color-dark;
+  background-color: $bg-color-warning;
+
+
+  &:hover {
+    color: $color-light;
+    background-color: $bg-color-dark;
+    border-color: $color-light;
+  }
+}
+
+
+.file-btn {
+  border-color: #D25454;
+  color: black;
+  background-color: #EFB810;
+  margin-left: 1vw;
+  margin-top: 20px;
+  font-size: 22px;
+  width: 60px;
+  height: 44px;
+
+  &:hover {
+    color: white;
+    background-color: #141416;
+    border-color: white;
+  }
+}

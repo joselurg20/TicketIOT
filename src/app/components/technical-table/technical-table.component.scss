@@ -1,0 +1,99 @@
+@import "../../../style/variables.scss";
+
+* {
+  padding: 4px;
+}
+
+#main {
+  background-color: $bg-color-mid;
+  color: $text-color-mid;
+  width: 100%;
+  height: auto;
+  padding: 40px;
+  border-radius: 25px;
+  text-align: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+h2 {
+  color: $text-color-dark;
+  text-align: center;
+  align-self: center;
+}
+
+
+#divTable {
+  border-radius: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 0;
+  overflow: hidden;
+  text-align: center;
+  height: min-content;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  background-color: $bg-color-mid;
+  color: $text-color-mid;
+}
+
+td{
+  text-align: center;
+}
+
+
+th {
+  text-align: center;
+  color: $color-dark;
+  background-color: $bg-color-warning;
+  padding: 10px;
+  margin: 0px 10px 0px 10px;
+}
+
+tr {
+  text-align: center;
+  color: $text-color-dark;
+  background-color: $bg-color-warning;
+  padding: 10px;
+  margin: 0px 10px 0px 10px;
+}
+
+.row-highlight {
+  background-color: $bg-color-mid;
+  color: $text-color-mid;
+
+  &:hover {
+    background-color: $bg-color-secondary;
+  }
+}
+
+
+
+@media screen and (max-width: 992px) {
+  #main {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    border-radius: 0;
+    align-items: center;
+    cursor: pointer;
+  }
+}
+
+
+@media screen and (max-width: 600px) {
+  #main {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    border-radius: 0;
+    align-items: center;
+    cursor: pointer;
+  }
+
+}
+

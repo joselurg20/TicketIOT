@@ -1,1 +1,82 @@
-<p>incidence-table works!</p>
+<section class="d-flex">
+    <div class="col-md-auto mt-3" id="main">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>Incidencias</h2>
+            <div class="ml-auto">
+                <a class="btn" href="/incidencia" type="button">Crear Incidencia</a>
+                <a class="btn" type="button" (click)="tickets()">Mostrar Incidencia</a>
+            </div>
+        </div>
+        <div id="divTable">
+            <table mat-table [dataSource]="dataSource" matSort #sort (matSortChange)="announceSortChange($event)"
+                class="mat-elevation-z8">
+
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
+                        #
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.id}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="title">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
+                        Titulo
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by weight">
+                        Nombre
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by weight">
+                        Email
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="priority">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
+                        Prioridad
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.priority}} </td>
+                </ng-container>
+                <ng-container matColumnDef="state">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
+                        Estado
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.state}} </td>
+                </ng-container>
+                <ng-container matColumnDef="timestamp">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol">
+                        Fecha Creación
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.timestamp}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="userID">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
+                        Técnico
+                    </th>
+                    <td mat-cell *matCellDef="let element"> {{element.userID}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="row-highlight"
+                    (mouseover)="highlightRow($event)" (mouseleave)="unhighlightRow($event)"
+                    [class.selected]="row === selectedRow" (click)="onRowClicked(row)"></tr>
+
+            </table>
+
+        </div>
+
+        <div class="content">
+            <mat-paginator class="pages" [pageSizeOptions]="[10, 25, 35, 50]" showFirstLastButtons
+                #paginator></mat-paginator>
+        </div>
+
+    </div>

@@ -6,14 +6,17 @@ import { Observable } from 'rxjs';
 import { ChartBarComponent } from "../../grafics/chart-bar/chart-bar.component";
 import { ChartPieComponent } from "../../grafics/chart-pie/chart-pie.component";
 import { ChartDoughnutComponent } from "../../grafics/chart-doughnut/chart-doughnut.component";
-
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
 
 @Component({
   selector: 'app-incidence-index',
   standalone: true,
   templateUrl: './incidence-index.component.html',
   styleUrls: ['./incidence-index.component.scss'],
-  imports: [CommonModule, ReactiveFormsModule, ChartBarComponent, ChartPieComponent, ChartDoughnutComponent]
+  imports: [CommonModule, ReactiveFormsModule,MatFormFieldModule, MatInputModule, MatButtonModule, MatSnackBarModule ,ChartBarComponent, ChartPieComponent, ChartDoughnutComponent]
 })
 export class IncidenceIndexComponent implements OnInit {
   public ticketForm!: FormGroup;
@@ -22,10 +25,17 @@ export class IncidenceIndexComponent implements OnInit {
   successMessage: string = "";
   previewUrl: string | ArrayBuffer | null = null;
   isImageSelected: boolean = false;
+  message = "Incidencia enviada correctamente. ¡Gracias!";
+  action = "Cerrar";
 
 
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private _snackBar: MatSnackBar) { }
+
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open( message , action, );
+  }
 
   ngOnInit() {
     this.ticketForm = new FormGroup({

@@ -22,7 +22,7 @@ export class ChartDoughnutComponent {
           label: 'Cantidad de incidencias',
           data: [12, 19, 3, 5, 2, 3],
           backgroundColor: [
-            'rgba(255, 100, 147, 0.2)',
+            'rgba(232, 19, 87, 0.2)',
             'rgba(116, 92, 216, 0.2)',
             'rgba(253, 183, 63, 0.2)',
             'rgba(59, 235, 151, 0.2)',
@@ -30,7 +30,7 @@ export class ChartDoughnutComponent {
             'rgba(255, 255, 255, 0.2)'
           ],
           borderColor: [
-            'rgba(255, 100, 147, 1)',
+            'rgba(232, 19, 87, 1)',
             'rgba(116, 92, 216, 1)',
             'rgba(253, 183, 63, 1)',
             'rgba(59, 235, 151, 1)',

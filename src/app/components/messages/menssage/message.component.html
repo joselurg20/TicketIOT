@@ -1,0 +1,33 @@
+<div class="d-flex justify-content-end">
+  <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Ver Mensajes
+  </button>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Mensajes</h5>
+        <button type="button" class="iot-cross" data-bs-dismiss="modal" aria-label="Close"
+          id="hola"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <div *ngFor="let message of messages">
+          <h4>{{ message.Author }} </h4>
+          <p>{{ message.Content }}</p>
+          <div *ngIf="message.AttachmentPaths && message.AttachmentPaths.length > 0">
+            <div *ngFor="let attachment of message.AttachmentPaths let last = last">
+              <button *ngIf="!last" type="button" class="custom-file-button btn-lg" (click)="downloadAttachment(attachment)"><i class="fa-solid fa-download"></i> Descargar
+                Adjunto</button>
+            </div>
+          </div>
+          <hr>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn iot-btn" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

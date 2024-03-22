@@ -7,16 +7,22 @@ import { ChartBarComponent } from "../../grafics/chart-bar/chart-bar.component";
 import { ChartPieComponent } from "../../grafics/chart-pie/chart-pie.component";
 import { ChartDoughnutComponent } from "../../grafics/chart-doughnut/chart-doughnut.component";
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatButtonModule} from '@angular/material/button';
-import {MatInputModule} from '@angular/material/input';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import {
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
+import { MatSelectModule } from '@angular/material/select';
+
 
 @Component({
   selector: 'app-incidence-index',
   standalone: true,
   templateUrl: './incidence-index.component.html',
   styleUrls: ['./incidence-index.component.scss'],
-  imports: [CommonModule, ReactiveFormsModule,MatFormFieldModule, MatInputModule, MatButtonModule, MatSnackBarModule ,ChartBarComponent, ChartPieComponent, ChartDoughnutComponent]
+  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatFormFieldModule, MatSelectModule, MatButtonModule, MatSnackBarModule, MatInputModule, MatButtonModule, MatSnackBarModule, ChartBarComponent, ChartPieComponent, ChartDoughnutComponent]
 })
 export class IncidenceIndexComponent implements OnInit {
   public ticketForm!: FormGroup;
@@ -25,17 +31,18 @@ export class IncidenceIndexComponent implements OnInit {
   successMessage: string = "";
   previewUrl: string | ArrayBuffer | null = null;
   isImageSelected: boolean = false;
-  message = "Incidencia enviada correctamente. ¡Gracias!";
-  action = "Cerrar";
+  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
+  constructor(private http: HttpClient, private _snackBar: MatSnackBar,) { }
 
-
-  constructor(private http: HttpClient, private _snackBar: MatSnackBar) { }
-
-
-  openSnackBar(message: string, action: string) {
-    this._snackBar.open( message , action, );
+  openSnackBar() {
+    this._snackBar.open("Incidencia enviada", 'Cerrar', {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
+
 
   ngOnInit() {
     this.ticketForm = new FormGroup({
@@ -46,7 +53,6 @@ export class IncidenceIndexComponent implements OnInit {
       Email: new FormControl('', [Validators.required, Validators.email])
     });
   }
-
 
 
   onSubmit() {
@@ -61,8 +67,6 @@ export class IncidenceIndexComponent implements OnInit {
         .subscribe({
           next: (response) => {
             console.log('Ticket creado con éxito', response);
-            this.successMsg = "Incidencia creada con éxito. Espere a que un técnico se ponga en contacto con usted mediante el email que ha proporcionado.";
-            this.successMessage = "Incidencia enviada correctamente. ¡Gracias!";
             this.ticketForm.reset(); // Clear form fields
           },
           error: (error) => {

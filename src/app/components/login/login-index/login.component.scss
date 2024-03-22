@@ -42,7 +42,6 @@ input::placeholder {
 
 }
 
-
 .link {
   color: $color-light;
   text-align: center;
@@ -71,10 +70,7 @@ img {
     margin-top: 50px;
     padding: 20px;
     border-radius: 25px;
-
   }
-
-
 }
 
 @media screen and (max-width: 600px) {
@@ -110,5 +106,4 @@ img {
     align-items: center;
     margin: 0;
   }
-
 }

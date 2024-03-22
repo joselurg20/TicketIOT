@@ -1,19 +1,17 @@
-
-
 <div class="header-container d-flex align-items-center justify-content-between">
     <div class="d-flex align-items-center">
         <img src="../../../assets/images/logo/IoTlogo.png" alt="">
         <h1>loggedUserName</h1>
     </div>
 
-    <button class="btn" type="button" (click)="logout()"><i class="fa-solid fa-right-from-bracket fa-rotate-180"> </i>Log out</button>
+    <button class="btn btn-lg" type="button" (click)="logout()"><i class="fa-solid fa-right-from-bracket fa-rotate-180">
+        </i>Log out</button>
 
 </div>
-<mat-grid-list cols="8" rowWidth="100px">
+<mat-grid-list cols="8" rowHeight="225px" class="m-0" >
     <mat-grid-tile *ngFor="let tile of tiles" [colspan]="tile.cols" [rowspan]="tile.rows">
         <ng-container *ngComponentOutlet="tile.component"></ng-container>
     </mat-grid-tile>
 </mat-grid-list>
-
 
 <app-technical-table></app-technical-table>

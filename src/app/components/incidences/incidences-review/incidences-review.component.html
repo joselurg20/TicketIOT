@@ -111,10 +111,9 @@
         </div>
         <p *ngIf="successMsg" class="success">{{ successMsg }}</p>
         <p *ngIf="!successMsg" class="error">{{ successMsg }}</p>
-        <div class="mt-3 d-md-flex justify-content-end">
-            <button [disabled]="!messageForm.valid" type="submit" class="mt-1 btn btn-lg coment">Enviar
-                Comentario</button>
-
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="m-1 btn btn-lg">Enviar Mensajes</button>
+            <app-message></app-message>
         </div>
         <div class="logotipe">
             <img src="assets/images/logo/IoTlogo.png" alt="">

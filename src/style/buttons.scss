@@ -46,3 +46,19 @@
     border-color: white;
   }
 }
+
+
+.iot-cross {
+  background-color: transparent;
+  border-color: transparent;
+  color: #fff;
+  margin-left: 1vw;
+  margin-top: 20px;
+  font-size: 22px;
+  width: 40px;
+
+  &:hover {
+    color: #EFB810;
+  }
+
+}

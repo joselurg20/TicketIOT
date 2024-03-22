@@ -1,0 +1,78 @@
+@import '../../../style/imports.scss';
+
+.modal-content{
+    background-color: #202124;
+}
+
+.modal-title{
+    color: #EFB810;
+}
+
+#exampleModal{
+    background-color: #14141680;
+    backdrop-filter: blur(5px);
+}
+
+.modal-body{
+    color: white !important;
+}
+
+
+
+/*
+button{
+    color:$color-dark;
+    background-color: $bg-color-warning;
+    width: 150px;
+    height: 53.5px;
+    border-radius: 5px;
+    border-color: $bg-color-warning;
+    border-style: solid;
+    font-size: larger;
+
+    &:hover{
+        color: $color-light;
+        background-color: $bg-color-dark;
+        border-color: $color-light;
+    }
+}
+*/
+.btn{
+    color:$color-dark;
+    background-color: $bg-color-warning;
+    width: 150px;
+    height: 53.5px;
+    border-radius: 5px;
+    border-color: $bg-color-warning;
+    border-style: solid;
+    font-size: larger;
+
+    &:hover{
+        color: $color-light;
+        background-color: $bg-color-dark;
+        border-color: $color-light;
+    }
+}
+.btn-close{
+    color: white !important;
+    border-color: #EFB810;
+}
+
+
+.custom-file-button {
+    display: block;
+    margin: 0 auto;
+    color: $text-color-light;
+    background-color: $bg-color-warning;
+    border: 1px solid $color-warning;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+  
+    &:hover {
+      color: $color-light;
+      background-color: $bg-color-dark;
+      border-color: $color-light;
+    }
+  }
+  

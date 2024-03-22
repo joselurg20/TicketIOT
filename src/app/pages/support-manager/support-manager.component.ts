@@ -6,6 +6,7 @@ import { ChartPieComponent } from "../../components/grafics/chart-pie/chart-pie.
 import { ChartDoughnutComponent } from "../../components/grafics/chart-doughnut/chart-doughnut.component";
 import { MatGridListModule } from '@angular/material/grid-list';
 import { ChartBarComponent } from 'src/app/components/grafics/chart-bar/chart-bar.component';
+import { MessageComponent } from "../../components/messages/menssage/message.component";
 
 interface Tile {
     cols: number;
@@ -18,7 +19,7 @@ interface Tile {
     standalone: true,
     templateUrl: './support-manager.component.html',
     styleUrls: ['./support-manager.component.scss'],
-    imports: [CommonModule, IncidenceTableComponent, TechnicalTableComponent, ChartPieComponent, ChartDoughnutComponent, MatGridListModule, ChartBarComponent]
+    imports: [CommonModule, IncidenceTableComponent, TechnicalTableComponent, ChartPieComponent, ChartDoughnutComponent, MatGridListModule, ChartBarComponent, MessageComponent]
 })
 export class SupportManagerComponent {
 logout() {

@@ -31,6 +31,7 @@ h2 {
   &:hover {
     color: $color-light;
     background-color: $bg-color-dark;
+    border-color: $color-light;
   }
 }
 
@@ -68,7 +69,7 @@ th {
   margin: 0px 10px 0px 10px;
 }
 
-td{
+td {
   text-align: center;
 }
 
@@ -131,4 +132,3 @@ tr {
   }
 
 }
-

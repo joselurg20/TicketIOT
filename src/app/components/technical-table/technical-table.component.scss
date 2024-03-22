@@ -41,10 +41,9 @@ table {
   color: $text-color-mid;
 }
 
-td{
+td {
   text-align: center;
 }
-
 
 th {
   text-align: center;
@@ -71,8 +70,6 @@ tr {
   }
 }
 
-
-
 @media screen and (max-width: 992px) {
   #main {
     width: 100%;
@@ -84,7 +81,6 @@ tr {
   }
 }
 
-
 @media screen and (max-width: 600px) {
   #main {
     width: 100%;
@@ -94,6 +90,4 @@ tr {
     align-items: center;
     cursor: pointer;
   }
-
 }
-

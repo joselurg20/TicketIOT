@@ -1,5 +1,7 @@
 export interface iMessage {
-    Content: string,
-    AttachmentPaths?: string[],
-    TicketID: number
-}
+    Id: number;
+    Author: string;
+    Content: string;
+    AttachmentPaths: string[];
+    ticketID: number;
+  }

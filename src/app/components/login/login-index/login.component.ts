@@ -19,17 +19,17 @@ function passwordValidator(control: FormControl): { [key: string]: any } | null 
 }
 
 @Component({
-    selector: 'app-login',
-    standalone: true,
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
-    imports: [CommonModule, ReactiveFormsModule, LenguageComponent]
+  selector: 'app-login',
+  standalone: true,
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
+  imports: [CommonModule, ReactiveFormsModule, LenguageComponent]
 })
 export class LoginComponent implements OnInit {
   public loginForm!: FormGroup; // Define loginForm como un FormGroup
   public errorMsg: string = "";
 
-  constructor(private loginService: LoginService, private router: Router) {}
+  constructor(private loginService: LoginService, private router: Router) { }
 
   ngOnInit() {
     // Inicializa el formulario y sus controles
@@ -46,22 +46,22 @@ export class LoginComponent implements OnInit {
 
       // Envia la solicitud de inicio de sesión al backend
       this.loginService.login(email, password)
-      .subscribe({
-        next: (response) => {
-          this.errorMsg = "";
-          localStorage.setItem('jwtToken', response);
-          console.log('Token JWT almacenado en localStorage:', response);
-          if(localStorage.getItem('userRole') == 'SupportManager') {
-            this.router.navigate(['/support-manager']);
-          } else if(localStorage.getItem('userRole') == 'SupportTechnician'){
-            this.router.navigate(['/support-technician']);
+        .subscribe({
+          next: (response) => {
+            this.errorMsg = "";
+            localStorage.setItem('jwtToken', response);
+            console.log('Token JWT almacenado en localStorage:', response);
+            if (localStorage.getItem('userRole') == 'SupportManager') {
+              this.router.navigate(['/support-manager']);
+            } else if (localStorage.getItem('userRole') == 'SupportTechnician') {
+              this.router.navigate(['/support-technician']);
+            }
+          },
+          error: (error) => {
+            console.error('Error en la solicitud:', error);
+            this.errorMsg = "Email o contraseña no válidos."
           }
-        },
-        error: (error) => {
-          console.error('Error en la solicitud:', error);
-          this.errorMsg = "Email o contraseña no válidos."
-        }
-      });
+        });
     }
   }
 }

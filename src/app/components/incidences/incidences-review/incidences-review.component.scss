@@ -11,18 +11,18 @@ h1 {
 }
 
 .btn {
-  border-radius:5px ;
+  border-radius: 5px;
   color: $color-dark;
   background-color: $bg-color-warning;
+  height: 53.5px;
 
 
   &:hover {
-    color:  $color-light;
+    color: $color-light;
     background-color: $bg-color-dark;
-    border-color:  $color-light;
+    border-color: $color-light;
   }
 }
-
 
 .btn2 {
   border-color: #D25454;
@@ -35,13 +35,11 @@ h1 {
   height: 44px;
 
   &:hover {
-  color: white;
-  background-color: #141416;
-  border-color: white;
+    color: white;
+    background-color: #141416;
+    border-color: white;
+  }
 }
-}
-
-
 
 .container {
   margin: 2rem auto;
@@ -81,7 +79,6 @@ p {
   margin-left: 18px;
 }
 
-
 .form-select {
   border-radius: 10px;
   background-color: $bg-color-mid;
@@ -92,7 +89,8 @@ p {
     box-shadow: none !important;
     border-color: $color-warning;
   }
-  &::placeholder{
+
+  &::placeholder {
     color: $text-color-warning;
   }
 }
@@ -115,26 +113,24 @@ p {
 }
 
 .logotipe {
-    text-align: center;
-  
-  
-    img {
-      width: 350px;
-      height: auto;
-      border-radius: 10px;
-    }
-  
-  
-    .preview-image {
-      width: 150px;
-      height: auto;
-      border-radius: 10px;
-  
-    }
+  text-align: center;
+
+  img {
+    width: 350px;
+    height: auto;
+    border-radius: 10px;
   }
 
+  .preview-image {
+    width: 150px;
+    height: auto;
+    border-radius: 10px;
+
+  }
+}
+
 .preview-link {
-    color: $text-color-dark;
+  color: $text-color-dark;
 }
 
 #Content {
@@ -158,7 +154,6 @@ p {
 .coment {
   margin-left: 1vw;
 }
-
 
 .success {
   color: green;
@@ -186,7 +181,6 @@ p {
     font-size: 16px;
   }
 }
-
 
 @media screen and (max-width: 600px) {
 

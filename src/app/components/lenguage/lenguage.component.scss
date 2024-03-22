@@ -1,33 +1,30 @@
 @import "../../../style/variables.scss";
 
-.btn{
-    
-    background-color: $bg-color-mid;
-    border-color: #202124;
-    border-radius: 0.625rem;
-    transition: all .3s ease;
-    align-items: center;
-    justify-content: center;
-    border-style:none ;
-  
-  
-  &:hover{
+.btn {
+  background-color: $bg-color-mid;
+  border-color: #202124;
+  border-radius: 0.625rem;
+  transition: all .3s ease;
+  align-items: center;
+  justify-content: center;
+  border-style: none;
+
+  &:hover {
     background-color: $bg-color-danger;
   }
-  
-  &.active{
+
+  &.active {
     background-color: $bg-color-warning;
   }
 
-  &.btnES{
+  &.btnES {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
   }
 
-  &.btnEN{
+  &.btnEN {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }
-
 
 }

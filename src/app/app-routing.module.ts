@@ -13,16 +13,20 @@ import { ManagerIncidenceComponent } from './pages/manager-incidence/manager-inc
 
 
 const routes: Routes = [
+
+  //accedibles por los trabajadores
   { path: "", component: LoginComponent },
   { path: "login", component: LoginComponent },
   { path: "recuperar", component: RecoveredComponent },
   { path: "support-manager", component: SupportManagerComponent },
   { path: "support-technician", component: SupportTechnicalComponent },
-  { path: "revisarsmanager", component: ManagerIncidenceComponent },
-  { path: "revisartecnico", component: TechnicialIncidenceComponent },
-  { path: "incidencia", component: IncidenceIndexComponent },
+  { path: "revisar-manager", component: ManagerIncidenceComponent },
+  { path: "revisar-tecnico", component: TechnicialIncidenceComponent },
   { path: "helpdesk/:ticketID", component: HelpdeskComponent },
-  { path:"enlace", component: IncidenceUserComponent },
+
+  //accedibles el usuario
+  { path: "incidencia", component: IncidenceIndexComponent },
+  { path: "enlace", component: IncidenceUserComponent },
   { path: "404", component: Error404Component },
   { path: "**", redirectTo: "/404" }
 ];

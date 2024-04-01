@@ -6,6 +6,7 @@ import { IncidenceIndexComponent } from './components/incidences/incidence-index
 import { RecoveredComponent } from './components/login/recovered/recovered.component';
 import { IncidencesReviewComponent } from './components/incidences/incidences-review/incidences-review.component';
 import { SupportManagerComponent } from './pages/support-manager/support-manager.component';
+import { HelpdeskComponent } from './components/messages/helpdesk/helpdesk.component';
 
 
 const routes: Routes = [
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: "support-manager", component: SupportManagerComponent },
   { path: "revisar", component: IncidencesReviewComponent },
   { path: "incidencia", component: IncidenceIndexComponent },
+  { path: "helpdesk/:ticketID", component: HelpdeskComponent },
   { path: "404", component: Error404Component },
   { path: "**", redirectTo: "/404" }
 ];

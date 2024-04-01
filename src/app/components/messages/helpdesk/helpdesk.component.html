@@ -1,1 +1,42 @@
-<p>helpdesk works!</p>
+
+    <h1>Mensajes</h1>
+    <div class="col-12" *ngFor="let message of messages">
+        <div class="p-3 container">
+            <label for="" class="ticketdata"><b>Mensaje</b></label>
+            <p class="ticketdata">{{ message.Content }}</p>
+            <div *ngIf="message.AttachmentPaths && message.AttachmentPaths.length > 0">
+                <div *ngFor="let attachment of message.AttachmentPaths let last = last">
+                    <button *ngIf="!last" type="button" class="btn" (click)="downloadAttachment(attachment)">Descargar
+                        Adjunto</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form [formGroup]="messageForm" (submit)="onSubmit()" enctype="multipart/form-data" class="container">
+        <div class="form-group">
+            <label for="Attachments"><i class="fa-solid fa-folder"></i> Adjuntar Archivos:</label> <br>
+            <input type="file" id="Attachments" formControlName="Attachments" multiple (change)="onFileChange($event)"
+                style="display: none;">
+            <button type="button" onclick="document.getElementById('Attachments').click()"
+                class="custom-file-button btn btn-lg"><i class="fa-solid fa-arrow-up-from-bracket"></i> Seleccionar
+                Archivos</button>
+
+            <div *ngIf="previewUrl" class="logotipe">
+                <img [src]="previewUrl" *ngIf="isImageSelected" alt="Vista previa del archivo" class="preview-image">
+                <a class="preview-link" [href]="previewUrl" *ngIf="!isImageSelected" target="_blank">Ver Archivo
+                    Adjunto</a>
+            </div>
+        </div>
+        <div class="mb-3 form-group">
+            <label for="Content" class="form-label"><i class="fa-solid fa-message"></i> Mensaje</label>
+            <textarea class="form-control  form-control-lg" id="content" rows="3" placeholder="Ingrese un mensaje"
+                formControlName="Content"></textarea>
+        </div>
+        <div class="mt-3 d-md-flex justify-content-end">
+            <button [disabled]="!messageForm.valid" type="submit" class="mt-1 btn btn-lg coment">Enviar
+                Comentario</button>
+        </div>
+        <div class="logotipe">
+            <img src="assets/images/logo/IoTlogo.png" alt="">
+        </div>
+    </form>

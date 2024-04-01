@@ -10,20 +10,20 @@
             </div>
             <div class="col-6">
                 <div class="p-3">
+                    <label class="ticketdata">Fecha de Creación</label>
+                    <p class="font"> ticket.timestamp </p>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="p-3">
                     <label class="ticketdata">Nombre del Usuario</label>
-                    <p class="font"> ticket.name </p>
+                    <p class="font">ticket.name</p>
                 </div>
             </div>
             <div class="col-6">
                 <div class="p-3">
                     <label class="ticketdata">Email del Usuario</label>
                     <p class="font">ticket.email</p>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="p-3">
-                    <label class="ticketdata">Fecha de Creación</label>
-                    <p class="font">ticket.timestamp</p>
                 </div>
             </div>
             <div class="col-6">
@@ -53,9 +53,6 @@
                 <option> </option>
             </select>
         </div>
-        <!--<div class="d-grid gap-2">
-            <button type="submit" class="btn btn-lg" >Asignar técnico</button>
-        </div>-->
 
         <div class="mb-3">
             <label for="prioridad" class="form-label"><i class="fa-solid fa-bell"></i>Prioridad</label>
@@ -64,10 +61,6 @@
                 <option>p</option>
             </select>
         </div>
-        <!-- <div class="d-grid gap-2">
-            <button type="submit" class="btn btn-lg" >Modificar Prioridad</button>
-        </div>
-       -->
 
         <div class="mb-3">
             <label for="estado" class="form-label"><i class="fa-solid fa-traffic-light"></i>Estado</label>
@@ -76,27 +69,23 @@
                 <option>s</option>
             </select>
         </div>
-        <!--
-        <div class="d-grid gap-2">
-            <button type="submit" class="btn btn-lg">Actualizar Estado</button>
-        </div>
-    -->
+
         <div class="d-grid gap-2">
             <button type="submit" class="btn btn-lg"><i class="fa-solid fa-floppy-disk"></i> Reasignar
                 formulario</button>
         </div>
 
-
-
     </form>
     <hr>
     <form enctype="multipart/form-data">
-        <h1>Comentarios</h1>
+        <h1>Mensajes</h1>
         <div class="form-group">
-            <label for="Attachments"><i class="fa-solid fa-folder"></i>Adjuntar Archivos:</label> <br>
+            <label for="Attachments"><i class="fa-solid fa-folder"></i> Adjuntar Archivos:</label> <br>
             <input type="file" id="Attachments" formControlName="Attachments" multiple (change)="onFileChange($event)"
                 style="display: none;">
-            <button type="button" onclick="document.getElementById('Attachments').click()" class="custom-file-button btn btn-lg"><i class="fa-solid fa-arrow-up-from-bracket"></i> Seleccionar Archivos</button>
+            <button type="button" onclick="document.getElementById('Attachments').click()"
+                class="custom-file-button btn btn-lg"><i class="fa-solid fa-arrow-up-from-bracket"></i> Seleccionar
+                Archivos</button>
 
             <div *ngIf="previewUrl" class="logotipe">
                 <img [src]="previewUrl" *ngIf="isImageSelected" alt="Vista previa del archivo" class="preview-image">

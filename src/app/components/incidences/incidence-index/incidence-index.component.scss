@@ -1,4 +1,4 @@
-@import "../../../../style/variables.scss";
+@import "../../../../styles/variables.scss";
 
 * {
   padding: 4px;
@@ -57,7 +57,6 @@ h2 {
     color: $text-color-dark;
   }
 
-
   & input,
   textarea {
     border-radius: 10px;
@@ -86,7 +85,6 @@ h2 {
   color: $color-dark;
   background-color: $bg-color-warning;
 
-
   &:hover {
     color: $color-light;
     background-color: $bg-color-dark;
@@ -97,13 +95,11 @@ h2 {
 .logotipe {
   text-align: center;
 
-
   img {
     width: 350px;
     height: auto;
     border-radius: 10px;
   }
-
 
   .preview-image {
     width: 150px;
@@ -130,6 +126,17 @@ h2 {
 
   }
 
+  .btn {
+    width: 100%;
+  }
+
+  .btn2 {
+    width: 100%;
+  }
+
+  .font {
+    font-size: 16px;
+  }
 
 }
 
@@ -141,5 +148,17 @@ h2 {
     height: auto;
     margin: 0;
 
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .btn2 {
+    width: 100%;
+  }
+
+  .font {
+    font-size: 16px;
   }
 }

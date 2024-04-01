@@ -10,11 +10,11 @@ import { MessageComponent } from "../menssage/message.component";
     imports: [CommonModule, MessageComponent]
 })
 export class ComunicationComponent {
-onFileChange($event: Event) {
-throw new Error('Method not implemented.');
-}
-previewUrl: any;
-isImageSelected: any;
-successMsg: any;
+    onFileChange($event: Event) {
+        throw new Error('Method not implemented.');
+    }
+    previewUrl: any;
+    isImageSelected: any;
+    successMsg: any;
 
 }

@@ -1,21 +1,37 @@
 @import "../../../../styles/imports.scss";
 
 * {
-  padding: 4px;
+  padding: 5px;
 }
 
-.container {
-  margin: 2rem auto;
-  border-radius: 25px;
-  background-color: $bg-color-mid;
-  color: $text-color-mid;
+h1 {
+
+  color: #EFB810;
+  text-align: center;
+}
+
+.p-3 {
   padding: 20px;
-  width: 900px;
-  height: auto;
-  align-items: center;
+  background-color: #141416;
+  border-radius: 15px;
+}
+
+label {
+  font-size: 20px;
 
 }
 
-.from-group {
-  margin-bottom: 10px;
+.ticketdata {
+  color: #EFB810;
+  font-size: 21px;
+}
+
+p {
+  font-size: 16px;
+}
+
+.font {
+  font-size: 18px;
+  color: white;
+  margin-left: 18px;
 }

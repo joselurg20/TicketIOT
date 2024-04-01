@@ -1,0 +1,36 @@
+@import './../../../../styles/variables.scss';
+
+* {
+  padding: 5px;
+}
+
+.form-select {
+  border-radius: 10px;
+  background-color: $bg-color-mid;
+  color: $text-color-warning !important;
+
+  &:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: $color-warning;
+  }
+
+  &::placeholder {
+    color: $text-color-warning;
+  }
+}
+
+
+.btn {
+  border-radius: 5px;
+  color: $color-dark;
+  background-color: $bg-color-warning;
+  height: 53.5px;
+
+
+  &:hover {
+    color: $color-light;
+    background-color: $bg-color-dark;
+    border-color: $color-light;
+  }
+}

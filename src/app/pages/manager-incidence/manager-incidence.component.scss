@@ -1,0 +1,12 @@
+@import './../../../styles/imports.scss';
+
+.container {
+  margin: 2rem auto;
+  border-radius: 25px;
+  background-color: $bg-color-mid;
+  width: 900px;
+  padding: 20px;
+  color: $color-light;
+  outline: none;
+  box-shadow: none;
+}

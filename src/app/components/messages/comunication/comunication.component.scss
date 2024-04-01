@@ -1,0 +1,101 @@
+@import './../../../../styles/imports.scss';
+
+* {
+  padding: 5px;
+}
+
+h1 {
+  text-align: left;
+  color: $color-warning;
+
+}
+
+.form-select {
+  border-radius: 10px;
+  background-color: $bg-color-mid;
+  color: $text-color-warning !important;
+
+  &:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: $color-warning;
+  }
+
+  &::placeholder {
+    color: $text-color-warning;
+  }
+}
+
+.btn {
+  border-radius: 5px;
+  color: $color-dark;
+  background-color: $bg-color-warning;
+  height: 53.5px;
+
+
+  &:hover {
+    color: $color-light;
+    background-color: $bg-color-dark;
+    border-color: $color-light;
+  }
+}
+
+.custom-file-button {
+  display: block;
+  margin: 0 auto;
+  color: $text-color-light;
+  background-color: $bg-color-warning;
+  border: 1px solid $color-warning;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+
+  &:hover {
+    color: $color-light;
+    background-color: $bg-color-dark;
+    border-color: $color-light;
+  }
+}
+
+.logotipe {
+  text-align: center;
+
+  img {
+    width: 350px;
+    height: auto;
+    border-radius: 10px;
+  }
+
+  .preview-image {
+    width: 150px;
+    height: auto;
+    border-radius: 10px;
+
+  }
+}
+
+.preview-link {
+  color: $text-color-dark;
+}
+
+#Content {
+  resize: none;
+  border-radius: 10px;
+  background-color: $bg-color-mid;
+  color: $text-color-warning !important;
+
+  &:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: $color-warning;
+  }
+
+  &::placeholder {
+    color: $text-color-warning;
+  }
+
+}
+
+.coment {
+  margin-left: 1vw;
+}

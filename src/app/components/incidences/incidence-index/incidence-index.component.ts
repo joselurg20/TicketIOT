@@ -1,20 +1,16 @@
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { ChartBarComponent } from "../../grafics/chart-bar/chart-bar.component";
-import { ChartPieComponent } from "../../grafics/chart-pie/chart-pie.component";
-import { ChartDoughnutComponent } from "../../grafics/chart-doughnut/chart-doughnut.component";
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import {
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-} from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarModule, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { MatInputModule } from '@angular/material/input';
+import { ChartBarComponent } from '../../grafics/chart-bar/chart-bar.component';
+import { ChartDoughnutComponent } from '../../grafics/chart-doughnut/chart-doughnut.component';
+import { ChartPieComponent } from '../../grafics/chart-pie/chart-pie.component';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -34,7 +30,7 @@ export class IncidenceIndexComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
-  constructor(private http: HttpClient, private _snackBar: MatSnackBar,) { }
+  constructor(private http: HttpClient, private _snackBar: MatSnackBar) { }
 
   openSnackBar() {
     this._snackBar.open("Incidencia enviada", 'Cerrar', {
@@ -115,5 +111,4 @@ export class IncidenceIndexComponent implements OnInit {
       this.isImageSelected = file.type.startsWith('image/');
     }
   }
-
 }

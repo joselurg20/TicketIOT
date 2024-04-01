@@ -1,0 +1,146 @@
+@import '../../../../styles/imports.scss';
+
+h1 {
+  color: $text-color-dark;
+  text-align: center;
+  padding: 20px;
+}
+
+.container {
+  margin: 2rem auto;
+  border-radius: 25px;
+  background-color: $bg-color-mid;
+  color: $text-color-mid;
+  padding: 20px;
+  width: 900px;
+  height: auto;
+  align-items: center;
+
+  & input:focus,
+  & textarea:focus,
+  & select:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: $color-warning;
+  }
+
+  input.placeholder,
+  textarea.placeholder{
+    color: $text-color-warning;
+  }
+
+  & input,
+  textarea {
+    border-radius: 10px;
+    background-color: $bg-color-mid;
+    color: $text-color-warning !important;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: $text-color-warning;
+  }
+
+}
+
+.btn {
+  border-radius: 5px;
+  color: $color-dark;
+  background-color: $bg-color-warning;
+  padding: 10px;
+  margin: 0px 10px 0px 10px;
+
+  &:hover {
+    color: $color-light;
+    background-color: $bg-color-dark;
+    border-color: $color-light;
+  }
+}
+
+.btn2 {
+  border-color: #D25454;
+  color: black;
+
+  &:hover {
+    color: $color-light;
+    background-color: $bg-color-dark;
+    border-color: $color-light;
+  }
+}
+
+.custom-file-button {
+  display: block;
+  margin: 0 auto;
+  color: $text-color-light;
+  background-color: $bg-color-warning;
+  border: 1px solid $color-warning;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+
+  &:hover {
+    color: $color-light;
+    background-color: $bg-color-dark;
+    border-color: $color-light;
+  }
+}
+
+.logotipe {
+    text-align: center;
+  
+  
+    img {
+      width: 350px;
+      height: auto;
+      border-radius: 10px;
+    }
+  
+  
+    .preview-image {
+      width: 150px;
+      height: auto;
+      border-radius: 10px;
+  
+    }
+  }
+
+  
+  @media screen and (max-width: 992px) {
+    .container {
+      width: 100%;
+      border-radius: 25px;
+    }
+
+    .btn {
+        width: 100%;
+      }
+    
+      .btn2 {
+        width: 100%;
+      }
+    
+      .font {
+        font-size: 16px;
+      }
+  }
+  
+  @media screen and (max-width: 600px) {
+  
+    .container {
+      width: 100%;
+      border-radius: 0px;
+    }
+
+    .btn {
+        width: 100%;
+      }
+    
+      .btn2 {
+        width: 100%;
+      }
+    
+      .font {
+        font-size: 16px;
+      }
+  }
+

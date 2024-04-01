@@ -1,4 +1,4 @@
-@import '../../../style/imports.scss';
+@import '../../../../styles/imports.scss';
 
 .modal-content{
     background-color: #202124;
@@ -17,26 +17,6 @@
     color: white !important;
 }
 
-
-
-/*
-button{
-    color:$color-dark;
-    background-color: $bg-color-warning;
-    width: 150px;
-    height: 53.5px;
-    border-radius: 5px;
-    border-color: $bg-color-warning;
-    border-style: solid;
-    font-size: larger;
-
-    &:hover{
-        color: $color-light;
-        background-color: $bg-color-dark;
-        border-color: $color-light;
-    }
-}
-*/
 .btn{
     color:$color-dark;
     background-color: $bg-color-warning;

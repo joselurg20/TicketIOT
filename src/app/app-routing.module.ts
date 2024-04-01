@@ -4,9 +4,12 @@ import { Error404Component } from './components/error404/error404.component';
 import { LoginComponent } from './components/login/login-index/login.component';
 import { IncidenceIndexComponent } from './components/incidences/incidence-index/incidence-index.component';
 import { RecoveredComponent } from './components/login/recovered/recovered.component';
-import { IncidencesReviewComponent } from './components/incidences/incidences-review/incidences-review.component';
 import { SupportManagerComponent } from './pages/support-manager/support-manager.component';
 import { HelpdeskComponent } from './components/messages/helpdesk/helpdesk.component';
+import { IncidenceUserComponent } from './pages/incidence-user/incidence-user.component';
+import { TechnicialIncidenceComponent } from './pages/technicial-incidence/technicial-incidence.component';
+import { SupportTechnicalComponent } from './pages/support-technical/support-technical.component';
+import { ManagerIncidenceComponent } from './pages/manager-incidence/manager-incidence.component';
 
 
 const routes: Routes = [
@@ -14,9 +17,12 @@ const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "recuperar", component: RecoveredComponent },
   { path: "support-manager", component: SupportManagerComponent },
-  { path: "revisar", component: IncidencesReviewComponent },
+  { path: "support-technician", component: SupportTechnicalComponent },
+  { path: "revisarsmanager", component: ManagerIncidenceComponent },
+  { path: "revisartecnico", component: TechnicialIncidenceComponent },
   { path: "incidencia", component: IncidenceIndexComponent },
   { path: "helpdesk/:ticketID", component: HelpdeskComponent },
+  { path:"enlace", component: IncidenceUserComponent },
   { path: "404", component: Error404Component },
   { path: "**", redirectTo: "/404" }
 ];

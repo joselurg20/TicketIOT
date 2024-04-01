@@ -8,10 +8,11 @@
         </i>Log out</button>
 
 </div>
-<mat-grid-list cols="8" rowHeight="225px" class="m-0" >
+<mat-grid-list cols="8" rowHeight="225px" class="m-0" gutterSize="20px" >
     <mat-grid-tile *ngFor="let tile of tiles" [colspan]="tile.cols" [rowspan]="tile.rows">
         <ng-container *ngComponentOutlet="tile.component"></ng-container>
     </mat-grid-tile>
 </mat-grid-list>
+
 
 <app-technical-table></app-technical-table>

@@ -8,6 +8,11 @@ import { iTicketDescriptor } from "src/app/models/tickets/iTicketDescription";
 import { iUserTable } from "src/app/models/users/iUserTable";
 import { ApiService } from "src/app/services/api.service";
 import { MessageComponent } from "../../messages/menssage/message.component";
+import { IncidenceDataComponent } from "../incidence-data/incidence-data.component";
+import { HelpdeskComponent } from "../../messages/helpdesk/helpdesk.component";
+import { ComunicationComponent } from "../../messages/comunication/comunication.component";
+import { TechnicialComponent } from "../../data/technicial/technicial.component";
+import { ManagerComponent } from "../../data/manager/manager.component";
 
 
 @Component({
@@ -15,7 +20,7 @@ import { MessageComponent } from "../../messages/menssage/message.component";
     standalone: true,
     templateUrl: './incidences-review.component.html',
     styleUrls: ['./incidences-review.component.scss'],
-    imports: [CommonModule, MessageComponent]
+    imports: [CommonModule, MessageComponent, IncidenceDataComponent, ManagerComponent, HelpdeskComponent, ComunicationComponent, TechnicialComponent]
 })
 export class IncidencesReviewComponent implements OnInit {
 

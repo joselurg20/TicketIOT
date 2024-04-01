@@ -4,40 +4,10 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-
-
-export interface PeriodicElement {
-  id: number;
-  title: string;
-  name: string;
-  email: string;
-  priority: string;
-  state: string;
-  timestamp: string;
-  userID: number;
-  status: boolean;
-
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { id: 1, title: 'Ticket 1', name: 'User 1', email: 'Email 1', priority: 'Alta', state: 'Abierto', timestamp: '2/2/2022', userID: 1, status: true },
-  { id: 2, title: 'Ticket 2', name: 'User 2', email: 'Email 2', priority: 'Alta', state: 'Abierto', timestamp: '2/2/2022', userID: 1, status: true },
-  { id: 3, title: 'Ticket 3', name: 'User 3', email: 'Email 3', priority: 'Alta', state: 'Abierto', timestamp: '2/2/2022', userID: 1, status: true },
-  { id: 4, title: 'Ticket 4', name: 'User 4', email: 'Email 4', priority: 'Alta', state: 'Abierto', timestamp: '2/2/2022', userID: 1, status: true },
-  { id: 5, title: 'Ticket 5', name: 'User 5', email: 'Email 5', priority: 'Alta', state: 'Abierto', timestamp: '2/2/2022', userID: 1, status: true },
-  { id: 6, title: 'Ticket 6', name: 'User 6', email: 'Email 6', priority: 'Alta', state: 'Abierto', timestamp: '2/2/2022', userID: 1, status: true },
-  { id: 7, title: 'Ticket 7', name: 'User 7', email: 'Email 7', priority: 'Alta', state: 'Abierto', timestamp: '2/2/2022', userID: 1, status: true },
-  { id: 8, title: 'Ticket 8', name: 'User 8', email: 'Email 8', priority: 'Alta', state: 'Abierto', timestamp: '2/2/2022', userID: 1, status: true },
-  { id: 9, title: 'Ticket 9', name: 'User 9', email: 'Email 9', priority: 'Alta', state: 'Abierto', timestamp: '2/2/2022', userID: 1, status: true },
-  /*
-  {id: 10, title: 'Ticket 10', name: 'User 10', email: 'Email 10', priority: 'Alta', state: 'Abierto', timestamp: '2/2/2022', userID: 1, status: true},
-  {id: 11, title: 'Ticket 11', name: 'User 11', email: 'Email 11', priority: 'Alta', state: 'Abierto', timestamp: '2/2/2022', userID: 1, status: true},
-  {id: 12, title: 'Ticket 12', name: 'User 12', email: 'Email 12', priority: 'Alta', state: 'Abierto', timestamp: '2/2/2022', userID: 1, status: true},
-  {id: 13, title: 'Ticket 13', name: 'User 13', email: 'Email 13', priority: 'Alta', state: 'Abierto', timestamp: '2/2/2022', userID: 1, status: true},
-  {id: 14, title: 'Ticket 14', name: 'User 14', email: 'Email 14', priority: 'Alta', state: 'Abierto', timestamp: '2/2/2022', userID: 1, status: true},
-  {id: 15, title: 'Ticket 15', name: 'User 15', email: 'Email 15', priority: 'Alta', state: 'Abierto', timestamp: '2/2/2022', userID: 1, status: true},
-  */
-];
+import { ApiService } from 'src/app/services/api.service';
+import { iTicketTable } from 'src/app/models/tickets/iTicketTable';
+import { LoginService } from 'src/app/services/login.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -51,14 +21,29 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
 
 
   displayedColumns: string[] = ['id', 'title', 'name', 'email', 'priority', 'state', 'timestamp', 'userID'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  dataSource = new MatTableDataSource<iTicketTable>();
+  selectedRow: any;
+  loggedUserName: string = "";
 
-  constructor(private _liveAnnouncer: LiveAnnouncer) { }
+  constructor(private _liveAnnouncer: LiveAnnouncer, private apiService: ApiService, private router: Router) { }
 
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.dataSource.sortingDataAccessor = (data: iTicketTable, sortHeaderId: string) => {
+      switch (sortHeaderId) {
+        case 'priority':
+          return this.getPriorityValue(data.priority);
+        case 'timestamp':
+          return new Date(data.timestamp).getTime(); // Convertir la fecha a milisegundos para ordenar correctamente
+        default:
+          const value = data[sortHeaderId as keyof iTicketTable]; // Obtener el valor de la propiedad
+          return typeof value === 'string' ? value.toLowerCase() : (typeof value === 'number' ? value : 0); // Convertir a minúsculas si es una cadena o devolver el valor numérico
+      }
+    };
   }
   announceSortChange(sortState: Sort) {
 
@@ -68,34 +53,105 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
       this._liveAnnouncer.announce('Sorting cleared');
     }
   }
-  selectedRow: any;
-  unhighlightRow($event: MouseEvent) {
-    throw new Error('Method not implemented.');
-  }
-  onRowClicked(_t114: any) {
-    throw new Error('Method not implemented.');
-  }
-  highlightRow($event: MouseEvent) {
-    throw new Error('Method not implemented.');
-  }
-  /*
-  dataSource: CdkTableDataSourceInput<any> | undefined;
-  displayedColumns: any;
 
-  announceSortChange($event: Sort) {
-  throw new Error('Method not implemented.');
-  }*/
+  highlightRow(event: MouseEvent) {
+    const row = event.currentTarget as HTMLTableRowElement;
+    row.classList.add('highlighted');
+  }
+
+  unhighlightRow(event: MouseEvent) {
+    const row = event.currentTarget as HTMLTableRowElement;
+    row.classList.remove('highlighted');
+  }
+
+  getPriorityValue(priority: string): number {
+    switch (priority) {
+      case 'HIGHEST': return 1;
+      case 'HIGH': return 2;
+      case 'MEDIUM': return 3;
+      case 'LOW': return 4;
+      case 'LOWEST': return 5;
+      default: return 0;
+    }
+  }
+
+  onRowClicked(row: any) {
+    this.selectedRow = row;
+    localStorage.setItem('selectedTicket', this.selectedRow.id);
+  }
+
   tickets() {
-    throw new Error('Method not implemented.');
-  }
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
-  /*
-  ngAfterViewInit(): void {
-  throw new Error('Method not implemented.');
+    if(localStorage.getItem('selectedTicket') != null) {
+      this.router.navigate(['/tickets']);
+    }
   }
 
-  */
+  ngOnInit(): void {
+    const userNameFromLocalStorage = localStorage.getItem('userName');
+    if (!userNameFromLocalStorage) {
+      console.log('No se encontró ningún nombre de usuario en el localStorage.');
+    }
+    if(localStorage.getItem('userRole') == 'SupportManager') {
+      this.apiService.getTickets().subscribe({
+        next: (response: any) => {
+          console.log('Tickets recibidos', response);
+          // Mapear la respuesta de la API utilizando la interfaz iTicketTable
+          const tickets: iTicketTable[] = response.$values.map((value: any) => {
+            return {
+              id: value.id,
+              title: value.title,
+              name: value.name,
+              email: value.email,
+              timestamp: this.formatDate(value.timestamp),
+              priority: value.priority,
+              state: value.state,
+              userID: value.userID // Asegúrate de asignar el valor correcto
+            };
+          });
+          this.dataSource.data = tickets; // Establecer los datos en la dataSource
+          console.log('Datos mapeados para tabla', tickets);
+        },
+        error: (error: any) => {
+          console.error('Error al obtener los tickets del usuario:', error);
+        }
+      });
+    } else {
+      this.apiService.getTicketsByUser(parseInt(localStorage.getItem('userId')!)).subscribe({
+        next: (response: any) => {
+          console.log('Tickets recibidos', response);
+          // Mapear la respuesta de la API utilizando la interfaz iTicketTable
+          const tickets: iTicketTable[] = response.$values.map((value: any) => {
+            return {
+              id: value.id,
+              title: value.title,
+              name: value.name,
+              email: value.email,
+              timestamp: this.formatDate(value.timestamp),
+              priority: value.priority,
+              state: value.state,
+              userID: value.userID // Asegúrate de asignar el valor correcto
+            };
+          });
+          this.dataSource.data = tickets; // Establecer los datos en la dataSource
+          console.log('Datos mapeados para tabla', tickets);
+        },
+        error: (error: any) => {
+          console.error('Error al obtener los tickets del usuario:', error);
+        }
+      });
+    }
+  }
+
+  formatDate(fecha: string): string {
+    const fechaObj = new Date(fecha);
+    const dia = fechaObj.getDate().toString().padStart(2, '0');
+    const mes = (fechaObj.getMonth() + 1).toString().padStart(2, '0'); // Se suma 1 porque los meses van de 0 a 11
+    const año = fechaObj.getFullYear();
+    const horas = fechaObj.getHours().toString().padStart(2, '0');
+    const minutos = fechaObj.getMinutes().toString().padStart(2, '0');
+    const segundos = fechaObj.getSeconds().toString().padStart(2, '0');
+
+    return `${dia}/${mes}/${año} - ${horas}:${minutos}:${segundos}`;
+  }
 
 }

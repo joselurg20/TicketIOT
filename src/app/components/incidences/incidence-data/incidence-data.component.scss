@@ -1,0 +1,21 @@
+@import "../../../../styles/imports.scss";
+
+* {
+  padding: 4px;
+}
+
+.container {
+  margin: 2rem auto;
+  border-radius: 25px;
+  background-color: $bg-color-mid;
+  color: $text-color-mid;
+  padding: 20px;
+  width: 900px;
+  height: auto;
+  align-items: center;
+
+}
+
+.from-group {
+  margin-bottom: 10px;
+}

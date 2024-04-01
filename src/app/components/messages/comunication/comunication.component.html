@@ -1,0 +1,30 @@
+
+<h1>Mensajes</h1>
+        <div class="form-group">
+            <label for="Attachments"><i class="fa-solid fa-folder"></i> Adjuntar Archivos:</label> <br>
+            <input type="file" id="Attachments" formControlName="Attachments" multiple (change)="onFileChange($event)"
+                style="display: none;">
+            <button type="button" onclick="document.getElementById('Attachments').click()"
+                class="custom-file-button btn btn-lg"><i class="fa-solid fa-arrow-up-from-bracket"></i> Seleccionar
+                Archivos</button>
+
+            <div *ngIf="previewUrl" class="logotipe">
+                <img [src]="previewUrl" *ngIf="isImageSelected" alt="Vista previa del archivo" class="preview-image">
+                <a class="preview-link" [href]="previewUrl" *ngIf="!isImageSelected" target="_blank">Ver Archivo
+                    Adjunto</a>
+            </div>
+        </div>
+        <div class="mb-3 form-group">
+            <label for="Content" class="form-label"><i class="fa-solid fa-message"></i> Mensaje</label>
+            <textarea class="form-control  form-control-lg" id="Content" rows="3" placeholder="Ingrese un mensaje"
+                formControlName="Content"></textarea>
+        </div>
+        <p *ngIf="successMsg" class="success">{{ successMsg }}</p>
+        <p *ngIf="!successMsg" class="error">{{ successMsg }}</p>
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="m-1 btn btn-lg">Enviar Mensajes</button>
+            <app-message></app-message>
+        </div>
+        <div class="logotipe">
+            <img src="assets/images/logo/IoTlogo.png" alt="">
+        </div>

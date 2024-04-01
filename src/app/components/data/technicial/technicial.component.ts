@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-incidence',
+  selector: 'app-technicial',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './incidence.component.html',
-  styleUrls: ['./incidence.component.scss']
+  templateUrl: './technicial.component.html',
+  styleUrls: ['./technicial.component.scss']
 })
-export class IncidenceComponent {
+export class TechnicialComponent {
 
 }

@@ -11,6 +11,7 @@ import { ChartBarComponent } from '../../grafics/chart-bar/chart-bar.component';
 import { ChartDoughnutComponent } from '../../grafics/chart-doughnut/chart-doughnut.component';
 import { ChartPieComponent } from '../../grafics/chart-pie/chart-pie.component';
 import { Observable } from 'rxjs';
+import { ApiService } from 'src/app/services/api.service';
 
 
 @Component({
@@ -22,7 +23,6 @@ import { Observable } from 'rxjs';
 })
 export class IncidenceIndexComponent implements OnInit {
   public ticketForm!: FormGroup;
-  private readonly apiUrl = 'http://localhost:8001/api/Ticket';
   successMsg: string = "";
   successMessage: string = "";
   previewUrl: string | ArrayBuffer | null = null;
@@ -30,7 +30,7 @@ export class IncidenceIndexComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
-  constructor(private http: HttpClient, private _snackBar: MatSnackBar) { }
+  constructor(private http: HttpClient, private _snackBar: MatSnackBar, private apiService: ApiService) { }
 
   openSnackBar() {
     this._snackBar.open("Incidencia enviada", 'Cerrar', {
@@ -97,7 +97,7 @@ export class IncidenceIndexComponent implements OnInit {
       }
     }
 
-    return this.http.post<any>(this.apiUrl, formData);
+    return this.apiService.createTicket(formData);
   }
 
   onFileChange(event: any) {

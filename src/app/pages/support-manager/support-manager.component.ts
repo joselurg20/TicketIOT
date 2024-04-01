@@ -7,6 +7,8 @@ import { ChartDoughnutComponent } from "../../components/grafics/chart-doughnut/
 import { MatGridListModule } from '@angular/material/grid-list';
 import { ChartBarComponent } from 'src/app/components/grafics/chart-bar/chart-bar.component';
 import { MessageComponent } from "../../components/messages/menssage/message.component";
+import { LoginService } from 'src/app/services/login.service';
+import { Router } from '@angular/router';
 
 interface Tile {
     cols: number;
@@ -22,8 +24,13 @@ interface Tile {
     imports: [CommonModule, IncidenceTableComponent, TechnicalTableComponent, ChartPieComponent, ChartDoughnutComponent, MatGridListModule, ChartBarComponent, MessageComponent]
 })
 export class SupportManagerComponent {
+
+constructor(private loginService: LoginService, private router: Router) {
+}
+
 logout() {
-throw new Error('Method not implemented.');
+    this.loginService.logout();
+    this.router.navigate(['/login']);
 }
 
 tiles: Tile[] = [

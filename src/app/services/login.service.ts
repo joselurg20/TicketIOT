@@ -7,7 +7,7 @@ import { tap } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class LoginService {
-    private readonly apiUrl = 'https://localhost:7233/api/user/login';
+    private readonly apiUrl = 'https://localhost:7131/gateway/users/authenticate';
     private readonly tokenKey = 'authToken';
     private readonly userIdKey = 'userId';
     private readonly userNameKey = 'userName';
@@ -32,7 +32,8 @@ export class LoginService {
 
 
     login(email: string, password: string): Observable<any> {
-        return this.http.post<any>(this.apiUrl, { email, password }).pipe(
+        const loginData = { email, password };
+        return this.http.post<any>(this.apiUrl, loginData).pipe(
             tap(response => {
                 if (response && response.token) {
                     // Almacenar el token de autenticación en localStorage

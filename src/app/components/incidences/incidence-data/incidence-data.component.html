@@ -4,43 +4,43 @@
         <div class="col-6">
             <div class="p-3">
                 <label class="ticketdata">Titulo</label>
-                <p class="font">ticket.title</p>
+                <p class="font">{{ticket.title}}</p>
             </div>
         </div>
         <div class="col-6">
             <div class="p-3">
                 <label class="ticketdata">Fecha de Creación</label>
-                <p class="font"> ticket.timestamp </p>
+                <p class="font"> {{ticket.timestamp}} </p>
             </div>
         </div>
         <div class="col-6">
             <div class="p-3">
                 <label class="ticketdata">Nombre del Usuario</label>
-                <p class="font">ticket.name</p>
+                <p class="font">{{ticket.name}}</p>
             </div>
         </div>
         <div class="col-6">
             <div class="p-3">
                 <label class="ticketdata">Email del Usuario</label>
-                <p class="font">ticket.email</p>
+                <p class="font">{{ticket.email}}</p>
             </div>
         </div>
         <div class="col-6">
             <div class="p-3">
                 <label class="ticketdata">Prioridad</label>
-                <p class="font">ticket.priority</p>
+                <p class="font">{{ticket.priority}}</p>
             </div>
         </div>
         <div class="col-6">
             <div class="p-3">
                 <label class="ticketdata">Estado</label>
-                <p class="font">ticket.state</p>
+                <p class="font">{{ticket.state}}</p>
             </div>
         </div>
         <div class="col-12">
             <div class="p-3">
                 <label class="ticketdata">Técnico Asignado</label>
-                <p class="font"> user.id - user.userName </p>
+                <p class="font"> {{ticket.userId}} - {{ticket.userName}} </p>
             </div>
         </div>
     </div>

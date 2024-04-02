@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -7,12 +7,19 @@ import { Observable } from 'rxjs';
 })
 export class ApiService {
   private apiUrl = 'https://localhost:7131/gateway';
+  
 
   constructor(private http: HttpClient) { }
 
   // Método para obtener la lista de usuarios
   getUsers(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/Users/users/getall`);
+    const token = localStorage.getItem('authToken');
+  
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.get<any[]>(`${this.apiUrl}/Users/users/getall`, { headers });
   }
 
   getUserById(userId: number): Observable<any> {
@@ -20,7 +27,13 @@ export class ApiService {
   }
 
   getTickets(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/tickets/getall`);
+    const token = localStorage.getItem('authToken');
+  
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+  
+    return this.http.get<any[]>(`${this.apiUrl}/tickets/getall`, { headers });
   }
 
   createTicket(formData: FormData): Observable<any> {
@@ -44,12 +57,30 @@ export class ApiService {
   }
   
   assignTechnician(ticketId: number, userId: number) {
-    return this.http.put<any>(`${this.apiUrl}/tickets/asign/${ticketId}-${userId}`, null);
+    const token = localStorage.getItem('authToken');
+  
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.put<any>(`${this.apiUrl}/tickets/asign/${ticketId}/${userId}`, null, {headers});
   }
   changeTicketPriority(ticketId: number, priority: number) {
-    return this.http.put<any>(`${this.apiUrl}/tickets/change-priority/${ticketId}-${priority}`, null);
+    const token = localStorage.getItem('authToken');
+  
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.put<any>(`${this.apiUrl}/tickets/changepriority/${ticketId}/${priority}`, null, {headers});
   }
   changeTicketState(ticketId: number, state: number) {
-    return this.http.put<any>(`${this.apiUrl}/tickets/change-state/${ticketId}-${state}`, null);
+    const token = localStorage.getItem('authToken');
+  
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.put<any>(`${this.apiUrl}/tickets/changestate/${ticketId}/${state}`, null, {headers});
   }
 }

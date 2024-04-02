@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IncidenceTableComponent } from "../../components/incidences/incidence-table/incidence-table.component";
 import { TechnicalTableComponent } from "../../components/technical-table/technical-table.component";
@@ -9,6 +9,9 @@ import { ChartBarComponent } from 'src/app/components/grafics/chart-bar/chart-ba
 import { MessageComponent } from "../../components/messages/menssage/message.component";
 import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
+import { iTicketTable } from 'src/app/models/tickets/iTicketTable';
+import { iUserTable } from 'src/app/models/users/iUserTable';
+import { ApiService } from 'src/app/services/api.service';
 
 interface Tile {
     cols: number;
@@ -23,15 +26,27 @@ interface Tile {
     styleUrls: ['./support-manager.component.scss'],
     imports: [CommonModule, IncidenceTableComponent, TechnicalTableComponent, ChartPieComponent, ChartDoughnutComponent, MatGridListModule, ChartBarComponent, MessageComponent]
 })
-export class SupportManagerComponent {
+export class SupportManagerComponent implements OnInit {
 
-constructor(private loginService: LoginService, private router: Router) {
+loggedUsername: string = "";
+tickets: iTicketTable[] = [];
+users: iUserTable[] = [];
+
+constructor(private apiService: ApiService, private loginService: LoginService, private router: Router) {
+}
+
+ngOnInit(): void {
+    this.loggedUsername = localStorage.getItem('userName') || '';
+    
+      
 }
 
 logout() {
     this.loginService.logout();
     this.router.navigate(['/login']);
 }
+
+
 
 tiles: Tile[] = [
     {component: IncidenceTableComponent, cols: 4, rows: 4},

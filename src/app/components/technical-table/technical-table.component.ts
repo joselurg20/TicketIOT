@@ -1,21 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { iUserTable } from 'src/app/models/users/iUserTable';
+import { ApiService } from 'src/app/services/api.service';
 
-export interface PeriodicElement {
-  id: number;
-  name: string;
-  correo: string;
-  numero: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { id: 1, name: 'tecnico1', correo: 'tecnico1@gmail.com', numero: '1' },
-  { id: 2, name: 'tecnico2', correo: 'tecnico2@gmail.com', numero: '2' },
-  { id: 3, name: 'tecnico3', correo: 'tecnico3@gmail.com', numero: '3' },
-  { id: 4, name: 'tecnico4', correo: 'tecnico4@gmail.com', numero: '4' },
-  { id: 5, name: 'tecnico5', correo: 'tecnico5@gmail.com', numero: '5' },
-];
 
 @Component({
   selector: 'app-technical-table',
@@ -24,7 +12,29 @@ const ELEMENT_DATA: PeriodicElement[] = [
   templateUrl: './technical-table.component.html',
   styleUrls: ['./technical-table.component.scss']
 })
-export class TechnicalTableComponent {
-  displayedColumns: string[] = ['id', 'name', 'correo', 'numero'];
-  dataSource = ELEMENT_DATA;
+export class TechnicalTableComponent implements OnInit {
+  users: iUserTable[] = [];
+
+  constructor(private apiService: ApiService) { }
+
+  ngOnInit(): void {
+    this.apiService.getUsers().subscribe({
+      next: (response: any) => {
+        console.log('Users recibidos', response);
+        const users: iUserTable[] = response.map((value: any) => {
+          return {
+            id: value.id,
+            userName: value.userName,
+            email: value.email,
+            phoneNumber: value.phoneNumber
+          };
+        });
+        this.users = users;
+        console.log('Datos mapeados para tabla', users);
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+  }
 }

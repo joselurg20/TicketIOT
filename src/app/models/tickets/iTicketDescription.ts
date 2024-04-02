@@ -8,7 +8,6 @@ export interface iTicketDescriptor {
     timestamp: string,
     priority: string,
     state: string,
-    userID: number,
-    userName: string,
-    messages: iMessage[]
+    userId: number,
+    userName: string
 }

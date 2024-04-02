@@ -1,28 +1,37 @@
-<div>
-    <label for="tecnico" class="form-label"><i class="fa-solid fa-user"></i>Técnico</label>
-    <select class="form-select form-select-lg" id="tecnico" required name="tecnico">
-        <option value="">Seleccione un técnico</option>
-        <option> </option>
-    </select>
-</div>
+<form>
+    <div>
+        <label for="tecnico" class="form-label"><i class="fa-solid fa-user"></i>Técnico</label>
+        <select class="form-select form-select-lg" id="tecnico" required [(ngModel)]="selectedUserId" name="tecnico">
+            <option value="-1">Seleccione un técnico</option>
+            <option *ngFor="let user of users" [value]="user.id">{{user.id}} - {{user.userName}}</option>
+        </select>
+    </div>
 
-<div class="mb-3">
-    <label for="prioridad" class="form-label"><i class="fa-solid fa-bell"></i>Prioridad</label>
-    <select class="form-select form-select-lg" id="prioridad" required name="prioridad">
-        <option value="">Seleccione un grado de prioridad</option>
-        <option>p</option>
-    </select>
-</div>
+    <div class="mb-3">
+        <label for="prioridad" class="form-label"><i class="fa-solid fa-bell"></i>Prioridad</label>
+        <select class="form-select form-select-lg" id="prioridad" required [(ngModel)]="selectedPriorityValue" name="prioridad">
+            <option value="-1">Seleccione un grado de prioridad</option>
+            <option value="5">HIGHEST</option>
+            <option value="4">HIGH</option>
+            <option value="3">MEDIUM</option>
+            <option value="2">LOW</option>
+            <option value="1">LOWEST</option>
+            <option value="0">NOT SURE</option>
+        </select>
+    </div>
 
-<div class="mb-3">
-    <label for="estado" class="form-label"><i class="fa-solid fa-traffic-light"></i>Estado</label>
-    <select class="form-select form-select-lg" id="estado" required name="estado">
-        <option value="">Seleccione un estado</option>
-        <option>s</option>
-    </select>
-</div>
+    <div class="mb-3">
+        <label for="estado" class="form-label"><i class="fa-solid fa-traffic-light"></i>Estado</label>
+        <select class="form-select form-select-lg" id="estado" required [(ngModel)]="selectedStateValue" name="estado">
+            <option value="-1">Seleccione un estado</option>
+            <option value="0">PENDING</option>
+            <option value="1">OPENED</option>
+            <option value="2">PAUSED</option>
+            <option value="3">FINISHED</option>
+        </select>
+    </div>
 
-<div class="d-grid gap-2">
-    <button type="submit" class="btn btn-lg"><i class="fa-solid fa-floppy-disk"></i> Reasignar
-        formulario</button>
-</div>
+    <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-lg" (click)="updateTicket()"><i class="fa-solid fa-floppy-disk"></i> Modificar incidencia</button>
+    </div>
+</form>

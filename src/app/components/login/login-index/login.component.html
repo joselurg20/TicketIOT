@@ -5,7 +5,7 @@
         <div class="col-md-6">
 
             <form [formGroup]="loginForm" (submit)="onSubmit()">
-      
+
                 <h1 class="mb-3">Inicio de Sesión</h1>
 
                 <div class="mb-3">
@@ -16,8 +16,8 @@
 
                 <div class="mb-3">
                     <label for="password" class="form-label"><i class="fa-solid fa-lock"></i> Contraseña</label>
-                    <input type="password" class="form-control form-control-lg" id="password" placeholder="Ingrese su contraseña"
-                        formControlName="password">
+                    <input type="password" class="form-control form-control-lg" id="password"
+                        placeholder="Ingrese su contraseña" formControlName="password">
                 </div>
 
                 <div class="mb-3">
@@ -27,8 +27,7 @@
                 </div>
 
                 <div class="d-grid mb-3">
-                    <button [disabled]="!loginForm.valid" type="submit"
-                        class="iot-log-btn">Acceder</button>
+                    <button [disabled]="!loginForm.valid" type="submit" class="iot-log-btn">Acceder</button>
                 </div>
 
                 <div class="link mb-3">

@@ -3,10 +3,15 @@
 * {
   padding: 4px;
 }
+section{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
 
 #main {
-  background-color: $bg-color-mid;
-  color: $text-color-mid;
   width: 900px;
   height: auto;
   padding: 40px;
@@ -97,7 +102,7 @@ tr {
   justify-content: center;
   margin: 0;
   padding: 0;
-  border-radius: 10px;
+  border-radius: 20px;
 
 }
 

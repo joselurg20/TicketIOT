@@ -1,5 +1,19 @@
-<mat-grid-list cols="2" rowHeight="2:1" gutterSize="20px">
-    <mat-grid-tile rowspan="2">Historial de mensajes</mat-grid-tile>
-    <mat-grid-tile>Datos de la incicencia</mat-grid-tile>
-    <mat-grid-tile>enviar mensajes</mat-grid-tile>
-  </mat-grid-list>
+<div class="grid-container">
+  <div class="grid-item"><app-history></app-history></div>
+  <div class="grid-item">
+
+    <h1 class="my-4">Incidencia</h1>
+    <form>
+    <div class="row gy-1">
+      <div class="col-12">
+        <div class="p-3">
+            <h2 class="ticketdata">Estado</h2>
+            <p class="font">ticket.state</p>
+        </div>
+    </div>
+    </div>
+    </form>
+  </div>
+
+  <div class="grid-item"><app-helpdesk></app-helpdesk></div>
+</div>

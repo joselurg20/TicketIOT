@@ -55,21 +55,21 @@ export class HelpdeskComponent {
   }
 
   onSubmit() {
-    if(this.messageForm.valid) {
+    if (this.messageForm.valid) {
       console.log('Datos del formulario:', this.messageForm.value);
       const Content = this.messageForm.value.Content;
       this.createMessage(Content, this.ticketId)
-      .subscribe({
-        next: (response) => {
-          console.log('Message creado con éxito', response);
-          this.successMsg = "Mensaje creado con éxito.";
-          location.reload(); 
-        },
-        error: (error) => {
-          console.error('Error en la solicitud', error);
-          this.successMsg = "Error al crear el mensaje.";
-        }
-      });
+        .subscribe({
+          next: (response) => {
+            console.log('Message creado con éxito', response);
+            this.successMsg = "Mensaje creado con éxito.";
+            location.reload();
+          },
+          error: (error) => {
+            console.error('Error en la solicitud', error);
+            this.successMsg = "Error al crear el mensaje.";
+          }
+        });
     }
   }
 
@@ -77,12 +77,12 @@ export class HelpdeskComponent {
     const formData = new FormData();
     formData.append('MessageDTO.Content', Content);
     formData.append('MessageDTO.TicketID', TicketID.toString());
-    
+
     const attachmentsControl = this.messageForm.get('Attachments');
-  
+
     if (attachmentsControl) {
       const attachments = attachmentsControl.value;
-      
+
       if (typeof attachments === 'string') {
         const fileInput = <HTMLInputElement>document.getElementById('Attachments');
         if (fileInput && fileInput.files && fileInput.files.length > 0) {
@@ -94,7 +94,7 @@ export class HelpdeskComponent {
         }
       }
     }
-  
+
     return this.http.post<any>(this.apiUrl, formData);
   }
 
@@ -103,18 +103,18 @@ export class HelpdeskComponent {
     const fileName = attachmentPath.substring(pathPrefix.length);
     this.downloadFile(attachmentPath, fileName);
   }
-  
+
   downloadFile(data: any, fileName: string) {
     const blob = new Blob([data], { type: 'application/octet-stream' });
-  
+
     const url = window.URL.createObjectURL(blob);
-  
+
     const link = document.createElement('a');
     link.href = url;
     link.download = fileName;
-  
+
     link.click();
-  
+
     window.URL.revokeObjectURL(url);
   }
 

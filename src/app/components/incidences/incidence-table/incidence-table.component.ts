@@ -82,7 +82,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
 
   tickets() {
     if(localStorage.getItem('selectedTicket') != null) {
-      this.router.navigate(['/tickets']);
+      this.router.navigate(['/revisar-manager']);
     }
   }
 
@@ -105,7 +105,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
               timestamp: this.formatDate(value.timestamp),
               priority: value.priority,
               state: value.state,
-              userID: value.userID // Asegúrate de asignar el valor correcto
+              userId: value.userId // Asegúrate de asignar el valor correcto
             };
           });
           this.dataSource.data = tickets; // Establecer los datos en la dataSource
@@ -129,7 +129,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
               timestamp: this.formatDate(value.timestamp),
               priority: value.priority,
               state: value.state,
-              userID: value.userID // Asegúrate de asignar el valor correcto
+              userId: value.userId // Asegúrate de asignar el valor correcto
             };
           });
           this.dataSource.data = tickets; // Establecer los datos en la dataSource

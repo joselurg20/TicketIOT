@@ -12,13 +12,15 @@ import { HttpClient } from '@angular/common/http';
 import { iUserTable } from 'src/app/models/users/iUserTable';
 import { iMessage } from 'src/app/models/tickets/iMessage';
 import { HelpdeskComponent } from "../../components/messages/helpdesk/helpdesk.component";
+import { ComunicationComponent } from "../../components/messages/comunication/comunication.component";
+import { HistoryComponent } from "../../components/messages/history/history.component";
 
 @Component({
     selector: 'app-incidence-user',
     standalone: true,
     templateUrl: './incidence-user.component.html',
     styleUrls: ['./incidence-user.component.scss'],
-    imports: [CommonModule, MatGridListModule, NgFor, IncidenceTableComponent, IncidenceDataComponent, MessageComponent, HelpdeskComponent]
+    imports: [CommonModule, MatGridListModule, NgFor, IncidenceTableComponent, IncidenceDataComponent, MessageComponent, HelpdeskComponent, ComunicationComponent, HistoryComponent]
 })
 export class IncidenceUserComponent {
     public user: iUserTable = {} as iUserTable;

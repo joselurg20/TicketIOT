@@ -1,0 +1,60 @@
+@import "../../../styles/imports.scss";
+
+* {
+  padding: 10px;
+}
+
+h1 {
+  color: #EFB810;
+  text-align: center;
+}
+
+.btn {
+  border-radius: 5px;
+  color: $color-dark;
+  background-color: $bg-color-warning;
+  padding: 10px;
+  margin: 0px 10px 0px 10px;
+
+  &:hover {
+    color: $color-light;
+    background-color: $bg-color-dark;
+    border-color: $color-light;
+  }
+}
+
+img {
+  width: 30vw;
+}
+
+.item1 {
+  grid-area: menu;
+}
+
+.item2 {
+  grid-area: main;
+}
+
+.item3 {
+  grid-area: right;
+}
+
+.item4 {
+  grid-area: footer;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    'menu main main main right right right'
+    'menu footer footer footer footer footer footer';
+    grid-gap: 10px;
+}
+
+.grid-container > div {
+  background-color: $bg-color-mid;
+  color: $text-color-mid;
+  border-radius: 25px;
+  margin: 0px;
+  padding: 20px;
+}

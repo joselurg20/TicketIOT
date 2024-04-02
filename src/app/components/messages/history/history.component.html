@@ -1,1 +1,15 @@
-<p>history works!</p>
+<div *ngFor="let message of messages">
+    <div class="message">
+        <h4>Author: {{ message.Author }}</h4>
+        <hr>
+        <p>{{ message.Content }}</p>
+        <p>Archivos adjuntos:</p>
+        <ul>
+            <div *ngFor="let attachment of message.AttachmentPaths let last = last">
+                <button *ngIf="!last" type="button" class="custom-file-button btn-lg"
+                    (click)="downloadAttachment(attachment)"><i class="fa-solid fa-download"></i> Descargar
+                    Archivos</button>
+            </div>
+        </ul>
+    </div>
+</div>

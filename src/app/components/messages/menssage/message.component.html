@@ -9,8 +9,8 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Mensajes</h5>
-        <button type="button" class="iot-cross" data-bs-dismiss="modal" aria-label="Close"
-          id="hola"><i class="fa-solid fa-xmark"></i></button>
+        <button type="button" class="iot-cross" data-bs-dismiss="modal" aria-label="Close" id="hola"><i
+            class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="modal-body">
         <div *ngFor="let message of messages">
@@ -18,8 +18,9 @@
           <p>{{ message.Content }}</p>
           <div *ngIf="message.AttachmentPaths && message.AttachmentPaths.length > 0">
             <div *ngFor="let attachment of message.AttachmentPaths let last = last">
-              <button *ngIf="!last" type="button" class="custom-file-button btn-lg" (click)="downloadAttachment(attachment)"><i class="fa-solid fa-download"></i> Descargar
-                Adjunto</button>
+              <button *ngIf="!last" type="button" class="custom-file-button btn-lg"
+                (click)="downloadAttachment(attachment)"><i class="fa-solid fa-download"></i> Descargar
+                Archivos</button>
             </div>
           </div>
           <hr>

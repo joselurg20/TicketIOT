@@ -89,4 +89,8 @@ export class ApiService {
 
     return this.http.put<any>(`${this.apiUrl}/tickets/changestate/${ticketId}/${state}`, null, {headers});
   }
+
+  createMessage(formData: FormData): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/messages/create`, formData);
+  }
 }

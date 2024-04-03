@@ -1,6 +1,6 @@
 <section class="d-flex">
-    <div class="content">
-        <div class="col-md-12 mt-3" id="main">
+    <div class="col-12">
+        <div class="col-12" id="main">
             <h2>Información de Técnicos</h2>
             <div id="divTable">
                 <table class="user-table">
@@ -14,10 +14,10 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let user of users" class="row-highlight">
-                            <td>{{ user.id }}</td>
-                            <td>{{ user.userName }}</td>
-                            <td>{{ user.email }}</td>
-                            <td>{{ user.phoneNumber }}</td>
+                            <td class="id">{{ user.id }}</td>
+                            <td class="name">{{ user.userName }}</td>
+                            <td class="email">{{ user.email }}</td>
+                            <td class="phone">{{ user.phoneNumber }}</td>
                         </tr>
                     </tbody>
                 </table>

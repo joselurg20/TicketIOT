@@ -5,19 +5,13 @@
 }
 
 #main {
-  background-color: $bg-color-mid;
-  width: 100%;
-  height: auto;
-  padding: 20px;
+  padding: 40px;
   border-radius: 25px;
-  align-items: center;
-  cursor: pointer;
+  background-color: $bg-color-mid;
 }
 
 h2 {
   color: $text-color-dark;
-  text-align: center;
-  align-self: center;
 }
 
 
@@ -27,7 +21,6 @@ h2 {
   margin-bottom: 20px;
   padding: 0;
   overflow: hidden;
-  text-align: center;
   height: min-content;
 }
 
@@ -39,12 +32,8 @@ table {
   color: $text-color-mid;
 }
 
-td {
-  text-align: center;
-}
 
 th {
-  text-align: center;
   color: $color-dark;
   background-color: $bg-color-warning;
   padding: 10px;
@@ -52,12 +41,19 @@ th {
 }
 
 tr {
-  text-align: center;
   color: $text-color-dark;
   background-color: $bg-color-warning;
   padding: 10px;
   margin: 0px 10px 0px 10px;
 }
+
+.id{
+  text-align: right;
+}
+.phone{
+  text-align: right;
+} 
+
 
 .row-highlight {
   background-color: $bg-color-mid;

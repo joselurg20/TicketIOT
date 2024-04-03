@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: "support-technician", component: SupportTechnicalComponent },
   { path: "revisar-manager", component: ManagerIncidenceComponent },
   { path: "revisar-tecnico", component: TechnicialIncidenceComponent },
-  { path: "helpdesk/:ticketID", component: HelpdeskComponent },
+  { path: "helpdesk/:ticketId", component: HelpdeskComponent },
   { path: "prueba", component: TechnicalTableComponent },
 
   //accedibles el usuario

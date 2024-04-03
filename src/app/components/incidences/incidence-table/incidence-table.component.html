@@ -3,19 +3,16 @@
         <div class="d-flex justify-content-between align-items-center">
             <h2>Incidencias</h2>
             <div class="ml-auto">
-                <a class="btn" href="/incidencia" type="button">Crear Incidencia</a>
-                <a class="btn" type="button">Mostrar Todo</a>
-            </div>
+                <a class="btn" href="/incidencia" type="button"><i class="fa-solid fa-plus"></i></a>
+                <a class="btn" type="button" (click)="cambiarIcono()"><i #icon class="fa-solid fa-eye"></i></a>            </div>
         </div>
         <div id="divTable">
             <table mat-table [dataSource]="dataSource" matSort #sort (matSortChange)="announceSortChange($event)"
                 class="mat-elevation-z8">
 
                 <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number">
-                        #
-                    </th>
-                    <td mat-cell *matCellDef="let element"> {{element.id}}</td>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by number" class="id">#</th>
+                    <td mat-cell *matCellDef="let element" class="id"> {{element.id}}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="title">

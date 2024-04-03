@@ -36,6 +36,8 @@ export class IncidenceIndexComponent implements OnInit {
     this._snackBar.open("Incidencia enviada", 'Cerrar', {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
+      duration: 3000, 
+      panelClass: ['green-snackbar'] 
     });
   }
 
@@ -58,12 +60,14 @@ export class IncidenceIndexComponent implements OnInit {
       const Content = this.ticketForm.value.Content;
       const Name = this.ticketForm.value.Name;
       const Email = this.ticketForm.value.Email;
-
+  
       this.createTicket(Title, Content, Name, Email)
         .subscribe({
           next: (response) => {
             console.log('Ticket creado con éxito', response);
-            this.ticketForm.reset(); // Clear form fields
+            this.openSnackBar(); // Mostrar toast
+            this.ticketForm.reset();
+            this.clearAttachments(); // Limpiar campos del formulario
           },
           error: (error) => {
             console.error('Error en la solicitud', error);
@@ -110,5 +114,12 @@ export class IncidenceIndexComponent implements OnInit {
       reader.readAsDataURL(file);
       this.isImageSelected = file.type.startsWith('image/');
     }
+  }
+
+
+  clearAttachments() {
+    this.ticketForm.get('Attachments')?.reset();
+    this.previewUrl = null;
+    this.isImageSelected = false;
   }
 }

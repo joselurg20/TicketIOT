@@ -102,16 +102,15 @@ h2 {
   }
 
   .preview-image {
-    width: 150px;
+    width: 250px;
     height: auto;
     border-radius: 10px;
 
   }
 }
-
-.errorMsg {
-  color: green;
-  text-align: center;
+.green-snackbar {
+  background-color: green !important;
+  color: white; // Color del texto
 }
 
 

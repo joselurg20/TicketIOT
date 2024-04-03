@@ -93,10 +93,10 @@ export class ChartBarComponent implements OnInit {
           label: 'Cantidad de incidencias',
           data: incidentCounts,
           backgroundColor: [
-            'rgba(232, 19, 87, 0.2)',
-            'rgba(116, 92, 216, 0.2)',
-            'rgba(253, 183, 63, 0.2)',
-            'rgba(59, 235, 151, 0.2)',
+            'rgba(232, 19, 87, 1)',
+            'rgba(116, 92, 216, 1)',
+            'rgba(253, 183, 63, 1)',
+            'rgba(59, 235, 151, 1)',
           ],
           borderColor: [
             'rgba(232, 19, 87, 1)',

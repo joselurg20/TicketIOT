@@ -48,6 +48,7 @@ export class IncidenceDataComponent implements OnInit {
             }
           });
         }else{
+          this.ticket = ticket;
           this.ticket.userId = '';
           this.ticket.userName = 'Sin asignar';
         }

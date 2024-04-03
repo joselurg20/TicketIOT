@@ -41,7 +41,13 @@ export class ApiService {
   }
 
   getTicketsByUser(userId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/tickets/getbyuser/${userId}`);
+    const token = localStorage.getItem('authToken');
+  
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.get<any[]>(`${this.apiUrl}/tickets/getbyuser/${userId}`, { headers });
   }
 
   getTicketById(ticketId: number): Observable<any> {
@@ -52,8 +58,8 @@ export class ApiService {
     return this.http.get<any[]>(`${this.apiUrl}/messages/getbyticket/${ticketId}`);
   }
 
-  downloadAttachment(attachmentPath: string) {
-    return this.http.get<any>(`${this.apiUrl}/messages/download/${attachmentPath}`);
+  downloadAttachment(attachmentPath: string, ticketId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/messages/download/${ticketId}/${attachmentPath}`);
   }
   
   assignTechnician(ticketId: number, userId: number) {

@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
 })
 export class IncidenceDataComponent implements OnInit {
 
-  ticket: iTicketDescriptor = {id: 0, title: '', name: '', email: '', timestamp: '', priority: '', state: '', userId: 0, userName: ''};
+  ticket: iTicketDescriptor = {id: 0, title: '', name: '', email: '', timestamp: '', priority: '', state: '', userId: '0', userName: ''};
   private ticketUpdateSubscription: Subscription = {} as Subscription;
 
   constructor(private apiService: ApiService, private ticketUpdateService: TicketUpdateService, private cdr: ChangeDetectorRef) { }
@@ -36,16 +36,21 @@ export class IncidenceDataComponent implements OnInit {
             userId: response.userId,
             userName: ''
           };
-        this.apiService.getUserById(ticket.userId).subscribe({
-          next: (response: any) => {
-            ticket.userName = response.userName;
-            
-            this.ticket = ticket;
-          },
-          error: (error: any) => {
-            console.error('Error al obtener el usuario', error);
-          }
-        });
+        if(response.userId != -1){
+          this.apiService.getUserById(parseInt(ticket.userId)).subscribe({
+            next: (response: any) => {
+              ticket.userName = response.userName;
+              
+              this.ticket = ticket;
+            },
+            error: (error: any) => {
+              console.error('Error al obtener el usuario', error);
+            }
+          });
+        }else{
+          this.ticket.userId = '';
+          this.ticket.userName = 'Sin asignar';
+        }
       },
       error: (error: any) => {
         console.error('Error al obtener los tickets del usuario:', error);

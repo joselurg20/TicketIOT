@@ -8,6 +8,6 @@ export interface iTicketDescriptor {
     timestamp: string,
     priority: string,
     state: string,
-    userId: number,
+    userId: string,
     userName: string
 }

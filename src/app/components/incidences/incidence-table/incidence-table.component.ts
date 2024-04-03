@@ -79,6 +79,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   onRowClicked(row: any) {
     this.selectedRow = row;
     localStorage.setItem('selectedTicket', this.selectedRow.id);
+    this.tickets();
   }
 
   tickets() {

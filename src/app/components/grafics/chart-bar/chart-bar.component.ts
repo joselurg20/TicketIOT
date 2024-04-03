@@ -71,10 +71,13 @@ export class ChartBarComponent implements OnInit {
     if(this.myChart) {
       this.myChart.destroy();
     }
-
+    var states: string[] = [];
     Chart.register(...registerables);
-    
-    const states: string[] = ['PENDING', 'OPENED', 'PAUSED'];
+    if(localStorage.getItem('userRole') == 'SupportManager') {
+      states = ['PENDING', 'OPENED', 'PAUSED'];
+    }else{
+      states = ['OPENED', 'PAUSED'];
+    }
 
     const incidentCounts = states.map(state => {
       // Calcular el número de incidentes para cada técnico

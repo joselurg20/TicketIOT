@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -27,11 +27,27 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   dataSource = new MatTableDataSource<iTicketTableSM>();
   selectedRow: any;
   loggedUserName: string = "";
+  isIconChanged: boolean = false;
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private apiService: ApiService, private router: Router) { }
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+
+
+  @ViewChild('icon')
+  iconElement!: ElementRef;
+
+  cambiarIcono() {
+    // Cambiar la clase del icono al icono deseado
+    if (this.isIconChanged) {
+      this.iconElement.nativeElement.className = 'fa-solid fa-eye';
+    } else {
+      this.iconElement.nativeElement.className = 'fa-solid fa-eye-slash';
+    }
+    this.isIconChanged = !this.isIconChanged; 
+  }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;

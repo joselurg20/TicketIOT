@@ -20,6 +20,7 @@ export class ComunicationComponent implements OnInit {
     public ticket: iTicketDescriptor = {} as iTicketDescriptor;
     public success: boolean = true;
     successMsg: string = '';
+    public userName: string = '';
 
     constructor(private apiService: ApiService) {}
 
@@ -50,6 +51,15 @@ export class ComunicationComponent implements OnInit {
             }
             });
         }
+
+        this.apiService.getUserById(parseInt(localStorage.getItem('userId')!)).subscribe({
+          next: (response: any) => {
+            this.userName = response.fullName;
+          },
+          error: (error: any) => {
+            console.error('Error al obtener el usuario', error);
+          }
+        })
     }
 
     previewUrl: any;
@@ -87,6 +97,7 @@ export class ComunicationComponent implements OnInit {
 
       createMessage(Content: string, TicketId: number): Observable<any> {
         const formData = new FormData();
+        formData.append('Author', this.userName);
         formData.append('Content', Content);
         formData.append('TicketId', TicketId.toString());
         

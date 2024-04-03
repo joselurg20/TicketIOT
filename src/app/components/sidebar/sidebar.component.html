@@ -1,0 +1,31 @@
+<div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed': ''">
+  <div class="logo-container">
+    <button class="logo" (click)="toggleCollapse()"><img src="../../../assets/images/logo/IoTisotipo.png"
+        alt=""></button>
+    <div class="logo-text" @fadeInOut *ngIf="collapsed">IThings</div>
+    <button class="btn-close" @rotate *ngIf="collapsed" (click)="closeSidenav()">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+  <hr class="sidenav-hr">
+  <ul class="sidenav-nav">
+    <li class="sidenav-nav-item" *ngFor="let data of navData">
+      <a class="sidenav-nav-link" [routerLink]="[data.routeLink]" routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact: true}">
+        <i class="sidenav-link-icon" [class]="data.icon"></i>
+        <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">{{data.label}}</span>
+      </a>
+    </li>
+    <li>
+      <div class="dropdown">
+        <button class=" btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fa-solid fa-language"></i>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item show" routerLinkActive="active"><img src="../../../assets/images/flags/spain.png" style="height: 20px;  width: auto; border-radius: 10px; margin-bottom: 5px" alt=""> Español</a></li>
+          <li><a class="dropdown-item"><img src="../../../assets/images/flags/england.png" style="height: 20px;  width: auto; border-radius: 10px; margin-bottom: 5px" alt=""> English</a></li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</div>

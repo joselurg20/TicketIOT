@@ -9,19 +9,21 @@ import { iTicketTable } from 'src/app/models/tickets/iTicketTable';
 import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
 import { iTicketTableSM } from 'src/app/models/tickets/iTicketTableSM';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @Component({
   selector: 'app-incidence-table',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatSortModule, MatPaginatorModule],
+  imports: [CommonModule, MatTableModule, MatSortModule, MatPaginatorModule, MatButtonModule, MatTooltipModule],
   templateUrl: './incidence-table.component.html',
   styleUrls: ['./incidence-table.component.scss']
 })
 export class IncidenceTableComponent implements AfterViewInit, OnInit {
 
 
-  displayedColumns: string[] = ['id', 'title', 'name', 'email', 'priority', 'state', 'timestamp'];
+  displayedColumns: string[] = ['id', 'title', 'name', 'email', 'priority', 'state', 'timestamp', 'technician', 'show'];
   dataSource = new MatTableDataSource<iTicketTableSM>();
   selectedRow: any;
   loggedUserName: string = "";
@@ -83,7 +85,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   }
 
   tickets() {
-    if(localStorage.getItem('selectedTicket') != null) {
+    if (localStorage.getItem('selectedTicket') != null) {
       this.router.navigate(['/revisar-manager']);
     }
   }
@@ -93,7 +95,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     if (!userNameFromLocalStorage) {
       console.log('No se encontró ningún nombre de usuario en el localStorage.');
     }
-    if(localStorage.getItem('userRole') == 'SupportManager') {
+    if (localStorage.getItem('userRole') == 'SupportManager') {
       this.apiService.getTicketsByUser(-1).subscribe({
         next: (response: any) => {
           console.log('Tickets recibidos', response);
@@ -105,7 +107,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
               email: value.email,
               timestamp: this.formatDate(value.timestamp),
               priority: value.priority,
-              state: value.state
+              state: value.state,
             };
           });
           this.dataSource.data = tickets;
@@ -140,6 +142,45 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
       });
     }
   }
+  getButtonPriority(priority: string): any {
+    let buttonStyles = {};
+
+    if (priority == 'HIGHEST') {
+      buttonStyles = { 'background-color': '#c82337' };
+    } else if (priority == 'HIGH') {
+      buttonStyles = { 'background-color': '#e06236' };
+    } else if (priority == 'MEDIUM') {
+      buttonStyles = { 'background-color': '#fdb83f' };
+    } else if (priority == 'LOW') {
+      buttonStyles = { 'background-color': 'rgba(59, 235, 151, 1)' };
+    } else if (priority == 'LOWEST') {
+      buttonStyles = { 'background-color': 'rgba(59, 214, 235, 1)' };
+    }else{
+      buttonStyles = { 'background-color': 'grey' };
+    }
+    return buttonStyles;
+    
+    
+  }
+
+    getButtonState(state: string): any {
+      let buttonStyles = {};
+
+      if (state == 'FINISHED') {
+        buttonStyles = { 'background-color': '#c82337' };
+      } else if (state == 'PAUSED') {
+        buttonStyles = { 'background-color': '#e06236' };
+      } else if (state == 'OPENED') {
+        buttonStyles = { 'background-color': 'rgba(59, 235, 151, 1)' };
+      }else{
+        buttonStyles = { 'background-color': 'grey' };
+      }
+      return buttonStyles;
+      
+      
+    }
+      
+
 
   formatDate(fecha: string): string {
     const fechaObj = new Date(fecha);

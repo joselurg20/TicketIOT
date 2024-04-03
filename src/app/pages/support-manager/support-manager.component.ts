@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 import { iTicketTable } from 'src/app/models/tickets/iTicketTable';
 import { iUserTable } from 'src/app/models/users/iUserTable';
 import { ApiService } from 'src/app/services/api.service';
+import { SidebarComponent } from "../../components/sidebar/sidebar.component";
+import { IncidenceIndexComponent } from "../../components/incidences/incidence-index/incidence-index.component";
 
 interface Tile {
     cols: number;
@@ -24,7 +26,7 @@ interface Tile {
     standalone: true,
     templateUrl: './support-manager.component.html',
     styleUrls: ['./support-manager.component.scss'],
-    imports: [CommonModule, IncidenceTableComponent, TechnicalTableComponent, ChartPieComponent, ChartDoughnutComponent, MatGridListModule, ChartBarComponent, MessageComponent]
+    imports: [CommonModule, IncidenceTableComponent, TechnicalTableComponent, ChartPieComponent, ChartDoughnutComponent, MatGridListModule, ChartBarComponent, MessageComponent, SidebarComponent, IncidenceIndexComponent]
 })
 export class SupportManagerComponent implements OnInit {
 

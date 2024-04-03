@@ -1,26 +1,27 @@
 <section class="d-flex">
     <div class="content">
         <div class="col-md-12 mt-3" id="main">
-          <h2>Información de Técnicos</h2>
-          <div id="divTable">
-            <table class="user-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Correo</th>
-                <th>Número de teléfono</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let user of users" class="row-highlight">
-                <td>{{ user.id }}</td>
-                <td>{{ user.userName }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.phoneNumber }}</td>
-              </tr>
-            </tbody>
-          </table>
-          </div>
-      </div>
+            <h2>Información de Técnicos</h2>
+            <div id="divTable">
+                <table class="user-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                            <th>Número de teléfono</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of users" class="row-highlight">
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.userName }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.phoneNumber }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
+    </div>
+</section>

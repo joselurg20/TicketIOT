@@ -1,4 +1,4 @@
-@import "../../../styles/variables.scss";
+@import "../../../styles/imports.scss";
 
 * {
   padding: 4px;
@@ -6,12 +6,10 @@
 
 #main {
   background-color: $bg-color-mid;
-  color: $text-color-mid;
   width: 100%;
   height: auto;
-  padding: 40px;
+  padding: 20px;
   border-radius: 25px;
-  text-align: center;
   align-items: center;
   cursor: pointer;
 }

@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
 
 @Component({
   selector: 'app-helpdesk',
@@ -16,14 +17,14 @@ import { Observable } from 'rxjs';
   styleUrls: ['./helpdesk.component.scss']
 })
 export class HelpdeskComponent {
-  public user: iUserTable = {} as iUserTable;
   public messages: iMessage[] = [];
   public messageForm!: FormGroup;
-  private readonly apiUrl = 'https://localhost:7233/api/Message';
   successMsg: string = "";
   previewUrl: string | ArrayBuffer | null = null;
   isImageSelected: boolean = false;
   ticketId: number = 0;
+  public ticket = {} as iTicketDescriptor;
+  public userName: string = '';
 
 
   constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router, private http: HttpClient) { }
@@ -35,15 +36,17 @@ export class HelpdeskComponent {
     });
     this.route.params.subscribe(params => {
       this.ticketId = params['ticketId'];
+      console.log('TicketId', this.ticketId)
       this.apiService.getMessagesByTicket(this.ticketId).subscribe({
         next: (response: any) => {
           console.log('response', response);
           this.messages = response.$values.map((message: any) => {
             return {
               Id: message.id,
+              Author: message.author,
               Content: message.content,
               AttachmentPaths: message.attachmentPaths.$values.map((attachmentPath: any) => attachmentPath.path),
-              ticketID: message.ticketID
+              ticketID: message.ticketId
             }
           })
         },
@@ -51,6 +54,25 @@ export class HelpdeskComponent {
           console.error('Error al obtener los mensajes del ticket', error);
         }
       })
+    });
+    this.apiService.getTicketById(this.ticketId).subscribe({
+      next: (response: any) => {
+        this.ticket = {
+          id: response.id,
+          title: response.title,
+          name: response.name,
+          email: response.email,
+          timestamp: response.timestamp,
+          priority: response.priority,
+          state: response.state,
+          userId: response.userId,
+          userName: ""
+        }
+        this.userName = this.ticket.name;
+      },
+      error: (error: any) => {
+        console.error('Error al obtener el usuario', error);
+      }
     });
   }
 
@@ -75,8 +97,9 @@ export class HelpdeskComponent {
 
   createMessage(Content: string, TicketID: number): Observable<any> {
     const formData = new FormData();
-    formData.append('MessageDTO.Content', Content);
-    formData.append('MessageDTO.TicketID', TicketID.toString());
+    formData.append('Author', this.userName);
+    formData.append('Content', Content);
+    formData.append('TicketID', TicketID.toString());
 
     const attachmentsControl = this.messageForm.get('Attachments');
 
@@ -86,20 +109,20 @@ export class HelpdeskComponent {
       if (typeof attachments === 'string') {
         const fileInput = <HTMLInputElement>document.getElementById('Attachments');
         if (fileInput && fileInput.files && fileInput.files.length > 0) {
-          formData.append('MessageDTO.Attachments', fileInput.files[0], fileInput.files[0].name);
+          formData.append('Attachments', fileInput.files[0], fileInput.files[0].name);
         }
       } else if (Array.isArray(attachments) && attachments.length > 0) {
         for (const attachment of attachments) {
-          formData.append('MessageDTO.Attachments', attachment, attachment.name);
+          formData.append('Attachments', attachment, attachment.name);
         }
       }
     }
 
-    return this.http.post<any>(this.apiUrl, formData);
+    return this.apiService.createMessage(formData);
   }
 
   downloadAttachment(attachmentPath: string) {
-    const pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/';
+    var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/'+this.ticketId+'/';
     const fileName = attachmentPath.substring(pathPrefix.length);
     this.downloadFile(attachmentPath, fileName);
   }

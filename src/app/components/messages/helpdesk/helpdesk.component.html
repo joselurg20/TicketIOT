@@ -1,7 +1,7 @@
 <h1>Mensajes</h1>
 <div class="col-12" *ngFor="let message of messages">
     <div class="p-3 container">
-        <label for="" class="ticketdata"><b>Mensaje</b></label>
+        <label for="" class="ticketdata"><b>{{ message.Author }}</b></label>
         <p class="ticketdata">{{ message.Content }}</p>
         <div *ngIf="message.AttachmentPaths && message.AttachmentPaths.length > 0">
             <div *ngFor="let attachment of message.AttachmentPaths let last = last">
@@ -33,7 +33,7 @@
     </div>
     <div class="mt-3 d-md-flex justify-content-end">
         <button [disabled]="!messageForm.valid" type="submit" class="mt-1 btn btn-lg coment">Enviar
-            Comentario</button>
+            Mensaje</button>
     </div>
     <div class="logotipe">
         <img src="assets/images/logo/IoTlogo.png" alt="">

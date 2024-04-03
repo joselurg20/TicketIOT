@@ -8,6 +8,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { iTicketTable } from 'src/app/models/tickets/iTicketTable';
 import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
+import { iTicketTableSM } from 'src/app/models/tickets/iTicketTableSM';
 
 
 @Component({
@@ -20,8 +21,8 @@ import { Router } from '@angular/router';
 export class IncidenceTableComponent implements AfterViewInit, OnInit {
 
 
-  displayedColumns: string[] = ['id', 'title', 'name', 'email', 'priority', 'state', 'timestamp', 'userID'];
-  dataSource = new MatTableDataSource<iTicketTable>();
+  displayedColumns: string[] = ['id', 'title', 'name', 'email', 'priority', 'state', 'timestamp'];
+  dataSource = new MatTableDataSource<iTicketTableSM>();
   selectedRow: any;
   loggedUserName: string = "";
 
@@ -33,14 +34,14 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.dataSource.sortingDataAccessor = (data: iTicketTable, sortHeaderId: string) => {
+    this.dataSource.sortingDataAccessor = (data: iTicketTableSM, sortHeaderId: string) => {
       switch (sortHeaderId) {
         case 'priority':
           return this.getPriorityValue(data.priority);
         case 'timestamp':
           return new Date(data.timestamp).getTime(); // Convertir la fecha a milisegundos para ordenar correctamente
         default:
-          const value = data[sortHeaderId as keyof iTicketTable]; // Obtener el valor de la propiedad
+          const value = data[sortHeaderId as keyof iTicketTableSM]; // Obtener el valor de la propiedad
           return typeof value === 'string' ? value.toLowerCase() : (typeof value === 'number' ? value : 0); // Convertir a minúsculas si es una cadena o devolver el valor numérico
       }
     };
@@ -92,11 +93,10 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
       console.log('No se encontró ningún nombre de usuario en el localStorage.');
     }
     if(localStorage.getItem('userRole') == 'SupportManager') {
-      this.apiService.getTickets().subscribe({
+      this.apiService.getTicketsByUser(-1).subscribe({
         next: (response: any) => {
           console.log('Tickets recibidos', response);
-          // Mapear la respuesta de la API utilizando la interfaz iTicketTable
-          const tickets: iTicketTable[] = response.$values.map((value: any) => {
+          const tickets: iTicketTableSM[] = response.$values.map((value: any) => {
             return {
               id: value.id,
               title: value.title,
@@ -104,11 +104,10 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
               email: value.email,
               timestamp: this.formatDate(value.timestamp),
               priority: value.priority,
-              state: value.state,
-              userId: value.userId // Asegúrate de asignar el valor correcto
+              state: value.state
             };
           });
-          this.dataSource.data = tickets; // Establecer los datos en la dataSource
+          this.dataSource.data = tickets;
           console.log('Datos mapeados para tabla', tickets);
         },
         error: (error: any) => {
@@ -120,7 +119,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
         next: (response: any) => {
           console.log('Tickets recibidos', response);
           // Mapear la respuesta de la API utilizando la interfaz iTicketTable
-          const tickets: iTicketTable[] = response.$values.map((value: any) => {
+          const tickets: iTicketTableSM[] = response.$values.map((value: any) => {
             return {
               id: value.id,
               title: value.title,
@@ -128,8 +127,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
               email: value.email,
               timestamp: this.formatDate(value.timestamp),
               priority: value.priority,
-              state: value.state,
-              userId: value.userId // Asegúrate de asignar el valor correcto
+              state: value.state
             };
           });
           this.dataSource.data = tickets; // Establecer los datos en la dataSource

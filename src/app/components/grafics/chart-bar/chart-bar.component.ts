@@ -24,7 +24,7 @@ export class ChartBarComponent implements OnInit {
   ngOnInit() {
 
     if(localStorage.getItem('userRole') == 'SupportManager') {
-      this.apiService.getTickets().subscribe({
+      this.apiService.getTicketsByUser(-1).subscribe({
         next: (response: any) => {
           console.log('Tickets recibidos', response);
           // Mapear la respuesta de la API utilizando la interfaz iTicketTable
@@ -74,7 +74,7 @@ export class ChartBarComponent implements OnInit {
 
     Chart.register(...registerables);
     
-    const states: string[] = ['PENDING', 'OPENED', 'PAUSED', 'FINISHED'];
+    const states: string[] = ['PENDING', 'OPENED', 'PAUSED'];
 
     const incidentCounts = states.map(state => {
       // Calcular el número de incidentes para cada técnico

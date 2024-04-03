@@ -20,7 +20,7 @@ export class ChartPieComponent {
 
   ngOnInit() {
     if(localStorage.getItem('userRole') == 'SupportManager') {
-      this.apiService.getTickets().subscribe({
+      this.apiService.getTicketsByUser(-1).subscribe({
         next: (response: any) => {
           console.log('Tickets recibidos', response);
           // Mapear la respuesta de la API utilizando la interfaz iTicketTable

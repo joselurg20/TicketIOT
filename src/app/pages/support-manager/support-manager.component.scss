@@ -1,35 +1,63 @@
 @import "../../../styles/imports.scss";
 
-* {
+
+.dashboard {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  grid-column-gap: 20px;
+}
+
+app-sidebar {
+  grid-column: 1 / 2;
+}
+
+.main-content {
+  grid-column: 2 / 3;
+}
+
+
+mat-grid-list {
+  border-radius: 25px;
+  padding: 20px;
+  margin-top: 2vw;
+  margin-left: 2vw;
+  margin-right: 2vw;
+  margin-bottom: 2vw;
+}
+
+mat-grid-tile {
+  background-color: $bg-color-mid-2;
+  border-radius: 25px;
+  padding: 20px;
+}
+
+.item1 {
+  grid-area: pie;
+  background-color: $bg-color-mid-2;
+  border-radius: 25px;
+}
+
+.item2 {
+  grid-area: douhth;
+  background-color: $bg-color-mid-2;
+  border-radius: 25px;
+}
+
+.item3 {
+  grid-area: bar;
+  background-color: $bg-color-mid-2;
+  border-radius: 25px;
+}
+
+.grid-container {
   padding: 10px;
-  margin: 0;
-}
-
-h1 {
-  color: #EFB810;
-  text-align: center;
-}
-
-.btn {
-  border-radius: 5px;
-  color: $color-dark;
-  background-color: $bg-color-warning;
-  padding: 10px;
-  margin: 0px 10px 0px 10px;
-
-  &:hover {
-    color: $color-light;
-    background-color: $bg-color-dark;
-    border-color: $color-light;
-  }
-}
-
-img {
-  width: 30vw;
-}
-
-
-mat-grid-tile{
-    background-color: $bg-color-mid;
-    border-radius: 20px;
+  border-radius: 25px;
+  margin-top: 2vw;
+  margin-left: 2vw;
+  margin-right: 2vw;
+  margin-bottom: 2vw;
+  display: grid;
+  grid-template-areas:
+    'pie douhth bar bar bar';
+  grid-gap: 10px;
 }

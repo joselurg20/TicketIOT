@@ -78,20 +78,18 @@ export class SidebarComponent implements OnInit {
     this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
   }
 
-  toggleButtons(language: string) {
-    if (language === 'es') {
-      this.esButtonPressed = true;
-      this.enButtonPressed = false;
-    } else if (language === 'en') {
-      this.esButtonPressed = false;
-      this.enButtonPressed = true;
-    }
-  }
-
-
   logout(){
     localStorage.clear();
     window.location.reload();
+  }
+
+  changeLanguage(language: string): void {
+    const button = document.querySelector('.dropdown-toggle img') as HTMLImageElement;
+    if (language === 'spanish') {
+      button.src = '../../../assets/images/flags/spain.png';
+    } else if (language === 'english') {
+      button.src = '../../../assets/images/flags/england.png';
+    }
   }
 
 }

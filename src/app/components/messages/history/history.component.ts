@@ -34,7 +34,8 @@ export class HistoryComponent {
               Id: message.id,
               Content: message.content,
               AttachmentPaths: message.attachmentPaths.$values.map((attachmentPath: any) => attachmentPath.path),
-              ticketID: message.ticketID
+              ticketID: message.ticketID,
+              Timestamp: message.timestamp
             }
           })
         },
@@ -43,40 +44,10 @@ export class HistoryComponent {
         }
       });
     }
-
-    this.messages.push({
-      Id: 0,
-      Author: "Test Author",
-      Content: "This is a fake message",
-      AttachmentPaths: ["fake_attachment1.pdf", "fake_attachment2.jpg"],
-      ticketID: this.ticketId
-    });
-
-    this.messages.push({
-      Id: 2,
-      Author: "Test Author2",
-      Content: "This is a fake message",
-      AttachmentPaths: ["fake_attachment1.pdf", "fake_attachment2.jpg"],
-      ticketID: this.ticketId
-    });
-    this.messages.push({
-      Id: 3,
-      Author: "Test Author3",
-      Content: "This is a fake message",
-      AttachmentPaths: ["fake_attachment1.pdf", "fake_attachment2.jpg"],
-      ticketID: this.ticketId
-    });
-    this.messages.push({
-      Id: 1,
-      Author: "Test Author4",
-      Content: "This is a fake message",
-      AttachmentPaths: ["fake_attachment1.pdf", "fake_attachment2.jpg"],
-      ticketID: this.ticketId
-    });
   }
 
   downloadAttachment(attachmentPath: string) {
-    const pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/';
+    var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/'+this.ticketId+'/';
     const fileName = attachmentPath.substring(pathPrefix.length);
     this.downloadFile(attachmentPath, fileName);
   }

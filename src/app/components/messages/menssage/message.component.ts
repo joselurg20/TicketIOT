@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from 'src/app/services/api.service';
 import { iMessage } from 'src/app/models/tickets/iMessage';
+import { timestamp } from 'rxjs';
+import { TicketDTO } from 'src/app/models/tickets/TicketDTO';
 
 @Component({
   selector: 'app-message',
@@ -10,9 +12,10 @@ import { iMessage } from 'src/app/models/tickets/iMessage';
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.scss']
 })
-export class MessageComponent {
+export class MessageComponent implements OnInit {
 
   ticketId: number = 0;
+  ticket: TicketDTO = {Name: '', Email: '', Title: '', HasNewMessages: false};
   messages: iMessage[] = [];
 
   constructor(private apiService: ApiService) { }
@@ -32,7 +35,8 @@ export class MessageComponent {
               Id: message.id,
               Content: message.content,
               AttachmentPaths: message.attachmentPaths.$values.map((attachmentPath: any) => attachmentPath.path),
-              ticketID: message.ticketID
+              ticketID: message.ticketID,
+              Timestamp: message.timestamp
             }
           })
         },
@@ -41,40 +45,35 @@ export class MessageComponent {
         }
       });
     }
+  }
 
-    this.messages.push({
-      Id: 0,
-      Author: "Test Author",
-      Content: "This is a fake message",
-      AttachmentPaths: ["fake_attachment1.pdf", "fake_attachment2.jpg"],
-      ticketID: this.ticketId
-    });
-
-    this.messages.push({
-      Id: 2,
-      Author: "Test Author2",
-      Content: "This is a fake message",
-      AttachmentPaths: ["fake_attachment1.pdf", "fake_attachment2.jpg"],
-      ticketID: this.ticketId
-    });
-    this.messages.push({
-      Id: 3,
-      Author: "Test Author3",
-      Content: "This is a fake message",
-      AttachmentPaths: ["fake_attachment1.pdf", "fake_attachment2.jpg"],
-      ticketID: this.ticketId
-    });
-    this.messages.push({
-      Id: 1,
-      Author: "Test Author4",
-      Content: "This is a fake message",
-      AttachmentPaths: ["fake_attachment1.pdf", "fake_attachment2.jpg"],
-      ticketID: this.ticketId
-    });
+  readMessages() {
+    this.apiService.getTicketById(this.ticketId).subscribe({
+      next: (response: any) => {
+        const ticket: TicketDTO = {
+          Title: response.title,
+          Name: response.name,
+          Email: response.email,
+          HasNewMessages: false
+        }
+        this.ticket = ticket;
+        this.apiService.updateTicket(this.ticketId, this.ticket).subscribe({
+          next: (response: any) => {
+            console.log('Ticket actualizado', response);
+          },
+          error: (error: any) => {
+            console.error('Error al actualizar el ticket', error);
+          }
+        })
+      },
+      error: (error: any) => {
+        console.error('Error al obtener el ticket', error);
+      }
+    });    
   }
 
   downloadAttachment(attachmentPath: string) {
-    const pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/';
+    var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/'+this.ticketId+'/';
     const fileName = attachmentPath.substring(pathPrefix.length);
     this.downloadFile(attachmentPath, fileName);
   }

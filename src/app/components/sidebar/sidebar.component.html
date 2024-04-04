@@ -19,11 +19,16 @@
     <li>
       <div class="dropdown">
         <button class=" btn btn-warning dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <i class="fa-solid fa-language"></i>
+          <img src="../../../assets/images/flags/spain.png"
+            style="height: 20px;  width: auto; border-radius: 10px; margin-bottom: 5px" alt="">
         </button>
         <ul class="dropdown-menu">
-          <li><a class="dropdown-item show" routerLinkActive="active"><img src="../../../assets/images/flags/spain.png" style="height: 20px;  width: auto; border-radius: 10px; margin-bottom: 5px" alt=""> Español</a></li>
-          <li><a class="dropdown-item"><img src="../../../assets/images/flags/england.png" style="height: 20px;  width: auto; border-radius: 10px; margin-bottom: 5px" alt=""> English</a></li>
+          <li><a class="dropdown-item" (click)="changeLanguage('spanish')"><img
+                src="../../../assets/images/flags/spain.png"
+                style="height: 20px;  width: auto; border-radius: 10px; margin-bottom: 5px" alt=""> Español</a></li>
+          <li><a class="dropdown-item" (click)="changeLanguage('english')"><img
+                src="../../../assets/images/flags/england.png"
+                style="height: 20px;  width: auto; border-radius: 10px; margin-bottom: 5px" alt=""> English</a></li>
         </ul>
       </div>
     </li>

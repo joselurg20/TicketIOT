@@ -7,9 +7,10 @@
 section {
   display: flex;
   flex-direction: column;
-  width: 100%;
   background-color: $bg-color-mid;
   border-radius: 25px;
+  margin-left: 2vw;
+  margin-right: 2vw;
 }
 
 #main {
@@ -119,8 +120,6 @@ tr {
 .imgRow {
   text-align: center;
 }
-
-
 
 @media screen and (max-width: 992px) {
   #main {

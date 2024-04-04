@@ -1,4 +1,4 @@
-export interface TicketDTO {
+export interface TicketDto {
     Title: string,
     Name: string,
     Email: string,

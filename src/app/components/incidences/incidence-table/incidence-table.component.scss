@@ -20,6 +20,7 @@ section {
 
 h2 {
   color: $text-color-dark;
+  text-shadow: 0 0 15px $color-dark;
 }
 
 .btn {
@@ -49,12 +50,11 @@ table {
   width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
-  background-color: $bg-color-mid;
+  background-color: $color-dark;
   color: $text-color-mid;
 }
 
 ng-container {
-  text-align: left;
   color: $text-color-mid;
   background-color: $bg-color-warning;
   padding: 10px;
@@ -77,7 +77,7 @@ tr {
 }
 
 .row-highlight {
-  background-color: $bg-color-mid;
+  background-color: $color-mid;
   color: $text-color-mid;
 
   &:hover {
@@ -95,9 +95,10 @@ tr {
 }
 
 .pages {
-  background-color: $bg-color-secondary;
-  color: $text-color-dark;
+  background-color: $bg-color-primary;
+  color: $text-color-primary;
   border-radius: 10px;
+  font-weight: bold;
 }
 
 .mat-raised-button {
@@ -109,6 +110,14 @@ tr {
 
 .editIcon{
   cursor: pointer;
+}
+
+.numberRow {
+  text-align: end;
+}
+
+.imgRow {
+  text-align: center;
 }
 
 

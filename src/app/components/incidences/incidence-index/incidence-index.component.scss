@@ -60,14 +60,14 @@ h2 {
   & input,
   textarea {
     border-radius: 10px;
-    background-color: $bg-color-mid;
-    color: $text-color-warning !important;
+    background-color: $color-light;
+    color: $text-color-primary !important;
   }
 
   input::placeholder,
   textarea::placeholder,
   select::placeholder {
-    color: $text-color-warning;
+    color: $text-color-primary;
   }
 
   & select {

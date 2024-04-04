@@ -16,7 +16,6 @@ section {
   padding: 40px;
   border-radius: 25px;
   align-items: center;
-  cursor: pointer;
 }
 
 h2 {
@@ -106,6 +105,10 @@ tr {
   color: $color-dark;
   background-color: $bg-color-warning;
 
+}
+
+.editIcon{
+  cursor: pointer;
 }
 
 

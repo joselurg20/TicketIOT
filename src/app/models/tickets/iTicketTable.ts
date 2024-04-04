@@ -6,5 +6,5 @@ export interface iTicketTable {
     timestamp: string,
     priority: string,
     state: string,
-    userId: string
+    techName: string
 }

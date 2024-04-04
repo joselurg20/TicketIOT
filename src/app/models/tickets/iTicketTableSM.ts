@@ -5,5 +5,7 @@ export interface iTicketTableSM {
     email: string,
     timestamp: string,
     priority: string,
-    state: string
+    state: string,
+    techName: string,
+    techId: number
 }

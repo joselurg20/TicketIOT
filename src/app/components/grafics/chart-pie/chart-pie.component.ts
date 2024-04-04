@@ -86,20 +86,20 @@ export class ChartPieComponent {
           label: 'Cantidad de incidencias',
           data: incidentCounts,
           backgroundColor: [
-            'rgba(232, 19, 87, 1)',
-            'rgba(116, 92, 216, 1)',
-            'rgba(253, 183, 63, 1)',
+            '#c82337',
+            '#e06236',
+            '#fdb83f',
             'rgba(59, 235, 151, 1)',
             'rgba(59, 214, 235, 1)',
-            'rgba(255, 255, 255, 1)'
+            'grey'
           ],
           borderColor: [
-            'rgba(232, 19, 87, 1)',
-            'rgba(116, 92, 216, 1)',
-            'rgba(253, 183, 63, 1)',
+            '#c82337',
+            '#e06236',
+            '#fdb83f',
             'rgba(59, 235, 151, 1)',
             'rgba(59, 214, 235, 1)',
-            'rgba(255, 255, 255, 1)'
+            'grey'
           ],
           borderWidth: 1
         }]

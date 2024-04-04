@@ -33,20 +33,27 @@ export class SupportManagerComponent implements OnInit {
 loggedUsername: string = "";
 tickets: iTicketTable[] = [];
 users: iUserTable[] = [];
+isShowingAll: boolean = false;
 
 constructor(private apiService: ApiService, private loginService: LoginService, private router: Router) {
 }
 
 ngOnInit(): void {
-    this.loggedUsername = localStorage.getItem('userName') || '';
-    
-      
+    window.onpopstate = (event) => {
+        this.loginService.logout();
+        this.router.navigate(['/login']);
+    }
 }
 
 logout() {
     this.loginService.logout();
     this.router.navigate(['/login']);
 }
+
+receiveDataFromChild(data: boolean) {
+    this.isShowingAll = data;
+    console.log('Datos recibidos en el padre:', this.isShowingAll);
+  }
 
 
 

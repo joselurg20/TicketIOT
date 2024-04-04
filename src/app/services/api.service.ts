@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { TicketDTO } from '../models/tickets/TicketDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -71,6 +72,11 @@ export class ApiService {
 
     return this.http.put<any>(`${this.apiUrl}/tickets/asign/${ticketId}/${userId}`, null, {headers});
   }
+
+  updateTicket(ticketId: number, newTicket: TicketDTO) {
+    return this.http.put<any>(`${this.apiUrl}/tickets/update/${ticketId}`, newTicket);
+  }
+
   changeTicketPriority(ticketId: number, priority: number) {
     const token = localStorage.getItem('authToken');
   

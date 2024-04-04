@@ -10,5 +10,6 @@ export interface iTicket {
     user: iUser,
     priority: string,
     state: string,
+    hasNewMessages: boolean,
     messages: iMessage[]
 }

@@ -7,5 +7,6 @@ export interface iTicketTableSM {
     priority: string,
     state: string,
     techName: string,
-    techId: number
+    techId: number,
+    hasNewMessages: boolean
 }

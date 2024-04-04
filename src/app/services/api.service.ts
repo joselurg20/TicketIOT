@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TicketDTO } from '../models/tickets/TicketDTO';
+import { TicketDto } from '../models/tickets/TicketDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -73,7 +73,7 @@ export class ApiService {
     return this.http.put<any>(`${this.apiUrl}/tickets/asign/${ticketId}/${userId}`, null, {headers});
   }
 
-  updateTicket(ticketId: number, newTicket: TicketDTO) {
+  updateTicket(ticketId: number, newTicket: TicketDto) {
     return this.http.put<any>(`${this.apiUrl}/tickets/update/${ticketId}`, newTicket);
   }
 

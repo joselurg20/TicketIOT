@@ -82,6 +82,7 @@ export class IncidenceIndexComponent implements OnInit {
     formData.append('TicketDTO.Title', Title);
     formData.append('TicketDTO.Name', Name);
     formData.append('TicketDTO.Email', Email);
+    formData.append('TicketDTO.HasNewMessages', 'true');
     formData.append('MessageDTO.Author', Name);
     formData.append('MessageDTO.Content', Content);
 

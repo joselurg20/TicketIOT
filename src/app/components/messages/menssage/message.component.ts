@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ApiService } from 'src/app/services/api.service';
 import { iMessage } from 'src/app/models/tickets/iMessage';
 import { timestamp } from 'rxjs';
-import { TicketDTO } from 'src/app/models/tickets/TicketDTO';
+import { TicketDto } from 'src/app/models/tickets/TicketDTO';
 
 @Component({
   selector: 'app-message',
@@ -15,7 +15,7 @@ import { TicketDTO } from 'src/app/models/tickets/TicketDTO';
 export class MessageComponent implements OnInit {
 
   ticketId: number = 0;
-  ticket: TicketDTO = {Name: '', Email: '', Title: '', HasNewMessages: false};
+  ticket: TicketDto = {Name: '', Email: '', Title: '', HasNewMessages: false};
   messages: iMessage[] = [];
 
   constructor(private apiService: ApiService) { }
@@ -50,7 +50,7 @@ export class MessageComponent implements OnInit {
   readMessages() {
     this.apiService.getTicketById(this.ticketId).subscribe({
       next: (response: any) => {
-        const ticket: TicketDTO = {
+        const ticket: TicketDto = {
           Title: response.title,
           Name: response.name,
           Email: response.email,

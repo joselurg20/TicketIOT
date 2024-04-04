@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { iTicketTableSM } from 'src/app/models/tickets/iTicketTableSM';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { iUserTable } from 'src/app/models/users/iUserTable';
 
 
 @Component({
@@ -28,6 +29,8 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   selectedRow: any;
   loggedUserName: string = "";
   isIconChanged: boolean = false;
+  isShowingAll: boolean = false;
+  isSupportManager: boolean = false;
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private apiService: ApiService, private router: Router) { }
 
@@ -52,6 +55,8 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.dataSource.sort.active = 'priority';
+    this.dataSource.sort.direction = 'desc';
     this.dataSource.sortingDataAccessor = (data: iTicketTableSM, sortHeaderId: string) => {
       switch (sortHeaderId) {
         case 'priority':
@@ -85,11 +90,11 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
 
   getPriorityValue(priority: string): number {
     switch (priority) {
-      case 'HIGHEST': return 1;
-      case 'HIGH': return 2;
+      case 'HIGHEST': return 5;
+      case 'HIGH': return 4;
       case 'MEDIUM': return 3;
-      case 'LOW': return 4;
-      case 'LOWEST': return 5;
+      case 'LOW': return 2;
+      case 'LOWEST': return 1;
       default: return 0;
     }
   }
@@ -106,12 +111,56 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     }
   }
 
-  ngOnInit(): void {
-    const userNameFromLocalStorage = localStorage.getItem('userName');
-    if (!userNameFromLocalStorage) {
-      console.log('No se encontró ningún nombre de usuario en el localStorage.');
-    }
-    if (localStorage.getItem('userRole') == 'SupportManager') {
+  showAll() {
+    if(!this.isShowingAll) {
+      this.apiService.getTickets().subscribe({
+        next: (response: any) => {
+          console.log('Tickets recibidos', response);
+          const tickets: iTicketTableSM[] = response.$values.map((value: any) => {
+            return {
+              id: value.id,
+              title: value.title,
+              name: value.name,
+              email: value.email,
+              timestamp: this.formatDate(value.timestamp),
+              priority: value.priority,
+              state: value.state,
+              techId: value.userId,
+              techName: ''
+            };
+          });
+          this.apiService.getUsers().subscribe({
+            next: (response: any) => {
+              console.log('Users recibidos', response);
+              const users: iUserTable[] = response.map((value: any) => {
+                return {
+                  id: value.id,
+                  userName: value.fullName
+                };
+              });
+              tickets.forEach((ticket) => {
+                const user = users.find((user) => user.id === ticket.techId);
+                if (user) {
+                    ticket.techName = user.userName;             
+                } else {
+                  ticket.techName = 'Sin asignar'
+                } 
+              });
+              this.dataSource.data = tickets;
+              console.log('Datos mapeados para tabla', tickets);
+            },
+            error: (error: any) => {
+              console.error('Error al obtener los tickets del usuario:', error);
+            }
+          })
+          this.dataSource.data = tickets;
+          console.log('Datos mapeados para tabla', tickets);
+        },
+        error: (error: any) => {
+          console.error('Error al obtener los tickets del usuario:', error);
+        }
+      });
+    } else {
       this.apiService.getTicketsByUser(-1).subscribe({
         next: (response: any) => {
           console.log('Tickets recibidos', response);
@@ -124,6 +173,41 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
               timestamp: this.formatDate(value.timestamp),
               priority: value.priority,
               state: value.state,
+              techName: 'Sin asignar'
+            };
+          });
+          this.dataSource.data = tickets;
+          console.log('Datos mapeados para tabla', tickets);
+        },
+        error: (error: any) => {
+          console.error('Error al obtener los tickets del usuario:', error);
+        }
+      });
+    }
+    this.isShowingAll = !this.isShowingAll;
+  }
+
+  ngOnInit(): void {
+
+    const userNameFromLocalStorage = localStorage.getItem('userName');
+    if (!userNameFromLocalStorage) {
+      console.log('No se encontró ningún nombre de usuario en el localStorage.');
+    }
+    if (localStorage.getItem('userRole') == 'SupportManager') {
+      this.isSupportManager = true;
+      this.apiService.getTicketsByUser(-1).subscribe({
+        next: (response: any) => {
+          console.log('Tickets recibidos', response);
+          const tickets: iTicketTableSM[] = response.$values.map((value: any) => {
+            return {
+              id: value.id,
+              title: value.title,
+              name: value.name,
+              email: value.email,
+              timestamp: this.formatDate(value.timestamp),
+              priority: value.priority,
+              state: value.state,
+              techName: 'Sin asignar'
             };
           });
           this.dataSource.data = tickets;
@@ -134,6 +218,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
         }
       });
     } else {
+      this.isSupportManager = false;
       this.apiService.getTicketsByUser(parseInt(localStorage.getItem('userId')!)).subscribe({
         next: (response: any) => {
           console.log('Tickets recibidos', response);
@@ -149,6 +234,16 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
               state: value.state
             };
           });
+          this.apiService.getUserById(parseInt(localStorage.getItem('userId')!)).subscribe({
+            next: (response: any) => {
+              tickets.forEach((ticket: iTicketTableSM) => {
+                ticket.techName = response.fullName;
+              });
+            },
+            error: (error: any) => {
+              console.error('Error al obtener el usuario:', error);
+            }
+          })
           this.dataSource.data = tickets; // Establecer los datos en la dataSource
           console.log('Datos mapeados para tabla', tickets);
         },

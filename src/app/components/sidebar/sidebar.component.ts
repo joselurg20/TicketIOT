@@ -1,9 +1,10 @@
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 import { Component, Output, EventEmitter, OnInit, HostListener } from '@angular/core';
 import { navbarData } from '../../models/incidence/nav-data';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { LoginService } from 'src/app/services/login.service';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -51,7 +52,17 @@ export class SidebarComponent implements OnInit {
   @Output() onToggleSideNav: EventEmitter<SideNavToggle> = new EventEmitter();
   collapsed = false;
   screenWidth = 0;
-  navData = navbarData;
+  navData: navbarData[] = [{
+    icon: 'fa-solid fa-house',
+    label: 'Inicio',
+    click: this.goToDashboard.bind(this)
+  },
+
+    {
+    icon: 'fas fa-right-from-bracket fa-rotate-180',
+    label: 'Cerrar sesion',
+    click: this.logout.bind(this)
+  },];
 
 
 
@@ -63,6 +74,8 @@ export class SidebarComponent implements OnInit {
       this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
     }
   }
+
+  constructor(private loginService: LoginService, private router: Router) {}
 
   ngOnInit(): void {
       this.screenWidth = window.innerWidth;
@@ -78,9 +91,18 @@ export class SidebarComponent implements OnInit {
     this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
   }
 
+  goToDashboard(){
+    if(localStorage.getItem('userRole') == 'SupportManager') {
+      this.router.navigate(['/support-manager']);
+    } else {
+      this.router.navigate(['/support-technician']);
+    }
+    
+  }
+
   logout(){
-    localStorage.clear();
-    window.location.reload();
+    this.loginService.logout();
+    this.router.navigate(['/login']);
   }
 
   changeLanguage(language: string): void {

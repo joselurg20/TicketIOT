@@ -12,14 +12,15 @@ import { ChartDoughnutComponent } from '../../grafics/chart-doughnut/chart-dough
 import { ChartPieComponent } from '../../grafics/chart-pie/chart-pie.component';
 import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
+import { ButtonComponent } from "../../button/button.component";
 
 
 @Component({
-  selector: 'app-incidence-index',
-  standalone: true,
-  templateUrl: './incidence-index.component.html',
-  styleUrls: ['./incidence-index.component.scss'],
-  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatFormFieldModule, MatSelectModule, MatButtonModule, MatSnackBarModule, MatInputModule, MatButtonModule, MatSnackBarModule, ChartBarComponent, ChartPieComponent, ChartDoughnutComponent]
+    selector: 'app-incidence-index',
+    standalone: true,
+    templateUrl: './incidence-index.component.html',
+    styleUrls: ['./incidence-index.component.scss'],
+    imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatFormFieldModule, MatSelectModule, MatButtonModule, MatSnackBarModule, MatInputModule, MatButtonModule, MatSnackBarModule, ChartBarComponent, ChartPieComponent, ChartDoughnutComponent, ButtonComponent]
 })
 export class IncidenceIndexComponent implements OnInit {
   public ticketForm!: FormGroup;

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -31,6 +31,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   isIconChanged: boolean = false;
   isShowingAll: boolean = false;
   isSupportManager: boolean = false;
+  @Output() dataEvent = new EventEmitter();
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private apiService: ApiService, private router: Router) { }
 
@@ -55,14 +56,21 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.dataSource.sort.active = 'priority';
-    this.dataSource.sort.direction = 'desc';
+    if(localStorage.getItem('userRole') == 'SupportManager') {
+      this.dataSource.sort.active = 'priority';
+      this.dataSource.sort.direction = 'desc';
+    }else{
+      this.dataSource.sort.active = 'newMessages';
+      this.dataSource.sort.direction = 'desc';
+    }
     this.dataSource.sortingDataAccessor = (data: iTicketTableSM, sortHeaderId: string) => {
       switch (sortHeaderId) {
         case 'priority':
           return this.getPriorityValue(data.priority);
         case 'timestamp':
           return new Date(data.timestamp).getTime(); // Convertir la fecha a milisegundos para ordenar correctamente
+        case 'newMessages':
+          return this.getHasNewMessagesValue(data.hasNewMessages);
         default:
           const value = data[sortHeaderId as keyof iTicketTableSM]; // Obtener el valor de la propiedad
           return typeof value === 'string' ? value.toLowerCase() : (typeof value === 'number' ? value : 0); // Convertir a minúsculas si es una cadena o devolver el valor numérico
@@ -99,6 +107,15 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     }
   }
 
+  getHasNewMessagesValue(hasNewMessages: boolean): number {
+    if (hasNewMessages) {
+      return 1;
+    } else {
+      return 0;
+    }
+
+  }
+
   onRowClicked(row: any) {
     this.selectedRow = row;
     localStorage.setItem('selectedTicket', this.selectedRow.id);
@@ -119,6 +136,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   }
 
   showAll() {
+    this.dataEvent.emit(this.isShowingAll);
     if(!this.isShowingAll) {
       this.apiService.getTickets().subscribe({
         next: (response: any) => {

@@ -1,13 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
-import { iUserTable } from 'src/app/models/users/iUserTable';
 import { ApiService } from 'src/app/services/api.service';
-import { iTicketTable } from 'src/app/models/tickets/iTicketTable';
 import { iTicketGraph } from 'src/app/models/tickets/iTicketsGraph';
 import { iUserGraph } from 'src/app/models/users/iUserGraph';
-import { GraphUpdateService } from 'src/app/services/graphUpdateService';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chart-doughnut',
@@ -21,10 +17,8 @@ export class ChartDoughnutComponent {
   users: iUserGraph[] = [];
   tickets: iTicketGraph[] = [];
   myChart: any;
-  isShowingAll: boolean = false;
-  private graphUpdateSubscription: Subscription = {} as Subscription;
 
-  constructor(private apiService: ApiService, private graphUpdateService: GraphUpdateService) { }
+  constructor(private apiService: ApiService) { }
 
   ngOnInit() {
 
@@ -55,7 +49,7 @@ export class ChartDoughnutComponent {
     }
 
     if(localStorage.getItem('userRole') == 'SupportManager') {
-      this.apiService.getTicketsByUser(-1).subscribe({
+      this.apiService.getTickets().subscribe({
         next: (response: any) => {
           console.log('Tickets recibidos', response);
           // Mapear la respuesta de la API utilizando la interfaz iTicketTable
@@ -73,12 +67,6 @@ export class ChartDoughnutComponent {
         error: (error: any) => {
           console.error('Error al obtener los tickets del usuario:', error);
         }
-      });
-
-      this.graphUpdateSubscription = this.graphUpdateService.graphUpdated$.subscribe(() => {
-        console.log('Ticket update received');
-        
-        this.refreshGraphData();
       });
     } else {
       this.apiService.getTicketsByUser(parseInt(localStorage.getItem('userId')!)).subscribe({
@@ -103,70 +91,6 @@ export class ChartDoughnutComponent {
     }
 
     
-  }
-
-  refreshGraphData(): void {
-    if(localStorage.getItem('userRole') == 'SupportManager') {
-      if(this.isShowingAll){
-        this.apiService.getUsers().subscribe({
-          next: (response: any) => {
-            console.log('Users recibidos', response);
-            const users: iUserGraph[] = response.map((value: any) => {
-              return {
-                id: value.id,
-                userName: value.userName
-              };
-            });
-            this.users = users;
-            console.log('Datos mapeados para tabla', users);
-            this.createChart();
-          },
-          error: (error) => {
-            console.log(error);
-          }
-        });
-        this.apiService.getTicketsByUser(-1).subscribe({
-          next: (response: any) => {
-            console.log('Tickets recibidos', response);
-            // Mapear la respuesta de la API utilizando la interfaz iTicketTable
-            const tickets: iTicketGraph[] = response.$values.map((value: any) => {
-              return {
-                priority: value.priority,
-                state: value.state,
-                userId: value.userId
-              };
-            });
-            this.tickets = tickets; // Establecer los datos en la dataSource
-            console.log('Datos mapeados para tabla', tickets);
-            this.createChart();
-          },
-          error: (error: any) => {
-            console.error('Error al obtener los tickets del usuario:', error);
-          }
-        });
-      this.isShowingAll = !this.isShowingAll;
-      }else{
-        this.apiService.getTickets().subscribe({
-          next: (response: any) => {
-            console.log('Tickets recibidos', response);
-            // Mapear la respuesta de la API utilizando la interfaz iTicketTable
-            const tickets: iTicketGraph[] = response.$values.map((value: any) => {
-              return {
-                priority: value.priority,
-                state: value.state,
-                userId: value.userId
-              };
-            });
-            this.tickets = tickets; // Establecer los datos en la dataSource
-            console.log('Datos mapeados para tabla', tickets);
-            this.createChart();
-          },
-          error: (error: any) => {
-            console.error('Error al obtener los tickets del usuario:', error);
-          }
-        });
-      }
-    }
   }
 
   createChart(): void {

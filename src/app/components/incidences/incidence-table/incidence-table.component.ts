@@ -272,6 +272,11 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
               console.error('Error al obtener el usuario:', error);
             }
           })
+          for(let ticket of tickets){
+            if(ticket.state == 'FINISHED') {
+              tickets.splice(tickets.indexOf(ticket), 1);
+            }
+          }
           this.dataSource.data = tickets; // Establecer los datos en la dataSource
           console.log('Datos mapeados para tabla', tickets);
         },

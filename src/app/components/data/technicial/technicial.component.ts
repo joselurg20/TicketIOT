@@ -13,7 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 })
 export class TechnicialComponent {
 
-  public states: string[] = ['PENDING', 'OPENED', 'PAUSED', 'FINISHED'];
+  public states: string[] = ['OPENED', 'PAUSED', 'FINISHED'];
   selectedState: string = '';
   selectedStateValue: number = -1;
 

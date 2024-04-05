@@ -2,10 +2,12 @@ import { CommonModule } from '@angular/common';
 import { R3TargetBinder } from '@angular/compiler';
 import { Component, Input, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
+import { Subscription } from 'rxjs';
 import { iTicketTable } from 'src/app/models/tickets/iTicketTable';
 import { iTicketGraph } from 'src/app/models/tickets/iTicketsGraph';
 import { iUserTable } from 'src/app/models/users/iUserTable';
 import { ApiService } from 'src/app/services/api.service';
+import { GraphUpdateService } from 'src/app/services/graphUpdateService';
 
 @Component({
   selector: 'app-chart-bar',
@@ -18,14 +20,66 @@ export class ChartBarComponent implements OnInit {
 
   tickets: iTicketGraph[] = [];
   myChart: any;
-  @Input() isShowingAll: any;
+  isShowingAll: boolean = false;
+  private graphUpdateSubscription: Subscription = {} as Subscription;
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService, private graphUpdateService: GraphUpdateService) { }
 
   ngOnInit() {
 
     if(localStorage.getItem('userRole') == 'SupportManager') {
-      if(!this.isShowingAll){
+      this.apiService.getTicketsByUser(-1).subscribe({
+        next: (response: any) => {
+          console.log('Tickets recibidos', response);
+          // Mapear la respuesta de la API utilizando la interfaz iTicketTable
+          const tickets: iTicketGraph[] = response.$values.map((value: any) => {
+            return {
+              priority: value.priority,
+              state: value.state,
+              userId: value.userId // Asegúrate de asignar el valor correcto
+            };
+          });
+          this.tickets = tickets; // Establecer los datos en la dataSource
+          console.log('Datos mapeados para tabla', tickets);
+          this.createChart();
+        },
+        error: (error: any) => {
+          console.error('Error al obtener los tickets del usuario:', error);
+        }
+      });
+      
+    
+      this.graphUpdateSubscription = this.graphUpdateService.graphUpdated$.subscribe(() => {
+        console.log('Ticket update received');
+        
+        this.refreshGraphData();
+      });
+    } else {
+      this.apiService.getTicketsByUser(parseInt(localStorage.getItem('userId')!)).subscribe({
+        next: (response: any) => {
+          console.log('Tickets recibidos', response);
+          // Mapear la respuesta de la API utilizando la interfaz iTicketTable
+          const tickets: iTicketGraph[] = response.$values.map((value: any) => {
+            return {
+              priority: value.priority,
+              state: value.state,
+              userId: value.userId // Asegúrate de asignar el valor correcto
+            };
+          });
+          this.tickets = tickets; // Establecer los datos en la dataSource
+          console.log('Datos mapeados para tabla', tickets);
+          this.createChart();
+        },
+        error: (error: any) => {
+          console.error('Error al obtener los tickets del usuario:', error);
+        }
+      });
+    }
+  }
+
+  refreshGraphData(): void {
+    if(localStorage.getItem('userRole') == 'SupportManager') {
+      if(this.isShowingAll){
         this.apiService.getTicketsByUser(-1).subscribe({
           next: (response: any) => {
             console.log('Tickets recibidos', response);
@@ -66,26 +120,7 @@ export class ChartBarComponent implements OnInit {
           }
         });
       }
-    } else {
-      this.apiService.getTicketsByUser(parseInt(localStorage.getItem('userId')!)).subscribe({
-        next: (response: any) => {
-          console.log('Tickets recibidos', response);
-          // Mapear la respuesta de la API utilizando la interfaz iTicketTable
-          const tickets: iTicketGraph[] = response.$values.map((value: any) => {
-            return {
-              priority: value.priority,
-              state: value.state,
-              userId: value.userId // Asegúrate de asignar el valor correcto
-            };
-          });
-          this.tickets = tickets; // Establecer los datos en la dataSource
-          console.log('Datos mapeados para tabla', tickets);
-          this.createChart();
-        },
-        error: (error: any) => {
-          console.error('Error al obtener los tickets del usuario:', error);
-        }
-      });
+      this.isShowingAll = !this.isShowingAll;
     }
   }
 
@@ -113,7 +148,7 @@ export class ChartBarComponent implements OnInit {
       data: {
         labels: states,
         datasets: [{
-          label: 'Cantidad de incidencias',
+          label: '',
           data: incidentCounts,
           backgroundColor: [
             'rgba(59, 235, 151, 1)',

@@ -12,6 +12,7 @@ import { iTicketTableSM } from 'src/app/models/tickets/iTicketTableSM';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { iUserTable } from 'src/app/models/users/iUserTable';
+import { GraphUpdateService } from 'src/app/services/graphUpdateService';
 
 
 @Component({
@@ -31,9 +32,8 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   isIconChanged: boolean = false;
   isShowingAll: boolean = false;
   isSupportManager: boolean = false;
-  @Output() dataEvent = new EventEmitter();
 
-  constructor(private _liveAnnouncer: LiveAnnouncer, private apiService: ApiService, private router: Router) { }
+  constructor(private _liveAnnouncer: LiveAnnouncer, private apiService: ApiService, private router: Router, private graphUpdateService: GraphUpdateService) { }
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -136,7 +136,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   }
 
   showAll() {
-    this.dataEvent.emit(this.isShowingAll);
+    this.graphUpdateService.triggerGraphUpdate();
     if(!this.isShowingAll) {
       this.apiService.getTickets().subscribe({
         next: (response: any) => {

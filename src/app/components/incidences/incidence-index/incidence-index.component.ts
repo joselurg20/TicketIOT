@@ -16,13 +16,14 @@ import { ButtonComponent } from "../../button/button.component";
 
 
 @Component({
-    selector: 'app-incidence-index',
-    standalone: true,
-    templateUrl: './incidence-index.component.html',
-    styleUrls: ['./incidence-index.component.scss'],
-    imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatFormFieldModule, MatSelectModule, MatButtonModule, MatSnackBarModule, MatInputModule, MatButtonModule, MatSnackBarModule, ChartBarComponent, ChartPieComponent, ChartDoughnutComponent, ButtonComponent]
+  selector: 'app-incidence-index',
+  standalone: true,
+  templateUrl: './incidence-index.component.html',
+  styleUrls: ['./incidence-index.component.scss'],
+  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatFormFieldModule, MatSelectModule, MatButtonModule, MatSnackBarModule, MatInputModule, MatButtonModule, MatSnackBarModule, ChartBarComponent, ChartPieComponent, ChartDoughnutComponent, ButtonComponent]
 })
 export class IncidenceIndexComponent implements OnInit {
+
   public ticketForm!: FormGroup;
   successMsg: string = "";
   successMessage: string = "";
@@ -37,8 +38,8 @@ export class IncidenceIndexComponent implements OnInit {
     this._snackBar.open("Incidencia enviada", 'Cerrar', {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
-      duration: 3000, 
-      panelClass: ['green-snackbar'] 
+      duration: 3000,
+      panelClass: ['green-snackbar']
     });
   }
 
@@ -61,7 +62,7 @@ export class IncidenceIndexComponent implements OnInit {
       const Content = this.ticketForm.value.Content;
       const Name = this.ticketForm.value.Name;
       const Email = this.ticketForm.value.Email;
-  
+
       this.createTicket(Title, Content, Name, Email)
         .subscribe({
           next: (response) => {
@@ -124,5 +125,9 @@ export class IncidenceIndexComponent implements OnInit {
     this.ticketForm.get('Attachments')?.reset();
     this.previewUrl = null;
     this.isImageSelected = false;
+  }
+
+  goBack() {
+    window.history.back();
   }
 }

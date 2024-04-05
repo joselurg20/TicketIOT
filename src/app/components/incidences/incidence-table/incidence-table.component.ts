@@ -142,6 +142,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
         next: (response: any) => {
           console.log('Tickets recibidos', response);
           const tickets: iTicketTableSM[] = response.$values.map((value: any) => {
+            
             return {
               id: value.id,
               title: value.title,

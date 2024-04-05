@@ -21,6 +21,7 @@ export class ComunicationComponent implements OnInit {
     public success: boolean = true;
     successMsg: string = '';
     public userName: string = '';
+    selectedFiles: File[] = [];
 
     constructor(private apiService: ApiService) {}
 
@@ -62,7 +63,8 @@ export class ComunicationComponent implements OnInit {
         })
     }
 
-    previewUrl: any;
+    previewUrls: Array<string | ArrayBuffer | null> = new Array();
+    isFileSelected: boolean = false;
     isImageSelected: any;
 
     onSubmit() {
@@ -79,7 +81,6 @@ export class ComunicationComponent implements OnInit {
               setTimeout(() => {
                 this.successMsg = "";
               }, 5000);
-              location.reload();
     
             },
             error: (error) => {
@@ -101,22 +102,24 @@ export class ComunicationComponent implements OnInit {
         formData.append('Content', Content);
         formData.append('TicketId', TicketId.toString());
         
-        const attachmentsControl = this.messageForm.get('Attachments');
+        var attachments = this.selectedFiles;
       
-        if (attachmentsControl) {
-          const attachments = attachmentsControl.value;
+        if (attachments.length > 0) {
           
-          if (typeof attachments === 'string') {
+          if (attachments.length == 1) {
             const fileInput = <HTMLInputElement>document.getElementById('Attachments');
             if (fileInput && fileInput.files && fileInput.files.length > 0) {
               formData.append('Attachments', fileInput.files[0], fileInput.files[0].name);
             }
-          } else if (Array.isArray(attachments) && attachments.length > 0) {
-            for (const attachment of attachments) {
+          } else if (attachments.length > 0) {
+            for (var attachment of attachments) {
               formData.append('Attachments', attachment, attachment.name);
             }
           }
         }
+        this.selectedFiles = [];
+        this.previewUrls = new Array();
+        this.isFileSelected = false;
         return this.apiService.createMessage(formData);
       }
 
@@ -133,14 +136,18 @@ export class ComunicationComponent implements OnInit {
       }
 
       onFileChange(event: any) {
-        const file = event.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = () => {
-            this.previewUrl = reader.result;
-          };
-          reader.readAsDataURL(file);
-          this.isImageSelected = file.type.startsWith('image/');
+        this.selectedFiles = event.target.files;
+        const files = this.selectedFiles;
+        this.isFileSelected = true;
+        for(let file of files) {
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+              this.previewUrls.push(reader.result);
+            };
+            reader.readAsDataURL(file);
+            this.isImageSelected = file.type.startsWith('image/');
+          }
         }
       }
 }

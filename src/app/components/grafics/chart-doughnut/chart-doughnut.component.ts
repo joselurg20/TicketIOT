@@ -201,20 +201,47 @@ export class ChartDoughnutComponent {
             'rgba(255, 255, 255, 1)'
           ],
           borderColor: [
-            'rgba(232, 19, 87, 1)',
+            'black',
+            'black',
+            'black',
+            'black',
+            'black',
+            'black'
+            /*'rgba(232, 19, 87, 1)',
             'rgba(116, 92, 216, 1)',
             'rgba(253, 183, 63, 1)',
             'rgba(59, 235, 151, 1)',
             'rgba(59, 214, 235, 1)',
-            'rgba(255, 255, 255, 1)'
+            'rgba(255, 255, 255, 1)'*/
           ],
           borderWidth: 1
         }]
       },
       options: {
+        plugins: {
+          legend: {
+            labels: {
+              color: 'white'
+            }
+          }
+        },
         scales: {
           y: {
-            beginAtZero: true
+            beginAtZero: true,
+            grid: {
+              display: false
+            },
+            ticks: {
+              display: false
+            }
+          },
+          x: {
+            grid: {
+              display: false
+            },
+            ticks: {
+              display: false
+            }
           }
         }
       }

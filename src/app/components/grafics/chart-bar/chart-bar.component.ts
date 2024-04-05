@@ -156,18 +156,41 @@ export class ChartBarComponent implements OnInit {
             'grey'
           ],
           borderColor: [
-            'rgba(59, 235, 151, 1)',
+            'black',
+            'black',
+            'black'
+            /*'rgba(59, 235, 151, 1)',
             '#e06236',
-            'grey'
+            'grey'*/
           ],
           borderWidth: 1
         }]
       },
       options: {
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
         scales: {
           y: {
-            beginAtZero: true
+            beginAtZero: true,
+            ticks: {
+              color: 'white'
+            },
+            grid: {
+              color: 'white'
+            }
+          },
+          x: {
+            ticks: {
+              color: 'white'
+            },
+            grid: {
+              color: 'white'
+            }
           }
+          
         }
       }
     });

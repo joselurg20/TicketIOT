@@ -5,13 +5,15 @@ import { ComunicationComponent } from "../../components/messages/comunication/co
 import { TechnicialComponent } from "../../components/data/technicial/technicial.component";
 import { ButtonComponent } from "../../components/button/button.component";
 import { Router } from '@angular/router';
+import { SidebarComponent } from 'src/app/components/sidebar/sidebar.component';
 
 @Component({
     selector: 'app-technicial-incidence',
     standalone: true,
     templateUrl: './technicial-incidence.component.html',
     styleUrls: ['./technicial-incidence.component.scss'],
-    imports: [CommonModule, IncidenceDataComponent, ComunicationComponent, TechnicialComponent, ButtonComponent]
+    imports: [CommonModule, IncidenceDataComponent, ComunicationComponent,
+        TechnicialComponent, ButtonComponent, SidebarComponent]
 })
 export class TechnicialIncidenceComponent implements OnInit {
 

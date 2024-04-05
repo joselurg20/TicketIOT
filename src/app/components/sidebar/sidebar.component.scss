@@ -111,6 +111,10 @@ img {
     }
   }
 
+  .sidenav-nav-item {
+    font-weight: bold;
+  }
+
   .sidenav-nav-item:hover {
     .sidenav-nav-link {
       background-color: #EFB810;
@@ -151,6 +155,7 @@ select {
   option {
     background-color: #202124;
     color: white;
+  font-weight: bold;
     font-size: 1rem;
     border: none;
     border-radius: 0.313rem;

@@ -6,8 +6,8 @@
 
 .form-select {
   border-radius: 10px;
-  background-color: $bg-color-mid;
-  color: $text-color-warning !important;
+  background-color: $bg-color-light;
+  color: $text-color-primary !important;
 
   &:focus {
     outline: none !important;
@@ -16,7 +16,7 @@
   }
 
   &::placeholder {
-    color: $text-color-warning;
+    color: $text-color-primary;
   }
 }
 

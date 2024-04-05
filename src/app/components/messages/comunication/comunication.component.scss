@@ -67,7 +67,7 @@ h1 {
   }
 
   .preview-image {
-    width: 150px;
+    width: 250px;
     height: auto;
     border-radius: 10px;
 
@@ -81,8 +81,8 @@ h1 {
 #Content {
   resize: none;
   border-radius: 10px;
-  background-color: $bg-color-mid;
-  color: $text-color-warning !important;
+  background-color: $bg-color-light;
+  color: $text-color-primary !important;
 
   &:focus {
     outline: none !important;
@@ -91,7 +91,7 @@ h1 {
   }
 
   &::placeholder {
-    color: $text-color-warning;
+    color: $text-color-primary;
   }
 
 }

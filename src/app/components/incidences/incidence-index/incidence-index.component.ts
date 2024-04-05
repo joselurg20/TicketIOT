@@ -13,6 +13,7 @@ import { ChartPieComponent } from '../../grafics/chart-pie/chart-pie.component';
 import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { ButtonComponent } from "../../button/button.component";
+import { SidebarComponent } from '../../sidebar/sidebar.component';
 
 
 @Component({
@@ -20,17 +21,23 @@ import { ButtonComponent } from "../../button/button.component";
   standalone: true,
   templateUrl: './incidence-index.component.html',
   styleUrls: ['./incidence-index.component.scss'],
-  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatFormFieldModule, MatSelectModule, MatButtonModule, MatSnackBarModule, MatInputModule, MatButtonModule, MatSnackBarModule, ChartBarComponent, ChartPieComponent, ChartDoughnutComponent, ButtonComponent]
+  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatFormFieldModule,
+    MatSelectModule, MatButtonModule, MatSnackBarModule, MatInputModule, MatButtonModule,
+    MatSnackBarModule, ChartBarComponent, ChartPieComponent,
+    ChartDoughnutComponent, ButtonComponent, SidebarComponent]
 })
 export class IncidenceIndexComponent implements OnInit {
 
   public ticketForm!: FormGroup;
   successMsg: string = "";
   successMessage: string = "";
-  previewUrl: string | ArrayBuffer | null = null;
-  isImageSelected: boolean = false;
+  previewUrls: Array<string | ArrayBuffer | null> = new Array();
+  isFileSelected: boolean = false;
+  isImageSelected: any;
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+  isLogged: boolean = false;
+  selectedFiles: File[] = [];
 
   constructor(private http: HttpClient, private _snackBar: MatSnackBar, private apiService: ApiService) { }
 
@@ -52,6 +59,12 @@ export class IncidenceIndexComponent implements OnInit {
       Name: new FormControl('', Validators.required),
       Email: new FormControl('', [Validators.required, Validators.email])
     });
+
+    if(localStorage.getItem('authToken') != null){
+      this.isLogged = true;
+    } else {
+      this.isLogged = false;
+    }
   }
 
 
@@ -88,42 +101,48 @@ export class IncidenceIndexComponent implements OnInit {
     formData.append('MessageDTO.Author', Name);
     formData.append('MessageDTO.Content', Content);
 
-    const attachmentsControl = this.ticketForm.get('Attachments');
-
-    if (attachmentsControl) {
-      const attachments = attachmentsControl.value;
-
-      if (typeof attachments === 'string') {
+    var attachments = this.selectedFiles;
+      
+    if (attachments.length > 0) {
+          
+      if (attachments.length == 1) {
         const fileInput = <HTMLInputElement>document.getElementById('Attachments');
         if (fileInput && fileInput.files && fileInput.files.length > 0) {
-          formData.append('MessageDTO.Attachments', fileInput.files[0], fileInput.files[0].name);
+          formData.append('Attachments', fileInput.files[0], fileInput.files[0].name);
         }
-      } else if (Array.isArray(attachments) && attachments.length > 0) {
-        for (const attachment of attachments) {
-          formData.append('MessageDTO.Attachments', attachment, attachment.name);
+      } else if (attachments.length > 0) {
+        for (var attachment of attachments) {
+          formData.append('Attachments', attachment, attachment.name);
         }
       }
     }
+    this.selectedFiles = [];
+    this.previewUrls = new Array();
+    this.isFileSelected = false;
 
     return this.apiService.createTicket(formData);
   }
 
   onFileChange(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.previewUrl = reader.result;
-      };
-      reader.readAsDataURL(file);
-      this.isImageSelected = file.type.startsWith('image/');
+    this.selectedFiles = event.target.files;
+    const files = this.selectedFiles;
+    this.isFileSelected = true;
+    for(let file of files) {
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.previewUrls.push(reader.result);
+        };
+        reader.readAsDataURL(file);
+        this.isImageSelected = file.type.startsWith('image/');
+      }
     }
   }
 
 
   clearAttachments() {
     this.ticketForm.get('Attachments')?.reset();
-    this.previewUrl = null;
+    this.previewUrls = [];
     this.isImageSelected = false;
   }
 

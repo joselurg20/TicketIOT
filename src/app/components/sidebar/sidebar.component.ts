@@ -54,7 +54,7 @@ export class SidebarComponent implements OnInit {
   screenWidth = 0;
   navData: NavbarData[] = [{
     icon: 'fa-solid fa-house',
-    label: 'Inicio',
+    label: 'Dashboard',
     click: this.goToDashboard.bind(this),
     route: this.getDashboardRoute()
   },

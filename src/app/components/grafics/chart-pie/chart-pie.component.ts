@@ -150,20 +150,47 @@ export class ChartPieComponent {
             'grey'
           ],
           borderColor: [
-            '#c82337',
+            'black',
+            'black',
+            'black',
+            'black',
+            'black',
+            'black'
+            /*'#c82337',
             '#e06236',
             '#fdb83f',
             'rgba(59, 235, 151, 1)',
             'rgba(59, 214, 235, 1)',
-            'grey'
+            'grey'*/
           ],
           borderWidth: 1
         }]
       },
       options: {
+        plugins: {
+          legend: {
+            labels: {
+              color: 'white'
+            }
+          }
+        },
         scales: {
           y: {
-            beginAtZero: true
+            beginAtZero: true,
+            grid: {
+              display: false
+            },
+            ticks: {
+              display: false
+            }
+          },
+          x: {
+            grid: {
+              display: false
+            },
+            ticks: {
+              display: false
+            }
           }
         }
       }

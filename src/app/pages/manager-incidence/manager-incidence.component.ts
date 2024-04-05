@@ -15,11 +15,15 @@ import { Router } from '@angular/router';
 })
 export class ManagerIncidenceComponent implements OnInit {
 
-    constructor(private router: Router) {}
+    constructor(private router: Router) { }
 
     ngOnInit(): void {
         window.onpopstate = (event) => {
             this.router.navigate(['/support-manager']);
         }
+    }
+
+    goBack() {
+        window.history.back();
     }
 }

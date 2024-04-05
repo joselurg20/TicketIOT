@@ -4,14 +4,15 @@ import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
 import { ApiService } from 'src/app/services/api.service';
 import { TicketUpdateService } from 'src/app/services/ticketUpdate.service';
 import { Subscription } from 'rxjs';
+import { ButtonComponent } from "../../button/button.component";
 
 
 @Component({
-  selector: 'app-incidence-data',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './incidence-data.component.html',
-  styleUrls: ['./incidence-data.component.scss']
+    selector: 'app-incidence-data',
+    standalone: true,
+    templateUrl: './incidence-data.component.html',
+    styleUrls: ['./incidence-data.component.scss'],
+    imports: [CommonModule, ButtonComponent]
 })
 export class IncidenceDataComponent implements OnInit {
 
@@ -80,6 +81,10 @@ export class IncidenceDataComponent implements OnInit {
   ngOnDestroy(): void {
     this.ticketUpdateSubscription.unsubscribe();
   }
+
+  goBack() {
+    window.history.back();
+    }
 
   refreshTicketData() {
     const selectedTicketId = parseInt(localStorage.getItem('selectedTicket')!);

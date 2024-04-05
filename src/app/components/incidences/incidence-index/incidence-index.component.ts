@@ -129,5 +129,5 @@ export class IncidenceIndexComponent implements OnInit {
 
   goBack() {
     window.history.back();
-  }
+    }
 }

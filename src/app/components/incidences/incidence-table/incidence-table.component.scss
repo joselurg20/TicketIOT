@@ -47,6 +47,7 @@ h2 {
   padding: 0;
   overflow: hidden;
   height: min-content;
+  text-align: center;
 }
 
 table {
@@ -115,17 +116,10 @@ tr {
 
 }
 
-.editIcon{
+.editIcon {
   cursor: pointer;
 }
 
-.numberRow {
-  text-align: end;
-}
-
-.imgRow {
-  text-align: center;
-}
 
 @media screen and (max-width: 992px) {
   #main {

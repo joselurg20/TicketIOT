@@ -2,16 +2,20 @@
     <h1>Mensajes</h1>
     <div class="form-group">
         <label for="Attachments"><i class="fa-solid fa-folder"></i> Adjuntar Archivos:</label> <br>
-        <input type="file" id="Attachments" formControlName="Attachments" multiple (change)="onFileChange($event)"
-            style="display: none;">
+        <input type="file" id="Attachments" formControlName="Attachments" (change)="onFileChange($event)"
+            style="display: none;" multiple>
         <button type="button" onclick="document.getElementById('Attachments').click()"
             class="custom-file-button btn btn-lg"><i class="fa-solid fa-arrow-up-from-bracket"></i> Seleccionar
             Archivos</button>
 
-        <div *ngIf="previewUrl" class="logotipe">
-            <img [src]="previewUrl" *ngIf="isImageSelected" alt="Vista previa del archivo" class="preview-image">
-            <a class="preview-link" [href]="previewUrl" *ngIf="!isImageSelected" target="_blank">Ver Archivo
-                Adjunto</a>
+        <div *ngIf="isFileSelected" class="logotipe">
+            <div *ngIf="isImageSelected">
+                <img *ngFor="let previewUrl of previewUrls" [src]="previewUrl" alt="Vista previa del archivo" class="preview-image">
+            </div>
+            <div *ngIf="!isImageSelected">
+                <a *ngFor="let previewUrl of previewUrls" class="preview-link" [href]="previewUrl" target="_blank">Ver Archivo
+                    Adjunto</a>
+            </div>
         </div>
     </div>
     <div class="mb-3 form-group">

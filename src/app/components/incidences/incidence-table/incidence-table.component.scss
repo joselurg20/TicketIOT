@@ -29,7 +29,8 @@ h2 {
   color: $color-dark;
   background-color: $bg-color-warning;
   padding: 10px;
-  margin: 0px 10px 0px 10px;
+  margin-right: -7px;
+  margin-left: 20px;
 
   &:hover {
     color: $color-light;

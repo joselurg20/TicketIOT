@@ -8,7 +8,7 @@
 
         <form [formGroup]="ticketForm" (submit)="onSubmit()" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="Name"><i class="fa-solid fa-user"> </i> Nombre:</label>
+                <label for="Name"><i class="fa-solid fa-user"> </i> Nombre (máx. 45 caracteres):</label>
                 <input type="text" class="form-control form-control-lg" id="Name" placeholder="Ingrese su nombre"
                     formControlName="Name">
             </div>
@@ -20,7 +20,7 @@
             </div>
 
             <div class="form-group">
-                <label for="Title"><i class="fa-solid fa-pen"></i> Título:</label>
+                <label for="Title"><i class="fa-solid fa-pen"></i> Título (máx. 45 caracteres):</label>
                 <input type="text" class="form-control form-control-lg" id="Title" placeholder="Ingrese el título"
                     formControlName="Title">
             </div>

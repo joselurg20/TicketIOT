@@ -53,10 +53,10 @@ export class IncidenceIndexComponent implements OnInit {
 
   ngOnInit() {
     this.ticketForm = new FormGroup({
-      Title: new FormControl('', Validators.required),
+      Title: new FormControl('', [Validators.required, Validators.maxLength(45)]),
       Content: new FormControl('', Validators.required),
       Attachments: new FormControl('', null),
-      Name: new FormControl('', Validators.required),
+      Name: new FormControl('', [Validators.required, Validators.maxLength(45)]),
       Email: new FormControl('', [Validators.required, Validators.email])
     });
 

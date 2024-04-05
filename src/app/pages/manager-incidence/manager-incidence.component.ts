@@ -5,15 +5,18 @@ import { ManagerComponent } from "../../components/data/manager/manager.componen
 import { ComunicationComponent } from "../../components/messages/comunication/comunication.component";
 import { ButtonComponent } from "../../components/button/button.component";
 import { Router } from '@angular/router';
+import { SidebarComponent } from 'src/app/components/sidebar/sidebar.component';
 
 @Component({
     selector: 'app-support-incidence',
     standalone: true,
     templateUrl: './manager-incidence.component.html',
     styleUrls: ['./manager-incidence.component.scss'],
-    imports: [CommonModule, IncidenceDataComponent, ManagerComponent, ComunicationComponent, ButtonComponent]
+    imports: [CommonModule, IncidenceDataComponent, ManagerComponent,
+        ComunicationComponent, ButtonComponent, SidebarComponent]
 })
 export class ManagerIncidenceComponent implements OnInit {
+
 
     constructor(private router: Router) { }
 
@@ -21,9 +24,5 @@ export class ManagerIncidenceComponent implements OnInit {
         window.onpopstate = (event) => {
             this.router.navigate(['/support-manager']);
         }
-    }
-
-    goBack() {
-        window.history.back();
     }
 }

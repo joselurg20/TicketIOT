@@ -81,6 +81,7 @@ tr {
   background-color: $bg-color-warning;
   padding: 10px;
   margin: 0px 10px 0px 10px;
+  height: 60px;
 }
 
 .row-highlight {
@@ -122,6 +123,11 @@ tr {
 
 .editIcon {
   cursor: pointer;
+}
+
+.mat-badge-content {
+  font-size: 15px;
+  margin-top: 5px;
 }
 
 

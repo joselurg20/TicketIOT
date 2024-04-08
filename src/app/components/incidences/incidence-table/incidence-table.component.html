@@ -85,9 +85,11 @@
                         class="headerRow">
                         Nuevos
                     </th>
-                    <td mat-cell *matCellDef="let element" class="newRow"><i class="fa-solid fa-envelope fa-2x"
-                            *ngIf="!element.hasNewMessages"></i><i class="fa-solid fa-envelope-open-text fa-2x"
-                            *ngIf="element.hasNewMessages"></i></td>
+                    <td mat-cell *matCellDef="let element" class="newRow">
+                        <i class="fa-solid fa-envelope fa-2x" *ngIf="!element.hasNewMessages"></i>
+                        <i class="fa-solid fa-envelope-open-text fa-2x" *ngIf="element.hasNewMessages"
+                            [matBadge]="element.newMessagesCount" matBadgeColor="warn"></i>
+                    </td>
                 </ng-container>
 
                 <ng-container matColumnDef="show">

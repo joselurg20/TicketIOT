@@ -15,7 +15,7 @@ import { TicketDto } from 'src/app/models/tickets/TicketDTO';
 export class MessageComponent implements OnInit {
 
   ticketId: number = 0;
-  ticket: TicketDto = {Name: '', Email: '', Title: '', HasNewMessages: false};
+  ticket: TicketDto = {Name: '', Email: '', Title: '', HasNewMessages: false, NewMessagesCount: 0};
   messages: iMessage[] = [];
 
   constructor(private apiService: ApiService) { }
@@ -54,7 +54,8 @@ export class MessageComponent implements OnInit {
           Title: response.title,
           Name: response.name,
           Email: response.email,
-          HasNewMessages: false
+          HasNewMessages: false,
+          NewMessagesCount: 0
         }
         this.ticket = ticket;
         this.apiService.updateTicket(this.ticketId, this.ticket).subscribe({

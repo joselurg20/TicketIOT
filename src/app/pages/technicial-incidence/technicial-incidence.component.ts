@@ -6,6 +6,7 @@ import { TechnicialComponent } from "../../components/data/technicial/technicial
 import { ButtonComponent } from "../../components/button/button.component";
 import { Router } from '@angular/router';
 import { SidebarComponent } from 'src/app/components/sidebar/sidebar.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
     selector: 'app-technicial-incidence',
@@ -13,9 +14,11 @@ import { SidebarComponent } from 'src/app/components/sidebar/sidebar.component';
     templateUrl: './technicial-incidence.component.html',
     styleUrls: ['./technicial-incidence.component.scss'],
     imports: [CommonModule, IncidenceDataComponent, ComunicationComponent,
-        TechnicialComponent, ButtonComponent, SidebarComponent]
+        TechnicialComponent, ButtonComponent, SidebarComponent, MatProgressSpinnerModule]
 })
 export class TechnicialIncidenceComponent implements OnInit {
+
+    isLoading: boolean = true;
 
     constructor(private router: Router) {}
 
@@ -23,5 +26,9 @@ export class TechnicialIncidenceComponent implements OnInit {
         window.onpopstate = (event) => {
             this.router.navigate(['/support-technician']);
         }
+        
+        setTimeout(() => {
+            this.isLoading = false;
+        }, 1000);
     }
 }

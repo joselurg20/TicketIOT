@@ -8,6 +8,7 @@ import { IncidenceIndexComponent } from 'src/app/components/incidences/incidence
 import { IncidenceTableComponent } from 'src/app/components/incidences/incidence-table/incidence-table.component';
 import { IncidenceDataComponent } from "../../components/incidences/incidence-data/incidence-data.component";
 import { SidebarComponent } from 'src/app/components/sidebar/sidebar.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
 
@@ -16,10 +17,13 @@ import { Router } from '@angular/router';
     standalone: true,
     templateUrl: './support-technical.component.html',
     styleUrls: ['./support-technical.component.scss'],
-    imports: [CommonModule, IncidenceTableComponent, TechnicalTableComponent, ChartPieComponent, ChartDoughnutComponent, ChartBarComponent, IncidenceDataComponent, IncidenceIndexComponent, SidebarComponent]
+    imports: [CommonModule, IncidenceTableComponent, TechnicalTableComponent, ChartPieComponent,
+        ChartDoughnutComponent, ChartBarComponent, IncidenceDataComponent, IncidenceIndexComponent,
+        SidebarComponent, MatProgressSpinnerModule]
 })
 export class SupportTechnicalComponent implements OnInit {
 
+    isLoading: boolean = true;
 
 constructor(private loginService: LoginService, private router: Router) {}
 
@@ -28,5 +32,9 @@ constructor(private loginService: LoginService, private router: Router) {}
             this.loginService.logout();
             this.router.navigate(['/login']);
         }
+        
+        setTimeout(() => {
+            this.isLoading = false;
+        }, 1000);
     }
 }

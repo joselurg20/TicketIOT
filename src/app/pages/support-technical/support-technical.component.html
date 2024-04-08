@@ -1,5 +1,6 @@
 <app-sidebar></app-sidebar>
-<div class="dashboard">
+<mat-progress-spinner *ngIf="isLoading" mode="indeterminate" color="warn" class="progressSpinner"></mat-progress-spinner>
+<div class="dashboard" *ngIf="!isLoading">
     <div class="main-content">
         <app-incidence-table></app-incidence-table>
 

@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { iTicketTableSM } from 'src/app/models/tickets/iTicketTableSM';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatBadgeModule} from '@angular/material/badge';
 import { iUserTable } from 'src/app/models/users/iUserTable';
 import { GraphUpdateService } from 'src/app/services/graphUpdateService';
 
@@ -18,7 +19,8 @@ import { GraphUpdateService } from 'src/app/services/graphUpdateService';
 @Component({
   selector: 'app-incidence-table',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatSortModule, MatPaginatorModule, MatButtonModule, MatTooltipModule],
+  imports: [CommonModule, MatTableModule, MatSortModule, MatPaginatorModule, MatButtonModule,
+    MatTooltipModule, MatBadgeModule],
   templateUrl: './incidence-table.component.html',
   styleUrls: ['./incidence-table.component.scss']
 })
@@ -32,6 +34,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   isIconChanged: boolean = false;
   isShowingAll: boolean = false;
   isSupportManager: boolean = false;
+  isbadgeHidden: boolean = true;
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private apiService: ApiService, private router: Router, private graphUpdateService: GraphUpdateService) { }
 
@@ -42,6 +45,10 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
 
   @ViewChild('icon')
   iconElement!: ElementRef;
+
+  toggleBadgeVisibility() {
+    this.isbadgeHidden = !this.isbadgeHidden;
+  }
 
   cambiarIcono() {
     // Cambiar la clase del icono al icono deseado
@@ -259,7 +266,8 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
               timestamp: this.formatDate(value.timestamp),
               priority: value.priority,
               state: value.state,
-              hasNewMessages: value.hasNewMessages
+              hasNewMessages: value.hasNewMessages,
+              newMessagesCount: value.newMessagesCount
             };
           });
           this.apiService.getUserById(parseInt(localStorage.getItem('userId')!)).subscribe({

@@ -8,5 +8,6 @@ export interface iTicketTableSM {
     state: string,
     techName: string,
     techId: number,
-    hasNewMessages: boolean
+    hasNewMessages: boolean,
+    newMessagesCount: number
 }

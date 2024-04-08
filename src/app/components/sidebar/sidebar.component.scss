@@ -12,31 +12,32 @@
   .logo-container {
     display: flex;
     align-items: center;
+    justify-content: space-between; /* Añadido para alinear */
     padding: 0.938rem 0.938rem 0 0.938rem;
     width: 100%;
+  
 
-    .logo {
-      background-color: #202124;
-      text-align: bottom;
-      width: 3rem;
-      height: 3rem;
-      min-width: 3rem;
-      min-height: 3rem;
-      border-radius: 0.313rem;
-      padding: 0.313rem;
-      font-size: 24px;
-      font-weight: 900;
-      cursor: pointer;
-      border: none;
-    }
+.logo {
+    background-color: #202124;
+    text-align: bottom;
+    width: 3rem;
+    height: 3rem;
+    min-width: 3rem;
+    min-height: 3rem;
+    border-radius: 0.313rem;
+    padding: 0.313rem;
+    font-size: 24px;
+    font-weight: 900;
+    cursor: pointer;
+    border: none;
+}
 
-    .logo-text {
-
-      margin-left: 1.5rem;
-      font-size: 24px;
-      font-weight: 700;
-      color: #EFB810;
-    }
+.logo-text {
+    background-color: #202124;
+    cursor: pointer;
+    width: 350px;
+    height: 40px;
+}
 
     .btn-close {
       margin-left: auto;
@@ -155,7 +156,7 @@ select {
   option {
     background-color: #202124;
     color: white;
-  font-weight: bold;
+    font-weight: bold;
     font-size: 1rem;
     border: none;
     border-radius: 0.313rem;
@@ -169,7 +170,6 @@ select {
     &:focus {
       background-color: red;
       color: red
-      
     }
   }
 

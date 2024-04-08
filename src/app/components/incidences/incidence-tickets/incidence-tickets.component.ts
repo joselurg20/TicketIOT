@@ -1,29 +1,25 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { CommonModule } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { ApiService } from 'src/app/services/api.service';
-import { iTicketTable } from 'src/app/models/tickets/iTicketTable';
-import { LoginService } from 'src/app/services/login.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 import { iTicketTableSM } from 'src/app/models/tickets/iTicketTableSM';
-import { MatButtonModule } from '@angular/material/button';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { iUserTable } from 'src/app/models/users/iUserTable';
+import { ApiService } from 'src/app/services/api.service';
 import { GraphUpdateService } from 'src/app/services/graphUpdateService';
 
-
 @Component({
-  selector: 'app-incidence-table',
+  selector: 'app-incidence-tickets',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatSortModule, MatPaginatorModule, MatButtonModule, MatTooltipModule],
-  templateUrl: './incidence-table.component.html',
-  styleUrls: ['./incidence-table.component.scss']
+  imports: [CommonModule, MatTableModule, MatSortModule, MatPaginatorModule, MatButtonModule, MatTooltipModule],  
+  templateUrl: './incidence-tickets.component.html',
+  styleUrls: ['./incidence-tickets.component.scss']
 })
-export class IncidenceTableComponent implements AfterViewInit, OnInit {
-
+export class IncidenceTicketsComponent {
 
   displayedColumns: string[] = ['id', 'title', 'name', 'email', 'priority', 'state', 'timestamp', 'technician', 'show'];
   dataSource = new MatTableDataSource<iTicketTableSM>();
@@ -32,6 +28,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   isIconChanged: boolean = false;
   isShowingAll: boolean = false;
   isSupportManager: boolean = false;
+element: any;
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private apiService: ApiService, private router: Router, private graphUpdateService: GraphUpdateService) { }
 

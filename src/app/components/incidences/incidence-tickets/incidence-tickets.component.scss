@@ -1,0 +1,134 @@
+@import "../../../../styles/imports.scss";
+
+* {
+  padding: 4px;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  background-color: $bg-color-mid-2;
+  border-radius: 25px;
+  margin-left: 2vw;
+  margin-right: 2vw;
+}
+
+#main {
+  padding: 40px;
+  border-radius: 25px;
+  align-items: center;
+}
+
+h2 {
+  color: $text-color-dark;
+  text-shadow: 0 0 15px $color-dark;
+}
+
+.btn {
+  border-radius: 5px;
+  color: $color-dark;
+  background-color: $bg-color-warning;
+  padding: 10px;
+  margin-right: -7px;
+  margin-left: 20px;
+
+  &:hover {
+    color: $color-light;
+    background-color: $bg-color-dark;
+    border-color: $color-light;
+  }
+}
+
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  background-color: $color-dark;
+  color: $text-color-mid;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 0;
+  overflow: hidden;
+  height: min-content;
+  text-align: left;
+  width: 100%;
+}
+
+th {
+  color: $color-dark;
+  background-color: $bg-color-warning;
+  padding: 10px;
+  margin: 0px 10px 0px 10px;
+
+
+  &:nth-child(1) {
+    text-align: right;
+  }
+
+  &:nth-child(5) {
+    text-align: center;
+  }
+
+  &:nth-child(6) {
+    text-align: center;
+  }
+
+  &:nth-child(7) {
+    text-align: right;
+  }
+
+  &:nth-child(9) {
+    text-align: center;
+  }
+
+}
+
+td {
+  padding: 10px;
+  margin: 0px 10px 0px 10px;
+
+  &:nth-child(1) {
+    text-align: right;
+  }
+
+  &:nth-child(5) {
+    text-align: center;
+  }
+
+  &:nth-child(6) {
+    text-align: center;
+  }
+
+  &:nth-child(7) {
+    text-align: right;
+  }
+
+  &:nth-child(9) {
+    text-align: center;
+  }
+
+}
+
+.row-highlight {
+    background-color: $bg-color-mid;
+    color: $text-color-mid;
+  
+    &:hover {
+      background-color: $bg-color-secondary;
+    }
+  }
+
+  .pages {
+    background-color: $bg-color-primary;
+    color: $text-color-primary;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    font-weight: bold;
+    margin-top: -24px;
+    margin-left: -4px;
+    margin-right: -4px;
+    border-top: $bg-color-dark 1px solid;
+  }
+  

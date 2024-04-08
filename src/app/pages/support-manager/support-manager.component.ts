@@ -14,6 +14,7 @@ import { iUserTable } from 'src/app/models/users/iUserTable';
 import { ApiService } from 'src/app/services/api.service';
 import { SidebarComponent } from "../../components/sidebar/sidebar.component";
 import { IncidenceIndexComponent } from "../../components/incidences/incidence-index/incidence-index.component";
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 interface Tile {
     cols: number;
@@ -26,7 +27,9 @@ interface Tile {
     standalone: true,
     templateUrl: './support-manager.component.html',
     styleUrls: ['./support-manager.component.scss'],
-    imports: [CommonModule, IncidenceTableComponent, TechnicalTableComponent, ChartPieComponent, ChartDoughnutComponent, MatGridListModule, ChartBarComponent, MessageComponent, SidebarComponent, IncidenceIndexComponent]
+    imports: [CommonModule, IncidenceTableComponent, TechnicalTableComponent, ChartPieComponent,
+        ChartDoughnutComponent, MatGridListModule, ChartBarComponent, MessageComponent,
+        SidebarComponent, IncidenceIndexComponent, MatProgressSpinnerModule]
 })
 export class SupportManagerComponent implements OnInit {
 
@@ -34,8 +37,9 @@ loggedUsername: string = "";
 tickets: iTicketTable[] = [];
 users: iUserTable[] = [];
 isShowingAll: boolean = false;
+isLoading: boolean = true;
 
-constructor(private apiService: ApiService, private loginService: LoginService, private router: Router) {
+constructor(private loginService: LoginService, private router: Router) {
 }
 
 ngOnInit(): void {
@@ -43,6 +47,10 @@ ngOnInit(): void {
         this.loginService.logout();
         this.router.navigate(['/login']);
     }
+
+    setTimeout(() => {
+        this.isLoading = false;
+      }, 1000);
 }
 
 logout() {

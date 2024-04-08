@@ -6,6 +6,7 @@ import { ComunicationComponent } from "../../components/messages/comunication/co
 import { ButtonComponent } from "../../components/button/button.component";
 import { Router } from '@angular/router';
 import { SidebarComponent } from 'src/app/components/sidebar/sidebar.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
     selector: 'app-support-incidence',
@@ -13,10 +14,11 @@ import { SidebarComponent } from 'src/app/components/sidebar/sidebar.component';
     templateUrl: './manager-incidence.component.html',
     styleUrls: ['./manager-incidence.component.scss'],
     imports: [CommonModule, IncidenceDataComponent, ManagerComponent,
-        ComunicationComponent, ButtonComponent, SidebarComponent]
+        ComunicationComponent, ButtonComponent, SidebarComponent, MatProgressSpinnerModule]
 })
 export class ManagerIncidenceComponent implements OnInit {
 
+    isLoading: boolean = true;
 
     constructor(private router: Router) { }
 
@@ -24,5 +26,9 @@ export class ManagerIncidenceComponent implements OnInit {
         window.onpopstate = (event) => {
             this.router.navigate(['/support-manager']);
         }
+
+        setTimeout(() => {
+            this.isLoading = false;
+        }, 1000);
     }
 }

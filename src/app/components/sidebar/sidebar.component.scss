@@ -33,10 +33,17 @@
 }
 
 .logo-text {
-    background-color: #202124;
-    cursor: pointer;
-    width: 350px;
-    height: 40px;
+  background-color: #202124;
+  text-align: bottom;
+  margin-left: 0.25rem;
+  width: 20rem;
+  height: 3rem;
+  min-height: 3rem;
+  border-radius: 0.313rem;
+  padding: 0.313rem;
+  font-size: 24px;
+  cursor: pointer;
+  border: none;
 }
 
     .btn-close {

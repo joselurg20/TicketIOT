@@ -9,7 +9,8 @@
                         #icon class="fa-solid fa-eye"></i></a>
             </div>
         </div>
-        <div id="divTable">
+        <mat-progress-spinner *ngIf="isLoading" mode="indeterminate" color="warn" class="progressSpinner"></mat-progress-spinner>
+        <div id="divTable" *ngIf="!isLoading">
             <table mat-table [dataSource]="dataSource" matSort #sort (matSortChange)="announceSortChange($event)"
                 class="mat-elevation-z8">
 
@@ -109,7 +110,7 @@
 
         </div>
 
-        <div>
+        <div *ngIf="!isLoading">
             <mat-paginator class="pages" [pageSizeOptions]="[10, 25, 35, 50]" showFirstLastButtons
                 #paginator></mat-paginator>
         </div>

@@ -5,8 +5,6 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ApiService } from 'src/app/services/api.service';
-import { iTicketTable } from 'src/app/models/tickets/iTicketTable';
-import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
 import { iTicketTableSM } from 'src/app/models/tickets/iTicketTableSM';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,13 +12,14 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatBadgeModule} from '@angular/material/badge';
 import { iUserTable } from 'src/app/models/users/iUserTable';
 import { GraphUpdateService } from 'src/app/services/graphUpdateService';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 @Component({
   selector: 'app-incidence-table',
   standalone: true,
   imports: [CommonModule, MatTableModule, MatSortModule, MatPaginatorModule, MatButtonModule,
-    MatTooltipModule, MatBadgeModule],
+    MatTooltipModule, MatBadgeModule, MatProgressSpinnerModule],
   templateUrl: './incidence-table.component.html',
   styleUrls: ['./incidence-table.component.scss']
 })
@@ -35,6 +34,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   isShowingAll: boolean = false;
   isSupportManager: boolean = false;
   isbadgeHidden: boolean = true;
+  isLoading: boolean = false;
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private apiService: ApiService, private router: Router, private graphUpdateService: GraphUpdateService) { }
 
@@ -216,7 +216,11 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
         }
       });
     }
+    this.isLoading = true;
     this.isShowingAll = !this.isShowingAll;
+    setTimeout(() => {
+      this.isLoading = false;
+  }, 1000);
   }
 
   ngOnInit(): void {

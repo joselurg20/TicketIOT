@@ -11,6 +11,8 @@ import { TechnicialIncidenceComponent } from './pages/technicial-incidence/techn
 import { SupportTechnicalComponent } from './pages/support-technical/support-technical.component';
 import { ManagerIncidenceComponent } from './pages/manager-incidence/manager-incidence.component';
 import { TechnicalTableComponent } from './components/technical-table/technical-table.component';
+import { IncidenceTicketsComponent } from './components/incidences/incidence-tickets/incidence-tickets.component';
+
 
 
 const routes: Routes = [
@@ -25,6 +27,7 @@ const routes: Routes = [
   { path: "revisar-tecnico", component: TechnicialIncidenceComponent },
   { path: "helpdesk/:ticketId", component: HelpdeskComponent },
   { path: "prueba", component: TechnicalTableComponent },
+  { path: "prueba2", component: IncidenceTicketsComponent},
 
   //accedibles el usuario
   { path: "incidencia", component: IncidenceIndexComponent },

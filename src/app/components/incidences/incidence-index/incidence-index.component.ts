@@ -39,7 +39,7 @@ export class IncidenceIndexComponent implements OnInit {
   isLogged: boolean = false;
   selectedFiles: File[] = [];
 
-  constructor(private http: HttpClient, private _snackBar: MatSnackBar, private apiService: ApiService) { }
+  constructor(private _snackBar: MatSnackBar, private apiService: ApiService) { }
 
   openSnackBar() {
     this._snackBar.open("Incidencia enviada", 'Cerrar', {
@@ -149,4 +149,6 @@ export class IncidenceIndexComponent implements OnInit {
   goBack() {
     window.history.back();
     }
+
+
 }

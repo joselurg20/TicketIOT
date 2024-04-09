@@ -68,8 +68,8 @@ export class ApiService {
     return this.http.get<any[]>(`${this.apiUrl}/messages/getbyticket/${ticketId}`);
   }
 
-  downloadAttachment(attachmentPath: string, ticketId: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/messages/download/${ticketId}/${attachmentPath}`);
+  downloadAttachment(attachmentPath: string, ticketId: number): Observable<Blob> {
+    return this.http.get(`${this.apiUrl}/messages/download/${ticketId}/${attachmentPath}`, { responseType: 'blob' });
   }
   
   assignTechnician(ticketId: number, userId: number) {

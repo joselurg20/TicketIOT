@@ -24,7 +24,7 @@ export class ChartDoughnutComponent {
 
     if(localStorage.getItem('userRole') == 'SupportManager') {
 
-      this.apiService.getUsers().subscribe({
+      this.apiService.getTechnicians().subscribe({
         next: (response: any) => {
           console.log('Users recibidos', response);
           const users: iUserGraph[] = response.map((value: any) => {

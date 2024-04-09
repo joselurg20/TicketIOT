@@ -26,7 +26,7 @@ export class ManagerComponent implements OnInit {
   constructor(private apiService: ApiService, private ticketUpdateService: TicketUpdateService) {}
 
   ngOnInit(): void {
-    this.apiService.getUsers().subscribe({
+    this.apiService.getTechnicians().subscribe({
       next: (response: any) => {
         console.log('Users recibidos', response);
         const users: iUserGraph[] = response.map((value: any) => {

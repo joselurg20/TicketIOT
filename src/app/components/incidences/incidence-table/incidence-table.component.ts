@@ -220,7 +220,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     this.isShowingAll = !this.isShowingAll;
     setTimeout(() => {
       this.isLoading = false;
-  }, 1000);
+    }, 1000);
   }
 
   ngOnInit(): void {

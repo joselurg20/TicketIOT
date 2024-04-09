@@ -32,7 +32,7 @@ const routes: Routes = [
   //Pruebas 
   { path: "prueba", component: TechnicalTableComponent },
   { path: "prueba2", component: IncidenceTicketsComponent},
-  { path: "prueba3", component: MessageComponent },
+  { path: "prueba3/:ticketId", component: MessageComponent },
   { path: "prueba4", component: IncidencePruebaComponent },
 
   //accedibles el usuario

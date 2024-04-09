@@ -1,13 +1,27 @@
-<h1>Mensajes</h1>
-<div class="col-12" *ngFor="let message of messages">
-    <div class="p-3 container">
-        <label for="" class="ticketdata"><b>{{ message.Author }}</b></label>
-        <p class="ticketdata">{{ message.Content }}</p>
-        <div *ngIf="message.AttachmentPaths && message.AttachmentPaths.length > 0">
-            <div *ngFor="let attachment of message.AttachmentPaths let last = last">
-                <button *ngIf="!last" type="button" class="btn" (click)="downloadAttachment(attachment)">Descargar
-                    Adjunto</button>
+<h1>Historial</h1>
+<div class="modal-content">
+    <div class="modal-body">
+        <hr>
+        <div class="modal-mensage" *ngFor="let message of messages">
+            <div class="d-flex justify-content-between">
+                <h4>{{message.Author}}</h4>
+                <span class="justify-content-end">{{message.Timestamp}}</span>
+            </div>
+            <p>{{message.Content}}</p>
+            <div>
+                <div>
+                    <div *ngIf="message.AttachmentPaths && message.AttachmentPaths.length > 0"
+                        class="d-flex justify-content-center preview">
+                        <div *ngFor="let attachment of message.Attachments">
+                            <img [src]="attachment.attachmentUrl" alt="">
+                            <button class="custom-file-button btn-lg"
+                                (click)="downloadAttachment(attachment.attachmentPath)"><i
+                                    class="fa-solid fa-download"></i> Descargar Achivo</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+        <hr>
     </div>
 </div>

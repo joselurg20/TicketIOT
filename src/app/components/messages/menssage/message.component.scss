@@ -13,26 +13,27 @@
   backdrop-filter: blur(5px);
 }
 
-span{
+span {
   color: $text-color-warning;
 }
 
-hr{
+hr {
   color: $text-color-warning;
 }
 
 .modal-mensage {
   color: white !important;
-  background-color: $bg-color-mid-2; 
+  background-color: $bg-color-mid-2;
   padding: 10px;
   margin: 10px;
   border-radius: 10px;
 }
 
-.btn-close{
+.btn-close {
   color: white !important;
-  &:focus{
-    box-shadow: none; 
+
+  &:focus {
+    box-shadow: none;
   }
 }
 
@@ -72,14 +73,14 @@ hr{
   }
 }
 
-.preview{
+.preview {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  
+
 }
 
-img{
+img {
   margin-top: 20px;
   padding: 10px;
   width: 200px;

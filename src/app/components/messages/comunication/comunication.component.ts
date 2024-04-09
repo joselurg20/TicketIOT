@@ -6,6 +6,7 @@ import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
 import { ApiService } from 'src/app/services/api.service';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { TicketDto } from 'src/app/models/tickets/TicketDTO';
 
 @Component({
     selector: 'app-comunication',
@@ -101,6 +102,30 @@ export class ComunicationComponent implements OnInit {
         formData.append('Author', this.userName);
         formData.append('Content', Content);
         formData.append('TicketId', TicketId.toString());
+
+        this.apiService.getTicketById(TicketId).subscribe({
+          next: (response: any) => {
+            var ticket: TicketDto = {
+              Title: response.title,
+              Name: response.name,
+              Email: response.email,
+              HasNewMessages: true,
+              NewMessagesCount: response.newMessagesCount
+            };
+            ticket.NewMessagesCount++;
+            this.apiService.updateTicket(TicketId, ticket).subscribe({
+              next: (response: any) => {
+                console.log('Ticket actualizado', response);
+              },
+              error: (error: any) => {
+                console.error('Error al actualizar el ticket', error);
+              }
+            })
+          },
+          error: (error: any) => {
+            console.error('Error al obtener el ticket', error);
+          }
+        })
         
         var attachments = this.selectedFiles;
       

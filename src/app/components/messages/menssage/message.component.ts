@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ApiService } from 'src/app/services/api.service';
 import { iMessage } from 'src/app/models/tickets/iMessage';
 import { TicketDto } from 'src/app/models/tickets/TicketDTO';
+import { iAttachment } from 'src/app/models/attachments/iAttachment';
 
 @Component({
   selector: 'app-message',
@@ -35,6 +36,7 @@ export class MessageComponent implements OnInit {
               Author: message.author,
               Content: message.content,
               AttachmentPaths: message.attachmentPaths.$values.map((attachmentPath: any) => attachmentPath.path),
+              Attachments: [],
               ticketID: message.ticketID,
               Timestamp: this.formatDate(message.timestamp)
             }
@@ -70,27 +72,46 @@ export class MessageComponent implements OnInit {
       error: (error: any) => {
         console.error('Error al obtener el ticket', error);
       }
-    });    
+    });
+    
+    
+    for (const message of this.messages) {
+      if(message.AttachmentPaths.length > 0) {
+        for (const attachmentPath of message.AttachmentPaths) {
+          var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/'+this.ticketId+'/';
+          const fileName = attachmentPath.substring(pathPrefix.length);
+          this.apiService.downloadAttachment(fileName, +localStorage.getItem('selectedTicket')!).subscribe({
+            next: (response: any) => {
+              const attachment: iAttachment = {
+                attachmentPath: attachmentPath,
+                attachmentUrl: URL.createObjectURL(new Blob([response], { type: 'application/octet-stream' }))
+              }
+              message.Attachments.push(attachment);
+            },
+            error: (error: any) => {
+              console.error('Error al descargar el archivo adjunto', error);
+            }
+          })
+        }
+        console.log('Mensajes', this.messages);
+      }
+    }
   }
 
   downloadAttachment(attachmentPath: string) {
     var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/'+this.ticketId+'/';
     const fileName = attachmentPath.substring(pathPrefix.length);
-    this.downloadFile(attachmentPath, fileName);
-  }
-
-  downloadFile(data: any, fileName: string) {
-    const blob = new Blob([data], { type: 'application/octet-stream' });
-
-    const url = window.URL.createObjectURL(blob);
-
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = fileName;
-
-    link.click();
-
-    window.URL.revokeObjectURL(url);
+    this.apiService.downloadAttachment(fileName, +localStorage.getItem('selectedTicket')!).subscribe({
+      next: (response: any) => {
+        const blob = new Blob([response], { type: 'application/octet-stream' });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = fileName;
+        link.click();
+        window.URL.revokeObjectURL(url);
+      }
+    })
   }
 
   formatDate(fecha: string): string {

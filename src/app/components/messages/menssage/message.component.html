@@ -22,10 +22,10 @@
           <p>{{message.Content}}</p>
           <div>
             <div>
-              <div class="d-flex justify-content-center preview">
-                <div>
-                  <img src="https://previews.123rf.com/images/bahtiarmaulana/bahtiarmaulana2204/bahtiarmaulana220400040/185159316-rebanada-de-dibujos-animados-de-pizza-ilustraci%C3%B3n-de-dibujos-animados-vectoriales-im%C3%A1genes.jpg" alt="">
-                  <button class="custom-file-button btn-lg"><i class="fa-solid fa-download"></i> Descargar Achivos</button>
+              <div *ngIf="message.AttachmentPaths && message.AttachmentPaths.length > 0" class="d-flex justify-content-center preview">
+                <div *ngFor="let attachment of message.Attachments">
+                  <img [src]="attachment.attachmentUrl" alt="">
+                  <button class="custom-file-button btn-lg" (click)="downloadAttachment(attachment.attachmentPath)"><i class="fa-solid fa-download"></i> Descargar Achivo</button>
                 </div>        
               </div>
             </div>

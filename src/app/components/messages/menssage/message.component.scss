@@ -71,3 +71,18 @@ hr{
     transition: 0.3s;
   }
 }
+
+.preview{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  
+}
+
+img{
+  margin-top: 20px;
+  padding: 10px;
+  width: 200px;
+  height: 150px;
+  border-radius: 25px;
+}

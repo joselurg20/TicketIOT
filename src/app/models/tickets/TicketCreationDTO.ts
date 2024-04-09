@@ -1,7 +1,7 @@
 import { TMessageDTO } from "./TMessageDTO";
-import { TicketDTO } from "./TicketDTO";
+import { TicketDto } from "./TicketDTO";
 
 export interface TicketCreationDTO {
-    TicketDTO: TicketDTO,
+    TicketDTO: TicketDto,
     MessageDTO: TMessageDTO
 }

@@ -1,5 +1,3 @@
-import { iMessage } from "./iMessage";
-
 export interface iTicketDescriptor {
     id: number,
     title: string,

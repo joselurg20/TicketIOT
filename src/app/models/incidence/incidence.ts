@@ -6,6 +6,5 @@ export interface Incidencia {
     status: string;
     created: string;
     post: string;
-    [key: string]: any; // Índice de firma para permitir acceso de propiedad seguro
-
+    [key: string]: any;
 }

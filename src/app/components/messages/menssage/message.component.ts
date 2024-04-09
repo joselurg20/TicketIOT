@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from 'src/app/services/api.service';
 import { iMessage } from 'src/app/models/tickets/iMessage';
-import { timestamp } from 'rxjs';
 import { TicketDto } from 'src/app/models/tickets/TicketDTO';
 
 @Component({

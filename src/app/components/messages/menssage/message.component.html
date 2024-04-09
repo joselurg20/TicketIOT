@@ -14,15 +14,15 @@
       </div>
       <div class="modal-body">
         <hr>
-        <div class="modal-mensage">
+        <div class="modal-mensage" *ngFor="let message of messages">
           <div class="d-flex justify-content-between">
-            <h4>Marco Antonio </h4>
-            <span class="justify-content-end">10:00 - 10/10/2022</span>
+            <h4>{{message.Author}}</h4>
+            <span class="justify-content-end">{{message.Timestamp}}</span>
           </div>
-          <p>El problema es el siguiente</p>
+          <p>{{message.Content}}</p>
           <div>
             <div>
-              <button class="custom-file-button btn-lg"><i class="fa-solid fa-download"></i> Descargar Achivos</button>
+              <button class="custom-file-button btn-lg"><i class="fa-solid fa-download"></i> Descargar Achivo</button>
             </div>
           </div>
         </div>

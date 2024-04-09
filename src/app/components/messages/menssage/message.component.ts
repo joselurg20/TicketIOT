@@ -32,10 +32,11 @@ export class MessageComponent implements OnInit {
           this.messages = response.$values.map((message: any) => {
             return {
               Id: message.id,
+              Author: message.author,
               Content: message.content,
               AttachmentPaths: message.attachmentPaths.$values.map((attachmentPath: any) => attachmentPath.path),
               ticketID: message.ticketID,
-              Timestamp: message.timestamp
+              Timestamp: this.formatDate(message.timestamp)
             }
           })
         },
@@ -90,5 +91,17 @@ export class MessageComponent implements OnInit {
     link.click();
 
     window.URL.revokeObjectURL(url);
+  }
+
+  formatDate(fecha: string): string {
+    const fechaObj = new Date(fecha);
+    const dia = fechaObj.getDate().toString().padStart(2, '0');
+    const mes = (fechaObj.getMonth() + 1).toString().padStart(2, '0'); // Se suma 1 porque los meses van de 0 a 11
+    const año = fechaObj.getFullYear();
+    const horas = fechaObj.getHours().toString().padStart(2, '0');
+    const minutos = fechaObj.getMinutes().toString().padStart(2, '0');
+    const segundos = fechaObj.getSeconds().toString().padStart(2, '0');
+
+    return `${dia}/${mes}/${año} - ${horas}:${minutos}:${segundos}`;
   }
 }

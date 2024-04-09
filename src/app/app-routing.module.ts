@@ -13,6 +13,7 @@ import { ManagerIncidenceComponent } from './pages/manager-incidence/manager-inc
 import { TechnicalTableComponent } from './components/technical-table/technical-table.component';
 import { IncidenceTicketsComponent } from './components/incidences/incidence-tickets/incidence-tickets.component';
 import { MessageComponent } from './components/messages/menssage/message.component';
+import { IncidencePruebaComponent } from './components/incidences/incidence-prueba/incidence-prueba.component';
 
 
 
@@ -32,6 +33,7 @@ const routes: Routes = [
   { path: "prueba", component: TechnicalTableComponent },
   { path: "prueba2", component: IncidenceTicketsComponent},
   { path: "prueba3", component: MessageComponent },
+  { path: "prueba4", component: IncidencePruebaComponent },
 
   //accedibles el usuario
   { path: "incidencia", component: IncidenceIndexComponent },

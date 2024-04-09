@@ -307,11 +307,11 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     } else if (priority == 'MEDIUM') {
       buttonStyles = { 'background-color': '#fdb83f' };
     } else if (priority == 'LOW') {
-      buttonStyles = { 'background-color': 'rgba(59, 235, 151, 1)' };
+      buttonStyles = { 'background-color': '#3beb97' };
     } else if (priority == 'LOWEST') {
-      buttonStyles = { 'background-color': 'rgba(59, 214, 235, 1)' };
+      buttonStyles = { 'background-color': '#3bd6eb' };
     }else{
-      buttonStyles = { 'background-color': 'grey' };
+      buttonStyles = { 'background-color': '#7B7B7B' };
     }
     return buttonStyles;
     
@@ -326,9 +326,9 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
       } else if (state == 'PAUSED') {
         buttonStyles = { 'background-color': '#e06236' };
       } else if (state == 'OPENED') {
-        buttonStyles = { 'background-color': 'rgba(59, 235, 151, 1)' };
+        buttonStyles = { 'background-color': '#3beb97' };
       }else{
-        buttonStyles = { 'background-color': 'grey' };
+        buttonStyles = { 'background-color': '#7B7B7B' };
       }
       return buttonStyles;
       

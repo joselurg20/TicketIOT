@@ -121,26 +121,6 @@ export class HelpdeskComponent {
     return this.apiService.createMessage(formData);
   }
 
-  downloadAttachment(attachmentPath: string) {
-    var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/'+this.ticketId+'/';
-    const fileName = attachmentPath.substring(pathPrefix.length);
-    this.downloadFile(attachmentPath, fileName);
-  }
-
-  downloadFile(data: any, fileName: string) {
-    const blob = new Blob([data], { type: 'application/octet-stream' });
-
-    const url = window.URL.createObjectURL(blob);
-
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = fileName;
-
-    link.click();
-
-    window.URL.revokeObjectURL(url);
-  }
-
   onFileChange(event: any) {
     const file = event.target.files[0];
     if (file) {

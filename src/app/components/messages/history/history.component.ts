@@ -36,6 +36,7 @@ export class HistoryComponent {
               Author: message.author,
               Content: message.content,
               AttachmentPaths: message.attachmentPaths.$values.map((attachmentPath: any) => attachmentPath.path),
+              Timestamp: this.formatDate(message.timestamp),
               ticketID: message.ticketId
             }
           })
@@ -84,5 +85,17 @@ export class HistoryComponent {
     link.click();
 
     window.URL.revokeObjectURL(url);
+  }
+
+  formatDate(fecha: string): string {
+    const fechaObj = new Date(fecha);
+    const dia = fechaObj.getDate().toString().padStart(2, '0');
+    const mes = (fechaObj.getMonth() + 1).toString().padStart(2, '0'); // Se suma 1 porque los meses van de 0 a 11
+    const año = fechaObj.getFullYear();
+    const horas = fechaObj.getHours().toString().padStart(2, '0');
+    const minutos = fechaObj.getMinutes().toString().padStart(2, '0');
+    const segundos = fechaObj.getSeconds().toString().padStart(2, '0');
+
+    return `${dia}/${mes}/${año} - ${horas}:${minutos}:${segundos}`;
   }
 }

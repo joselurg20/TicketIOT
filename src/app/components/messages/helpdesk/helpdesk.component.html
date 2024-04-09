@@ -1,16 +1,5 @@
-<h1>Mensajes</h1>
-<div class="col-12" *ngFor="let message of messages">
-    <div class="p-3 container">
-        <label for="" class="ticketdata"><b>{{ message.Author }}</b></label>
-        <p class="ticketdata">{{ message.Content }}</p>
-        <div *ngIf="message.AttachmentPaths && message.AttachmentPaths.length > 0">
-            <div *ngFor="let attachment of message.AttachmentPaths let last = last">
-                <button *ngIf="!last" type="button" class="btn" (click)="downloadAttachment(attachment)">Descargar
-                    Adjunto</button>
-            </div>
-        </div>
-    </div>
-</div>
+<h1>Enviar Mensaje</h1>
+
 <form [formGroup]="messageForm" (submit)="onSubmit()" enctype="multipart/form-data" class="container">
     <div class="form-group">
         <label for="Attachments"><i class="fa-solid fa-folder"></i> Adjuntar Archivos:</label> <br>

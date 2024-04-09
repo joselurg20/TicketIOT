@@ -14,6 +14,7 @@ import { iMessage } from 'src/app/models/tickets/iMessage';
 import { HelpdeskComponent } from "../../components/messages/helpdesk/helpdesk.component";
 import { ComunicationComponent } from "../../components/messages/comunication/comunication.component";
 import { HistoryComponent } from "../../components/messages/history/history.component";
+import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
 
 @Component({
     selector: 'app-incidence-user',
@@ -23,34 +24,29 @@ import { HistoryComponent } from "../../components/messages/history/history.comp
     imports: [CommonModule, MatGridListModule, NgFor, IncidenceTableComponent, IncidenceDataComponent, MessageComponent, HelpdeskComponent, ComunicationComponent, HistoryComponent]
 })
 export class IncidenceUserComponent {
-    public user: iUserTable = {} as iUserTable;
-    public messages: iMessage[] = [];
-    public messageForm!: FormGroup;
-    private readonly apiUrl = 'https://localhost:7233/api/Message';
-    successMsg: string = "";
-    previewUrl: string | ArrayBuffer | null = null;
-    isImageSelected: boolean = false;
-    ticketId: number = 0;
+  public messages: iMessage[] = [];
+  successMsg: string = "";
+  ticketId: number = 0;
+  public ticket = {} as iTicketDescriptor;
+  public userName: string = '';
   
   
-    constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router, private http: HttpClient) { }
+    constructor(private route: ActivatedRoute, private apiService: ApiService) { }
   
     ngOnInit(): void {
-      this.messageForm = new FormGroup({
-        Attachments: new FormControl('', null),
-        Content: new FormControl('', Validators.required)
-      });
       this.route.params.subscribe(params => {
         this.ticketId = params['ticketId'];
+        console.log('TicketId', this.ticketId)
         this.apiService.getMessagesByTicket(this.ticketId).subscribe({
           next: (response: any) => {
             console.log('response', response);
             this.messages = response.$values.map((message: any) => {
               return {
                 Id: message.id,
+                Author: message.author,
                 Content: message.content,
                 AttachmentPaths: message.attachmentPaths.$values.map((attachmentPath: any) => attachmentPath.path),
-                ticketID: message.ticketID
+                ticketID: message.ticketId
               }
             })
           },
@@ -59,81 +55,24 @@ export class IncidenceUserComponent {
           }
         })
       });
-    }
-  
-    onSubmit() {
-      if(this.messageForm.valid) {
-        console.log('Datos del formulario:', this.messageForm.value);
-        const Content = this.messageForm.value.Content;
-        this.createMessage(Content, this.ticketId)
-        .subscribe({
-          next: (response) => {
-            console.log('Message creado con éxito', response);
-            this.successMsg = "Mensaje creado con éxito.";
-            location.reload(); 
-          },
-          error: (error) => {
-            console.error('Error en la solicitud', error);
-            this.successMsg = "Error al crear el mensaje.";
+      this.apiService.getTicketById(this.ticketId).subscribe({
+        next: (response: any) => {
+          this.ticket = {
+            id: response.id,
+            title: response.title,
+            name: response.name,
+            email: response.email,
+            timestamp: response.timestamp,
+            priority: response.priority,
+            state: response.state,
+            userId: response.userId,
+            userName: ""
           }
-        });
-      }
-    }
-  
-    createMessage(Content: string, TicketID: number): Observable<any> {
-      const formData = new FormData();
-      formData.append('MessageDTO.Content', Content);
-      formData.append('MessageDTO.TicketID', TicketID.toString());
-      
-      const attachmentsControl = this.messageForm.get('Attachments');
-    
-      if (attachmentsControl) {
-        const attachments = attachmentsControl.value;
-        
-        if (typeof attachments === 'string') {
-          const fileInput = <HTMLInputElement>document.getElementById('Attachments');
-          if (fileInput && fileInput.files && fileInput.files.length > 0) {
-            formData.append('MessageDTO.Attachments', fileInput.files[0], fileInput.files[0].name);
-          }
-        } else if (Array.isArray(attachments) && attachments.length > 0) {
-          for (const attachment of attachments) {
-            formData.append('MessageDTO.Attachments', attachment, attachment.name);
-          }
+          this.userName = this.ticket.name;
+        },
+        error: (error: any) => {
+          console.error('Error al obtener el usuario', error);
         }
-      }
-    
-      return this.http.post<any>(this.apiUrl, formData);
-    }
-  
-    downloadAttachment(attachmentPath: string) {
-      const pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/';
-      const fileName = attachmentPath.substring(pathPrefix.length);
-      this.downloadFile(attachmentPath, fileName);
-    }
-    
-    downloadFile(data: any, fileName: string) {
-      const blob = new Blob([data], { type: 'application/octet-stream' });
-    
-      const url = window.URL.createObjectURL(blob);
-    
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = fileName;
-    
-      link.click();
-    
-      window.URL.revokeObjectURL(url);
-    }
-  
-    onFileChange(event: any) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          this.previewUrl = reader.result;
-        };
-        reader.readAsDataURL(file);
-        this.isImageSelected = file.type.startsWith('image/');
-      }
+      });
     }
 }

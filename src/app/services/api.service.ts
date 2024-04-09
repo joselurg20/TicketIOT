@@ -27,6 +27,15 @@ export class ApiService {
     return this.http.get<any>(`${this.apiUrl}/Users/users/getbyid/${userId}`);
   }
 
+  getTechnicians(): Observable<any> {
+    const token = localStorage.getItem('authToken');
+  
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<any>(`${this.apiUrl}/Users/users/gettechnicians`, { headers });
+  }
+
   getTickets(): Observable<any[]> {
     const token = localStorage.getItem('authToken');
   

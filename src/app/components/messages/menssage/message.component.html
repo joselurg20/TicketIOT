@@ -1,33 +1,34 @@
-<div class="d-flex justify-content-end">
-  <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="readMessages()">
+<div class="d-flex justify-content-center">
+  <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal"
+    (click)="readMessages()">
     Ver Mensajes
   </button>
 </div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Mensajes</h5>
-        <button type="button" class="iot-cross" data-bs-dismiss="modal" aria-label="Close" id="hola"><i
-            class="fa-solid fa-xmark"></i></button>
+        <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="fa-solid fa-comments"></i> Mensajes</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div *ngFor="let message of messages">
-          <h4>{{ message.Author }} </h4>
-          <p>{{ message.Content }}</p>
-          <div *ngIf="message.AttachmentPaths && message.AttachmentPaths.length > 0">
-            <div *ngFor="let attachment of message.AttachmentPaths let last = last">
-              <button *ngIf="!last" type="button" class="custom-file-button btn-lg"
-                (click)="downloadAttachment(attachment)"><i class="fa-solid fa-download"></i> Descargar
-                Archivos</button>
+        <hr>
+        <div class="modal-mensage">
+          <div class="d-flex justify-content-between">
+            <h4>Marco Antonio </h4>
+            <span class="justify-content-end">10:00 - 10/10/2022</span>
+          </div>
+          <p>El problema es el siguiente</p>
+          <div>
+            <div>
+              <button class="custom-file-button btn-lg"><i class="fa-solid fa-download"></i> Descargar Achivos</button>
             </div>
           </div>
-          <hr>
         </div>
+        <hr>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn iot-btn" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

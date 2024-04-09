@@ -12,6 +12,7 @@ import { SupportTechnicalComponent } from './pages/support-technical/support-tec
 import { ManagerIncidenceComponent } from './pages/manager-incidence/manager-incidence.component';
 import { TechnicalTableComponent } from './components/technical-table/technical-table.component';
 import { IncidenceTicketsComponent } from './components/incidences/incidence-tickets/incidence-tickets.component';
+import { MessageComponent } from './components/messages/menssage/message.component';
 
 
 
@@ -26,8 +27,11 @@ const routes: Routes = [
   { path: "revisar-manager", component: ManagerIncidenceComponent },
   { path: "revisar-tecnico", component: TechnicialIncidenceComponent },
   { path: "helpdesk/:ticketId", component: HelpdeskComponent },
+
+  //Pruebas 
   { path: "prueba", component: TechnicalTableComponent },
   { path: "prueba2", component: IncidenceTicketsComponent},
+  { path: "prueba3", component: MessageComponent },
 
   //accedibles el usuario
   { path: "incidencia", component: IncidenceIndexComponent },

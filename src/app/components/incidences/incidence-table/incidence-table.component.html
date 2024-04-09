@@ -5,14 +5,13 @@
             <div class="ml-auto">
                 <a class="btn" href="/incidencia" type="button" *ngIf="isSupportManager"><i
                         class="fa-solid fa-plus"></i></a>
-                <a class="btn" type="button" (click)="cambiarIcono()" (click)="showAll()" *ngIf="isSupportManager"><i
-                        #icon class="fa-solid fa-eye"></i></a>
+                        <a class="btn" type="button" (click)="cambiarIcono(); showAll();" *ngIf="isSupportManager"><i #icon class="fa-solid fa-eye"></i></a>
             </div>
         </div>
         <mat-progress-spinner *ngIf="isLoading" mode="indeterminate" color="warn" class="progressSpinner"></mat-progress-spinner>
-        <div id="divTable" *ngIf="!isLoading">
+        <div id="divTable">
             <table mat-table [dataSource]="dataSource" matSort #sort (matSortChange)="announceSortChange($event)"
-                class="mat-elevation-z8">
+                class="mat-elevation-z8" *ngIf="!isLoading">
 
                 <ng-container matColumnDef="id">
                     <th mat-header-cell mat-sort-header  *matHeaderCellDef class="headerRow">#</th>
@@ -110,9 +109,9 @@
 
         </div>
 
-        <div *ngIf="!isLoading">
-            <mat-paginator class="pages" [pageSizeOptions]="[10, 25, 35, 50]" showFirstLastButtons
-                #paginator></mat-paginator>
-        </div>
+        <div>
+            <mat-paginator class="pages" #paginator [length]="dataSource.data.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
+    *ngIf="!isLoading" [ngStyle]="{'display': isLoading ? 'none' : 'block'}"></mat-paginator>
+    </div>
     </div>
 </section>

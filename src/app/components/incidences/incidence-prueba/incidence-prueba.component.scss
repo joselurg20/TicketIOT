@@ -1,0 +1,173 @@
+@import "../../../../styles/variables.scss";
+
+* {
+  padding: 4px;
+}
+
+h2 {
+  color: $text-color-dark;
+  text-align: center;
+}
+
+.contenedor {
+  margin: 2rem auto;
+  border-radius: 25px;
+  background-color: $bg-color-mid;
+  width: 900px;
+  padding: 20px;
+  color: $text-color-mid;
+  outline: none;
+  box-shadow: none;
+  font-weight: 700;
+  font-size: large;
+
+  & input:focus,
+  & textarea:focus,
+  & select:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: $color-warning;
+  }
+
+  input.placeholder,
+  textarea.placeholder,
+  select.placeholder {
+    color: $text-color-warning;
+  }
+
+  .custom-file-button {
+    display: block;
+    margin: 0 auto;
+    color: $text-color-light;
+    background-color: $bg-color-warning;
+    border: 1px solid $color-warning;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+
+    &:hover {
+      color: $color-light;
+      background-color: $bg-color-dark;
+      border-color: $color-light;
+    }
+
+  }
+
+  .preview-link {
+    color: $text-color-dark;
+  }
+
+  & input,
+  textarea {
+    border-radius: 10px;
+    background-color: $color-light;
+    color: $text-color-primary !important;
+  }
+
+  input::placeholder,
+  textarea::placeholder,
+  select::placeholder {
+    color: $text-color-primary;
+  }
+
+  & select {
+    color: $color-danger !important;
+    background-color: $bg-color-danger;
+  }
+
+  &:active {
+    border-color: $text-color-mid !important;
+  }
+}
+
+.btn {
+  border-radius: 5px;
+  color: $color-dark;
+  background-color: $bg-color-warning;
+
+  &:hover {
+    color: $color-light;
+    background-color: $bg-color-dark;
+    border-color: $color-light;
+  }
+}
+
+.logotipe {
+  text-align: center;
+
+  img {
+    width: 350px;
+    height: auto;
+    border-radius: 10px;
+  }
+
+  .preview-image {
+    width: 250px;
+    height: auto;
+    border-radius: 10px;
+
+  }
+}
+
+.green-snackbar {
+  background-color: green !important;
+  color: white;
+}
+
+
+@media screen and (max-width: 992px) {
+  .contenedor {
+    width: 100%;
+    height: auto;
+    margin-top: 0;
+    margin: 0;
+    padding: 20px;
+    border-radius: 0;
+
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .btn2 {
+    width: 100%;
+  }
+
+  .font {
+    font-size: 16px;
+  }
+
+}
+
+.btn-close {
+  color: white !important;
+
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+
+@media screen and (max-width: 600px) {
+  .contenedor {
+    width: 100%;
+    padding: 20px;
+    border-radius: 0;
+    height: auto;
+    margin: 0;
+
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .btn2 {
+    width: 100%;
+  }
+
+  .font {
+    font-size: 16px;
+  }
+}

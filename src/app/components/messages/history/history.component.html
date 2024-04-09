@@ -1,15 +1,13 @@
-<div *ngFor="let message of messages">
-    <div class="message">
-        <h4>Author: {{ message.Author }}</h4>
-        <hr>
-        <p>{{ message.Content }}</p>
-        <p>Archivos adjuntos:</p>
-        <ul>
+<h1>Mensajes</h1>
+<div class="col-12" *ngFor="let message of messages">
+    <div class="p-3 container">
+        <label for="" class="ticketdata"><b>{{ message.Author }}</b></label>
+        <p class="ticketdata">{{ message.Content }}</p>
+        <div *ngIf="message.AttachmentPaths && message.AttachmentPaths.length > 0">
             <div *ngFor="let attachment of message.AttachmentPaths let last = last">
-                <button *ngIf="!last" type="button" class="custom-file-button btn-lg"
-                    (click)="downloadAttachment(attachment)"><i class="fa-solid fa-download"></i> Descargar
-                    Archivos</button>
+                <button *ngIf="!last" type="button" class="btn" (click)="downloadAttachment(attachment)">Descargar
+                    Adjunto</button>
             </div>
-        </ul>
+        </div>
     </div>
 </div>

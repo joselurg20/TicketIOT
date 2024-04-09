@@ -1,5 +1,10 @@
 @import '../../../../styles/imports.scss';
 
+h1 {
+    color: $text-color-dark;
+    padding: 20px;
+  }
+
 .message {
     color: white;
     background-color: #141416;

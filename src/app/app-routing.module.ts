@@ -18,6 +18,7 @@ import { Recovery2Component } from './components/login/recovery2/recovery2.compo
 
 
 
+
 const routes: Routes = [
 
   //accedibles por los trabajadores
@@ -32,7 +33,7 @@ const routes: Routes = [
   { path: "helpdesk/:ticketId", component: HelpdeskComponent },
 
   //Pruebas 
-  { path: "prueba", component: TechnicalTableComponent },
+  { path: "prueba", component: IncidenceTableComponent },
   { path: "prueba2", component: IncidenceTicketsComponent},
   { path: "prueba3/:ticketId", component: MessageComponent },
   { path: "prueba4", component: IncidencePruebaComponent },

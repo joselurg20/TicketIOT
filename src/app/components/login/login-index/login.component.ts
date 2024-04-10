@@ -5,6 +5,8 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { LoginService } from '../../../services/login.service';
 import { Router } from '@angular/router';
 import { LenguageComponent } from "../../lenguage/lenguage.component";
+import { TranslateService } from '@ngx-translate/core';
+
 
 function passwordValidator(control: FormControl): { [key: string]: any } | null {
   const hasUppercase = /[A-Z]/.test(control.value); // Verifica si hay al menos una letra mayúscula
@@ -23,13 +25,22 @@ function passwordValidator(control: FormControl): { [key: string]: any } | null 
   standalone: true,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  imports: [CommonModule, ReactiveFormsModule, LenguageComponent]
+  imports: [CommonModule, ReactiveFormsModule, LenguageComponent],
 })
 export class LoginComponent implements OnInit {
   public loginForm!: FormGroup; // Define loginForm como un FormGroup
   public errorMsg: string = "";
 
-  constructor(private loginService: LoginService, private router: Router) { }
+  constructor(private loginService: LoginService, private router: Router, private translate: TranslateService) {
+    this.translate.addLangs(['en', 'es']);
+    const lang = this.translate.getBrowserLang();
+    if (lang !== 'en' && lang !== 'es') {
+      this.translate.setDefaultLang('en');
+    } else {
+      this.translate.use('es');
+      
+    }
+  }
 
   ngOnInit() {
     // Inicializa el formulario y sus controles
@@ -38,6 +49,8 @@ export class LoginComponent implements OnInit {
       password: new FormControl('', [Validators.required, passwordValidator])
     });
   }
+
+
 
   onSubmit() {
     if (this.loginForm.valid) {

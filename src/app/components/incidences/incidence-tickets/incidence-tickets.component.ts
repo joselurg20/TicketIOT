@@ -7,6 +7,7 @@ import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { iTicketTableSM } from 'src/app/models/tickets/iTicketTableSM';
 import { iUserTable } from 'src/app/models/users/iUserTable';
 import { ApiService } from 'src/app/services/api.service';
@@ -19,7 +20,7 @@ import { GraphUpdateService } from 'src/app/services/graphUpdateService';
   templateUrl: './incidence-tickets.component.html',
   styleUrls: ['./incidence-tickets.component.scss']
 })
-export class IncidenceTicketsComponent {
+export class IncidenceTicketsComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['id', 'title', 'name', 'email', 'priority', 'state', 'timestamp', 'technician', 'show'];
   dataSource = new MatTableDataSource<iTicketTableSM>();
@@ -28,7 +29,7 @@ export class IncidenceTicketsComponent {
   isIconChanged: boolean = false;
   isShowingAll: boolean = false;
   isSupportManager: boolean = false;
-element: any;
+  element: any;
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private apiService: ApiService, private router: Router, private graphUpdateService: GraphUpdateService) { }
 

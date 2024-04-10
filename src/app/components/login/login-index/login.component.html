@@ -1,15 +1,11 @@
 <div class="container mt-lg-5">
-
     <div class="row justify-content-center">
-
-        <div class="col-md-6">
-
+         <div class="col-md-6">
             <form [formGroup]="loginForm" (submit)="onSubmit()">
-
                 <h1 class="mb-3">Inicio de Sesión</h1>
 
                 <div class="mb-3">
-                    <label for="email" class="form-label"><i class="fa-solid fa-at"></i> Email</label>
+                    <label for="email" class="form-label"><i class="fa-solid fa-at"></i> {{'login.email'}}</label>
                     <input type="text" class="form-control form-control-lg" id="email" placeholder="Ingrese su email"
                         formControlName="email">
                 </div>
@@ -35,13 +31,9 @@
                 </div>
 
             </form>
-
         </div>
-
         <div class="logotipe">
             <img src="assets/images/logo/IoTlogo.png" alt="">
         </div>
-
     </div>
-
 </div>

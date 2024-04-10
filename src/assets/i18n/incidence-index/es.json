@@ -1,0 +1,17 @@
+{
+    "incidence-index": {
+        "title": "Crear Incidencia",
+        "name": "Nombre (máx. 45 caracteres):",
+        "nameplaceholder": "Ingrese su nombre",
+        "email": "Correo electrónico:",
+        "emailplaceholder": "Ingrese su correo",
+        "titleincidence": "Título (máx. 45 caracteres):",
+        "titleplaceholder": "Ingrese el título de la incidencia",
+        "content": "Descripción:",
+        "contentplaceholder": "Ingrese la descripción de la incidencia",
+        "attachments": "Adjuntar archivos:",
+        "upload": "Seleccionar Archivos",
+        "download": "Ver Archivo Adjunto",
+        "send": "Enviar Incidencia"
+    }  
+}

@@ -15,6 +15,7 @@ import { IncidenceTicketsComponent } from './components/incidences/incidence-tic
 import { MessageComponent } from './components/messages/menssage/message.component';
 import { IncidencePruebaComponent } from './components/incidences/incidence-prueba/incidence-prueba.component';
 import { Recovery2Component } from './components/login/recovery2/recovery2.component';
+import { IncidenceTableComponent } from './components/incidences/incidence-table/incidence-table.component';
 
 
 

@@ -5,7 +5,8 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { LoginService } from '../../../services/login.service';
 import { Router } from '@angular/router';
 import { LenguageComponent } from "../../lenguage/lenguage.component";
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { SidebarComponent } from "../../sidebar/sidebar.component";
 
 
 function passwordValidator(control: FormControl): { [key: string]: any } | null {
@@ -21,11 +22,11 @@ function passwordValidator(control: FormControl): { [key: string]: any } | null 
 }
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  imports: [CommonModule, ReactiveFormsModule, LenguageComponent],
+    selector: 'app-login',
+    standalone: true,
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    imports: [CommonModule, ReactiveFormsModule, LenguageComponent, TranslateModule, SidebarComponent]
 })
 export class LoginComponent implements OnInit {
   public loginForm!: FormGroup; // Define loginForm como un FormGroup

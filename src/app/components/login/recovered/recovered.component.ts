@@ -4,20 +4,31 @@ import { ButtonComponent } from "../../button/button.component";
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
+import { LenguageComponent } from "../../lenguage/lenguage.component";
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-recovered',
     standalone: true,
     templateUrl: './recovered.component.html',
     styleUrls: ['./recovered.component.scss'],
-    imports: [CommonModule, ButtonComponent, ReactiveFormsModule, FormsModule]
+    imports: [CommonModule, ButtonComponent, ReactiveFormsModule, FormsModule, LenguageComponent, TranslateModule]
 })
 export class RecoveredComponent implements OnInit {
 
     recoveryForm!: FormGroup;
     email: string = '';
 
-    constructor(private router: Router, private apiService: ApiService) {}
+    constructor(private router: Router, private apiService: ApiService, private translate: TranslateService) {
+        this.translate.addLangs(['en', 'es']);
+        const lang = this.translate.getBrowserLang();
+        if (lang !== 'en' && lang !== 'es') {
+          this.translate.setDefaultLang('en');
+        } else {
+          this.translate.use('es');
+          
+        }
+      }
 
     ngOnInit(): void {
         this.recoveryForm = new FormGroup({   

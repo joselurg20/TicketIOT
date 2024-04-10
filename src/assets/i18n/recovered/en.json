@@ -1,0 +1,14 @@
+{
+  "recovered": {
+
+    "title": "Recover Password",
+    "email": "Email",
+    "emailplaceholder": "Enter your Email",
+    "send": "Recover Password",
+
+    "password": "Password",
+    "passwordplaceholder": "Enter your Password",
+    "password2": "Repeat Password",
+    "password2placeholder": "Repeat your Password"
+  }  
+}

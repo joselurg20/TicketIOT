@@ -4,6 +4,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { iResetPasswordDto } from 'src/app/models/users/iResetPasswordDto';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 function passwordValidator(control: FormControl): { [key: string]: any } | null {
   const hasUppercase = /[A-Z]/.test(control.value); // Verifica si hay al menos una letra mayúscula
@@ -20,7 +21,7 @@ function passwordValidator(control: FormControl): { [key: string]: any } | null 
 @Component({
   selector: 'app-recovery2',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, TranslateModule],
   templateUrl: './recovery2.component.html',
   styleUrls: ['./recovery2.component.scss']
 })
@@ -31,7 +32,16 @@ export class Recovery2Component implements OnInit {
   domain: string = '';
   tld: string = '';
 
-  constructor(private route: ActivatedRoute, private router: Router, private apiService: ApiService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private apiService: ApiService, private translate: TranslateService) {
+    this.translate.addLangs(['en', 'es']);
+    const lang = this.translate.getBrowserLang();
+    if (lang !== 'en' && lang !== 'es') {
+      this.translate.setDefaultLang('en');
+    } else {
+      this.translate.use('es');
+      
+    }
+  }
 
   ngOnInit(): void {
     this.recoveryForm = new FormGroup({

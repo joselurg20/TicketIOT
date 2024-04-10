@@ -1,4 +1,5 @@
 <app-button (click)="goBack()"></app-button>
+<app-lenguage class="d-flex justify-content-end"></app-lenguage>
 
 <div class="container mt-lg-5">
 
@@ -6,16 +7,16 @@
 
         <div class="col-md-6">
 
-            <h2>Restablecer contraseña</h2>
+            <h2>{{'recovered.title' | translate}}</h2>
             <form [formGroup]="recoveryForm" (ngSubmit)="resetPassword()">
                 <div class="mb-3 form-group">
-                    <label for="Email" class="form-label"><i class="fa-solid fa-at"></i> Email</label>
-                    <input type="Email" class="form-control form-control-lg" id="Email" placeholder="Ingrese su email"
+                    <label for="Email" class="form-label"><i class="fa-solid fa-at"></i> {{'recovered.email' | translate}}</label>
+                    <input type="Email" class="form-control form-control-lg" id="Email" placeholder="{{'recovered.emailplaceholder' | translate}}"
                         formControlName="Email">
                 </div>
 
                 <div class="d-grid mb-3">
-                    <button [disabled]="!recoveryForm.valid" type="submit" class="iot-log-btn">Restablecer contraseña</button>
+                    <button [disabled]="!recoveryForm.valid" type="submit" class="iot-log-btn">{{'recovered.send' | translate}}</button>
                 </div>
             </form>
         </div>

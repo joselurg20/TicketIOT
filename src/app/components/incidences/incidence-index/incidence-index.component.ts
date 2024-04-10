@@ -82,7 +82,9 @@ export class IncidenceIndexComponent implements OnInit {
             console.log('Ticket creado con éxito', response);
             this.openSnackBar(); // Mostrar toast
             this.ticketForm.reset();
-            this.clearAttachments(); // Limpiar campos del formulario
+            setTimeout(() => {
+              this.clearAttachments(); // Limpiar campos del formulario
+            }, 1000);
           },
           error: (error) => {
             console.error('Error en la solicitud', error);
@@ -102,17 +104,18 @@ export class IncidenceIndexComponent implements OnInit {
     formData.append('MessageDTO.Content', Content);
 
     var attachments = this.selectedFiles;
+    console.log('Attachments:', attachments);
       
     if (attachments.length > 0) {
           
       if (attachments.length == 1) {
         const fileInput = <HTMLInputElement>document.getElementById('Attachments');
         if (fileInput && fileInput.files && fileInput.files.length > 0) {
-          formData.append('Attachments', fileInput.files[0], fileInput.files[0].name);
+          formData.append('MessageDTO.Attachments', fileInput.files[0], fileInput.files[0].name);
         }
       } else if (attachments.length > 0) {
         for (var attachment of attachments) {
-          formData.append('Attachments', attachment, attachment.name);
+          formData.append('MessageDTO.Attachments', attachment, attachment.name);
         }
       }
     }
@@ -137,6 +140,7 @@ export class IncidenceIndexComponent implements OnInit {
         this.isImageSelected = file.type.startsWith('image/');
       }
     }
+    console.log('Selected files', this.selectedFiles);
   }
 
 
@@ -146,9 +150,6 @@ export class IncidenceIndexComponent implements OnInit {
     this.isImageSelected = false;
   }
 
-  goBack() {
-    window.history.back();
-    }
 
 
 }

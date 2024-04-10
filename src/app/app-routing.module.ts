@@ -14,7 +14,8 @@ import { TechnicalTableComponent } from './components/technical-table/technical-
 import { IncidenceTicketsComponent } from './components/incidences/incidence-tickets/incidence-tickets.component';
 import { MessageComponent } from './components/messages/menssage/message.component';
 import { IncidencePruebaComponent } from './components/incidences/incidence-prueba/incidence-prueba.component';
-import { IncidenceTableComponent } from './components/incidences/incidence-table/incidence-table.component';
+import { Recovery2Component } from './components/login/recovery2/recovery2.component';
+
 
 
 
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: "", component: LoginComponent },
   { path: "login", component: LoginComponent },
   { path: "recuperar", component: RecoveredComponent },
+  { path: "recuperar/:username/:domain/:tld", component: Recovery2Component },  
   { path: "support-manager", component: SupportManagerComponent },
   { path: "support-technician", component: SupportTechnicalComponent },
   { path: "revisar-manager", component: ManagerIncidenceComponent },

@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TicketDto } from '../models/tickets/TicketDTO';
+import { iResetPasswordDto } from '../models/users/iResetPasswordDto';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,14 @@ export class ApiService {
       'Authorization': `Bearer ${token}`
     });
     return this.http.get<any>(`${this.apiUrl}/Users/users/gettechnicians`, { headers });
+  }
+
+  checkEmail(username: string, domain: string, tld: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/Users/users/sendemail/${username}/${domain}/${tld}`);
+  }
+
+  resetPassword(formData: FormData): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/Users/users/resetpassword`, formData);
   }
 
   getTickets(): Observable<any[]> {

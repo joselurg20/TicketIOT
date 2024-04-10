@@ -5,16 +5,18 @@
             <div class="ml-auto">
                 <a class="btn" href="/incidencia" type="button" *ngIf="isSupportManager"><i
                         class="fa-solid fa-plus"></i></a>
-                        <a class="btn" type="button" (click)="cambiarIcono(); showAll();" *ngIf="isSupportManager"><i #icon class="fa-solid fa-eye"></i></a>
+                <a class="btn" type="button" (click)="cambiarIcono(); showAll();" *ngIf="isSupportManager"><i #icon
+                        class="fa-solid fa-eye"></i></a>
             </div>
         </div>
-        <mat-progress-spinner *ngIf="isLoading" mode="indeterminate" color="warn" class="progressSpinner"></mat-progress-spinner>
+        <mat-progress-spinner *ngIf="isLoading" mode="indeterminate" color="warn"
+            class="progressSpinner"></mat-progress-spinner>
         <div id="divTable">
             <table mat-table [dataSource]="dataSource" matSort #sort (matSortChange)="announceSortChange($event)"
                 class="mat-elevation-z8" *ngIf="!isLoading">
 
                 <ng-container matColumnDef="id">
-                    <th mat-header-cell mat-sort-header  *matHeaderCellDef class="headerRow">#</th>
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="headerRow">#</th>
                     <td mat-cell *matCellDef="let element" class="numberRow"> {{element.id}}</td>
                 </ng-container>
 
@@ -47,11 +49,11 @@
                         class="headerRow">
                         Prioridad
                     </th>
-                    <td mat-cell *matCellDef="let element" class="imgRow"> 
-                        <button mat-raised-button
-                            #tooltip="matTooltip" [matTooltip]="element.priority" matTooltipPosition="above"
-                            [ngStyle]="getButtonPriority(element.priority)">
-                        </button></td>
+                    <td mat-cell *matCellDef="let element" class="imgRow">
+                        <button mat-raised-button #tooltip="matTooltip" [matTooltip]="element.priority"
+                            matTooltipPosition="above" [ngStyle]="getButtonPriority(element.priority)">
+                        </button>
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="state">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol"
@@ -98,7 +100,8 @@
                         Editar
                     </th>
                     <td mat-cell *matCellDef="let element" class="editRow">
-                        <i class="fa-solid fa-pen-to-square fa-2x editIcon" (click)="onRowClicked(element)"></i></td>
+                        <i class="fa-solid fa-pen-to-square fa-2x editIcon" (click)="onRowClicked(element)"></i>
+                    </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -110,8 +113,9 @@
         </div>
 
         <div>
-            <mat-paginator class="pages" #paginator [length]="dataSource.data.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
-    *ngIf="!isLoading" [ngStyle]="{'display': isLoading ? 'none' : 'block'}"></mat-paginator>
-    </div>
+            <mat-paginator class="pages" [length]="dataSource.data.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"
+                showFirstLastButtons [ngStyle]="{'display': isLoading ? 'none' : 'block'}">
+            </mat-paginator>
+        </div>
     </div>
 </section>

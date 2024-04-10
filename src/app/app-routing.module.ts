@@ -14,6 +14,7 @@ import { TechnicalTableComponent } from './components/technical-table/technical-
 import { IncidenceTicketsComponent } from './components/incidences/incidence-tickets/incidence-tickets.component';
 import { MessageComponent } from './components/messages/menssage/message.component';
 import { IncidencePruebaComponent } from './components/incidences/incidence-prueba/incidence-prueba.component';
+import { IncidenceTableComponent } from './components/incidences/incidence-table/incidence-table.component';
 
 
 
@@ -30,7 +31,7 @@ const routes: Routes = [
   { path: "helpdesk/:ticketId", component: HelpdeskComponent },
 
   //Pruebas 
-  { path: "prueba", component: TechnicalTableComponent },
+  { path: "prueba", component: IncidenceTableComponent },
   { path: "prueba2", component: IncidenceTicketsComponent},
   { path: "prueba3/:ticketId", component: MessageComponent },
   { path: "prueba4", component: IncidencePruebaComponent },

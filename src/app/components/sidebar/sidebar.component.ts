@@ -76,12 +76,37 @@ export class SidebarComponent implements OnInit {
   }
 
   switchLanguage(language: string) {
-    this.translate.use(language)
+    this.translate.use(language);
+    localStorage.setItem('selectedLanguage', language);
+    this.setLanguageImage(language);
+  }
+
+  private setLanguageImage(language: string): void {
+    const button = document.querySelector('.dropdown-toggle img') as HTMLImageElement;
+    if (language === 'spanish') {
+      button.src = '../../../assets/images/flags/spain.png';
+    } else if (language === 'english') {
+      button.src = '../../../assets/images/flags/england.png';
+    }
+  }
+
+  getLanguageImage(): string {
+    const selectedLanguage = localStorage.getItem('selectedLanguage');
+    if (selectedLanguage === 'es') {
+      return '../../../assets/images/flags/spain.png';
+    } else {
+      return '../../../assets/images/flags/england.png';
+    }
   }
 
 
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
+    const selectedLanguage = localStorage.getItem('selectedLanguage');
+    if (selectedLanguage) {
+      this.translate.use(selectedLanguage);
+      this.setLanguageImage(selectedLanguage);
+    }
   }
 
   toggleCollapse(): void {

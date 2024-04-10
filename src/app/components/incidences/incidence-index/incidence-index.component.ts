@@ -14,17 +14,19 @@ import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { ButtonComponent } from "../../button/button.component";
 import { SidebarComponent } from '../../sidebar/sidebar.component';
+import { LenguageComponent } from "../../lenguage/lenguage.component";
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 
 @Component({
-  selector: 'app-incidence-index',
-  standalone: true,
-  templateUrl: './incidence-index.component.html',
-  styleUrls: ['./incidence-index.component.scss'],
-  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatFormFieldModule,
-    MatSelectModule, MatButtonModule, MatSnackBarModule, MatInputModule, MatButtonModule,
-    MatSnackBarModule, ChartBarComponent, ChartPieComponent,
-    ChartDoughnutComponent, ButtonComponent, SidebarComponent]
+    selector: 'app-incidence-index',
+    standalone: true,
+    templateUrl: './incidence-index.component.html',
+    styleUrls: ['./incidence-index.component.scss'],
+    imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatFormFieldModule,
+        MatSelectModule, MatButtonModule, MatSnackBarModule, MatInputModule, MatButtonModule,
+        MatSnackBarModule, ChartBarComponent, ChartPieComponent,
+        ChartDoughnutComponent, ButtonComponent, SidebarComponent, LenguageComponent, TranslateModule]
 })
 export class IncidenceIndexComponent implements OnInit {
 
@@ -39,7 +41,16 @@ export class IncidenceIndexComponent implements OnInit {
   isLogged: boolean = false;
   selectedFiles: File[] = [];
 
-  constructor(private _snackBar: MatSnackBar, private apiService: ApiService) { }
+  constructor(private _snackBar: MatSnackBar, private apiService: ApiService , private translate: TranslateService) {
+    this.translate.addLangs(['en', 'es']);
+    const lang = this.translate.getBrowserLang();
+    if (lang !== 'en' && lang !== 'es') {
+      this.translate.setDefaultLang('en');
+    } else {
+      this.translate.use('es');
+      
+    }
+  }
 
   openSnackBar() {
     this._snackBar.open("Incidencia enviada", 'Cerrar', {

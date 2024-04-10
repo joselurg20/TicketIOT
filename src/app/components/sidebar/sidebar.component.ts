@@ -1,10 +1,10 @@
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 import { Component, Output, EventEmitter, OnInit, HostListener } from '@angular/core';
-import { NavbarData } from '../../models/incidence/nav-data';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LoginService } from 'src/app/services/login.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -15,7 +15,7 @@ interface SideNavToggle {
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, TranslateModule],
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
   animations: [
@@ -52,19 +52,6 @@ export class SidebarComponent implements OnInit {
   @Output() onToggleSideNav: EventEmitter<SideNavToggle> = new EventEmitter();
   collapsed = false;
   screenWidth = 0;
-  navData: NavbarData[] = [{
-    icon: 'fa-solid fa-house',
-    label: 'Dashboard',
-    click: this.goToDashboard.bind(this),
-    route: this.getDashboardRoute()
-  },
-
-  {
-    icon: 'fas fa-right-from-bracket fa-rotate-180',
-    label: 'Cerrar sesión',
-    click: this.logout.bind(this),
-    route: '/logout'
-  }];
 
 
 
@@ -77,7 +64,21 @@ export class SidebarComponent implements OnInit {
     }
   }
 
-  constructor(private loginService: LoginService, private router: Router) { }
+  constructor(private loginService: LoginService, private router: Router, private translate: TranslateService) {
+    this.translate.addLangs(['en', 'es']);
+    const lang = this.translate.getBrowserLang();
+    if (lang !== 'en' && lang !== 'es') {
+      this.translate.setDefaultLang('en');
+    } else {
+      this.translate.use('es');
+      
+    }
+  }
+
+  switchLanguage(language: string) {
+    this.translate.use(language)
+  }
+
 
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;

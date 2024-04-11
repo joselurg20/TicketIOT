@@ -1,0 +1,7 @@
+{
+    "error404": {
+        "title": "Error 404",
+        "description": "Lo sentimos, la página que buscas no se encuentra disponible.",
+        "button": "Volver a la página principal"
+    }
+}

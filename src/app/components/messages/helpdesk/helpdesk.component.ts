@@ -8,11 +8,12 @@ import { ApiService } from 'src/app/services/api.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-helpdesk',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './helpdesk.component.html',
   styleUrls: ['./helpdesk.component.scss']
 })
@@ -27,9 +28,17 @@ export class HelpdeskComponent {
   public userName: string = '';
 
 
-  constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router, private http: HttpClient) { }
-
-  ngOnInit(): void {
+  constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router, private http: HttpClient, private translate: TranslateService) {
+    this.translate.addLangs(['en', 'es']);
+    const lang = this.translate.getBrowserLang();
+    if (lang !== 'en' && lang !== 'es') {
+      this.translate.setDefaultLang('en');
+    } else {
+      this.translate.use('es');
+      
+    }
+  }
+    ngOnInit(): void {
     this.messageForm = new FormGroup({
       Attachments: new FormControl('', null),
       Content: new FormControl('', Validators.required)

@@ -1,10 +1,12 @@
+<app-lenguage class="d-flex justify-content-end"></app-lenguage>
+
 <div class="error-container">
   <div class="logotipe text-center">
-    <h1>Error 404</h1>
-    <p>Lo sentimos, la página que buscas no se encuentra disponible.</p>
+    <h1>{{'error404.title' | translate}}</h1>
+    <p>{{'error404.description' | translate}}</p>
     <div class="d-grid gap-2 col-12 mx-auto">
-      <a class="btn" href="/login" type="button">Volver a la página principal</a>
-      <a class="btn" href="/login" type="button">Contactar soporte</a>
+      <a class="btn" href="/login" type="button">{{'error404.button' | translate}}</a>
+      <!--<a class="btn" href="/login" type="button">{{'error404.button2' | translate}}</a>-->
     </div>
     <img src="assets/images/logo/IoTlogo.png" alt="Error Image">
   </div>

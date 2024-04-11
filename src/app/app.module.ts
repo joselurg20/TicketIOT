@@ -42,6 +42,10 @@ export class AppModule { }
 export function HttpLoaderFactory(http: HttpBackend) {
   return new MultiTranslateHttpLoader( http, [
     { prefix: "./assets/i18n/login/", suffix: ".json" },
+    { prefix: "./assets/i18n/comunication/", suffix: ".json" },
+    { prefix: "./assets/i18n/data/", suffix: ".json" },
+    { prefix: "./assets/i18n/menssages/", suffix: ".json" },
+    { prefix: "./assets/i18n/incidence-data/", suffix: ".json" },
     { prefix: "./assets/i18n/incidence-index/", suffix: ".json" },
     { prefix: "./assets/i18n/recovered/", suffix: ".json" },
     { prefix: "./assets/i18n/sidenav/", suffix: ".json" },

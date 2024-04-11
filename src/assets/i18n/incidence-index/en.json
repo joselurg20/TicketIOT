@@ -1,17 +1,17 @@
 {
   "incidence-index": {
-      "title": "Create Incidence",
-      "name": "Name (max. 45 characters):",
-      "nameplaceholder": "Enter your name",
-      "email": "Email:",
-      "emailplaceholder": "Enter your email",
-      "titleincidence": "Title (max. 45 characters):",
-      "titleplaceholder": "Enter the title of the incidence",
-      "content": "Description:",
-      "contentplaceholder": "Enter the description of the incidence",
-      "attachments": "Attachments:",
-      "upload": "Select Files",
-      "download": "View Attachment",
-      "send": "Send Incidence"
-  }  
+    "title": "Create Incidence",
+    "name": "Name (max. 45 characters):",
+    "nameplaceholder": "Enter your name",
+    "email": "Email:",
+    "emailplaceholder": "Enter your email",
+    "titleincidence": "Title (max. 45 characters):",
+    "titleplaceholder": "Enter the title of the incidence",
+    "content": "Description:",
+    "contentplaceholder": "Enter the description of the incidence",
+    "attachments": "Attachments:",
+    "upload": "Select Files",
+    "download": "View Attachment",
+    "send": "Send Incidence"
+  }
 }

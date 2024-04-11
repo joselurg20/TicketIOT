@@ -1,11 +1,11 @@
 {
   "login": {
-      "title": "Login",
-      "email": "Email",
-      "emailplaceholder": "Enter your Email",
-      "password": "Password",
-      "passwordplaceholder": "Enter your Password",
-      "login": "Access", 
-      "forgotpassword": "Forgot your Password?"
-  }  
+    "title": "Login",
+    "email": "Email",
+    "emailplaceholder": "Enter your Email",
+    "password": "Password",
+    "passwordplaceholder": "Enter your Password",
+    "login": "Access",
+    "forgotpassword": "Forgot your Password?"
+  }
 }

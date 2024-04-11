@@ -4,11 +4,12 @@ import { ApiService } from 'src/app/services/api.service';
 import { iUserGraph } from 'src/app/models/users/iUserGraph';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TicketUpdateService } from 'src/app/services/ticketUpdate.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-manager',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './manager.component.html',
   styleUrls: ['./manager.component.scss']
 })
@@ -23,7 +24,16 @@ export class ManagerComponent implements OnInit {
   selectedState: string = '';
   selectedStateValue: number = -1;
 
-  constructor(private apiService: ApiService, private ticketUpdateService: TicketUpdateService) {}
+  constructor(private apiService: ApiService, private ticketUpdateService: TicketUpdateService, private translate: TranslateService) {
+    this.translate.addLangs(['en', 'es']);
+    const lang = this.translate.getBrowserLang();
+    if (lang !== 'en' && lang !== 'es') {
+      this.translate.setDefaultLang('en');
+    } else {
+      this.translate.use('es');
+      
+    }
+  }
 
   ngOnInit(): void {
     this.apiService.getTechnicians().subscribe({

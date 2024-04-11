@@ -1,15 +1,16 @@
 <form>
     <div class="mb-3">
-        <label for="estado" class="form-label"><i class="fa-solid fa-traffic-light"></i>Estado</label>
+        <label for="estado" class="form-label"><i class="fa-solid fa-traffic-light"></i> {{"data.status" | translate}}</label>
         <select class="form-select form-select-lg" id="estado" required [(ngModel)]="selectedStateValue" name="estado">
-            <option value="-1">Seleccione un estado</option>
-            <option value="1">OPENED</option>
-            <option value="2">PAUSED</option>
-            <option value="3">FINISHED</option>
+            <option value="-1">{{"data.option3" | translate}}</option>
+            <option value="1">{{"data.optionS2" | translate}}</option>
+            <option value="2">{{"data.optionS3" | translate}}</option>
+            <option value="3">{{"data.optionS4" | translate}}</option>
         </select>
     </div>
 
     <div class="d-grid gap-2">
-        <button type="submit" class="btn btn-lg" (click)="updateTicket()"><i class="fa-solid fa-floppy-disk"></i> Modificar incidencia</button>
+        <button type="submit" class="btn btn-lg" (click)="updateTicket()"><i class="fa-solid fa-floppy-disk"></i>
+            {{"data.save" | translate}}</button>
     </div>
 </form>

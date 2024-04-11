@@ -5,21 +5,31 @@ import { ApiService } from 'src/app/services/api.service';
 import { TicketUpdateService } from 'src/app/services/ticketUpdate.service';
 import { Subscription } from 'rxjs';
 import { ButtonComponent } from "../../button/button.component";
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 
 @Component({
     selector: 'app-incidence-data',
     standalone: true,
+    imports: [CommonModule, ButtonComponent, TranslateModule],
     templateUrl: './incidence-data.component.html',
-    styleUrls: ['./incidence-data.component.scss'],
-    imports: [CommonModule, ButtonComponent]
+    styleUrls: ['./incidence-data.component.scss']
 })
 export class IncidenceDataComponent implements OnInit {
 
   ticket: iTicketDescriptor = {id: 0, title: '', name: '', email: '', timestamp: '', priority: '', state: '', userId: '0', userName: ''};
   private ticketUpdateSubscription: Subscription = {} as Subscription;
 
-  constructor(private apiService: ApiService, private ticketUpdateService: TicketUpdateService, private cdr: ChangeDetectorRef) { }
+  constructor(private apiService: ApiService, private ticketUpdateService: TicketUpdateService, private cdr: ChangeDetectorRef, private translate: TranslateService) {
+    this.translate.addLangs(['en', 'es']);
+    const lang = this.translate.getBrowserLang();
+    if (lang !== 'en' && lang !== 'es') {
+      this.translate.setDefaultLang('en');
+    } else {
+      this.translate.use('es');
+      
+    }
+  }
 
   ngOnInit(): void {
     this.apiService.getTicketById(parseInt(localStorage.getItem('selectedTicket')!)).subscribe({

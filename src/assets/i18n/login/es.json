@@ -1,11 +1,11 @@
 {
-    "login": {
-        "title": "Inicio de Sesión",
-        "email": "Correo",
-        "emailplaceholder": "Ingresa tu Correo",
-        "password": "Contraseña",
-        "passwordplaceholder": "Ingresa tu Contraseña",
-        "login": "Acceder", 
-        "forgotpassword": "¿Olvidaste tu Contraseña?"
-    }  
+  "login": {
+    "title": "Inicio de Sesión",
+    "email": "Correo",
+    "emailplaceholder": "Ingresa tu Correo",
+    "password": "Contraseña",
+    "passwordplaceholder": "Ingresa tu Contraseña",
+    "login": "Acceder",
+    "forgotpassword": "¿Olvidaste tu Contraseña?"
+  }
 }

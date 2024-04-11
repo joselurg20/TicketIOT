@@ -1,15 +1,16 @@
 <div class="d-flex justify-content-center">
   <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal"
-    (click)="readMessages()">
-    Ver Mensajes
+    (click)="readMessages()"><i class="fa-solid fa-comments"></i> {{"message.button" | translate}}
   </button>
 </div>
+
+
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="fa-solid fa-comments"></i> Mensajes</h1>
+        <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="fa-solid fa-comments"></i> {{"message.title" | translate}}</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -25,7 +26,7 @@
               <div *ngIf="message.AttachmentPaths && message.AttachmentPaths.length > 0" class="d-flex justify-content-center preview">
                 <div *ngFor="let attachment of message.Attachments">
                   <img [src]="attachment.attachmentUrl" alt="">
-                  <button class="custom-file-button btn-lg" (click)="downloadAttachment(attachment.attachmentPath)"><i class="fa-solid fa-download"></i> Descargar Achivo</button>
+                  <button class="custom-file-button btn-lg" (click)="downloadAttachment(attachment.attachmentPath)"><i class="fa-solid fa-download"></i> {{"message.download" | translate}}</button>
                 </div>        
               </div>
             </div>

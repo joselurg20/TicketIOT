@@ -1,16 +1,16 @@
 {
-    "recovered": {
-    
-        "title": "Recuperar Contraseña",
-        "email": "Correo",
-        "emailplaceholder": "Ingresa tu Correo",
-        "send": "Restablecer Contraseña",
+  "recovered": {
 
-        "password": "Contraseña",
-        "passwordplaceholder": "Ingresa tu Contraseña",
-        "password2": "Repetir Contraseña",
-        "passwordplaceholder2": "Repite tu Contraseña",
+    "title": "Recuperar Contraseña",
+    "email": "Correo",
+    "emailplaceholder": "Ingresa tu Correo",
+    "send": "Restablecer Contraseña",
 
-        "passwordMismatchErrorMessage": "Las contraseñas no coinciden"
-    }  
+    "password": "Contraseña",
+    "passwordplaceholder": "Ingresa tu Contraseña",
+    "password2": "Repetir Contraseña",
+    "passwordplaceholder2": "Repite tu Contraseña",
+
+    "passwordMismatchErrorMessage": "Las contraseñas no coinciden"
+  }
 }

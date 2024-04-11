@@ -7,13 +7,14 @@ import { ApiService } from 'src/app/services/api.service';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { TicketDto } from 'src/app/models/tickets/TicketDTO';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-comunication',
     standalone: true,
     templateUrl: './comunication.component.html',
     styleUrls: ['./comunication.component.scss'],
-    imports: [CommonModule, MessageComponent, FormsModule, ReactiveFormsModule]
+    imports: [CommonModule, MessageComponent, FormsModule, ReactiveFormsModule, TranslateModule]
 })
 export class ComunicationComponent implements OnInit {
 
@@ -24,7 +25,16 @@ export class ComunicationComponent implements OnInit {
     public userName: string = '';
     selectedFiles: File[] = [];
 
-    constructor(private apiService: ApiService) {}
+    constructor(private apiService: ApiService, private translate: TranslateService) {
+      this.translate.addLangs(['en', 'es']);
+      const lang = this.translate.getBrowserLang();
+      if (lang !== 'en' && lang !== 'es') {
+        this.translate.setDefaultLang('en');
+      } else {
+        this.translate.use('es');
+        
+      }
+    }
 
     ngOnInit(): void {
         this.messageForm = new FormGroup({

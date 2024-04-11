@@ -15,6 +15,7 @@ import { HelpdeskComponent } from "../../components/messages/helpdesk/helpdesk.c
 import { ComunicationComponent } from "../../components/messages/comunication/comunication.component";
 import { HistoryComponent } from "../../components/messages/history/history.component";
 import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
     selector: 'app-incidence-user',
@@ -29,31 +30,38 @@ export class IncidenceUserComponent {
   ticketId: number = 0;
   public ticket = {} as iTicketDescriptor;
   public userName: string = '';
+  hashedId: string = '';
   
   
-    constructor(private route: ActivatedRoute, private apiService: ApiService) { }
+    constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router) { }
   
     ngOnInit(): void {
       this.route.params.subscribe(params => {
         this.ticketId = params['ticketId'];
-        console.log('TicketId', this.ticketId)
-        this.apiService.getMessagesByTicket(this.ticketId).subscribe({
-          next: (response: any) => {
-            console.log('response', response);
-            this.messages = response.$values.map((message: any) => {
-              return {
-                Id: message.id,
-                Author: message.author,
-                Content: message.content,
-                AttachmentPaths: message.attachmentPaths.$values.map((attachmentPath: any) => attachmentPath.path),
-                ticketID: message.ticketId
-              }
-            })
-          },
-          error: (error: any) => {
-            console.error('Error al obtener los mensajes del ticket', error);
-          }
-        })
+        console.log('TicketId', this.ticketId);
+        this.hashedId = params['hashedId'];
+        const hashedPassword = CryptoJS.SHA256(this.ticketId.toString()).toString();
+        if(this.hashedId === hashedPassword) {
+          this.apiService.getMessagesByTicket(this.ticketId).subscribe({
+            next: (response: any) => {
+              console.log('response', response);
+              this.messages = response.$values.map((message: any) => {
+                return {
+                  Id: message.id,
+                  Author: message.author,
+                  Content: message.content,
+                  AttachmentPaths: message.attachmentPaths.$values.map((attachmentPath: any) => attachmentPath.path),
+                  ticketID: message.ticketId
+                }
+              })
+            },
+            error: (error: any) => {
+              console.error('Error al obtener los mensajes del ticket', error);
+            }
+          })
+        }else{
+          this.router.navigate(['/404']);
+        }
       });
       this.apiService.getTicketById(this.ticketId).subscribe({
         next: (response: any) => {
@@ -74,5 +82,6 @@ export class IncidenceUserComponent {
           console.error('Error al obtener el usuario', error);
         }
       });
+      
     }
 }

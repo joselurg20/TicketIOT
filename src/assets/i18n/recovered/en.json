@@ -11,6 +11,6 @@
     "password2": "Repeat Password",
     "passwordplaceholder2": "Repeat your Password",
 
-    "passwordMismatchErrorMessage": "Passwords do not match" 
-  }  
+    "passwordMismatchErrorMessage": "Passwords do not match"
+  }
 }

@@ -1,0 +1,12 @@
+{
+  "comunication": {
+    "title": "Mensajes",
+    "upload": "Adjuntar archivos:",
+    "select": "Seleccionar Archivos",
+    "download": "Ver Archivo Adjunto",
+    "name": "Mensaje",
+    "nameplaceholder": "Ingrese su Mensaje",
+    "send": "Enviar Mensaje"
+  }
+}
+ 

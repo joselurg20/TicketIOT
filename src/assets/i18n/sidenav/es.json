@@ -1,8 +1,8 @@
 {
-    "sidenav": {
-        "dashboard": "Dashboard",
-        "logout": "Cerrar Sesión",
-        "lenges":"Español",
-        "lengen": "Inglés"
-    }
+  "sidenav": {
+    "dashboard": "Dashboard",
+    "logout": "Cerrar Sesión",
+    "lenges": "Español",
+    "lengen": "Inglés"
+  }
 }

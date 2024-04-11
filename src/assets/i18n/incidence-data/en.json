@@ -1,0 +1,12 @@
+{
+  "incidence-data": {
+    "title": "Incidences",
+    "name": "Title",
+    "date": "Date Created",
+    "username": "User Name",
+    "email": "User Email",
+    "priority": "Priority",
+    "status": "Status",
+    "technic": "Technician Assigned"
+  }
+}

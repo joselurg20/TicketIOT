@@ -4,11 +4,12 @@ import { ApiService } from 'src/app/services/api.service';
 import { iMessage } from 'src/app/models/tickets/iMessage';
 import { TicketDto } from 'src/app/models/tickets/TicketDTO';
 import { iAttachment } from 'src/app/models/attachments/iAttachment';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-message',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.scss']
 })
@@ -18,7 +19,16 @@ export class MessageComponent implements OnInit {
   ticket: TicketDto = {Name: '', Email: '', Title: '', HasNewMessages: false, NewMessagesCount: 0};
   messages: iMessage[] = [];
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService , private translate: TranslateService) {
+    this.translate.addLangs(['en', 'es']);
+    const lang = this.translate.getBrowserLang();
+    if (lang !== 'en' && lang !== 'es') {
+      this.translate.setDefaultLang('en');
+    } else {
+      this.translate.use('es');
+      
+    }
+  }
 
   ngOnInit(): void {
     var ticketIdLS = localStorage.getItem('selectedTicket');

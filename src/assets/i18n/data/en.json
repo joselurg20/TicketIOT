@@ -1,0 +1,21 @@
+{
+  "data": {
+    "technic": "Technician Assigned",
+    "option1": "Select a Technician",
+    "priority": "Priority",
+    "option2": "Select a Priority",
+    "optionP1": "VERY HIGH",
+    "optionP2": "HIGH",
+    "optionP3": "MEDIUM",
+    "optionP4": "LOW",
+    "optionP5": "VERY LOW",
+    "optionP6": "NOT PRIORITIZED",
+    "status": "Status",
+    "option3": "Select a status",
+    "optionS1": "Pending",
+    "optionS2": "In Progress",
+    "optionS3": "Paused",
+    "optionS4": "Finished",
+    "save": "Modify incidence"
+  }
+}

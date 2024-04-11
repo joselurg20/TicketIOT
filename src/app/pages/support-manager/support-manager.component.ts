@@ -48,6 +48,10 @@ ngOnInit(): void {
         this.router.navigate(['/login']);
     }
 
+    if(localStorage.getItem('userRole') !== 'SupportManager') {
+        this.router.navigate(['/login']);
+    }
+
     setTimeout(() => {
         this.isLoading = false;
       }, 1000);
@@ -55,7 +59,6 @@ ngOnInit(): void {
 
 logout() {
     this.loginService.logout();
-    this.router.navigate(['/login']);
 }
 
 receiveDataFromChild(data: boolean) {

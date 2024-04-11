@@ -26,12 +26,11 @@ const routes: Routes = [
   { path: "", component: LoginComponent },
   { path: "login", component: LoginComponent },
   { path: "recuperar", component: RecoveredComponent },
-  { path: "recuperar/:username/:domain/:tld", component: Recovery2Component },  
+  { path: "recuperar/:hash/:username/:domain/:tld", component: Recovery2Component },  
   { path: "support-manager", component: SupportManagerComponent },
   { path: "support-technician", component: SupportTechnicalComponent },
   { path: "revisar-manager", component: ManagerIncidenceComponent },
   { path: "revisar-tecnico", component: TechnicialIncidenceComponent },
-  { path: "helpdesk/:ticketId", component: HelpdeskComponent },
 
   //Pruebas 
   { path: "prueba", component: IncidenceTableComponent },

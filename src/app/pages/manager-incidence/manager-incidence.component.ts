@@ -27,6 +27,10 @@ export class ManagerIncidenceComponent implements OnInit {
             this.router.navigate(['/support-manager']);
         }
 
+        if(localStorage.getItem('userRole') !== 'SupportManager') {
+            this.router.navigate(['/login']);
+        }
+
         setTimeout(() => {
             this.isLoading = false;
         }, 1000);

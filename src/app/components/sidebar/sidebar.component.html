@@ -16,7 +16,7 @@
       </a>
     </li>
       <li class="sidenav-nav-item">
-      <a class="sidenav-nav-link" routerLinkActive="active" routerLink="/login">
+      <a class="sidenav-nav-link" routerLinkActive="active" routerLink (click)="logout()">
         <i class="sidenav-link-icon fa-solid fa-right-from-bracket fa-rotate-180"></i>
         <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">{{"sidenav.logout" | translate}}</span>
       </a>

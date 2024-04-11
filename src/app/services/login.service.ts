@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -22,7 +23,7 @@ export class LoginService {
     private roleSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
     private ticketIdsSubject: BehaviorSubject<number[] | null> = new BehaviorSubject<number[] | null>(null);
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private router: Router) {
 
         const storedToken = localStorage.getItem(this.tokenKey);
         if (storedToken) {
@@ -85,6 +86,7 @@ export class LoginService {
         this.emailSubject.next(null);
         this.roleSubject.next(null);
         this.ticketIdsSubject.next(null);
+        this.router.navigate(['/login']);
     }
 
 

@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { LenguageComponent } from "../../lenguage/lenguage.component";
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SidebarComponent } from "../../sidebar/sidebar.component";
+import * as CryptoJS from 'crypto-js';
 
 
 function passwordValidator(control: FormControl): { [key: string]: any } | null {
@@ -58,8 +59,10 @@ export class LoginComponent implements OnInit {
       const email = this.loginForm.value.email;
       const password = this.loginForm.value.password;
 
+      const hashedPassword = CryptoJS.SHA256(password).toString().concat('@','A','a');
+
       // Envia la solicitud de inicio de sesión al backend
-      this.loginService.login(email, password)
+      this.loginService.login(email, hashedPassword)
         .subscribe({
           next: (response) => {
             this.errorMsg = "";

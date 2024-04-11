@@ -79,6 +79,7 @@ export class ComunicationComponent implements OnInit {
     isImageSelected: any;
 
     onSubmit() {
+      if(this.ticket.state !== 'FINISHED') {
         if(this.messageForm.valid) {
           console.log('Datos del formulario:', this.messageForm.value);
           console.log('Ticket:', this.ticket.id);
@@ -105,7 +106,13 @@ export class ComunicationComponent implements OnInit {
           });
           
         }
+      } else {
+        this.successMsg = "El ticket ya ha sido cerrado.";
+        setTimeout(() => {
+          this.successMsg = "";
+        }, 5000);
       }
+    }
 
       createMessage(Content: string, TicketId: number): Observable<any> {
         const formData = new FormData();

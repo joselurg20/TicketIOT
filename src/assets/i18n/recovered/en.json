@@ -9,6 +9,8 @@
     "password": "Password",
     "passwordplaceholder": "Enter your Password",
     "password2": "Repeat Password",
-    "password2placeholder": "Repeat your Password"
+    "passwordplaceholder2": "Repeat your Password",
+
+    "passwordMismatchErrorMessage": "Passwords do not match" 
   }  
 }

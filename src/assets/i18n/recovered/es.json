@@ -1,16 +1,16 @@
 {
     "recovered": {
     
-        "title": "Restablecer Contraseña",
+        "title": "Recuperar Contraseña",
         "email": "Correo",
         "emailplaceholder": "Ingresa tu Correo",
         "send": "Restablecer Contraseña",
 
-
-
         "password": "Contraseña",
         "passwordplaceholder": "Ingresa tu Contraseña",
         "password2": "Repetir Contraseña",
-        "password2placeholder": "Repite tu Contraseña"
+        "passwordplaceholder2": "Repite tu Contraseña",
+
+        "passwordMismatchErrorMessage": "Las contraseñas no coinciden"
     }  
 }

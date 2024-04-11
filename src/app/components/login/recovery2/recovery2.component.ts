@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { iResetPasswordDto } from 'src/app/models/users/iResetPasswordDto';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { LenguageComponent } from "../../lenguage/lenguage.component";
 
 function passwordValidator(control: FormControl): { [key: string]: any } | null {
   const hasUppercase = /[A-Z]/.test(control.value); // Verifica si hay al menos una letra mayúscula
@@ -19,11 +20,11 @@ function passwordValidator(control: FormControl): { [key: string]: any } | null 
 }
 
 @Component({
-  selector: 'app-recovery2',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, TranslateModule],
-  templateUrl: './recovery2.component.html',
-  styleUrls: ['./recovery2.component.scss']
+    selector: 'app-recovery2',
+    standalone: true,
+    templateUrl: './recovery2.component.html',
+    styleUrls: ['./recovery2.component.scss'],
+    imports: [CommonModule, ReactiveFormsModule, FormsModule, TranslateModule, LenguageComponent]
 })
 export class Recovery2Component implements OnInit {
 
@@ -58,22 +59,32 @@ export class Recovery2Component implements OnInit {
   resetPassword() {
     const password = this.recoveryForm.value.Password;
     const repeatPassword = this.recoveryForm.value.RepeatPassword;
-
-    if (password === repeatPassword) {
-      const formData = new FormData();
-      formData.append('Username', this.username);
-      formData.append('Domain', this.domain);
-      formData.append('Tld', this.tld);
-      formData.append('Password', password);
-      this.apiService.resetPassword(formData).subscribe({
-        next: (response) => {
-          console.log('Contraseña restablecida:', response);
-          this.router.navigate(['/login']);
-        },
-        error: (error) => {
-          console.error('Error al restablecer la contraseña:', error);
-        }
-      });
+  
+    // Verificar si las contraseñas coinciden
+    if (password !== repeatPassword) {
+      if (this.translate.currentLang === 'es') {
+        alert('Las contraseñas no coinciden');
+      } else {
+        alert('Passwords do not match');
+      }
+      return; 
     }
+  
+    // Si las contraseñas coinciden, continuar con el proceso de restablecimiento de contraseña
+    const formData = new FormData();
+    formData.append('Username', this.username);
+    formData.append('Domain', this.domain);
+    formData.append('Tld', this.tld);
+    formData.append('Password', password);
+  
+    this.apiService.resetPassword(formData).subscribe({
+      next: (response) => {
+        console.log('Contraseña restablecida:', response);
+        this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        console.error('Error al restablecer la contraseña:', error);
+      }
+    });
   }
 }

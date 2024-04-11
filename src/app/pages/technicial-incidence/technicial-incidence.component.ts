@@ -26,6 +26,10 @@ export class TechnicialIncidenceComponent implements OnInit {
         window.onpopstate = (event) => {
             this.router.navigate(['/support-technician']);
         }
+
+        if(localStorage.getItem('userRole') !== 'SupportTechnician') {
+            this.router.navigate(['/login']);
+        }
         
         setTimeout(() => {
             this.isLoading = false;

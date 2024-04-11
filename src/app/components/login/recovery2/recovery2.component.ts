@@ -33,6 +33,8 @@ export class Recovery2Component implements OnInit {
   username: string = '';
   domain: string = '';
   tld: string = '';
+  email: string = '';
+  hash: string = '';
 
   constructor(private route: ActivatedRoute, private router: Router, private apiService: ApiService, private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);
@@ -54,6 +56,12 @@ export class Recovery2Component implements OnInit {
       this.username = params['username'];
       this.domain = params['domain'];
       this.tld = params['tld'];
+      this.email = this.username.concat('@', this.domain, '.', this.tld);
+      const hashedEmail = CryptoJS.SHA256(this.email).toString();
+      this.hash = params['hash'];
+      if(hashedEmail !== this.hash){
+        this.router.navigate(['/404']);
+      }
     });
   }
 

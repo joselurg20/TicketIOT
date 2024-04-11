@@ -32,6 +32,10 @@ constructor(private loginService: LoginService, private router: Router) {}
             this.loginService.logout();
             this.router.navigate(['/login']);
         }
+
+        if(localStorage.getItem('userRole') !== 'SupportTechnician') {
+            this.router.navigate(['/login']);
+        }
         
         setTimeout(() => {
             this.isLoading = false;

@@ -16,13 +16,15 @@ import { ComunicationComponent } from "../../components/messages/comunication/co
 import { HistoryComponent } from "../../components/messages/history/history.component";
 import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
 import * as CryptoJS from 'crypto-js';
+import { LenguageComponent } from "../../components/lenguage/lenguage.component";
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-incidence-user',
     standalone: true,
     templateUrl: './incidence-user.component.html',
     styleUrls: ['./incidence-user.component.scss'],
-    imports: [CommonModule, MatGridListModule, NgFor, IncidenceTableComponent, IncidenceDataComponent, MessageComponent, HelpdeskComponent, ComunicationComponent, HistoryComponent]
+    imports: [CommonModule, MatGridListModule, NgFor, IncidenceTableComponent, IncidenceDataComponent, MessageComponent, HelpdeskComponent, ComunicationComponent, HistoryComponent, LenguageComponent, TranslateModule]
 })
 export class IncidenceUserComponent {
   public messages: iMessage[] = [];
@@ -33,7 +35,16 @@ export class IncidenceUserComponent {
   hashedId: string = '';
   
   
-    constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router) { }
+    constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router , private translate: TranslateService) {
+      this.translate.addLangs(['en', 'es']);
+      const lang = this.translate.getBrowserLang();
+      if (lang !== 'en' && lang !== 'es') {
+        this.translate.setDefaultLang('en');
+      } else {
+        this.translate.use('es');
+        
+      }
+    }
   
     ngOnInit(): void {
       this.route.params.subscribe(params => {

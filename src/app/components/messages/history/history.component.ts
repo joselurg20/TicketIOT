@@ -4,13 +4,14 @@ import { ApiService } from 'src/app/services/api.service';
 import { iMessage } from 'src/app/models/tickets/iMessage';
 import { ActivatedRoute } from '@angular/router';
 import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 
 
 @Component({
   selector: 'app-history',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './history.component.html',
   styleUrls: ['./history.component.scss']
 })
@@ -21,8 +22,16 @@ export class HistoryComponent {
   ticket: any;
   userName: string = '';
 
-  constructor(private apiService: ApiService, private route: ActivatedRoute) { }
-
+  constructor(private apiService: ApiService, private route: ActivatedRoute, private translate: TranslateService) {
+    this.translate.addLangs(['en', 'es']);
+    const lang = this.translate.getBrowserLang();
+    if (lang !== 'en' && lang !== 'es') {
+      this.translate.setDefaultLang('en');
+    } else {
+      this.translate.use('es');
+      
+    }
+  }
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.ticketId = params['ticketId'];

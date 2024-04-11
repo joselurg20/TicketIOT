@@ -41,7 +41,7 @@ const routes: Routes = [
 
   //accedibles el usuario
   { path: "incidencia", component: IncidenceIndexComponent },
-  { path: "enlace/:ticketId", component: IncidenceUserComponent },
+  { path: "enlace/:hashedId/:ticketId", component: IncidenceUserComponent },
   { path: "404", component: Error404Component },
   { path: "**", redirectTo: "/404" }
 ];

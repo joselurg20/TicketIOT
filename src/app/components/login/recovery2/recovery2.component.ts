@@ -6,6 +6,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { iResetPasswordDto } from 'src/app/models/users/iResetPasswordDto';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LenguageComponent } from "../../lenguage/lenguage.component";
+import * as CryptoJS from 'crypto-js';
 
 function passwordValidator(control: FormControl): { [key: string]: any } | null {
   const hasUppercase = /[A-Z]/.test(control.value); // Verifica si hay al menos una letra mayúscula
@@ -69,13 +70,16 @@ export class Recovery2Component implements OnInit {
       }
       return; 
     }
+
+    
+    const hashedPassword = CryptoJS.SHA256(password).toString().concat('@','A','a');
   
     // Si las contraseñas coinciden, continuar con el proceso de restablecimiento de contraseña
     const formData = new FormData();
     formData.append('Username', this.username);
     formData.append('Domain', this.domain);
     formData.append('Tld', this.tld);
-    formData.append('Password', password);
+    formData.append('Password', hashedPassword);
   
     this.apiService.resetPassword(formData).subscribe({
       next: (response) => {

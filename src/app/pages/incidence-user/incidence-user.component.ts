@@ -51,9 +51,9 @@ export class IncidenceUserComponent {
         this.ticketId = params['ticketId'];
         console.log('TicketId', this.ticketId);
         this.hashedId = params['hashedId'];
-        const hashedPassword = CryptoJS.SHA256(this.ticketId.toString()).toString();
-        if(this.hashedId === hashedPassword) {
-          this.apiService.getMessagesByTicket(this.ticketId).subscribe({
+        const hashedId = CryptoJS.SHA256(this.ticketId.toString()).toString();
+        if(this.hashedId === hashedId) {
+          /*this.apiService.getMessagesByTicket(this.ticketId).subscribe({
             next: (response: any) => {
               console.log('response', response);
               this.messages = response.$values.map((message: any) => {
@@ -69,7 +69,7 @@ export class IncidenceUserComponent {
             error: (error: any) => {
               console.error('Error al obtener los mensajes del ticket', error);
             }
-          })
+          })*/
         }else{
           this.router.navigate(['/404']);
         }

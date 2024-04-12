@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from 'src/app/services/api.service';
 import { iMessage } from 'src/app/models/tickets/iMessage';
 import { TicketDto } from 'src/app/models/tickets/TicketDTO';
 import { iAttachment } from 'src/app/models/attachments/iAttachment';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { MessagesUpdateService } from 'src/app/services/messagesUpdate.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-message',
@@ -19,8 +21,9 @@ export class MessageComponent implements OnInit {
   ticket: TicketDto = { Name: '', Email: '', Title: '', HasNewMessages: false, NewMessagesCount: 0 };
   messages: iMessage[] = [];
   isFirstLoad: boolean = true;
+  private messagesUpdateSubscription: Subscription = {} as Subscription;
 
-  constructor(private apiService: ApiService, private translate: TranslateService) {
+  constructor(private apiService: ApiService, private translate: TranslateService, private messagesUpdateService: MessagesUpdateService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -57,7 +60,38 @@ export class MessageComponent implements OnInit {
           console.error('Error al obtener los mensajes del ticket', error);
         }
       });
+
+      this.messagesUpdateSubscription = this.messagesUpdateService.messagesUpdated$.subscribe(() => {
+        console.log('Messages update received');
+        
+        this.refreshMessagesData();
+      });
     }
+  }
+
+  /**
+   * Actualiza los mensajes de la incidencia.
+   */
+  refreshMessagesData() {
+    this.apiService.getMessagesByTicket(this.ticketId).subscribe({
+      next: (response: any) => {
+        console.log('response', response);
+        this.messages = response.$values.map((message: any) => {
+          return {
+            Id: message.id,
+            Author: message.author,
+            Content: message.content,
+            AttachmentPaths: message.attachmentPaths.$values.map((attachmentPath: any) => attachmentPath.path),
+            Attachments: [],
+            ticketID: message.ticketID,
+            Timestamp: this.formatDate(message.timestamp)
+          }
+        })
+      },
+      error: (error: any) => {
+        console.error('Error al obtener los mensajes del ticket', error);
+      }
+    });
   }
 
   /**

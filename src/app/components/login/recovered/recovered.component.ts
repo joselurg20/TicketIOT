@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from "../../button/button.component";
 import { Router } from '@angular/router';
@@ -23,15 +23,15 @@ export class RecoveredComponent implements OnInit {
         this.translate.addLangs(['en', 'es']);
         const lang = this.translate.getBrowserLang();
         if (lang !== 'en' && lang !== 'es') {
-          this.translate.setDefaultLang('en');
+            this.translate.setDefaultLang('en');
         } else {
-          this.translate.use('es');
-          
+            this.translate.use('es');
+
         }
-      }
+    }
 
     ngOnInit(): void {
-        this.recoveryForm = new FormGroup({   
+        this.recoveryForm = new FormGroup({
             Email: new FormControl('', [Validators.required, Validators.email])
         });
     }
@@ -48,14 +48,14 @@ export class RecoveredComponent implements OnInit {
             const username = emailParts[1];
             const domain = emailParts[2];
             const tld = emailParts[3];
-        
+
             this.apiService.checkEmail(username, domain, tld).subscribe({
                 next: (response) => {
-                console.log('Email enviado:', response);
-                this.router.navigate(['/login']);
+                    console.log('Email enviado:', response);
+                    this.router.navigate(['/login']);
                 },
                 error: (error) => {
-                console.error('Error al enviar el email:', error);
+                    console.error('Error al enviar el email:', error);
                 }
             })
         }

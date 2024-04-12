@@ -14,20 +14,21 @@ import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { ButtonComponent } from "../../button/button.component";
 import { SidebarComponent } from '../../sidebar/sidebar.component';
+import { LenguageComponent } from "../../lenguage/lenguage.component";
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 
 @Component({
-  selector: 'app-incidence-prueba',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatFormFieldModule,
-    MatSelectModule, MatButtonModule, MatSnackBarModule, MatInputModule, MatButtonModule,
-    MatSnackBarModule, ChartBarComponent, ChartPieComponent,
-    ChartDoughnutComponent, ButtonComponent, SidebarComponent],
-  templateUrl: './incidence-prueba.component.html',
-  styleUrls: ['./incidence-prueba.component.scss']
+    selector: 'app-incidence-prueba',
+    standalone: true,
+    templateUrl: './incidence-prueba.component.html',
+    styleUrls: ['./incidence-prueba.component.scss'],
+    imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatFormFieldModule,
+        MatSelectModule, MatButtonModule, MatSnackBarModule, MatInputModule, MatButtonModule,
+        MatSnackBarModule, ChartBarComponent, ChartPieComponent,
+        ChartDoughnutComponent, ButtonComponent, SidebarComponent, LenguageComponent, TranslateModule]
 })
 export class IncidencePruebaComponent implements OnInit {
-
 
   public ticketForm!: FormGroup;
   successMsg: string = "";
@@ -40,7 +41,16 @@ export class IncidencePruebaComponent implements OnInit {
   isLogged: boolean = false;
   selectedFiles: File[] = [];
 
-  constructor(private _snackBar: MatSnackBar, private apiService: ApiService) { }
+  constructor(private _snackBar: MatSnackBar, private apiService: ApiService , private translate: TranslateService) {
+    this.translate.addLangs(['en', 'es']);
+    const lang = this.translate.getBrowserLang();
+    if (lang !== 'en' && lang !== 'es') {
+      this.translate.setDefaultLang('en');
+    } else {
+      this.translate.use('es');
+      
+    }
+  }
 
   openSnackBar() {
     this._snackBar.open("Incidencia enviada", 'Cerrar', {
@@ -81,9 +91,11 @@ export class IncidencePruebaComponent implements OnInit {
         .subscribe({
           next: (response) => {
             console.log('Ticket creado con éxito', response);
-            this.openSnackBar(); // Mostrar toast
+            this.openSnackBar(); 
             this.ticketForm.reset();
-            this.clearAttachments(); // Limpiar campos del formulario
+            setTimeout(() => {
+              this.clearAttachments(); 
+            }, 1000);
           },
           error: (error) => {
             console.error('Error en la solicitud', error);
@@ -103,17 +115,18 @@ export class IncidencePruebaComponent implements OnInit {
     formData.append('MessageDTO.Content', Content);
 
     var attachments = this.selectedFiles;
+    console.log('Attachments:', attachments);
       
     if (attachments.length > 0) {
           
       if (attachments.length == 1) {
         const fileInput = <HTMLInputElement>document.getElementById('Attachments');
         if (fileInput && fileInput.files && fileInput.files.length > 0) {
-          formData.append('Attachments', fileInput.files[0], fileInput.files[0].name);
+          formData.append('MessageDTO.Attachments', fileInput.files[0], fileInput.files[0].name);
         }
       } else if (attachments.length > 0) {
         for (var attachment of attachments) {
-          formData.append('Attachments', attachment, attachment.name);
+          formData.append('MessageDTO.Attachments', attachment, attachment.name);
         }
       }
     }
@@ -138,6 +151,7 @@ export class IncidencePruebaComponent implements OnInit {
         this.isImageSelected = file.type.startsWith('image/');
       }
     }
+    console.log('Selected files', this.selectedFiles);
   }
 
 
@@ -147,13 +161,22 @@ export class IncidencePruebaComponent implements OnInit {
     this.isImageSelected = false;
   }
 
-  goBack() {
-    window.history.back();
+  handleFileInput(files: any) {
+    const file = files.item(0);
+    if (file) {
+      const extension = file.name.split('.').pop()?.toLowerCase();
+      if (extension === 'txt') {
+        console.log('Es un documento de texto (txt).');
+      } else if (extension === 'pdf') {
+        console.log('Es un documento PDF.');
+      } else if (extension === 'docx' || extension === 'doc') {
+        console.log('Es un documento de Word.');
+      } else {
+        console.log('No es una imagen ni un tipo de archivo reconocido.');
+      }
     }
+  }
 
 
-    removeUnwantedPhotos() {
-      this.previewUrls = [];
-      this.isImageSelected = false;
-    }
+
 }

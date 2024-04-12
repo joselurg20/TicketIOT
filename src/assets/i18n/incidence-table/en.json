@@ -1,0 +1,14 @@
+{
+  "incidence-table": {
+    "header": "Tickets",
+    "title": "Title",
+    "name": "Name",
+    "state": "State",
+    "timestamp": "Timestamp",
+    "technician": "Technician",
+    "email": "Email",
+    "priority": "Priority",
+    "show": "Edit",
+    "titleTable": "Tickets"
+  }
+}

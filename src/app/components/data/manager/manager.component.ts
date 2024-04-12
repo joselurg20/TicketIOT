@@ -15,7 +15,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 })
 export class ManagerComponent implements OnInit {
 
-  users: iUserGraph[] = [];  
+  users: iUserGraph[] = [];
   public priorities: string[] = ['NOT_SURE', 'LOWEST', 'LOW', 'MEDIUM', 'HIGH', 'HIGHEST'];
   public states: string[] = ['PENDING', 'OPENED', 'PAUSED', 'FINISHED'];
   selectedUserId: number = -1;
@@ -32,7 +32,7 @@ export class ManagerComponent implements OnInit {
       this.translate.setDefaultLang('en');
     } else {
       this.translate.use('es');
-      
+
     }
   }
 
@@ -56,7 +56,7 @@ export class ManagerComponent implements OnInit {
   }
 
   updateTicket() {
-    if(this.selectedUserId != -1) {
+    if (this.selectedUserId != -1) {
       this.apiService.assignTechnician(parseInt(localStorage.getItem('selectedTicket')!), this.selectedUserId).subscribe({
         next: () => {
           console.log('Técnico asignado correctamente');
@@ -70,8 +70,8 @@ export class ManagerComponent implements OnInit {
       });
     }
     setTimeout(() => {
-    },10);
-    if(this.selectedPriorityValue != -1) {
+    }, 10);
+    if (this.selectedPriorityValue != -1) {
       this.apiService.changeTicketPriority(parseInt(localStorage.getItem('selectedTicket')!), this.selectedPriorityValue).subscribe({
         next: () => {
           console.log('Prioridad cambiada correctamente');
@@ -84,9 +84,9 @@ export class ManagerComponent implements OnInit {
         }
       });
     }
-    setTimeout(() => { 
-    },20);
-    if(this.selectedStateValue != -1) {
+    setTimeout(() => {
+    }, 20);
+    if (this.selectedStateValue != -1) {
       this.apiService.changeTicketState(parseInt(localStorage.getItem('selectedTicket')!), this.selectedStateValue).subscribe({
         next: () => {
           console.log('Estado cambiado correctamente');

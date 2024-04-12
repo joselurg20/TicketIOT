@@ -1,14 +1,14 @@
 @import "../../../styles/imports.scss";
 
 .btn {
-    margin: 2vh;
+  margin: 2vh;
   color: $color-mid;
   background-color: $bg-color-warning;
   border-radius: 10px;
 
-   &:hover {
-     color: $bg-color-warning;
-     background-color: $color-light;
-     border-color: $bg-color-warning;
-   }
+  &:hover {
+    color: $bg-color-warning;
+    background-color: $color-light;
+    border-color: $bg-color-warning;
+  }
 }

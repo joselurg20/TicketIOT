@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { iUserTable } from 'src/app/models/users/iUserTable';
 import { iMessage } from 'src/app/models/tickets/iMessage';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -35,10 +34,11 @@ export class HelpdeskComponent {
       this.translate.setDefaultLang('en');
     } else {
       this.translate.use('es');
-      
+
     }
   }
-    ngOnInit(): void {
+
+  ngOnInit(): void {
     this.messageForm = new FormGroup({
       Attachments: new FormControl('', null),
       Content: new FormControl('', Validators.required)

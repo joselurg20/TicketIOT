@@ -23,11 +23,11 @@ function passwordValidator(control: FormControl): { [key: string]: any } | null 
 }
 
 @Component({
-    selector: 'app-login',
-    standalone: true,
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
-    imports: [CommonModule, ReactiveFormsModule, LenguageComponent, TranslateModule, SidebarComponent]
+  selector: 'app-login',
+  standalone: true,
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
+  imports: [CommonModule, ReactiveFormsModule, LenguageComponent, TranslateModule, SidebarComponent]
 })
 export class LoginComponent implements OnInit {
   public loginForm!: FormGroup; // Define loginForm como un FormGroup
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
       this.translate.setDefaultLang('en');
     } else {
       this.translate.use('es');
-      
+
     }
   }
 
@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
       const email = this.loginForm.value.email;
       const password = this.loginForm.value.password;
 
-      const hashedPassword = CryptoJS.SHA256(password).toString().concat('@','A','a');
+      const hashedPassword = CryptoJS.SHA256(password).toString().concat('@', 'A', 'a');
 
       // Envia la solicitud de inicio de sesión al backend
       this.loginService.login(email, hashedPassword)

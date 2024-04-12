@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ApiService } from 'src/app/services/api.service';
 import { iMessage } from 'src/app/models/tickets/iMessage';
 import { ActivatedRoute } from '@angular/router';
-import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 
@@ -29,9 +28,10 @@ export class HistoryComponent {
       this.translate.setDefaultLang('en');
     } else {
       this.translate.use('es');
-      
+
     }
   }
+
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.ticketId = params['ticketId'];
@@ -77,7 +77,7 @@ export class HistoryComponent {
   }
 
   downloadAttachment(attachmentPath: string) {
-    var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/'+this.ticketId+'/';
+    var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/' + this.ticketId + '/';
     const fileName = attachmentPath.substring(pathPrefix.length);
     this.downloadFile(attachmentPath, fileName);
   }

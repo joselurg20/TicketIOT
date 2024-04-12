@@ -1,83 +1,94 @@
-@import "../../../../styles/variables.scss";
+@import "../../../../styles/imports.scss";
 
+// Variables
+$primary-color: $bg-color-warning;
+$secondary-color: $color-light;
+$text-color: $text-color-dark;
+$placeholder-color: $text-color-mid;
+$warning-color: $color-warning;
+$danger-color: $color-danger;
+$bg-color: $bg-color-mid;
+$bg-color-2: $bg-color-mid-2;
+
+// Estilos
 * {
   padding: 4px;
 }
 
 h2 {
-  color: $text-color-dark;
+  color: $text-color;
   text-align: center;
 }
 
 .contenedor {
   margin: 2rem auto;
   border-radius: 25px;
-  background-color: $bg-color-mid;
+  background-color: $bg-color;
   width: 900px;
   padding: 20px;
-  color: $text-color-mid;
-  outline: none;
-  box-shadow: none;
+  color: #fff;
   font-weight: 700;
   font-size: large;
+  outline: none;
+  box-shadow: none;
 
   & input:focus,
   & textarea:focus,
   & select:focus {
     outline: none !important;
     box-shadow: none !important;
-    border-color: $color-warning;
+    border-color: $warning-color;
+    background-color: $bg-color-2;
   }
 
   input.placeholder,
   textarea.placeholder,
   select.placeholder {
-    color: $text-color-warning;
+    color: $placeholder-color;
   }
 
-  .custom-file-button {
-    display: block;
-    margin: 0 auto;
-    color: $text-color-light;
-    background-color: $bg-color-warning;
-    border: 1px solid $color-warning;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-
-    &:hover {
-      color: $color-light;
-      background-color: $bg-color-dark;
-      border-color: $color-light;
-    }
-
-  }
-
-  .preview-link {
-    color: $text-color-dark;
-  }
-
-  & input,
+  input,
   textarea {
     border-radius: 10px;
-    background-color: $color-light;
-    color: $text-color-primary !important;
+    background-color: $color-mid;
+    color: $text-color-mid;
   }
 
   input::placeholder,
   textarea::placeholder,
   select::placeholder {
-    color: $text-color-primary;
+    color: $text-color-warning;
   }
 
   & select {
-    color: $color-danger !important;
+    color: $danger-color !important;
     background-color: $bg-color-danger;
   }
 
   &:active {
-    border-color: $text-color-mid !important;
+    border-color: $text-color !important;
   }
+}
+
+.custom-file-button {
+  display: block;
+  margin: 0 auto;
+  color: $text-color;
+  background-color: $primary-color;
+  border: 1px solid $warning-color;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+
+  &:hover {
+    color: $secondary-color;
+    background-color: $bg-color-dark;
+    border-color: $secondary-color;
+  }
+}
+
+.preview-link {
+  color: $text-color;
 }
 
 .btn {
@@ -91,7 +102,6 @@ h2 {
     border-color: $color-light;
   }
 }
-
 .logotipe {
   text-align: center;
 
@@ -109,45 +119,21 @@ h2 {
   }
 }
 
-.green-snackbar {
-  background-color: green !important;
-  color: white;
+.errorMsg {
+  color: green;
+  text-align: center;
 }
 
-
+// Media queries
 @media screen and (max-width: 992px) {
   .contenedor {
     width: 100%;
     height: auto;
-    margin-top: 0;
     margin: 0;
     padding: 20px;
     border-radius: 0;
-
-  }
-
-  .btn {
-    width: 100%;
-  }
-
-  .btn2 {
-    width: 100%;
-  }
-
-  .font {
-    font-size: 16px;
-  }
-
-}
-
-.btn-close {
-  color: white !important;
-
-  &:focus {
-    box-shadow: none;
   }
 }
-
 
 @media screen and (max-width: 600px) {
   .contenedor {
@@ -156,18 +142,5 @@ h2 {
     border-radius: 0;
     height: auto;
     margin: 0;
-
-  }
-
-  .btn {
-    width: 100%;
-  }
-
-  .btn2 {
-    width: 100%;
-  }
-
-  .font {
-    font-size: 16px;
   }
 }

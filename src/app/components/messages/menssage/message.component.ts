@@ -16,18 +16,18 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 export class MessageComponent implements OnInit {
 
   ticketId: number = 0;
-  ticket: TicketDto = {Name: '', Email: '', Title: '', HasNewMessages: false, NewMessagesCount: 0};
+  ticket: TicketDto = { Name: '', Email: '', Title: '', HasNewMessages: false, NewMessagesCount: 0 };
   messages: iMessage[] = [];
   isFirstLoad: boolean = true;
 
-  constructor(private apiService: ApiService , private translate: TranslateService) {
+  constructor(private apiService: ApiService, private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
       this.translate.setDefaultLang('en');
     } else {
       this.translate.use('es');
-      
+
     }
   }
 
@@ -84,12 +84,12 @@ export class MessageComponent implements OnInit {
         console.error('Error al obtener el ticket', error);
       }
     });
-    
-    if(this.isFirstLoad) {
+
+    if (this.isFirstLoad) {
       for (const message of this.messages) {
-        if(message.AttachmentPaths.length > 0) {
+        if (message.AttachmentPaths.length > 0) {
           for (const attachmentPath of message.AttachmentPaths) {
-            var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/'+this.ticketId+'/';
+            var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/' + this.ticketId + '/';
             const fileName = attachmentPath.substring(pathPrefix.length);
             this.apiService.downloadAttachment(fileName, +localStorage.getItem('selectedTicket')!).subscribe({
               next: (response: any) => {
@@ -112,7 +112,7 @@ export class MessageComponent implements OnInit {
   }
 
   downloadAttachment(attachmentPath: string) {
-    var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/'+this.ticketId+'/';
+    var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/' + this.ticketId + '/';
     const fileName = attachmentPath.substring(pathPrefix.length);
     this.apiService.downloadAttachment(fileName, +localStorage.getItem('selectedTicket')!).subscribe({
       next: (response: any) => {

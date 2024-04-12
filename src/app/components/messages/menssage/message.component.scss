@@ -30,13 +30,24 @@ hr {
 }
 
 .btn-close {
-  color: white !important;
+  margin-left: auto;
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: transparent;
+  border: none;
+  border-color: #202124;
+
+  .fa-xmark {
+    color: #fff;
+    font-size: 24px;
+  }
 
   &:focus {
     box-shadow: none;
   }
 }
-
 
 .btn {
   color: $color-dark;

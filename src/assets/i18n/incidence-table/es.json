@@ -1,0 +1,14 @@
+{
+  "incidence-table": {
+    "header": "Incidencias",
+    "title": "Título",
+    "name": "Nombre",
+    "state": "Estado",
+    "timestamp": "Fecha y hora",
+    "technician": "Tecnico Asignado",
+    "email": "Email",
+    "priority": "Prioridad",
+    "show": "Editar",
+    "titleTable": "Incidencias"
+  }
+}

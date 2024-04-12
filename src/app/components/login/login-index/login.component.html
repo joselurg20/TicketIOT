@@ -1,18 +1,20 @@
 <app-lenguage class="d-flex justify-content-end"></app-lenguage>
 <div class="container mt-lg-5">
     <div class="row justify-content-center">
-         <div class="col-md-6">
+        <div class="col-md-6">
             <form [formGroup]="loginForm" (submit)="onSubmit()">
                 <h1 class="mb-3">{{'login.title' | translate}}</h1>
 
                 <div class="mb-3">
-                    <label for="email" class="form-label"><i class="fa-solid fa-at"></i> {{'login.email' | translate}}</label>
-                    <input type="text" class="form-control form-control-lg" id="email" placeholder="{{'login.emailplaceholder' | translate}}"
-                        formControlName="email">
+                    <label for="email" class="form-label"><i class="fa-solid fa-at"></i> {{'login.email' |
+                        translate}}</label>
+                    <input type="text" class="form-control form-control-lg" id="email"
+                        placeholder="{{'login.emailplaceholder' | translate}}" formControlName="email">
                 </div>
 
                 <div class="mb-3">
-                    <label for="password" class="form-label"><i class="fa-solid fa-lock"></i> {{'login.password' | translate}}</label>
+                    <label for="password" class="form-label"><i class="fa-solid fa-lock"></i> {{'login.password' |
+                        translate}}</label>
                     <input type="password" class="form-control form-control-lg" id="password"
                         placeholder="{{'login.passwordplaceholder' | translate}}" formControlName="password">
                 </div>
@@ -24,7 +26,8 @@
                 </div>
 
                 <div class="d-grid mb-3">
-                    <button [disabled]="!loginForm.valid" type="submit" class="iot-log-btn">{{'login.login' | translate}}</button>
+                    <button [disabled]="!loginForm.valid" type="submit" class="iot-log-btn">{{'login.login' |
+                        translate}}</button>
                 </div>
 
                 <div class="link mb-3">

@@ -1,7 +1,7 @@
 {
-    "error404": {
-        "title": "Error 404",
-        "description": "Sorry, the page you are looking for is not available.",
-        "button": "Back to the main page"
-    }
+  "error404": {
+    "title": "Error 404",
+    "description": "Sorry, the page you are looking for is not available.",
+    "description2": "The server of the website you are trying to access is communicable, but the address or URL you entered is not available."
+  }
 }

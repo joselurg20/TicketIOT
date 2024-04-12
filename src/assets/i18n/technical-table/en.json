@@ -1,0 +1,9 @@
+{
+  "technical-table": {
+    "header": "Technical table",
+    "title": "ID",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone"
+  }
+}

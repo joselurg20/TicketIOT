@@ -1,11 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { R3TargetBinder } from '@angular/compiler';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { Subscription } from 'rxjs';
-import { iTicketTable } from 'src/app/models/tickets/iTicketTable';
 import { iTicketGraph } from 'src/app/models/tickets/iTicketsGraph';
-import { iUserTable } from 'src/app/models/users/iUserTable';
 import { ApiService } from 'src/app/services/api.service';
 import { GraphUpdateService } from 'src/app/services/graphUpdateService';
 

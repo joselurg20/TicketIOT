@@ -8,13 +8,15 @@
             <h2>{{'recovered.title' | translate}}</h2>
             <form [formGroup]="recoveryForm" (ngSubmit)="resetPassword()">
                 <div class="mb-3">
-                    <label for="Password" class="form-label"><i class="fa-solid fa-lock"></i> {{'recovered.password' | translate}}</label>
+                    <label for="Password" class="form-label"><i class="fa-solid fa-lock"></i> {{'recovered.password' |
+                        translate}}</label>
                     <input type="Password" class="form-control form-control-lg" id="Password"
                         placeholder="{{'recovered.passwordplaceholder' | translate}}" formControlName="Password">
                 </div>
 
                 <div class="mb-3">
-                    <label for="RepeatPassword" class="form-label"><i class="fa-solid fa-lock"></i> {{'recovered.password2' | translate}}</label>
+                    <label for="RepeatPassword" class="form-label"><i class="fa-solid fa-lock"></i>
+                        {{'recovered.password2' | translate}}</label>
                     <input type="Password" class="form-control form-control-lg" id="RepeatPassword"
                         placeholder="{{'recovered.passwordplaceholder2' | translate}}" formControlName="RepeatPassword">
                 </div>

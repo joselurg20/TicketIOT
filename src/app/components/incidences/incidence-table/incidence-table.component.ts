@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -13,13 +13,14 @@ import {MatBadgeModule} from '@angular/material/badge';
 import { iUserTable } from 'src/app/models/users/iUserTable';
 import { GraphUpdateService } from 'src/app/services/graphUpdateService';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 
 @Component({
   selector: 'app-incidence-table',
   standalone: true,
   imports: [CommonModule, MatTableModule, MatSortModule, MatPaginatorModule, MatButtonModule,
-    MatTooltipModule, MatBadgeModule, MatProgressSpinnerModule],
+    MatTooltipModule, MatBadgeModule, MatProgressSpinnerModule, TranslateModule],
   templateUrl: './incidence-table.component.html',
   styleUrls: ['./incidence-table.component.scss']
 })
@@ -36,8 +37,16 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   isbadgeHidden: boolean = true;
   isLoading: boolean = false;
 
-  constructor(private _liveAnnouncer: LiveAnnouncer, private apiService: ApiService, private router: Router, private graphUpdateService: GraphUpdateService) { }
-
+  constructor(private _liveAnnouncer: LiveAnnouncer, private apiService: ApiService, private router: Router, private graphUpdateService: GraphUpdateService, private translate: TranslateService) {
+    this.translate.addLangs(['en', 'es']);
+    const lang = this.translate.getBrowserLang();
+    if (lang !== 'en' && lang !== 'es') {
+      this.translate.setDefaultLang('en');
+    } else {
+      this.translate.use('es');
+      
+    }
+  }
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 

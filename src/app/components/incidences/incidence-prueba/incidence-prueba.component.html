@@ -1,51 +1,48 @@
+<app-lenguage *ngIf="!isLogged" class="d-flex justify-content-end"></app-lenguage>
+<app-sidebar *ngIf="isLogged"></app-sidebar>
+
 <div class="contenedor overflow-hidden">
-
     <div class="container mt-3">
-
-        <h2>Crear Incidencia</h2>
+        <h2>{{'incidence-index.title' | translate}}</h2>
 
         <form [formGroup]="ticketForm" (submit)="onSubmit()" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="Name"><i class="fa-solid fa-user"> </i> Nombre (máx. 45 caracteres):</label>
-                <input type="text" class="form-control form-control-lg" id="Name" placeholder="Ingrese su nombre"
+                <label for="Name"><i class="fa-solid fa-user"> </i> {{'incidence-index.name' | translate}}</label>
+                <input type="text" class="form-control form-control-lg" id="Name" placeholder="{{'incidence-index.nameplaceholder' | translate}}"
                     formControlName="Name">
             </div>
 
             <div class="form-group">
-                <label for="Email"><i class="fa-solid fa-envelope"> </i> Email:</label>
-                <input type="Email" class="form-control form-control-lg" id="Email" placeholder="Ingrese su email"
+                <label for="Email"><i class="fa-solid fa-envelope"> </i> {{'incidence-index.email' | translate}}</label>
+                <input type="Email" class="form-control form-control-lg" id="Email" placeholder="{{'incidence-index.emailplaceholder' | translate}}"
                     formControlName="Email">
             </div>
 
             <div class="form-group">
-                <label for="Title"><i class="fa-solid fa-pen"></i> Título (máx. 45 caracteres):</label>
-                <input type="text" class="form-control form-control-lg" id="Title" placeholder="Ingrese el título"
+                <label for="Title"><i class="fa-solid fa-pen"></i> {{'incidence-index.titleincidence' | translate}}</label>
+                <input type="text" class="form-control form-control-lg" id="Title" placeholder="{{'incidence-index.titleplaceholder' | translate}}"
                     formControlName="Title">
             </div>
 
             <div class="form-group">
-                <label for="Content"><i class="fa-solid fa-file-pen"></i> Descripción:</label>
+                <label for="Content"><i class="fa-solid fa-file-lines"></i> {{'incidence-index.content' | translate}}</label>
                 <textarea class="form-control  form-control-lg" id="Content" rows="3"
-                    placeholder="Ingrese la descripción" formControlName="Content"></textarea>
+                    placeholder="{{'incidence-index.contentplaceholder' | translate}}" formControlName="Content"></textarea>
             </div>
 
             <div class="form-group">
-                <label for="Attachments"><i class="fa-solid fa-folder"></i> Adjuntar Archivos:</label> <br>
+                <label for="Attachments"><i class="fa-solid fa-folder"></i> {{'incidence-index.attachments' | translate}}</label> <br>
                 <input type="file" id="Attachments" formControlName="Attachments" multiple
                     (change)="onFileChange($event)" style="display: none;">
                 <button type="button" onclick="document.getElementById('Attachments').click()"
-                    class="custom-file-button btn btn-lg"><i class="fa-solid fa-arrow-up-from-bracket"></i> Seleccionar
-                    Archivos</button>
+                    class="custom-file-button btn btn-lg"><i class="fa-solid fa-arrow-up-from-bracket"></i> {{'incidence-index.upload' | translate}}</button>
 
                 <div *ngIf="isFileSelected" class="logotipe">
-                    <button (click)="removeUnwantedPhotos()" style="margin-top: 10px;" class="btn-close justify-content-end"></button>
-
                     <div *ngIf="isImageSelected">
                         <img *ngFor="let previewUrl of previewUrls" [src]="previewUrl" alt="Vista previa del archivo" class="preview-image">
                     </div>
                     <div *ngIf="!isImageSelected">
-                        <a *ngFor="let previewUrl of previewUrls" class="preview-link" [href]="previewUrl" target="_blank">Ver Archivo
-                            Adjunto</a>
+                        <a *ngFor="let previewUrl of previewUrls" class="preview-link" [href]="previewUrl" target="_blank"> {{'incidence-index.download' | translate}}</a>
                     </div>
                 </div>
             </div>
@@ -53,14 +50,11 @@
             <br>
 
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button [disabled]="!ticketForm.valid" type="submit" class="btn btn-lg" id="liveToastBtn">Enviar Incidencia</button>
+                <button [disabled]="!ticketForm.valid" type="submit" class="btn btn-lg" id="liveToastBtn">{{'incidence-index.send' | translate}}</button>
 
             </div>
-
         </form>
-
         <div class="logotipe">
             <img src="assets/images/logo/IoTlogo.png" alt="">
         </div>
-
     </div>

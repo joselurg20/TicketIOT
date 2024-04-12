@@ -4,7 +4,6 @@
   padding: 4px;
 }
 
-
 section {
   display: flex;
   flex-direction: column;
@@ -23,7 +22,6 @@ section {
 h2 {
   color: $text-color-dark;
 }
-
 
 #divTable {
   border-radius: 10px;
@@ -57,13 +55,13 @@ tr {
   margin: 0px 10px 0px 10px;
 }
 
-.id{
+.id {
   text-align: right;
 }
-.phone{
-  text-align: right;
-} 
 
+.phone {
+  text-align: right;
+}
 
 .row-highlight {
   background-color: $bg-color-mid;

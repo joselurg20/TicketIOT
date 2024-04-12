@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TicketUpdateService } from 'src/app/services/ticketUpdate.service';
 import { ApiService } from 'src/app/services/api.service';
@@ -25,11 +25,11 @@ export class TechnicialComponent {
       this.translate.setDefaultLang('en');
     } else {
       this.translate.use('es');
-      
+
     }
   }
   updateTicket() {
-    if(this.selectedStateValue != -1) {
+    if (this.selectedStateValue != -1) {
       this.apiService.changeTicketState(parseInt(localStorage.getItem('selectedTicket')!), this.selectedStateValue).subscribe({
         next: () => {
           console.log('Estado cambiado correctamente');

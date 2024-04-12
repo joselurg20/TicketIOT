@@ -71,7 +71,7 @@ export class SidebarComponent implements OnInit {
       this.translate.setDefaultLang('en');
     } else {
       this.translate.use('es');
-      
+
     }
   }
 

@@ -21,11 +21,11 @@ function passwordValidator(control: FormControl): { [key: string]: any } | null 
 }
 
 @Component({
-    selector: 'app-recovery2',
-    standalone: true,
-    templateUrl: './recovery2.component.html',
-    styleUrls: ['./recovery2.component.scss'],
-    imports: [CommonModule, ReactiveFormsModule, FormsModule, TranslateModule, LenguageComponent]
+  selector: 'app-recovery2',
+  standalone: true,
+  templateUrl: './recovery2.component.html',
+  styleUrls: ['./recovery2.component.scss'],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, TranslateModule, LenguageComponent]
 })
 export class Recovery2Component implements OnInit {
 
@@ -43,7 +43,7 @@ export class Recovery2Component implements OnInit {
       this.translate.setDefaultLang('en');
     } else {
       this.translate.use('es');
-      
+
     }
   }
 
@@ -59,7 +59,7 @@ export class Recovery2Component implements OnInit {
       this.email = this.username.concat('@', this.domain, '.', this.tld);
       const hashedEmail = CryptoJS.SHA256(this.email).toString();
       this.hash = params['hash'];
-      if(hashedEmail !== this.hash){
+      if (hashedEmail !== this.hash) {
         this.router.navigate(['/404']);
       }
     });
@@ -68,7 +68,7 @@ export class Recovery2Component implements OnInit {
   resetPassword() {
     const password = this.recoveryForm.value.Password;
     const repeatPassword = this.recoveryForm.value.RepeatPassword;
-  
+
     // Verificar si las contraseñas coinciden
     if (password !== repeatPassword) {
       if (this.translate.currentLang === 'es') {
@@ -76,19 +76,19 @@ export class Recovery2Component implements OnInit {
       } else {
         alert('Passwords do not match');
       }
-      return; 
+      return;
     }
 
-    
-    const hashedPassword = CryptoJS.SHA256(password).toString().concat('@','A','a');
-  
+
+    const hashedPassword = CryptoJS.SHA256(password).toString().concat('@', 'A', 'a');
+
     // Si las contraseñas coinciden, continuar con el proceso de restablecimiento de contraseña
     const formData = new FormData();
     formData.append('Username', this.username);
     formData.append('Domain', this.domain);
     formData.append('Tld', this.tld);
     formData.append('Password', hashedPassword);
-  
+
     this.apiService.resetPassword(formData).subscribe({
       next: (response) => {
         console.log('Contraseña restablecida:', response);

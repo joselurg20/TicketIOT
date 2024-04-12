@@ -10,13 +10,15 @@
             <h2>{{'recovered.title' | translate}}</h2>
             <form [formGroup]="recoveryForm" (ngSubmit)="resetPassword()">
                 <div class="mb-3 form-group">
-                    <label for="Email" class="form-label"><i class="fa-solid fa-at"></i> {{'recovered.email' | translate}}</label>
-                    <input type="Email" class="form-control form-control-lg" id="Email" placeholder="{{'recovered.emailplaceholder' | translate}}"
-                        formControlName="Email">
+                    <label for="Email" class="form-label"><i class="fa-solid fa-at"></i> {{'recovered.email' |
+                        translate}}</label>
+                    <input type="Email" class="form-control form-control-lg" id="Email"
+                        placeholder="{{'recovered.emailplaceholder' | translate}}" formControlName="Email">
                 </div>
 
                 <div class="d-grid mb-3">
-                    <button [disabled]="!recoveryForm.valid" type="submit" class="iot-log-btn">{{'recovered.send' | translate}}</button>
+                    <button [disabled]="!recoveryForm.valid" type="submit" class="iot-log-btn">{{'recovered.send' |
+                        translate}}</button>
                 </div>
             </form>
         </div>

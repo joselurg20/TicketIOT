@@ -4,47 +4,55 @@
   padding: 20px;
 }
 
-h1 {
-  color: #EFB810;
-  text-align: center;
+.item1 { grid-area: header; }
+.item2 { grid-area: menu; }
+.item3 { grid-area: main; }
+.item4 { grid-area: footer; }
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    'header header menu menu menu menu'
+    'main main menu menu menu menu'
+    'footer footer menu menu menu menu';
+  gap: 10px;
   padding: 10px;
-  margin-bottom: 30px;
 }
 
-img {
-  height: auto;
-  width: 350px;
+.grid-container > div {
+  color: white;  
+  padding: 20px 0;
+  font-size: 30px;
+  margin: 20px;
 }
 
-p {
-  font-size: large;
-}
 
-.logotipe {
-  text-align: center;
-}
 
-.error-container {
-  background-color: #202124;
-  color: #fff;
-  width: 800px;
-  height: 600px;
-  padding: 70px;
+
+.item2{
+  display: flex;
+  justify-content: center;
+  background-color: $bg-color-mid-2;
   border-radius: 25px;
-  margin: auto;
-  margin-top: 50px;
 }
 
-.btn {
-  border-color: #D25454;
-  color: black;
-  background-color: #EFB810;
+.item3{
+  color: $text-color-dark !important;
+  font-weight: bold;
+  font-size: 50px;
+  text-align: left !important; 
 }
 
-.btn:hover {
-  color: white;
-  background-color: #141416;
-  border-color: white;
+
+.item4{
+  text-align: left !important;
+}
+
+
+img{
+  border-radius: 25px;
+  width: 70vh;
+  height: auto;
 }
 
 @media screen and (max-width: 992px) {
@@ -60,7 +68,6 @@ p {
   }
 }
 
-/* On screens that are 600px or less, set the background color to olive */
 @media screen and (max-width: 600px) {
   .error-container {
     width: 100%;

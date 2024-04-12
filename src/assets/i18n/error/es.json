@@ -1,7 +1,6 @@
 {
   "error404": {
     "title": "Error 404",
-    "description": "Lo sentimos, la página que buscas no se encuentra disponible.",
-    "description2": "El servidor del sitio web al que intenta acceder es comunicable, pero la dirección o URL que ingreso no está disponible."
-  }
+    "description": "¡Oops! Parece que te has perdido en la red. La página que buscas no ha sido encontrada. No te preocupes, incluso los mejores navegantes se desvían a veces. Vuelve a intentarlo o navega hacia otro destino. ¡Buena suerte en tu viaje digital! 🌐🔍"
+    }
 }

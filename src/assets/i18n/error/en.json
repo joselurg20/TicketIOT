@@ -1,7 +1,6 @@
 {
   "error404": {
     "title": "Error 404",
-    "description": "Sorry, the page you are looking for is not available.",
-    "description2": "The server of the website you are trying to access is communicable, but the address or URL you entered is not available."
-  }
+    "description": "Oops! It seems that you have gotten lost in the network. The page you are looking for has not been found. Don't worry, even the best sailors sometimes go astray. Please try again or navigate to another destination. Good luck on your digital journey! 🌐🔍"
+}
 }

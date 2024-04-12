@@ -23,6 +23,7 @@ export class ManagerComponent implements OnInit {
   selectedPriorityValue: number = -1;
   selectedState: string = '';
   selectedStateValue: number = -1;
+  isWorking: boolean = false;
 
   constructor(private apiService: ApiService, private ticketUpdateService: TicketUpdateService, private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);
@@ -68,6 +69,8 @@ export class ManagerComponent implements OnInit {
         }
       });
     }
+    setTimeout(() => {
+    },10);
     if(this.selectedPriorityValue != -1) {
       this.apiService.changeTicketPriority(parseInt(localStorage.getItem('selectedTicket')!), this.selectedPriorityValue).subscribe({
         next: () => {
@@ -81,6 +84,8 @@ export class ManagerComponent implements OnInit {
         }
       });
     }
+    setTimeout(() => { 
+    },20);
     if(this.selectedStateValue != -1) {
       this.apiService.changeTicketState(parseInt(localStorage.getItem('selectedTicket')!), this.selectedStateValue).subscribe({
         next: () => {

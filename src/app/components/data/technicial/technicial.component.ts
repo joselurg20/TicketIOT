@@ -28,6 +28,10 @@ export class TechnicialComponent {
 
     }
   }
+
+  /**
+   * Actualiza el estado de una incidencia.
+   */
   updateTicket() {
     if (this.selectedStateValue != -1) {
       this.apiService.changeTicketState(parseInt(localStorage.getItem('selectedTicket')!), this.selectedStateValue).subscribe({

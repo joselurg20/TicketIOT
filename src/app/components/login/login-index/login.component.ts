@@ -53,7 +53,9 @@ export class LoginComponent implements OnInit {
   }
 
 
-
+  /**
+   * Envia la solicitud de inicio de sesión al backend.
+   */
   onSubmit() {
     if (this.loginForm.valid) {
       const email = this.loginForm.value.email;

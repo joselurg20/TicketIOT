@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -52,6 +51,9 @@ export class IncidenceIndexComponent implements OnInit {
     }
   }
 
+  /**
+   * Abre una notificación.
+   */
   openSnackBar() {
     this._snackBar.open("Incidencia enviada", 'Cerrar', {
       horizontalPosition: this.horizontalPosition,
@@ -79,6 +81,9 @@ export class IncidenceIndexComponent implements OnInit {
   }
 
 
+  /**
+   * Envía los datos del formulario.
+   */
   onSubmit() {
     if (this.ticketForm.valid) {
       console.log('Datos del formulario:', this.ticketForm.value);
@@ -105,6 +110,14 @@ export class IncidenceIndexComponent implements OnInit {
     }
   }
 
+  /**
+   * Crea una nueva incidencia con los datos pasados como parámetro.
+   * @param Title el titulo de la incidencia.
+   * @param Content el contenido de la incidencia.
+   * @param Name el nombre del usuario que crea la incidencia.
+   * @param Email el email del usuario que crea la incidencia.
+   * @returns
+   */
   createTicket(Title: string, Content: string, Name: string, Email: string): Observable<any> {
     const formData = new FormData();
     formData.append('TicketDTO.Title', Title);
@@ -137,6 +150,10 @@ export class IncidenceIndexComponent implements OnInit {
     return this.apiService.createTicket(formData);
   }
 
+  /**
+   * Cambia la previsualización del archivo adjunto.
+   * @param event el evento que lanza la función.
+   */
   onFileChange(event: any) {
     this.selectedFiles = event.target.files;
     const files = this.selectedFiles;
@@ -154,7 +171,9 @@ export class IncidenceIndexComponent implements OnInit {
     console.log('Selected files', this.selectedFiles);
   }
 
-
+  /**
+   * Limpia los archivos adjuntos del formulario.
+   */
   clearAttachments() {
     this.ticketForm.get('Attachments')?.reset();
     this.previewUrls = [];

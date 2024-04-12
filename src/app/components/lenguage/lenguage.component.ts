@@ -32,6 +32,10 @@ export class LenguageComponent implements OnInit {
     });
   }
 
+  /**
+   * Cambia el idioma según marque el botón.
+   * @param language el nuevo idioma.
+   */
   toggleButtons(language: string) {
     if (language === 'es') {
       this.translate.use('es');
@@ -40,10 +44,18 @@ export class LenguageComponent implements OnInit {
     }
   }
 
+  /**
+   * Cambia de idioma.
+   * @param language el nuevo idioma.
+   */
   switchLanguage(language: string) {
     this.translate.use(language);
   }
 
+  /**
+   * Actualiza el botón seleccionado.
+   * @param lang el idioma del botón seleccionado.
+   */
   private updateButtonState(lang: string) {
     this.esButtonPressed = lang === 'es';
     this.enButtonPressed = lang === 'en';

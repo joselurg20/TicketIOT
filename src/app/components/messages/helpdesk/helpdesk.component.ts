@@ -85,6 +85,9 @@ export class HelpdeskComponent {
     });
   }
 
+  /**
+   * Envía un nuevo mensaje a la incidencia seleccionada.
+   */
   onSubmit() {
     if (this.messageForm.valid) {
       console.log('Datos del formulario:', this.messageForm.value);
@@ -104,6 +107,12 @@ export class HelpdeskComponent {
     }
   }
 
+  /**
+   * Crea un nuevo mensaje para la incidencia cuyo id se pasa como parámetro.
+   * @param Content el contenido del mensaje.
+   * @param TicketID el id de la incidencia.
+   * @returns 
+   */
   createMessage(Content: string, TicketID: number): Observable<any> {
     const formData = new FormData();
     formData.append('Author', this.userName);
@@ -130,6 +139,10 @@ export class HelpdeskComponent {
     return this.apiService.createMessage(formData);
   }
 
+  /**
+   * Actualiza la previsualización del archivo adjunto.
+   * @param event el evento que lanza la función.
+   */
   onFileChange(event: any) {
     const file = event.target.files[0];
     if (file) {

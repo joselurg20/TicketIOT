@@ -76,6 +76,11 @@ export class IncidenceDataComponent implements OnInit {
     });
   }
 
+  /**
+   * Da formato a la fecha.
+   * @param fecha la fecha a formatear.
+   * @returns la fecha con formato 'DD/MM/AAAA - HH:mm:ss'
+   */
   formatDate(fecha: string): string {
     const fechaObj = new Date(fecha);
     const dia = fechaObj.getDate().toString().padStart(2, '0');
@@ -92,10 +97,16 @@ export class IncidenceDataComponent implements OnInit {
     this.ticketUpdateSubscription.unsubscribe();
   }
 
+  /**
+   * Vuelve a la vista anterior.
+   */
   goBack() {
     window.history.back();
     }
 
+  /**
+   * Actualiza los datos del ticket.
+   */
   refreshTicketData() {
     const selectedTicketId = parseInt(localStorage.getItem('selectedTicket')!);
     this.apiService.getTicketById(selectedTicketId).subscribe({

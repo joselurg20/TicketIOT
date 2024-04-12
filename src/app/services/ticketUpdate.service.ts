@@ -9,6 +9,9 @@ export class TicketUpdateService {
 
   ticketUpdated$ = this.ticketUpdatedSource.asObservable();
 
+  /**
+   * Trigger the ticket update.
+   */
   triggerTicketUpdate() {
     console.log('Ticket update triggered')
     this.ticketUpdatedSource.next();

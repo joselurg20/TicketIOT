@@ -76,12 +76,21 @@ export class HistoryComponent {
     });
   }
 
+  /**
+   * Descarga un archivo del servidor.
+   * @param attachmentPath la ruta del archivo.
+   */
   downloadAttachment(attachmentPath: string) {
     var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/' + this.ticketId + '/';
     const fileName = attachmentPath.substring(pathPrefix.length);
     this.downloadFile(attachmentPath, fileName);
   }
 
+  /**
+   * Descarga un archivo del servidor.
+   * @param data el archivo.
+   * @param fileName la ruta del archivo.
+   */
   downloadFile(data: any, fileName: string) {
     const blob = new Blob([data], { type: 'application/octet-stream' });
 
@@ -96,6 +105,11 @@ export class HistoryComponent {
     window.URL.revokeObjectURL(url);
   }
 
+  /**
+   * Da formato a la fecha.
+   * @param fecha la fecha a formatear.
+   * @returns la fecha con formato 'DD/MM/AAAA - HH:mm:ss'
+   */
   formatDate(fecha: string): string {
     const fechaObj = new Date(fecha);
     const dia = fechaObj.getDate().toString().padStart(2, '0');

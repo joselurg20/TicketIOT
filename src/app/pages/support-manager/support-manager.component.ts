@@ -57,10 +57,17 @@ ngOnInit(): void {
       }, 1000);
 }
 
+/**
+ * Cierra sesión.
+ */
 logout() {
     this.loginService.logout();
 }
 
+/**
+ * Recibe datos del componente hijo.
+ * @param data los datos del componente hijo.
+ */
 receiveDataFromChild(data: boolean) {
     this.isShowingAll = data;
     console.log('Datos recibidos en el padre:', this.isShowingAll);

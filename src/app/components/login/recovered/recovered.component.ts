@@ -36,10 +36,16 @@ export class RecoveredComponent implements OnInit {
         });
     }
 
+    /**
+     * Vuelve a la pantalla de inicio de sesión.
+     */
     goBack() {
         this.router.navigate(['/login']);
     }
 
+    /**
+     * Envía el email para restablecer la contraseña.
+     */
     resetPassword() {
         const Email = this.recoveryForm.value.Email;
         const emailParts = Email.match(/^([^@]+)@(.+)\.(.+)$/);

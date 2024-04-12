@@ -60,6 +60,9 @@ export class MessageComponent implements OnInit {
     }
   }
 
+  /**
+   * Marca los mensajes de una incidencia como leídos.
+   */
   readMessages() {
     this.apiService.getTicketById(this.ticketId).subscribe({
       next: (response: any) => {
@@ -111,6 +114,10 @@ export class MessageComponent implements OnInit {
     }
   }
 
+  /**
+   * Descarga un archivo adjunto del servidor.
+   * @param attachmentPath la ruta del archivo.
+   */
   downloadAttachment(attachmentPath: string) {
     var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/' + this.ticketId + '/';
     const fileName = attachmentPath.substring(pathPrefix.length);
@@ -127,6 +134,11 @@ export class MessageComponent implements OnInit {
     })
   }
 
+  /**
+   * Da formato a la fecha.
+   * @param fecha la fecha a formatear.
+   * @returns la fecha con formato 'DD/MM/AAAA - HH:mm:ss'
+   */
   formatDate(fecha: string): string {
     const fechaObj = new Date(fecha);
     const dia = fechaObj.getDate().toString().padStart(2, '0');

@@ -7,6 +7,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { Observable } from 'rxjs';
 import { TicketDto } from 'src/app/models/tickets/TicketDTO';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { MessagesUpdateService } from 'src/app/services/messagesUpdate.service';
 
 @Component({
   selector: 'app-comunication',
@@ -24,7 +25,7 @@ export class ComunicationComponent implements OnInit {
   public userName: string = '';
   selectedFiles: File[] = [];
 
-  constructor(private apiService: ApiService, private translate: TranslateService) {
+  constructor(private apiService: ApiService, private translate: TranslateService, private messagesUpdateService: MessagesUpdateService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -92,6 +93,8 @@ export class ComunicationComponent implements OnInit {
               console.log('Message creado con éxito', response);
               this.success = true;
               this.successMsg = "Mensaje creado con éxito.";
+              this.messagesUpdateService.triggerMessagesUpdate();
+              this.messageForm.reset();
               setTimeout(() => {
                 this.successMsg = "";
               }, 5000);

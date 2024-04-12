@@ -9,6 +9,9 @@ export class GraphUpdateService {
 
   graphUpdated$ = this.graphUpdatedSource.asObservable();
 
+  /**
+   * Trigger the graph update.
+   */
   triggerGraphUpdate() {
     console.log('Ticket update triggered')
     this.graphUpdatedSource.next();

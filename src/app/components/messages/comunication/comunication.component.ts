@@ -77,6 +77,9 @@ export class ComunicationComponent implements OnInit {
   isFileSelected: boolean = false;
   isImageSelected: any;
 
+  /**
+   * Envía un mensaje a la incidencia seleccionada.
+   */
   onSubmit() {
     if (this.ticket.state !== 'FINISHED') {
       if (this.messageForm.valid) {
@@ -113,6 +116,12 @@ export class ComunicationComponent implements OnInit {
     }
   }
 
+  /**
+   * Crea un mensaje nuevo para la incidencia cuyo id se pasa como parámetro.
+   * @param Content el contenido del mensaje.
+   * @param TicketId el id de la incidencia.
+   * @returns 
+   */
   createMessage(Content: string, TicketId: number): Observable<any> {
     const formData = new FormData();
     formData.append('Author', this.userName);
@@ -164,6 +173,11 @@ export class ComunicationComponent implements OnInit {
     return this.apiService.createMessage(formData);
   }
 
+  /**
+   * Da formato a la fecha.
+   * @param fecha la fecha a formatear.
+   * @returns la fecha con formato 'DD/MM/AAAA - HH:mm:ss'
+   */
   formatDate(fecha: string): string {
     const fechaObj = new Date(fecha);
     const dia = fechaObj.getDate().toString().padStart(2, '0');
@@ -176,6 +190,10 @@ export class ComunicationComponent implements OnInit {
     return `${dia}/${mes}/${año} - ${horas}:${minutos}:${segundos}`;
   }
 
+  /**
+   * Actualiza la previsualización de un archivo adjunto.
+   * @param event el evento que lanza la función.
+   */
   onFileChange(event: any) {
     this.selectedFiles = event.target.files;
     const files = this.selectedFiles;

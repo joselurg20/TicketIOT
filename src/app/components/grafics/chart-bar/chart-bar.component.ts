@@ -74,6 +74,9 @@ export class ChartBarComponent implements OnInit {
     }
   }
 
+  /**
+   * Actualiza los datos del gráfico según si el usuario es manager o no.
+   */
   refreshGraphData(): void {
     if(localStorage.getItem('userRole') == 'SupportManager') {
       if(this.isShowingAll){
@@ -121,6 +124,9 @@ export class ChartBarComponent implements OnInit {
     }
   }
 
+  /**
+   * Crea el gráfico.
+   */
   createChart(): void {
 
     if(this.myChart) {
@@ -193,6 +199,11 @@ export class ChartBarComponent implements OnInit {
     });
   }
 
+  /**
+   * Da formato a la fecha.
+   * @param fecha la fecha a formatear.
+   * @returns la fecha con formato 'DD/MM/AAAA - HH:mm:ss'
+   */
   formatDate(fecha: string): string {
     const fechaObj = new Date(fecha);
     const dia = fechaObj.getDate().toString().padStart(2, '0');

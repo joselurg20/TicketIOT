@@ -31,7 +31,13 @@ export class LoginService {
         }
     }
 
-
+    /**
+     * Realiza el inicio de sesión de un usuario. Guarda en localStorage el token de autenticación
+     * y los datos del usuario.
+     * @param email el email del usuario.
+     * @param password la contraseña del usuario.
+     * @returns 
+     */
     login(email: string, password: string): Observable<any> {
         const loginData = { email, password };
         return this.http.post<any>(this.apiUrl, loginData).pipe(
@@ -67,7 +73,10 @@ export class LoginService {
         );
     }
 
-
+    /**
+     * Elimina el token de autenticación y los datos del usuario de localStorage
+     * para manejar el cierre de sesión.
+     */
     logout(): void {
         localStorage.removeItem(this.tokenKey);
         localStorage.removeItem(this.userIdKey);

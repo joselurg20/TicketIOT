@@ -71,6 +71,9 @@ export class ChartPieComponent {
     }
   }
 
+  /**
+   * Actualiza los datos del gráfico según si el usuario es manager o no.
+   */
   refreshGraphData(): void {
     if(localStorage.getItem('userRole') == 'SupportManager') {
       if(this.isShowingAll){
@@ -118,6 +121,9 @@ export class ChartPieComponent {
     }
   }
 
+  /**
+   * Crea el gráfico.
+   */
   createChart(): void{
 
     if(this.myChart){

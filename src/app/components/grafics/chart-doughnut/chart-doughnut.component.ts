@@ -93,6 +93,9 @@ export class ChartDoughnutComponent {
     
   }
 
+  /**
+   * Crea el gráfico.
+   */
   createChart(): void {
 
     if(this.myChart) {

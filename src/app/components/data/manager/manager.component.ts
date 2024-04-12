@@ -55,6 +55,9 @@ export class ManagerComponent implements OnInit {
     })
   }
 
+  /**
+   * Actualiza los datos de una incidencia. Técnico asignado, prioridad y/o estado.
+   */
   updateTicket() {
     if (this.selectedUserId != -1) {
       this.apiService.assignTechnician(parseInt(localStorage.getItem('selectedTicket')!), this.selectedUserId).subscribe({

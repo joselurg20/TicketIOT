@@ -75,12 +75,20 @@ export class SidebarComponent implements OnInit {
     }
   }
 
+  /**
+   * Cambia el lenguaje.
+   * @param language el nuevo lenguaje Ej: 'en'.
+   */
   switchLanguage(language: string) {
     this.translate.use(language);
     localStorage.setItem('selectedLanguage', language);
     this.setLanguageImage(language);
   }
 
+  /**
+   * Cambia el icono del idioma.
+   * @param language el nuevo lenguaje Ej: 'en'.
+   */
   private setLanguageImage(language: string): void {
     const button = document.querySelector('.dropdown-toggle img') as HTMLImageElement;
     if (language === 'spanish') {
@@ -90,6 +98,10 @@ export class SidebarComponent implements OnInit {
     }
   }
 
+  /**
+   * Obtiene el icono del idioma.
+   * @returns la ruta al icono.
+   */
   getLanguageImage(): string {
     const selectedLanguage = localStorage.getItem('selectedLanguage');
     if (selectedLanguage === 'es') {
@@ -109,16 +121,26 @@ export class SidebarComponent implements OnInit {
     }
   }
 
+  /**
+   * Cambia el estado de la barra lateral.
+   *
+   */
   toggleCollapse(): void {
     this.collapsed = !this.collapsed;
     this.onToggleSideNav.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
   }
 
+  /**
+   * Cierra la barra lateral.
+   */
   closeSidenav(): void {
     this.collapsed = false;
     this.onToggleSideNav.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
   }
 
+  /**
+   * Navega a la ruta correspondiente.
+   */
   goToDashboard() {
     if (localStorage.getItem('userRole') == 'SupportManager') {
       this.router.navigate(['/support-manager']);
@@ -128,11 +150,18 @@ export class SidebarComponent implements OnInit {
 
   }
 
+  /**
+   * Cierra la sesión.
+   */
   logout() {
     this.loginService.logout();
   }
 
 
+  /**
+   * Obtiene la ruta al dashboard.
+   * @returns la ruta al dashboard.
+   */
   getDashboardRoute(): string {
     const userRole = localStorage.getItem('userRole');
     if (userRole === 'SupportManager') {
@@ -142,6 +171,10 @@ export class SidebarComponent implements OnInit {
     }
   }
 
+  /**
+   * Cambia el idioma.
+   * @param language el nuevo idioma.
+   */
   changeLanguage(language: string): void {
     const button = document.querySelector('.dropdown-toggle img') as HTMLImageElement;
     if (language === 'spanish') {

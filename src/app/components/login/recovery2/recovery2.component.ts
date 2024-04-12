@@ -65,6 +65,10 @@ export class Recovery2Component implements OnInit {
     });
   }
 
+  /**
+   * Comprueba si las contraseñas introducidas coinciden y, si coinciden, restablece la contraseña.
+   * @returns 
+   */
   resetPassword() {
     const password = this.recoveryForm.value.Password;
     const repeatPassword = this.recoveryForm.value.RepeatPassword;

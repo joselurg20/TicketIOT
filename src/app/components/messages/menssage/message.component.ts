@@ -18,6 +18,7 @@ export class MessageComponent implements OnInit {
   ticketId: number = 0;
   ticket: TicketDto = {Name: '', Email: '', Title: '', HasNewMessages: false, NewMessagesCount: 0};
   messages: iMessage[] = [];
+  isFirstLoad: boolean = true;
 
   constructor(private apiService: ApiService , private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);
@@ -84,27 +85,29 @@ export class MessageComponent implements OnInit {
       }
     });
     
-    
-    for (const message of this.messages) {
-      if(message.AttachmentPaths.length > 0) {
-        for (const attachmentPath of message.AttachmentPaths) {
-          var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/'+this.ticketId+'/';
-          const fileName = attachmentPath.substring(pathPrefix.length);
-          this.apiService.downloadAttachment(fileName, +localStorage.getItem('selectedTicket')!).subscribe({
-            next: (response: any) => {
-              const attachment: iAttachment = {
-                attachmentPath: attachmentPath,
-                attachmentUrl: URL.createObjectURL(new Blob([response], { type: 'application/octet-stream' }))
+    if(this.isFirstLoad) {
+      for (const message of this.messages) {
+        if(message.AttachmentPaths.length > 0) {
+          for (const attachmentPath of message.AttachmentPaths) {
+            var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/'+this.ticketId+'/';
+            const fileName = attachmentPath.substring(pathPrefix.length);
+            this.apiService.downloadAttachment(fileName, +localStorage.getItem('selectedTicket')!).subscribe({
+              next: (response: any) => {
+                const attachment: iAttachment = {
+                  attachmentPath: attachmentPath,
+                  attachmentUrl: URL.createObjectURL(new Blob([response], { type: 'application/octet-stream' }))
+                }
+                message.Attachments.push(attachment);
+              },
+              error: (error: any) => {
+                console.error('Error al descargar el archivo adjunto', error);
               }
-              message.Attachments.push(attachment);
-            },
-            error: (error: any) => {
-              console.error('Error al descargar el archivo adjunto', error);
-            }
-          })
+            })
+          }
+          console.log('Mensajes', this.messages);
         }
-        console.log('Mensajes', this.messages);
       }
+      this.isFirstLoad = false;
     }
   }
 

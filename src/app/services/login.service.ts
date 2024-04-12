@@ -14,14 +14,14 @@ export class LoginService {
     private readonly userNameKey = 'userName';
     private readonly userEmailKey = 'userEmail';
     private readonly roleKey = 'userRole';
-    private readonly userTicketIdsKey = 'userTicketIds';
+    private readonly userLanguageKey = 'userLanguage';
 
     private authTokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
     private userIdSubject: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(null);
     private userNameSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
     private emailSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
     private roleSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
-    private ticketIdsSubject: BehaviorSubject<number[] | null> = new BehaviorSubject<number[] | null>(null);
+    private userLanguageSubject: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(null);
 
     constructor(private http: HttpClient, private router: Router) {
 
@@ -58,14 +58,9 @@ export class LoginService {
                         localStorage.setItem(this.roleKey, response.role);
                         this.roleSubject.next(response.role);
                     }
-                    if (response.ticketIds) {
-                        try {
-                            const ticketIds = JSON.parse(response.ticketIds);
-                            localStorage.setItem(this.userTicketIdsKey, response.ticketIds);
-                            this.ticketIdsSubject.next(ticketIds);
-                        } catch (error) {
-                            console.error('Error parsing ticketIds:', error);
-                        }
+                    if(response.languageId) {
+                        localStorage.setItem(this.userLanguageKey, response.languageId);
+                        this.userLanguageSubject.next(response.languageId);
                     }
                 }
             })
@@ -79,13 +74,13 @@ export class LoginService {
         localStorage.removeItem(this.userNameKey);
         localStorage.removeItem(this.userEmailKey);
         localStorage.removeItem(this.roleKey);
-        localStorage.removeItem(this.userTicketIdsKey);
+        localStorage.removeItem(this.userLanguageKey);
         this.authTokenSubject.next(null);
         this.userIdSubject.next(null);
         this.userNameSubject.next(null);
         this.emailSubject.next(null);
         this.roleSubject.next(null);
-        this.ticketIdsSubject.next(null);
+        this.userLanguageSubject.next(null);
         this.router.navigate(['/login']);
     }
 
@@ -110,7 +105,7 @@ export class LoginService {
         return this.roleSubject.asObservable();
     }
 
-    getUserTicketIds(): Observable<number[] | null> {
-        return this.ticketIdsSubject.asObservable();
+    getUserLanguage(): Observable<number | null> {
+        return this.userLanguageSubject.asObservable();
     }
 }

@@ -145,6 +145,7 @@ export class ChartDoughnutComponent {
         }]
       },
       options: {
+        responsive: true,
         plugins: {
           legend: {
             labels: {
@@ -170,7 +171,8 @@ export class ChartDoughnutComponent {
               display: false
             }
           }
-        }
+        },
+        
       }
     });
   }

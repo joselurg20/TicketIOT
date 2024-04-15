@@ -173,6 +173,7 @@ export class ChartPieComponent {
         }]
       },
       options: {
+        responsive: true,
         plugins: {
           legend: {
             labels: {

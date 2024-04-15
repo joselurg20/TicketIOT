@@ -12,7 +12,7 @@ label {
 .container {
   margin: 2rem auto;
   border-radius: 25px;
-  background-color: $bg-color-mid;
+  background-color: $bg-color-mid-2;
   color: $text-color-mid;
   padding: 20px;
   width: 900px;
@@ -35,8 +35,8 @@ label {
   & input,
   textarea {
     border-radius: 10px;
-    background-color: $bg-color-mid;
-    color: $text-color-warning !important;
+    background-color: $bg-color-mid-2;
+    color: $color-light;
   }
 
   input::placeholder,
@@ -91,13 +91,11 @@ label {
 .logotipe {
   text-align: center;
 
-
   img {
     width: 350px;
     height: auto;
     border-radius: 10px;
   }
-
 
   .preview-image {
     width: 150px;

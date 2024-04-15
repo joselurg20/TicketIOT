@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MessagesUpdateService } from 'src/app/services/messagesUpdate.service';
 import { Subscription } from 'rxjs';
+import { iAttachment } from 'src/app/models/attachments/iAttachment';
 
 
 
@@ -39,31 +40,7 @@ export class HistoryComponent {
     this.route.params.subscribe(params => {
       this.ticketId = params['ticketId'];
       console.log('TicketId', this.ticketId)
-      this.apiService.getMessagesByTicket(this.ticketId).subscribe({
-        next: (response: any) => {
-          console.log('response', response);
-          this.messages = response.$values.map((message: any) => {
-            return {
-              Id: message.id,
-              Author: message.author,
-              Content: message.content,
-              AttachmentPaths: message.attachmentPaths.$values.map((attachmentPath: any) => attachmentPath.path),
-              Attachments: [],
-              Timestamp: this.formatDate(message.timestamp),
-              ticketID: message.ticketId
-            }
-          })
-
-          this.messagesUpdateSubscription = this.messagesUpdateService.messagesUpdated$.subscribe(() => {
-            console.log('Messages update received');
-            
-            this.refreshMessagesData();
-          });
-        },
-        error: (error: any) => {
-          console.error('Error al obtener los mensajes del ticket', error);
-        }
-      })
+      this.refreshMessagesData();
     });
     this.apiService.getTicketById(this.ticketId).subscribe({
       next: (response: any) => {
@@ -103,7 +80,29 @@ export class HistoryComponent {
             ticketID: message.ticketID,
             Timestamp: this.formatDate(message.timestamp)
           }
-        })
+        });
+        for (const message of this.messages) {
+          if (message.AttachmentPaths.length > 0) {
+            for (const attachmentPath of message.AttachmentPaths) {
+              var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/' + this.ticketId + '/';
+              const fileName = attachmentPath.substring(pathPrefix.length);
+              this.apiService.downloadAttachment(fileName, +localStorage.getItem('selectedTicket')!).subscribe({
+                next: (response: any) => {
+                  const attachment: iAttachment = {
+                    attachmentPath: attachmentPath,
+                    attachmentUrl: URL.createObjectURL(new Blob([response], { type: 'application/octet-stream' }))
+                  }
+                  message.Attachments.push(attachment);
+                },
+                error: (error: any) => {
+                  console.error('Error al descargar el archivo adjunto', error);
+                }
+              })
+            }
+            console.log('Mensajes', this.messages);
+          }
+        
+      }
       },
       error: (error: any) => {
         console.error('Error al obtener los mensajes del ticket', error);

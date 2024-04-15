@@ -20,7 +20,6 @@ export class MessageComponent implements OnInit {
   ticketId: number = 0;
   ticket: TicketDto = { Name: '', Email: '', Title: '', HasNewMessages: false, NewMessagesCount: 0 };
   messages: iMessage[] = [];
-  isFirstLoad: boolean = true;
   private messagesUpdateSubscription: Subscription = {} as Subscription;
 
   constructor(private apiService: ApiService, private translate: TranslateService, private messagesUpdateService: MessagesUpdateService) {
@@ -122,7 +121,6 @@ export class MessageComponent implements OnInit {
       }
     });
 
-    if (this.isFirstLoad) {
       for (const message of this.messages) {
         if (message.AttachmentPaths.length > 0) {
           for (const attachmentPath of message.AttachmentPaths) {
@@ -143,8 +141,7 @@ export class MessageComponent implements OnInit {
           }
           console.log('Mensajes', this.messages);
         }
-      }
-      this.isFirstLoad = false;
+      
     }
   }
 

@@ -4,12 +4,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { IncidenceTableComponent } from "../../components/incidences/incidence-table/incidence-table.component";
 import { IncidenceDataComponent } from "../../components/incidences/incidence-data/incidence-data.component";
 import { MessageComponent } from "../../components/messages/menssage/message.component";
-import { Observable } from 'rxjs';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
-import { HttpClient } from '@angular/common/http';
-import { iUserTable } from 'src/app/models/users/iUserTable';
 import { iMessage } from 'src/app/models/tickets/iMessage';
 import { HelpdeskComponent } from "../../components/messages/helpdesk/helpdesk.component";
 import { ComunicationComponent } from "../../components/messages/comunication/comunication.component";
@@ -52,25 +48,7 @@ export class IncidenceUserComponent {
         console.log('TicketId', this.ticketId);
         this.hashedId = params['hashedId'];
         const hashedId = CryptoJS.SHA256(this.ticketId.toString()).toString();
-        if(this.hashedId === hashedId) {
-          /*this.apiService.getMessagesByTicket(this.ticketId).subscribe({
-            next: (response: any) => {
-              console.log('response', response);
-              this.messages = response.$values.map((message: any) => {
-                return {
-                  Id: message.id,
-                  Author: message.author,
-                  Content: message.content,
-                  AttachmentPaths: message.attachmentPaths.$values.map((attachmentPath: any) => attachmentPath.path),
-                  ticketID: message.ticketId
-                }
-              })
-            },
-            error: (error: any) => {
-              console.error('Error al obtener los mensajes del ticket', error);
-            }
-          })*/
-        }else{
+        if(this.hashedId !== hashedId) {
           this.router.navigate(['/404']);
         }
       });

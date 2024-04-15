@@ -128,11 +128,45 @@ export class MessageComponent implements OnInit {
             const fileName = attachmentPath.substring(pathPrefix.length);
             this.apiService.downloadAttachment(fileName, +localStorage.getItem('selectedTicket')!).subscribe({
               next: (response: any) => {
-                const attachment: iAttachment = {
-                  attachmentPath: attachmentPath,
-                  attachmentUrl: URL.createObjectURL(new Blob([response], { type: 'application/octet-stream' }))
-                }
-                message.Attachments.push(attachment);
+                var attachment: iAttachment = {} as iAttachment;
+                  attachment.attachmentPath = attachmentPath;
+                  attachment.attachmentUrl = URL.createObjectURL(new Blob([response], { type: 'application/octet-stream' }));
+                  if(fileName.endsWith('.jpg') || fileName.endsWith('.jpeg') || fileName.endsWith('.png')){
+
+                    attachment.previewUrl = URL.createObjectURL(new Blob([response], { type: 'application/octet-stream' }))
+
+                  } else if(fileName.endsWith('.pdf')){
+
+                    attachment.previewUrl = 'assets/images/file-previews/pdf_file.png'
+
+                  } else if(fileName.endsWith('.doc') || fileName.endsWith('.docx')){
+
+                    attachment.previewUrl = 'assets/images/file-previews/doc_file.png'
+
+                  } else if(fileName.endsWith('.xls') || fileName.endsWith('.xlsx')){
+
+                    attachment.previewUrl = 'assets/images/file-previews/xls_file.png'
+                      
+                  } else if(fileName.endsWith('.rar') || fileName.endsWith('.zip') || fileName.endsWith('.7z')){
+
+                    attachment.previewUrl = 'assets/images/file-previews/rar_file.png'
+                      
+                  } else if(fileName.endsWith('.mp3') || fileName.endsWith('.wav') || fileName.endsWith('.mpeg')){
+
+                    attachment.previewUrl = 'assets/images/file-previews/audio_file.png'
+                      
+                  } else if(fileName.endsWith('.mp4') || fileName.endsWith('.avi') || fileName.endsWith('.mkv')){
+
+                    attachment.previewUrl = 'assets/images/file-previews/video_file.png'
+                      
+                  } else if(fileName.endsWith('.txt')){
+
+                    attachment.previewUrl = 'assets/images/file-previews/txt_file.png'
+
+                  } else {
+                    attachment.previewUrl = 'assets/images/file-previews/unknown_file.png'
+                  }
+                  message.Attachments.push(attachment);
               },
               error: (error: any) => {
                 console.error('Error al descargar el archivo adjunto', error);

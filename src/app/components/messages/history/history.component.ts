@@ -61,6 +61,11 @@ export class HistoryComponent {
         console.error('Error al obtener el usuario', error);
       }
     });
+    this.messagesUpdateSubscription = this.messagesUpdateService.messagesUpdated$.subscribe(() => {
+      console.log('Messages update received');
+      
+      this.refreshMessagesData();
+    });
   }
 
   /**
@@ -81,6 +86,8 @@ export class HistoryComponent {
             Timestamp: this.formatDate(message.timestamp)
           }
         });
+
+        // Archivos adjuntos
         for (const message of this.messages) {
           if (message.AttachmentPaths.length > 0) {
             for (const attachmentPath of message.AttachmentPaths) {
@@ -88,9 +95,43 @@ export class HistoryComponent {
               const fileName = attachmentPath.substring(pathPrefix.length);
               this.apiService.downloadAttachment(fileName, +localStorage.getItem('selectedTicket')!).subscribe({
                 next: (response: any) => {
-                  const attachment: iAttachment = {
-                    attachmentPath: attachmentPath,
-                    attachmentUrl: URL.createObjectURL(new Blob([response], { type: 'application/octet-stream' }))
+                  var attachment: iAttachment = {} as iAttachment;
+                  attachment.attachmentPath = attachmentPath;
+                  attachment.attachmentUrl = URL.createObjectURL(new Blob([response], { type: 'application/octet-stream' }));
+                  if(fileName.endsWith('.jpg') || fileName.endsWith('.jpeg') || fileName.endsWith('.png')){
+
+                    attachment.previewUrl = URL.createObjectURL(new Blob([response], { type: 'application/octet-stream' }))
+
+                  } else if(fileName.endsWith('.pdf')){
+
+                    attachment.previewUrl = 'assets/images/file-previews/pdf_file.png'
+
+                  } else if(fileName.endsWith('.doc') || fileName.endsWith('.docx')){
+
+                    attachment.previewUrl = 'assets/images/file-previews/doc_file.png'
+
+                  } else if(fileName.endsWith('.xls') || fileName.endsWith('.xlsx')){
+
+                    attachment.previewUrl = 'assets/images/file-previews/xls_file.png'
+                      
+                  } else if(fileName.endsWith('.rar') || fileName.endsWith('.zip') || fileName.endsWith('.7z')){
+
+                    attachment.previewUrl = 'assets/images/file-previews/rar_file.png'
+                      
+                  } else if(fileName.endsWith('.mp3') || fileName.endsWith('.wav') || fileName.endsWith('.mpeg')){
+
+                    attachment.previewUrl = 'assets/images/file-previews/audio_file.png'
+                      
+                  } else if(fileName.endsWith('.mp4') || fileName.endsWith('.avi') || fileName.endsWith('.mkv')){
+
+                    attachment.previewUrl = 'assets/images/file-previews/video_file.png'
+                      
+                  } else if(fileName.endsWith('.txt')){
+
+                    attachment.previewUrl = 'assets/images/file-previews/txt_file.png'
+
+                  } else {
+                    attachment.previewUrl = 'assets/images/file-previews/unknown_file.png'
                   }
                   message.Attachments.push(attachment);
                 },
@@ -117,26 +158,17 @@ export class HistoryComponent {
   downloadAttachment(attachmentPath: string) {
     var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/' + this.ticketId + '/';
     const fileName = attachmentPath.substring(pathPrefix.length);
-    this.downloadFile(attachmentPath, fileName);
-  }
-
-  /**
-   * Descarga un archivo del servidor.
-   * @param data el archivo.
-   * @param fileName la ruta del archivo.
-   */
-  downloadFile(data: any, fileName: string) {
-    const blob = new Blob([data], { type: 'application/octet-stream' });
-
-    const url = window.URL.createObjectURL(blob);
-
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = fileName;
-
-    link.click();
-
-    window.URL.revokeObjectURL(url);
+    this.apiService.downloadAttachment(fileName, +localStorage.getItem('selectedTicket')!).subscribe({
+      next: (response: any) => {
+        const blob = new Blob([response], { type: 'application/octet-stream' });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = fileName;
+        link.click();
+        window.URL.revokeObjectURL(url);
+      }
+    })
   }
 
   /**

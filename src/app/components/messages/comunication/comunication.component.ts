@@ -76,7 +76,6 @@ export class ComunicationComponent implements OnInit {
 
   previewUrls: Array<string | ArrayBuffer | null> = new Array();
   isFileSelected: boolean = false;
-  isImageSelected: any;
 
   /**
    * Envía un mensaje a la incidencia seleccionada.
@@ -202,14 +201,63 @@ export class ComunicationComponent implements OnInit {
     const files = this.selectedFiles;
     this.isFileSelected = true;
     for (let file of files) {
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          this.previewUrls.push(reader.result);
-        };
-        reader.readAsDataURL(file);
-        this.isImageSelected = file.type.startsWith('image/');
-      }
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                
+            };
+            reader.readAsDataURL(file);
+
+            // Verificar el tipo de archivo
+            if (file.type) {
+              console.log('Tipo de archivo:', file.type);
+                switch (file.type) {
+                    case 'image/jpeg':
+                    case 'image/png':
+                    case 'image/gif':
+                        this.previewUrls.push(reader.result);
+                        break;
+                    case 'application/pdf':
+                        // Asignar una imagen para PDF
+                        this.previewUrls.push('assets/images/file-previews/pdf_file.png');
+                        break;
+                    case 'application/msword':
+                    case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+                        // Asignar una imagen para Word
+                        this.previewUrls.push('assets/images/file-previews/doc_file.png');
+                        break;
+                    case 'application/vnd.ms-excel':
+                    case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+                        // Asignar una imagen para Excel
+                        this.previewUrls.push('assets/images/file-previews/xls_file.png');
+                        break;
+                    case 'text/plain':
+                        // Asignar una imagen para archivos de texto
+                        this.previewUrls.push('assets/images/file-previews/txt_file.png');
+                        break;
+                    case 'application/x-compressed':
+                    case 'application/x-zip-compressed':
+                    case 'application/x-7z-compressed':
+                        // Asignar una imagen para archivos comprimidos
+                        this.previewUrls.push('assets/images/file-previews/rar_file.png');
+                        break;
+                    case 'audio/mpeg':
+                    case 'audio/wav':
+                        // Asignar una imagen para archivos de audio
+                        this.previewUrls.push('assets/images/file-previews/audio_file.png');
+                        break;
+                    case 'video/mp4':
+                    case 'video/avi':
+                    case 'video/x-matroska':
+                        // Asignar una imagen para archivos de video
+                        this.previewUrls.push('assets/images/file-previews/video_file.png');
+                        break;
+                    default:
+                        // Asignar una imagen por defecto para otros tipos de archivo
+                        this.previewUrls.push('assets/images/file-previews/unknown_file.png');
+                }
+            }
+        }
     }
   }
 }

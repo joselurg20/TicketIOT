@@ -193,12 +193,10 @@ export class ChartBarComponent implements OnInit {
               color: 'white'
             }
           }
-          
         }
       }
     });
   }
-
   /**
    * Da formato a la fecha.
    * @param fecha la fecha a formatear.

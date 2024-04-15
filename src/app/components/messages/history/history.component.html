@@ -13,7 +13,7 @@
                     <div *ngIf="message.AttachmentPaths && message.AttachmentPaths.length > 0"
                         class="d-flex justify-content-center preview">
                         <div *ngFor="let attachment of message.Attachments">
-                            <img [src]="attachment.attachmentUrl" alt="">
+                            <img [src]="attachment.previewUrl" alt="">
                             <button class="custom-file-button btn-lg"
                                 (click)="downloadAttachment(attachment.attachmentPath)"><i
                                     class="fa-solid fa-download"></i> {{'message.download' | translate}}</button>

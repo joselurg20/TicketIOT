@@ -204,11 +204,7 @@ export class ComunicationComponent implements OnInit {
         if (file) {
             const reader = new FileReader();
             reader.onload = () => {
-                
-            };
-            reader.readAsDataURL(file);
-
-            // Verificar el tipo de archivo
+                // Verificar el tipo de archivo
             if (file.type) {
               console.log('Tipo de archivo:', file.type);
                 switch (file.type) {
@@ -257,6 +253,10 @@ export class ComunicationComponent implements OnInit {
                         this.previewUrls.push('assets/images/file-previews/unknown_file.png');
                 }
             }
+            };
+            reader.readAsDataURL(file);
+
+            
         }
     }
   }

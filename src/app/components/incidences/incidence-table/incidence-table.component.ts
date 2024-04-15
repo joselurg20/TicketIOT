@@ -27,7 +27,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 export class IncidenceTableComponent implements AfterViewInit, OnInit {
 
 
-  displayedColumns: string[] = ['id', 'title', 'name', 'email', 'priority', 'state', 'timestamp', 'technician', 'show'];
+  displayedColumns: string[] = ['state', 'id', 'title', 'name', 'email', 'priority', 'timestamp', 'technician', 'show'];
   dataSource = new MatTableDataSource<iTicketTableSM>();
   selectedRow: any;
   loggedUserName: string = "";
@@ -266,7 +266,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
         }
       });
     } else {
-      this.displayedColumns = ['id', 'title', 'name', 'email', 'priority', 'state', 'timestamp', 'technician', 'newMessages', 'show'];
+      this.displayedColumns = ['state', 'id', 'title', 'name', 'email', 'priority', 'timestamp', 'technician', 'newMessages', 'show'];
       this.isSupportManager = false;
       this.apiService.getTicketsByUser(parseInt(localStorage.getItem('userId')!)).subscribe({
         next: (response: any) => {

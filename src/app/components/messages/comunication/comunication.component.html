@@ -9,13 +9,8 @@
             {{"comunication.select" | translate}}</button>
 
         <div *ngIf="isFileSelected" class="logotipe">
-            <div *ngIf="isImageSelected">
-                <img *ngFor="let previewUrl of previewUrls" [src]="previewUrl" alt="Vista previa del archivo"
-                    class="preview-image">
-            </div>
-            <div *ngIf="!isImageSelected">
-                <a *ngFor="let previewUrl of previewUrls" class="preview-link" [href]="previewUrl" target="_blank">
-                    {{"comunication.download" | translate}}</a>
+            <div>
+                <img *ngFor="let previewUrl of previewUrls" [src]="previewUrl" class="preview-image">
             </div>
         </div>
     </div>

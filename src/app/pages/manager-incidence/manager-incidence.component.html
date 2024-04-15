@@ -1,6 +1,6 @@
 <app-sidebar></app-sidebar>
 <mat-progress-spinner *ngIf="isLoading" mode="indeterminate" color="warn" class="progressSpinner"></mat-progress-spinner>
-<div class="container" *ngIf="!isLoading">
+<div class="container"  [ngStyle]="{'display': isLoading ? 'none' : 'block'}" >
     <form>
         <app-incidence-data></app-incidence-data>
         <hr>

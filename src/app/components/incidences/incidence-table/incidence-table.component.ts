@@ -9,10 +9,10 @@ import { Router } from '@angular/router';
 import { iTicketTableSM } from 'src/app/models/tickets/iTicketTableSM';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import {MatBadgeModule} from '@angular/material/badge';
+import { MatBadgeModule } from '@angular/material/badge';
 import { iUserTable } from 'src/app/models/users/iUserTable';
 import { GraphUpdateService } from 'src/app/services/graphUpdateService';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 
@@ -44,7 +44,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
       this.translate.setDefaultLang('en');
     } else {
       this.translate.use('es');
-      
+
     }
   }
   @ViewChild(MatSort) sort!: MatSort;
@@ -66,16 +66,16 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     } else {
       this.iconElement.nativeElement.className = 'fa-solid fa-eye-slash';
     }
-    this.isIconChanged = !this.isIconChanged; 
+    this.isIconChanged = !this.isIconChanged;
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    if(localStorage.getItem('userRole') == 'SupportManager') {
+    if (localStorage.getItem('userRole') == 'SupportManager') {
       this.dataSource.sort.active = 'priority';
       this.dataSource.sort.direction = 'desc';
-    }else{
+    } else {
       this.dataSource.sort.active = 'newMessages';
       this.dataSource.sort.direction = 'desc';
     }
@@ -84,15 +84,18 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
         case 'priority':
           return this.getPriorityValue(data.priority);
         case 'timestamp':
-          return new Date(data.timestamp).getTime(); // Convertir la fecha a milisegundos para ordenar correctamente
+          return data.timestamp;
+        case 'technician':
+          return data.techName;
         case 'newMessages':
           return this.getHasNewMessagesValue(data.hasNewMessages);
         default:
-          const value = data[sortHeaderId as keyof iTicketTableSM]; // Obtener el valor de la propiedad
-          return typeof value === 'string' ? value.toLowerCase() : (typeof value === 'number' ? value : 0); // Convertir a minúsculas si es una cadena o devolver el valor numérico
+          const value = data[sortHeaderId as keyof iTicketTableSM];
+          return typeof value === 'string' ? value.toLowerCase() : (typeof value === 'number' ? value : 0);
       }
     };
   }
+
   announceSortChange(sortState: Sort) {
 
     if (sortState.direction) {
@@ -139,7 +142,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   }
 
   tickets() {
-    if(localStorage.getItem('userRole') == 'SupportManager') {
+    if (localStorage.getItem('userRole') == 'SupportManager') {
       if (localStorage.getItem('selectedTicket') != null) {
         this.router.navigate(['/revisar-manager']);
       }
@@ -148,12 +151,12 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
         this.router.navigate(['/revisar-tecnico']);
       }
     }
-    
+
   }
 
   showAll() {
     this.graphUpdateService.triggerGraphUpdate();
-    if(!this.isShowingAll) {
+    if (!this.isShowingAll) {
       this.apiService.getTickets().subscribe({
         next: (response: any) => {
           console.log('Tickets recibidos', response);
@@ -182,10 +185,10 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
               tickets.forEach((ticket) => {
                 const user = users.find((user) => user.id === ticket.techId);
                 if (user) {
-                    ticket.techName = user.userName;             
+                  ticket.techName = user.userName;
                 } else {
                   ticket.techName = 'Sin asignar'
-                } 
+                }
               });
               this.dataSource.data = tickets;
               console.log('Datos mapeados para tabla', tickets);
@@ -292,8 +295,8 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
               console.error('Error al obtener el usuario:', error);
             }
           })
-          for(let ticket of tickets){
-            if(ticket.state == 'FINISHED') {
+          for (let ticket of tickets) {
+            if (ticket.state == 'FINISHED') {
               tickets.splice(tickets.indexOf(ticket), 1);
             }
           }
@@ -319,31 +322,31 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
       buttonStyles = { 'background-color': '#3beb97' };
     } else if (priority == 'LOWEST') {
       buttonStyles = { 'background-color': '#3bd6eb' };
-    }else{
+    } else {
       buttonStyles = { 'background-color': '#7B7B7B' };
     }
     return buttonStyles;
-    
-    
+
+
   }
 
-    getButtonState(state: string): any {
-      let buttonStyles = {};
+  getButtonState(state: string): any {
+    let buttonStyles = {};
 
-      if (state == 'FINISHED') {
-        buttonStyles = { 'background-color': '#c82337' };
-      } else if (state == 'PAUSED') {
-        buttonStyles = { 'background-color': '#e06236' };
-      } else if (state == 'OPENED') {
-        buttonStyles = { 'background-color': '#3beb97' };
-      }else{
-        buttonStyles = { 'background-color': '#7B7B7B' };
-      }
-      return buttonStyles;
-      
-      
+    if (state == 'FINISHED') {
+      buttonStyles = { 'background-color': '#c82337' };
+    } else if (state == 'PAUSED') {
+      buttonStyles = { 'background-color': '#e06236' };
+    } else if (state == 'OPENED') {
+      buttonStyles = { 'background-color': '#3beb97' };
+    } else {
+      buttonStyles = { 'background-color': '#7B7B7B' };
     }
-      
+    return buttonStyles;
+
+
+  }
+
 
 
   formatDate(fecha: string): string {

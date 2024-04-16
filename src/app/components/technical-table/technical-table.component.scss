@@ -46,6 +46,7 @@ th {
   background-color: $bg-color-warning;
   padding: 10px;
   margin: 0px 10px 0px 10px;
+  font-size: 20px;
 }
 
 tr {
@@ -66,6 +67,7 @@ tr {
 .row-highlight {
   background-color: $bg-color-mid;
   color: $text-color-mid;
+  font-size: 18px ;
 
   &:hover {
     background-color: $bg-color-secondary;

@@ -16,6 +16,7 @@ import { ButtonComponent } from "../../button/button.component";
 import { SidebarComponent } from '../../sidebar/sidebar.component';
 import { LenguageComponent } from "../../lenguage/lenguage.component";
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { SnackbarComponent } from '../../snackbar/snackbar.component';
 
 
 @Component({
@@ -52,14 +53,17 @@ export class IncidencePruebaComponent implements OnInit {
     }
   }
 
-  openSnackBar() {
-    this._snackBar.open("Incidencia enviada", 'Cerrar', {
-      horizontalPosition: this.horizontalPosition,
-      verticalPosition: this.verticalPosition,
-      duration: 3000,
-      panelClass: ['green-snackbar']
-    });
-  }
+    durationInSeconds = 5;
+  
+  
+    openSnackBar() {
+      this._snackBar.openFromComponent(SnackbarComponent, {
+        duration: this.durationInSeconds * 1000,
+      });
+    }
+ 
+  
+
 
 
   ngOnInit() {

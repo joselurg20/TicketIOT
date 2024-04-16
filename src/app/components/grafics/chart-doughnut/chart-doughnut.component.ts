@@ -146,10 +146,18 @@ export class ChartDoughnutComponent {
       },
       options: {
         responsive: true,
-        plugins: {
+        plugins: {   
           legend: {
             labels: {
               color: 'white'
+            }
+          },
+          title: {
+            display: true,
+            text: 'Tickets por tecnico',
+            color: '#efb810',
+            font: {
+              size: 20
             }
           }
         },

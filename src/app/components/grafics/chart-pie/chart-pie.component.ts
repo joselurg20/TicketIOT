@@ -179,6 +179,14 @@ export class ChartPieComponent {
             labels: {
               color: 'white'
             }
+          },
+          title: {
+            display: true,
+            text: 'Prioridades de incidencias',
+            color: '#efb810',
+            font: {
+              size: 20
+            }
           }
         },
         scales: {

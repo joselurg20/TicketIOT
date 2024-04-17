@@ -22,8 +22,7 @@
             placeholder="{{'comunication.nameplaceholder' | translate}}" formControlName="Content"></textarea>
     </div>
     <div class="mt-3 d-md-flex justify-content-end">
-        <button [disabled]="!messageForm.valid" type="submit" class="mt-1 btn btn-lg coment"> {{"comunication.send" |
-            translate}}</button>
+        <button [disabled]="!messageForm.valid" (click)="openSnackBar()" id="liveToastBtn" type="submit" class="mt-1 btn btn-lg coment"> {{"comunication.send" |translate}}</button>
     </div>
     <div class="logotipe">
         <img src="assets/images/logo/IoTlogo.png" alt="">

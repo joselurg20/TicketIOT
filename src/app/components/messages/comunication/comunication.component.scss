@@ -64,7 +64,7 @@ label {
 .logotipe {
   text-align: center;
 
-  img {
+  img{
     width: 350px;
     height: auto;
     border-radius: 10px;
@@ -74,8 +74,15 @@ label {
     width: 250px;
     height: auto;
     border-radius: 10px;
-
   }
+}
+
+.preview {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 1vw;
+
 }
 
 .preview-link {

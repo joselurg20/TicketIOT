@@ -177,7 +177,7 @@ export class ChartBarComponent implements OnInit {
           title: {
             display: true,
             text: 'Tickets por estado',
-            color: '#efb810',
+            color: '#c6a4e7',
             font: {
               size: 18
             }

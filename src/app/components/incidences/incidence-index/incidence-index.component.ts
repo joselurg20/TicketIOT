@@ -40,6 +40,10 @@ export class IncidenceIndexComponent implements OnInit {
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   isLogged: boolean = false;
   selectedFiles: File[] = [];
+  durationInSeconds = 5;
+  selectFilesNames: string[] = [];
+  isSupportManager: boolean = true;
+  
 
   constructor(private _snackBar: MatSnackBar, private apiService: ApiService , private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);
@@ -52,18 +56,12 @@ export class IncidenceIndexComponent implements OnInit {
     }
   }
 
-
-  durationInSeconds = 5;
-  
-  
   openSnackBar() {
     this._snackBar.openFromComponent(SnackbarComponent, {
       duration: this.durationInSeconds * 1000,
     });
   }
 
-
-  
   ngOnInit() {
     this.ticketForm = new FormGroup({
       Title: new FormControl('', [Validators.required, Validators.maxLength(45)]),
@@ -100,6 +98,7 @@ export class IncidenceIndexComponent implements OnInit {
             setTimeout(() => {
               this.clearAttachments(); // Limpiar campos del formulario
             }, 1000);
+            window.location.href = '/support-manager';
           },
           error: (error) => {
             console.error('Error en la solicitud', error);
@@ -149,6 +148,15 @@ export class IncidenceIndexComponent implements OnInit {
     return this.apiService.createTicket(formData);
   }
 
+
+  isImage(previewUrl: string | ArrayBuffer | null): boolean {
+    if (typeof previewUrl === 'string' && previewUrl.startsWith('data:image')) {
+        return true;
+    }
+    return false;
+}
+
+
   /**
    * Cambia la previsualización del archivo adjunto.
    * @param event el evento que lanza la función.
@@ -157,17 +165,65 @@ export class IncidenceIndexComponent implements OnInit {
     this.selectedFiles = event.target.files;
     const files = this.selectedFiles;
     this.isFileSelected = true;
-    for(let file of files) {
+    for (let file of files) {
       if (file) {
         const reader = new FileReader();
         reader.onload = () => {
-          this.previewUrls.push(reader.result);
+          // Verificar el tipo de archivo
+          if (file.type) {
+
+            console.log('Tipo de archivo:', file.type);
+            switch (file.type) {
+              case 'image/jpeg':
+              case 'image/png':
+              case 'image/gif':
+                this.previewUrls.push(reader.result);
+                break;
+              case 'application/pdf':
+                // Asignar una imagen para PDF
+                this.previewUrls.push('assets/images/file-previews/pdf_file.png');
+                break;
+              case 'application/msword':
+              case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+                // Asignar una imagen para Word
+                this.previewUrls.push('assets/images/file-previews/doc_file.png');
+                break;
+              case 'application/vnd.ms-excel':
+              case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+                // Asignar una imagen para Excel
+                this.previewUrls.push('assets/images/file-previews/xls_file.png');
+                break;
+              case 'text/plain':
+                // Asignar una imagen para archivos de texto
+                this.previewUrls.push('assets/images/file-previews/txt_file.png');
+                break;
+              case 'application/x-compressed':
+              case 'application/x-zip-compressed':
+              case 'application/x-7z-compressed':
+                // Asignar una imagen para archivos comprimidos
+                this.previewUrls.push('assets/images/file-previews/rar_file.png');
+                break;
+              case 'audio/mpeg':
+              case 'audio/wav':
+                // Asignar una imagen para archivos de audio
+                this.previewUrls.push('assets/images/file-previews/audio_file.png');
+                break;
+              case 'video/mp4':
+              case 'video/avi':
+              case 'video/x-matroska':
+                // Asignar una imagen para archivos de video
+                this.previewUrls.push('assets/images/file-previews/video_file.png');
+                break;
+              default:
+                // Asignar una imagen por defecto para otros tipos de archivo
+                this.previewUrls.push('assets/images/file-previews/unknown_file.png');
+            }
+          }
+          this.selectFilesNames.push(file.name);
         };
         reader.readAsDataURL(file);
-        this.isImageSelected = file.type.startsWith('image/');
       }
     }
-    console.log('Selected files', this.selectedFiles);
   }
 
   /**
@@ -179,6 +235,7 @@ export class IncidenceIndexComponent implements OnInit {
     this.isImageSelected = false;
   }
 
+  
 
 
 }

@@ -19,11 +19,7 @@ import { SnackbarComponent } from './components/snackbar/snackbar.component';
     declarations: [
         AppComponent,
     ],
-    providers: [
-        {provide: MAT_DATE_LOCALE, useValue: es},
-        {provide: MAT_DATE_LOCALE, useValue: enUS},
-        {provide: MAT_DATE_FORMATS, useValue: format},
-    ],
+    providers: [],
     bootstrap: [AppComponent],
     imports: [
         SnackbarComponent,

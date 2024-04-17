@@ -7,10 +7,14 @@
         <button type="button" onclick="document.getElementById('Attachments').click()"
             class="custom-file-button btn btn-lg"><i class="fa-solid fa-arrow-up-from-bracket"></i>
             {{"comunication.select" | translate}}</button>
-
-        <div *ngIf="isFileSelected" class="logotipe">
-            <div>
-                <img *ngFor="let previewUrl of previewUrls" [src]="previewUrl" class="preview-image">
+        <div *ngIf="isFileSelected" class="logotipe preview">
+            <div *ngFor="let previewUrl of previewUrls; let i = index">
+                <img *ngIf="isImage(previewUrl)" [src]="previewUrl" class="preview-image"
+                    alt="Vista previa del archivo">
+                <div *ngIf="!isImage(previewUrl)">
+                    <img [src]="previewUrl" class="preview-image" alt="Vista previa del archivo">
+                    <p>{{ selectFilesNames[i] }}</p>
+                </div>
             </div>
         </div>
     </div>
@@ -23,8 +27,8 @@
     <p *ngIf="successMsg" class="success">{{ successMsg }}</p>
     <p *ngIf="!successMsg" class="error">{{ successMsg }}</p>
     <div class="d-flex justify-content-end">
-        <button [disabled]="!messageForm.valid" type="submit" class="m-1 btn btn-lg"><i
-                class="fa-solid fa-paper-plane"></i> {{"comunication.send" | translate}}</button>
+        <button [disabled]="!messageForm.valid" type="submit" class="m-1 btn btn-lg"><i class="fa-solid fa-paper-plane"
+                (click)="openSnackBar()" id="liveToastBtn"></i> {{"comunication.send" | translate}}</button>
         <app-message></app-message>
     </div>
 </form>

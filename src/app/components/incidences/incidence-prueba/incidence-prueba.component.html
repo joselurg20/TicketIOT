@@ -50,9 +50,9 @@
             <br>
 
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button [disabled]="!ticketForm.valid" type="submit" class="btn btn-lg" id="liveToastBtn">{{'incidence-index.send' | translate}}</button>
-
+                <button [disabled]="!ticketForm.valid" (click)="openSnackBar()" type="submit" class="btn btn-lg" id="liveToastBtn"><i class="fa-regular fa-paper-plane"></i> {{'incidence-index.send' | translate}}</button>
             </div>
+            
         </form>
         <div class="logotipe">
             <img src="assets/images/logo/IoTlogo.png" alt="">

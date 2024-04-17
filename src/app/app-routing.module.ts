@@ -14,6 +14,7 @@ import { MessageComponent } from './components/messages/menssage/message.compone
 import { IncidencePruebaComponent } from './components/incidences/incidence-prueba/incidence-prueba.component';
 import { Recovery2Component } from './components/login/recovery2/recovery2.component';
 import { IncidenceTableComponent } from './components/incidences/incidence-table/incidence-table.component';
+import { SnackbarComponent } from './components/snackbar/snackbar.component';
 
 
 
@@ -35,6 +36,8 @@ const routes: Routes = [
   { path: "prueba2", component: IncidenceTicketsComponent },
   { path: "prueba3/:ticketId", component: MessageComponent },
   { path: "prueba4", component: IncidencePruebaComponent },
+  { path: "enlace", component: IncidenceUserComponent },
+  { path: "prueba5", component: SnackbarComponent },
 
   //accedibles el usuario
   { path: "incidencia", component: IncidenceIndexComponent },

@@ -173,6 +173,14 @@ export class ChartBarComponent implements OnInit {
         plugins: {
           legend: {
             display: false
+          },
+          title: {
+            display: true,
+            text: 'Tickets por estado',
+            color: '#c6a4e7',
+            font: {
+              size: 18
+            }
           }
         },
         scales: {

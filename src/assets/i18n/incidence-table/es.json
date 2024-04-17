@@ -10,6 +10,27 @@
     "priority": "Prioridad",
     "newMessages": "Nuevos",
     "show": "Editar",
-    "titleTable": "Incidencias"
+    "titleTable": "Incidencias",
+    "filterState": "Filtrar por Estado",
+    "filterStateDefaultValue": "Todos",
+    "filterStateValue1": "Pendiente",
+    "filterStateValue2": "Abierta",
+    "filterStateValue3": "Pausada",
+    "filterStateValue4": "Terminada",
+    "filterPriority": "Filtrar por Prioridad",
+    "filterPriorityDefaultValue": "Por definir",
+    "filterPriorityValue1": "Más baja",
+    "filterPriorityValue2": "Baja",
+    "filterPriorityValue3": "Media",
+    "filterPriorityValue4": "Alta",
+    "filterPriorityValue5": "Más Alta",
+    "filterDate": "Filtrar por Fecha",
+    "filterDateTitle": "Introduzca un rango de fechas",
+    "invalidStartDate": "Fecha de inicio no válida",
+    "invalidEndDate": "Fecha de fin no válida",
+    "filterTechnician": "Filtrar por Técnico",
+    "filterTechnicianDefaultValue": "Sin Asignar",
+    "filterTechnicianValueAll": "Todos",
+    "filterButton": "Filtrar"
   }
 }

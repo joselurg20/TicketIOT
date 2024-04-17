@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
@@ -14,19 +14,25 @@ import { iUserTable } from 'src/app/models/users/iUserTable';
 import { GraphUpdateService } from 'src/app/services/graphUpdateService';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import { es, enUS, Locale } from 'date-fns/locale';
 
 @Component({
   selector: 'app-incidence-table',
   standalone: true,
   imports: [CommonModule, MatTableModule, MatSortModule, MatPaginatorModule, MatButtonModule,
-    MatTooltipModule, MatBadgeModule, MatProgressSpinnerModule, TranslateModule],
+    MatTooltipModule, MatBadgeModule, MatProgressSpinnerModule, TranslateModule, FormsModule,
+    ReactiveFormsModule, MatInputModule, MatDatepickerModule, MatNativeDateModule],
   templateUrl: './incidence-table.component.html',
   styleUrls: ['./incidence-table.component.scss']
 })
 export class IncidenceTableComponent implements AfterViewInit, OnInit {
 
-
+  range!: FormGroup;
+  filterForm!: FormGroup;
   displayedColumns: string[] = ['state', 'id', 'title', 'name', 'email', 'priority', 'timestamp', 'technician', 'show'];
   dataSource = new MatTableDataSource<iTicketTableSM>();
   selectedRow: any;
@@ -36,8 +42,12 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   isSupportManager: boolean = false;
   isbadgeHidden: boolean = true;
   isLoading: boolean = false;
+  showFilter: boolean = false;
+  users: iUserTable[] = [];
 
-  constructor(private _liveAnnouncer: LiveAnnouncer, private apiService: ApiService, private router: Router, private graphUpdateService: GraphUpdateService, private translate: TranslateService) {
+  constructor(private _liveAnnouncer: LiveAnnouncer, private apiService: ApiService,
+              private router: Router, private graphUpdateService: GraphUpdateService,
+              private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -55,18 +65,104 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   @ViewChild('icon')
   iconElement!: ElementRef;
 
-  toggleBadgeVisibility() {
-    this.isbadgeHidden = !this.isbadgeHidden;
-  }
-
-  cambiarIcono() {
-    // Cambiar la clase del icono al icono deseado
-    if (this.isIconChanged) {
-      this.iconElement.nativeElement.className = 'fa-solid fa-eye';
-    } else {
-      this.iconElement.nativeElement.className = 'fa-solid fa-eye-slash';
+  ngOnInit(): void {
+    this.filterForm = new FormGroup({
+      /*Title: new FormControl('', [Validators.required, Validators.maxLength(45)]),
+      Content: new FormControl('', Validators.required),
+      Attachments: new FormControl('', null),
+      Name: new FormControl('', [Validators.required, Validators.maxLength(45)]),
+      Email: new FormControl('', [Validators.required, Validators.email])*/
+    });
+    this.range = new FormGroup({
+      start: new FormControl(),
+      end: new FormControl()
+    })
+    const userNameFromLocalStorage = localStorage.getItem('userName');
+    if (!userNameFromLocalStorage) {
+      console.log('No se encontró ningún nombre de usuario en el localStorage.');
     }
-    this.isIconChanged = !this.isIconChanged;
+    if (localStorage.getItem('userRole') == 'SupportManager') {
+      this.isSupportManager = true;
+      this.apiService.getTicketsByUser(-1).subscribe({
+        next: (response: any) => {
+          console.log('Tickets recibidos', response);
+          const tickets: iTicketTableSM[] = response.$values.map((value: any) => {
+            return {
+              id: value.id,
+              title: value.title,
+              name: value.name,
+              email: value.email,
+              timestamp: this.formatDate(value.timestamp),
+              priority: value.priority,
+              state: value.state,
+              techName: 'Sin asignar'
+            };
+          });
+          this.dataSource.data = tickets;
+          
+        },
+        error: (error: any) => {
+          console.error('Error al obtener los tickets del usuario:', error);
+        }
+      });
+      this.apiService.getUsers().subscribe({
+        next: (response: any) => {
+          console.log('Users recibidos', response);
+          this.users = response.map((value: any) => {
+            return {
+              id: value.id,
+              userName: value.fullName
+            };
+          });
+        },
+        error: (error: any) => {
+          console.error('Error al obtener los tickets del usuario:', error);
+        }
+      });
+        
+    } else {
+      this.displayedColumns = ['state', 'id', 'title', 'name', 'email', 'priority', 'timestamp', 'technician', 'newMessages', 'show'];
+      this.isSupportManager = false;
+      this.apiService.getTicketsByUser(parseInt(localStorage.getItem('userId')!)).subscribe({
+        next: (response: any) => {
+          console.log('Tickets recibidos', response);
+          // Mapear la respuesta de la API utilizando la interfaz iTicketTable
+          const tickets: iTicketTableSM[] = response.$values.map((value: any) => {
+            return {
+              id: value.id,
+              title: value.title,
+              name: value.name,
+              email: value.email,
+              timestamp: this.formatDate(value.timestamp),
+              priority: value.priority,
+              state: value.state,
+              hasNewMessages: value.hasNewMessages,
+              newMessagesCount: value.newMessagesCount
+            };
+          });
+          this.apiService.getUserById(parseInt(localStorage.getItem('userId')!)).subscribe({
+            next: (response: any) => {
+              tickets.forEach((ticket: iTicketTableSM) => {
+                ticket.techName = response.fullName;
+              });
+            },
+            error: (error: any) => {
+              console.error('Error al obtener el usuario:', error);
+            }
+          })
+          for (let ticket of tickets) {
+            if (ticket.state == 'FINISHED') {
+              tickets.splice(tickets.indexOf(ticket), 1);
+            }
+          }
+          this.dataSource.data = tickets; // Establecer los datos en la dataSource
+          console.log('Datos mapeados para tabla', tickets);
+        },
+        error: (error: any) => {
+          console.error('Error al obtener los tickets del usuario:', error);
+        }
+      });
+    }
   }
 
   ngAfterViewInit() {
@@ -96,6 +192,30 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     };
   }
 
+  /**
+   * Cambia la visibilidad del badge.
+   */
+  toggleBadgeVisibility() {
+    this.isbadgeHidden = !this.isbadgeHidden;
+  }
+
+  /**
+   * Cambia el icono del ojo por el ojo tachado y viceversa.
+   */
+  cambiarIcono() {
+    // Cambiar la clase del icono al icono deseado
+    if (this.isIconChanged) {
+      this.iconElement.nativeElement.className = 'fa-solid fa-eye';
+    } else {
+      this.iconElement.nativeElement.className = 'fa-solid fa-eye-slash';
+    }
+    this.isIconChanged = !this.isIconChanged;
+  }
+
+  /**
+   * Cambia el tipo de orden de la tabla.
+   * @param sortState el nuevo tipo de ordenado.
+   */
   announceSortChange(sortState: Sort) {
 
     if (sortState.direction) {
@@ -105,16 +225,29 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     }
   }
 
+  /**
+   * Resalta una fila de la tabla.
+   * @param event el evento del ratón.
+   */
   highlightRow(event: MouseEvent) {
     const row = event.currentTarget as HTMLTableRowElement;
     row.classList.add('highlighted');
   }
 
+  /**
+   * Deja de resaltar una fila de la tabla.
+   * @param event el evento del ratón.
+   */
   unhighlightRow(event: MouseEvent) {
     const row = event.currentTarget as HTMLTableRowElement;
     row.classList.remove('highlighted');
   }
 
+  /**
+   * Traduce un valor de prioridad a un valor numérico.
+   * @param priority el valor de la prioridad.
+   * @returns el valor numérico de la prioridad.
+   */
   getPriorityValue(priority: string): number {
     switch (priority) {
       case 'HIGHEST': return 5;
@@ -126,6 +259,11 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     }
   }
 
+  /**
+   * Traduce un valor de newMessages a un valor numérico.
+   * @param hasNewMessages el valor de newMessages.
+   * @returns el valor numérico de newMessages.
+   */
   getHasNewMessagesValue(hasNewMessages: boolean): number {
     if (hasNewMessages) {
       return 1;
@@ -135,12 +273,19 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
 
   }
 
+  /**
+   * Guarda en localstorage el id del ticket que corresponde a la fila seleccionada.
+   * @param row la fila seleccionada.
+   */
   onRowClicked(row: any) {
     this.selectedRow = row;
     localStorage.setItem('selectedTicket', this.selectedRow.id);
     this.tickets();
   }
 
+  /**
+   * Redirige a la vista correspondiente al ticket seleccionado y según el rol del usuario.
+   */
   tickets() {
     if (localStorage.getItem('userRole') == 'SupportManager') {
       if (localStorage.getItem('selectedTicket') != null) {
@@ -154,6 +299,9 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
 
   }
 
+  /**
+   * Muestra todas las incidencias / Muestra solo las que no están asignadas.
+   */
   showAll() {
     this.graphUpdateService.triggerGraphUpdate();
     if (!this.isShowingAll) {
@@ -235,80 +383,11 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     }, 1000);
   }
 
-  ngOnInit(): void {
-
-    const userNameFromLocalStorage = localStorage.getItem('userName');
-    if (!userNameFromLocalStorage) {
-      console.log('No se encontró ningún nombre de usuario en el localStorage.');
-    }
-    if (localStorage.getItem('userRole') == 'SupportManager') {
-      this.isSupportManager = true;
-      this.apiService.getTicketsByUser(-1).subscribe({
-        next: (response: any) => {
-          console.log('Tickets recibidos', response);
-          const tickets: iTicketTableSM[] = response.$values.map((value: any) => {
-            return {
-              id: value.id,
-              title: value.title,
-              name: value.name,
-              email: value.email,
-              timestamp: this.formatDate(value.timestamp),
-              priority: value.priority,
-              state: value.state,
-              techName: 'Sin asignar'
-            };
-          });
-          this.dataSource.data = tickets;
-          console.log('Datos mapeados para tabla', tickets);
-        },
-        error: (error: any) => {
-          console.error('Error al obtener los tickets del usuario:', error);
-        }
-      });
-    } else {
-      this.displayedColumns = ['state', 'id', 'title', 'name', 'email', 'priority', 'timestamp', 'technician', 'newMessages', 'show'];
-      this.isSupportManager = false;
-      this.apiService.getTicketsByUser(parseInt(localStorage.getItem('userId')!)).subscribe({
-        next: (response: any) => {
-          console.log('Tickets recibidos', response);
-          // Mapear la respuesta de la API utilizando la interfaz iTicketTable
-          const tickets: iTicketTableSM[] = response.$values.map((value: any) => {
-            return {
-              id: value.id,
-              title: value.title,
-              name: value.name,
-              email: value.email,
-              timestamp: this.formatDate(value.timestamp),
-              priority: value.priority,
-              state: value.state,
-              hasNewMessages: value.hasNewMessages,
-              newMessagesCount: value.newMessagesCount
-            };
-          });
-          this.apiService.getUserById(parseInt(localStorage.getItem('userId')!)).subscribe({
-            next: (response: any) => {
-              tickets.forEach((ticket: iTicketTableSM) => {
-                ticket.techName = response.fullName;
-              });
-            },
-            error: (error: any) => {
-              console.error('Error al obtener el usuario:', error);
-            }
-          })
-          for (let ticket of tickets) {
-            if (ticket.state == 'FINISHED') {
-              tickets.splice(tickets.indexOf(ticket), 1);
-            }
-          }
-          this.dataSource.data = tickets; // Establecer los datos en la dataSource
-          console.log('Datos mapeados para tabla', tickets);
-        },
-        error: (error: any) => {
-          console.error('Error al obtener los tickets del usuario:', error);
-        }
-      });
-    }
-  }
+  /**
+   * Da color a los cuadros de prioridad según esta.
+   * @param priority la prioridad.
+   * @returns la línea de css correspondiente a la prioridad.
+   */
   getButtonPriority(priority: string): any {
     let buttonStyles = {};
 
@@ -330,6 +409,11 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
 
   }
 
+  /**
+   * Da color a los cuadros de estado.
+   * @param state el estado.
+   * @returns la línea de css correspondiente al estado.
+   */
   getButtonState(state: string): any {
     let buttonStyles = {};
 
@@ -347,8 +431,16 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
 
   }
 
+  toggleFilter() {
+    this.showFilter = !this.showFilter;
+  }
 
 
+  /**
+   * Da formato a la fecha.
+   * @param fecha la fecha a formatear.
+   * @returns la fecha con formato 'DD/MM/AAAA - HH:mm:ss'
+   */
   formatDate(fecha: string): string {
     const fechaObj = new Date(fecha);
     const dia = fechaObj.getDate().toString().padStart(2, '0');

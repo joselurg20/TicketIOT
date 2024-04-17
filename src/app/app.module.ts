@@ -11,6 +11,9 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { IncidenceTicketsComponent } from "./components/incidences/incidence-tickets/incidence-tickets.component";
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 import { SidebarComponent } from "./components/sidebar/sidebar.component";
+import { MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
+import { es, enUS } from 'date-fns/locale';
+import { format } from 'date-fns/format'
 
 
 
@@ -18,7 +21,11 @@ import { SidebarComponent } from "./components/sidebar/sidebar.component";
     declarations: [
         AppComponent,
     ],
-    providers: [],
+    providers: [
+        {provide: MAT_DATE_LOCALE, useValue: es},
+        {provide: MAT_DATE_LOCALE, useValue: enUS},
+        {provide: MAT_DATE_FORMATS, useValue: format},
+    ],
     bootstrap: [AppComponent],
     imports: [
         BrowserModule,

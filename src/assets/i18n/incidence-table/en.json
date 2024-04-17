@@ -10,6 +10,27 @@
     "priority": "Priority",
     "newMessages": "New",
     "show": "Edit",
-    "titleTable": "Tickets"
+    "titleTable": "Tickets",
+    "filterState": "Filter by State",
+    "filterStateDefaultValue": "All",
+    "filterStateValue1": "Pending",
+    "filterStateValue2": "Opened",
+    "filterStateValue3": "Paused",
+    "filterStateValue4": "Finished",
+    "filterPriority": "Filter by Priority",
+    "filterPriorityDefaultValue": "Not Sure",
+    "filterPriorityValue1": "Lowest",
+    "filterPriorityValue2": "Low",
+    "filterPriorityValue3": "Medium",
+    "filterPriorityValue4": "High",
+    "filterPriorityValue5": "Highest",
+    "filterDate": "Filter by Date",
+    "filterDateTitle": "Enter a date range",
+    "invalidStartDate": "Invalid start date",
+    "invalidEndDate": "Invalid end date",
+    "filterTechnician": "Filter by Technician",
+    "filterTechnicianDefaultValue": "Not Asigned",
+    "filterTechnicianValueAll": "All",
+    "filterButton": "Filter"
   }
 }

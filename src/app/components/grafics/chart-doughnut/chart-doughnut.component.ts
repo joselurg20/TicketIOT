@@ -155,7 +155,7 @@ export class ChartDoughnutComponent {
           title: {
             display: true,
             text: 'Tickets por tecnico',
-            color: '#efb810',
+            color: '#c6a4e7',
             font: {
               size: 20
             }

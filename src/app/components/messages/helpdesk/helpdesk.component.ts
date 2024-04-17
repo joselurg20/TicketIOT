@@ -8,6 +8,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarComponent } from '../../snackbar/snackbar.component';
 
 @Component({
   selector: 'app-helpdesk',
@@ -25,9 +27,10 @@ export class HelpdeskComponent {
   ticketId: number = 0;
   public ticket = {} as iTicketDescriptor;
   public userName: string = '';
+  durationInSeconds = 5;
 
 
-  constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router, private http: HttpClient, private translate: TranslateService) {
+  constructor(private route: ActivatedRoute,private _snackBar: MatSnackBar ,private apiService: ApiService, private router: Router, private http: HttpClient, private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -36,6 +39,12 @@ export class HelpdeskComponent {
       this.translate.use('es');
 
     }
+  }
+
+  openSnackBar() {
+    this._snackBar.openFromComponent(SnackbarComponent, {
+      duration: this.durationInSeconds * 1000,
+    });
   }
 
   ngOnInit(): void {

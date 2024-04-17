@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MessageComponent } from "../menssage/message.component";
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
 import { ApiService } from 'src/app/services/api.service';
 import { Observable } from 'rxjs';
 import { TicketDto } from 'src/app/models/tickets/TicketDTO';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MessagesUpdateService } from 'src/app/services/messagesUpdate.service';
+import { SnackbarComponent } from '../../snackbar/snackbar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-comunication',
@@ -24,8 +26,11 @@ export class ComunicationComponent implements OnInit {
   successMsg: string = '';
   public userName: string = '';
   selectedFiles: File[] = [];
+  durationInSeconds = 3;
+  public selectFilesNames: string[] = [];
 
-  constructor(private apiService: ApiService, private translate: TranslateService, private messagesUpdateService: MessagesUpdateService) {
+
+  constructor(private apiService: ApiService, private _snackBar: MatSnackBar, private translate: TranslateService, private formBuilder: FormBuilder, private messagesUpdateService: MessagesUpdateService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -34,6 +39,10 @@ export class ComunicationComponent implements OnInit {
       this.translate.use('es');
 
     }
+    this.messageForm = this.formBuilder.group({
+      Attachments: [null, Validators.required],
+      Content: [null, Validators.required]
+    });
   }
 
   ngOnInit(): void {
@@ -74,12 +83,19 @@ export class ComunicationComponent implements OnInit {
     })
   }
 
+  openSnackBar() {
+    this._snackBar.openFromComponent(SnackbarComponent, {
+      duration: this.durationInSeconds * 1000,
+    });
+  }
+
+
   previewUrls: Array<string | ArrayBuffer | null> = new Array();
   isFileSelected: boolean = false;
 
   /**
-   * Envía un mensaje a la incidencia seleccionada.
-   */
+  * Envía un mensaje a la incidencia seleccionada.
+  */
   onSubmit() {
     if (this.ticket.state !== 'FINISHED') {
       if (this.messageForm.valid) {
@@ -94,9 +110,7 @@ export class ComunicationComponent implements OnInit {
               this.successMsg = "Mensaje creado con éxito.";
               this.messagesUpdateService.triggerMessagesUpdate();
               this.messageForm.reset();
-              setTimeout(() => {
-                this.successMsg = "";
-              }, 5000);
+              this.openSnackBar();
 
             },
             error: (error) => {
@@ -119,11 +133,11 @@ export class ComunicationComponent implements OnInit {
   }
 
   /**
-   * Crea un mensaje nuevo para la incidencia cuyo id se pasa como parámetro.
-   * @param Content el contenido del mensaje.
-   * @param TicketId el id de la incidencia.
-   * @returns 
-   */
+  * Crea un mensaje nuevo para la incidencia cuyo id se pasa como parámetro.
+  * @param Content el contenido del mensaje.
+  * @param TicketId el id de la incidencia.
+  * @returns 
+  */
   createMessage(Content: string, TicketId: number): Observable<any> {
     const formData = new FormData();
     formData.append('Author', this.userName);
@@ -176,10 +190,10 @@ export class ComunicationComponent implements OnInit {
   }
 
   /**
-   * Da formato a la fecha.
-   * @param fecha la fecha a formatear.
-   * @returns la fecha con formato 'DD/MM/AAAA - HH:mm:ss'
-   */
+  * Da formato a la fecha.
+  * @param fecha la fecha a formatear.
+  * @returns la fecha con formato 'DD/MM/AAAA - HH:mm:ss'
+  */
   formatDate(fecha: string): string {
     const fechaObj = new Date(fecha);
     const dia = fechaObj.getDate().toString().padStart(2, '0');
@@ -192,72 +206,82 @@ export class ComunicationComponent implements OnInit {
     return `${dia}/${mes}/${año} - ${horas}:${minutos}:${segundos}`;
   }
 
+  isImage(previewUrl: string | ArrayBuffer | null): boolean {
+    if (typeof previewUrl === 'string' && previewUrl.startsWith('data:image')) {
+        return true;
+    }
+    return false;
+}
+
+
   /**
-   * Actualiza la previsualización de un archivo adjunto.
-   * @param event el evento que lanza la función.
-   */
+  * Actualiza la previsualización de un archivo adjunto.
+  * @param event el evento que lanza la función.
+  */
+
+
   onFileChange(event: any) {
     this.selectedFiles = event.target.files;
     const files = this.selectedFiles;
     this.isFileSelected = true;
     for (let file of files) {
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                // Verificar el tipo de archivo
-            if (file.type) {
-              console.log('Tipo de archivo:', file.type);
-                switch (file.type) {
-                    case 'image/jpeg':
-                    case 'image/png':
-                    case 'image/gif':
-                        this.previewUrls.push(reader.result);
-                        break;
-                    case 'application/pdf':
-                        // Asignar una imagen para PDF
-                        this.previewUrls.push('assets/images/file-previews/pdf_file.png');
-                        break;
-                    case 'application/msword':
-                    case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-                        // Asignar una imagen para Word
-                        this.previewUrls.push('assets/images/file-previews/doc_file.png');
-                        break;
-                    case 'application/vnd.ms-excel':
-                    case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-                        // Asignar una imagen para Excel
-                        this.previewUrls.push('assets/images/file-previews/xls_file.png');
-                        break;
-                    case 'text/plain':
-                        // Asignar una imagen para archivos de texto
-                        this.previewUrls.push('assets/images/file-previews/txt_file.png');
-                        break;
-                    case 'application/x-compressed':
-                    case 'application/x-zip-compressed':
-                    case 'application/x-7z-compressed':
-                        // Asignar una imagen para archivos comprimidos
-                        this.previewUrls.push('assets/images/file-previews/rar_file.png');
-                        break;
-                    case 'audio/mpeg':
-                    case 'audio/wav':
-                        // Asignar una imagen para archivos de audio
-                        this.previewUrls.push('assets/images/file-previews/audio_file.png');
-                        break;
-                    case 'video/mp4':
-                    case 'video/avi':
-                    case 'video/x-matroska':
-                        // Asignar una imagen para archivos de video
-                        this.previewUrls.push('assets/images/file-previews/video_file.png');
-                        break;
-                    default:
-                        // Asignar una imagen por defecto para otros tipos de archivo
-                        this.previewUrls.push('assets/images/file-previews/unknown_file.png');
-                }
-            }
-            };
-            reader.readAsDataURL(file);
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          // Verificar el tipo de archivo
+          if (file.type) {
 
-            
-        }
+            console.log('Tipo de archivo:', file.type);
+            switch (file.type) {
+              case 'image/jpeg':
+              case 'image/png':
+              case 'image/gif':
+                this.previewUrls.push(reader.result);
+                break;
+              case 'application/pdf':
+                // Asignar una imagen para PDF
+                this.previewUrls.push('assets/images/file-previews/pdf_file.png');
+                break;
+              case 'application/msword':
+              case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+                // Asignar una imagen para Word
+                this.previewUrls.push('assets/images/file-previews/doc_file.png');
+                break;
+              case 'application/vnd.ms-excel':
+              case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+                // Asignar una imagen para Excel
+                this.previewUrls.push('assets/images/file-previews/xls_file.png');
+                break;
+              case 'text/plain':
+                // Asignar una imagen para archivos de texto
+                this.previewUrls.push('assets/images/file-previews/txt_file.png');
+                break;
+              case 'application/x-compressed':
+              case 'application/x-zip-compressed':
+              case 'application/x-7z-compressed':
+                // Asignar una imagen para archivos comprimidos
+                this.previewUrls.push('assets/images/file-previews/rar_file.png');
+                break;
+              case 'audio/mpeg':
+              case 'audio/wav':
+                // Asignar una imagen para archivos de audio
+                this.previewUrls.push('assets/images/file-previews/audio_file.png');
+                break;
+              case 'video/mp4':
+              case 'video/avi':
+              case 'video/x-matroska':
+                // Asignar una imagen para archivos de video
+                this.previewUrls.push('assets/images/file-previews/video_file.png');
+                break;
+              default:
+                // Asignar una imagen por defecto para otros tipos de archivo
+                this.previewUrls.push('assets/images/file-previews/unknown_file.png');
+            }
+          }
+          this.selectFilesNames.push(file.name);
+        };
+        reader.readAsDataURL(file);
+      }
     }
   }
 }

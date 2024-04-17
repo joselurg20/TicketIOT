@@ -11,6 +11,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { IncidenceTicketsComponent } from "./components/incidences/incidence-tickets/incidence-tickets.component";
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 import { SidebarComponent } from "./components/sidebar/sidebar.component";
+import { SnackbarComponent } from './components/snackbar/snackbar.component';
 
 
 
@@ -21,6 +22,7 @@ import { SidebarComponent } from "./components/sidebar/sidebar.component";
     providers: [],
     bootstrap: [AppComponent],
     imports: [
+        SnackbarComponent,
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,

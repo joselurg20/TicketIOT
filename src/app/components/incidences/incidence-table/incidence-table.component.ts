@@ -18,7 +18,6 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
-import { es, enUS, Locale } from 'date-fns/locale';
 
 @Component({
   selector: 'app-incidence-table',

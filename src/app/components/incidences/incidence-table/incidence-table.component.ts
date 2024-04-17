@@ -104,7 +104,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
           console.error('Error al obtener los tickets del usuario:', error);
         }
       });
-      this.apiService.getUsers().subscribe({
+      this.apiService.getTechnicians().subscribe({
         next: (response: any) => {
           console.log('Users recibidos', response);
           this.users = response.map((value: any) => {

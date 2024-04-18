@@ -1,24 +1,24 @@
-import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
-import { CommonModule, registerLocaleData } from '@angular/common';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { CommonModule } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatButtonModule } from '@angular/material/button';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { ApiService } from 'src/app/services/api.service';
-import { Router } from '@angular/router';
-import { iTicketTableSM } from 'src/app/models/tickets/iTicketTableSM';
-import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatBadgeModule } from '@angular/material/badge';
-import { iUserTable } from 'src/app/models/users/iUserTable';
-import { GraphUpdateService } from 'src/app/services/graphUpdateService';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { TicketFilterRequestDto } from 'src/app/models/tickets/TicketFilterRequestDto';
+import { iTicketTableSM } from 'src/app/models/tickets/iTicketTableSM';
+import { iUserTable } from 'src/app/models/users/iUserTable';
+import { ApiService } from 'src/app/services/api.service';
+import { GraphUpdateService } from 'src/app/services/graphUpdateService';
 
 @Component({
   selector: 'app-incidence-table',

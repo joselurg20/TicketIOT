@@ -8,8 +8,8 @@ import { Observable } from 'rxjs';
 import { TicketDto } from 'src/app/models/tickets/TicketDTO';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MessagesUpdateService } from 'src/app/services/messagesUpdate.service';
-import { SnackbarComponent } from '../../snackbar/snackbar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarMenssageComponent } from '../../snackbars/snackbar-menssage/snackbar-menssage.component';
 
 @Component({
   selector: 'app-comunication',
@@ -84,7 +84,7 @@ export class ComunicationComponent implements OnInit {
   }
 
   openSnackBar() {
-    this._snackBar.openFromComponent(SnackbarComponent, {
+    this._snackBar.openFromComponent(SnackbarMenssageComponent, {
       duration: this.durationInSeconds * 1000,
     });
   }

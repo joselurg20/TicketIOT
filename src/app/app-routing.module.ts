@@ -14,7 +14,9 @@ import { MessageComponent } from './components/messages/menssage/message.compone
 import { IncidencePruebaComponent } from './components/incidences/incidence-prueba/incidence-prueba.component';
 import { Recovery2Component } from './components/login/recovery2/recovery2.component';
 import { IncidenceTableComponent } from './components/incidences/incidence-table/incidence-table.component';
-import { SnackbarComponent } from './components/snackbar/snackbar.component';
+import { SnackbarIncidenceComponent } from './components/snackbars/snackbar-incidence/snackbar-incidence.component';
+import { HistoryComponent } from './components/messages/history/history.component';
+import { HelpdeskComponent } from './components/messages/helpdesk/helpdesk.component';
 
 
 
@@ -37,7 +39,13 @@ const routes: Routes = [
   { path: "prueba3/:ticketId", component: MessageComponent },
   { path: "prueba4", component: IncidencePruebaComponent },
   { path: "enlace", component: IncidenceUserComponent },
-  { path: "prueba5", component: SnackbarComponent },
+  { path: "prueba5", component: SnackbarIncidenceComponent },
+  { path: "recuperar", component: RecoveredComponent },
+  { path: "recuperar2", component: Recovery2Component },
+  { path: "prueba6", component: HistoryComponent },
+  { path: "prueba7", component: HelpdeskComponent },
+  { path: "prueba8", component: IncidenceUserComponent },
+
 
   //accedibles el usuario
   { path: "incidencia", component: IncidenceIndexComponent },

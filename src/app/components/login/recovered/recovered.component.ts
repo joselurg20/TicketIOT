@@ -6,6 +6,8 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { ApiService } from 'src/app/services/api.service';
 import { LenguageComponent } from "../../lenguage/lenguage.component";
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { SnackbarMenssageComponent } from '../../snackbars/snackbar-menssage/snackbar-menssage.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-recovered',
@@ -18,8 +20,9 @@ export class RecoveredComponent implements OnInit {
 
     recoveryForm!: FormGroup;
     email: string = '';
+    durationInSeconds = 5;
 
-    constructor(private router: Router, private apiService: ApiService, private translate: TranslateService) {
+    constructor(private router: Router, private _snackBar: MatSnackBar, private apiService: ApiService, private translate: TranslateService) {
         this.translate.addLangs(['en', 'es']);
         const lang = this.translate.getBrowserLang();
         if (lang !== 'en' && lang !== 'es') {
@@ -30,6 +33,12 @@ export class RecoveredComponent implements OnInit {
         }
     }
 
+    openSnackBar() {
+        this._snackBar.openFromComponent(SnackbarMenssageComponent, {
+            duration: this.durationInSeconds * 1000,
+        });
+    }
+    
     ngOnInit(): void {
         this.recoveryForm = new FormGroup({
             Email: new FormControl('', [Validators.required, Validators.email])

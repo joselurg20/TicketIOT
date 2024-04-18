@@ -52,6 +52,7 @@ export class SidebarComponent implements OnInit {
   @Output() onToggleSideNav: EventEmitter<SideNavToggle> = new EventEmitter();
   collapsed = false;
   screenWidth = 0;
+  loggedUserName: string = "";
 
 
 
@@ -118,6 +119,12 @@ export class SidebarComponent implements OnInit {
     if (selectedLanguage) {
       this.translate.use(selectedLanguage);
       this.setLanguageImage(selectedLanguage);
+    }
+    const userNameFromLocalStorage = localStorage.getItem('userName');
+    if (userNameFromLocalStorage) {
+      this.loggedUserName = userNameFromLocalStorage;
+    } else {
+      console.log('No se encontró ningún nombre de usuario en el localStorage.');
     }
   }
 

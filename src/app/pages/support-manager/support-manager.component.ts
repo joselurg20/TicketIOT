@@ -1,20 +1,19 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IncidenceTableComponent } from "../../components/incidences/incidence-table/incidence-table.component";
-import { TechnicalTableComponent } from "../../components/technical-table/technical-table.component";
-import { ChartPieComponent } from "../../components/grafics/chart-pie/chart-pie.component";
-import { ChartDoughnutComponent } from "../../components/grafics/chart-doughnut/chart-doughnut.component";
+import { Component, OnInit } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { ChartBarComponent } from 'src/app/components/grafics/chart-bar/chart-bar.component';
-import { MessageComponent } from "../../components/messages/menssage/message.component";
-import { LoginService } from 'src/app/services/login.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
+import { ChartBarComponent } from 'src/app/components/grafics/chart-bar/chart-bar.component';
 import { iTicketTable } from 'src/app/models/tickets/iTicketTable';
 import { iUserTable } from 'src/app/models/users/iUserTable';
-import { ApiService } from 'src/app/services/api.service';
-import { SidebarComponent } from "../../components/sidebar/sidebar.component";
+import { LoginService } from 'src/app/services/login.service';
+import { ChartDoughnutComponent } from "../../components/grafics/chart-doughnut/chart-doughnut.component";
+import { ChartPieComponent } from "../../components/grafics/chart-pie/chart-pie.component";
 import { IncidenceIndexComponent } from "../../components/incidences/incidence-index/incidence-index.component";
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { IncidenceTableComponent } from "../../components/incidences/incidence-table/incidence-table.component";
+import { MessageComponent } from "../../components/messages/menssage/message.component";
+import { SidebarComponent } from "../../components/sidebar/sidebar.component";
+import { TechnicalTableComponent } from "../../components/technical-table/technical-table.component";
 
 interface Tile {
     cols: number;

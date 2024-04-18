@@ -1,17 +1,19 @@
 <div class="grid-container">
-<div class="grid-item"><app-history></app-history></div>
-<div class="grid-item">
-  <h1 class="my-4">{{"incidence-data.title" | translate}} <app-lenguage class="m-3 justify-content-end"></app-lenguage></h1>
-  <form>
-  <div class="row gy-1">
-    <div class="status col-12">
-      <div class="p-3">
-          <h2 class="ticketdata">{{"incidence-data.status" | translate}}</h2>
-          <p class="font">{{ticket.state}}</p>
+  <div class="item1"><img src="../../../assets/images/logo/IoTlogo.png" alt=""></div>
+  <div class="item2"><app-lenguage class="d-flex justify-content-end"></app-lenguage></div>
+  <div class="item3"><app-history></app-history></div>
+  <div class="item4">
+    <h1 class="my-4">{{"incidence-data.title" | translate}}</h1>
+    <form>
+      <div class="row gy-1">
+        <div class="status col-12">
+          <div class="p-3">
+            <h2 class="ticketdata">{{"incidence-data.status" | translate}}</h2>
+            <p class="font">{{ticket.state}}</p>
+          </div>
+        </div>
       </div>
+    </form>
   </div>
-  </div>
-  </form>
-</div>
-<div class="grid-item"><app-helpdesk></app-helpdesk></div>
+  <div class="item5"><app-helpdesk></app-helpdesk></div>
 </div>

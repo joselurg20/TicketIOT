@@ -1,7 +1,8 @@
 @import './../../../styles/imports.scss';
 
 * {
-  padding:0;
+  padding: 0;
+  margin: 0;
   overflow: hidden;
 }
 
@@ -10,10 +11,10 @@ h1 {
 }
 
 .p-3 {
- background-color: $bg-color-mid;
- border-radius: 15px;
- margin-left: 1rem;
- margin-right: 1rem;
+  background-color: $bg-color-mid;
+  border-radius: 15px;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
 .ticketdata {
@@ -27,24 +28,72 @@ h1 {
   margin-left: 18px;
 }
 
-.grid-container {
-  display: grid;
-  min-height: 100vh;
-  grid-template-columns: 1fr 0.95fr;
-  grid-gap: 10px;
+.item1 {
+  grid-area: iso;
+  background-color: $bg-color-dark  !important;
+  height: 10rem;
 }
 
-.grid-item {
+.item2 {
+  grid-area: leng;
+  background-color: $bg-color-dark  !important;
+}
+
+.item3 {
+  grid-area: hist;
+  width:100%;
+}
+
+.item4 {
+  grid-area: status;
+}
+
+.item5 {
+  grid-area: msg;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    'iso iso  iso iso  iso leng  '
+    'hist hist  hist hist hist status '
+    'hist hist  hist hist hist status '
+    'hist hist  hist hist  hist msg '
+    'hist hist  hist hist hist msg';
+  grid-gap: 10px;
+  border-radius: 20px;
+  padding: 10px;
+  height: 58rem;
+}
+
+.grid-container>div {
   background-color: $bg-color-mid-2;
   color: $text-color-mid;
   border-radius: 25px;
   padding: 20px;
 }
 
-.grid-item:nth-child(1) {
-  grid-row-end: span 2;
+img {
+  height: 10rem;
 }
 
-img {
-  height: 10vh;
+@media screen and (max-width: 600px) {
+
+  .grid-container {
+    display: grid;
+    grid-template-areas:
+      'iso . leng  '
+      'hist hist  hist '
+      'status status status'
+      'msg msg msg'; 
+    grid-gap: 10px;
+    border-radius: 20px;
+    padding: 10px;
+    height: 75rem;
+  }
+
+  img{
+    height: 7rem;
+  }
+  
 }

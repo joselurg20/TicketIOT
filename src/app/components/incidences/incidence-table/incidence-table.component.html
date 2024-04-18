@@ -7,8 +7,6 @@
                         class="fa-solid fa-plus"></i></a>
                 <a class="btn" type="button" (click)="toggleFilter();" *ngIf="isSupportManager"><i 
                         class="fa-solid fa-filter"></i></a>
-                <a class="btn" type="button" (click)="cambiarIcono(); showAll();" *ngIf="isSupportManager"><i #icon
-                        class="fa-solid fa-eye"></i></a>
             </div>
         </div>
         <div *ngIf="showFilter" class="filters">
@@ -24,16 +22,16 @@
                             translate}}</label>
                 </div>
             </div>
-            <form [formGroup]="filterForm">
+            <form>
                 <div class="selects">
-                    <select class="form-select form-select-lg" id="state" required  name="state">
+                    <select class="form-select form-select-lg" id="state" required  name="state" [(ngModel)]="selectedStateFilter">
                         <option value="-1">{{"incidence-table.filterStateDefaultValue" | translate}}</option>
                         <option value="0">{{"incidence-table.filterStateValue1" | translate}}</option>
                         <option value="1">{{"incidence-table.filterStateValue2" | translate}}</option>
                         <option value="2">{{"incidence-table.filterStateValue3" | translate}}</option>
                         <option value="3">{{"incidence-table.filterStateValue4" | translate}}</option>
                     </select>
-                    <select class="form-select form-select-lg" id="priority" required  name="priority">
+                    <select class="form-select form-select-lg" id="priority" required  name="priority" [(ngModel)]="selectedPriorityFilter">
                         <option value="-1">{{"incidence-table.filterPriorityDefaultValue" | translate}}</option>
                         <option value="0">{{"incidence-table.filterPriorityValue0" | translate}}</option>
                         <option value="1">{{"incidence-table.filterPriorityValue1" | translate}}</option>
@@ -42,9 +40,9 @@
                         <option value="4">{{"incidence-table.filterPriorityValue4" | translate}}</option>
                         <option value="5">{{"incidence-table.filterPriorityValue5" | translate}}</option>
                     </select>
-                    <select class="form-select form-select-lg" id="technician" required  name="technician">
-                        <option value="0">{{"incidence-table.filterTechnicianDefaultValue" | translate}}</option>
-                        <option value="1">{{"incidence-table.filterTechnicianValueAll" | translate}}</option>
+                    <select class="form-select form-select-lg" id="technician" required  name="technician" [(ngModel)]="selectedTechnicianFilter">
+                        <option value="-1">{{"incidence-table.filterTechnicianDefaultValue" | translate}}</option>
+                        <option value="0">{{"incidence-table.filterTechnicianValueAll" | translate}}</option>
                         <option *ngFor="let user of users" [value]="user.id">{{user.userName}}</option>
                     </select>
                     <div class="datepicker2">
@@ -59,7 +57,7 @@
                             <mat-error *ngIf="range.controls['start'].hasError('matStartDateInvalid')">{{"incidence-table.invalidStartDate | translate"}}</mat-error>
                             <mat-error *ngIf="range.controls['end'].hasError('matEndDateInvalid')">{{"incidence-table.invalidEndDate | translate"}}</mat-error>
                         </mat-form-field>
-                        <a class="btnL" type="submit" (click)="showAll();">{{"incidence-table.filterButton" | translate}}</a>
+                        <a class="btnL" type="submit" (click)="filterTickets();">{{"incidence-table.filterButton" | translate}}</a>
                     </div>
                 </div>
                 

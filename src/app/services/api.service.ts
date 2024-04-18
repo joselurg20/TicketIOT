@@ -1,7 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TicketDto } from '../models/tickets/TicketDTO';
+import { TicketFilterRequestDto } from '../models/tickets/TicketFilterRequestDto';
 
 @Injectable({
   providedIn: 'root'
@@ -81,6 +82,29 @@ export class ApiService {
     });
   
     return this.http.get<any[]>(`${this.apiUrl}/tickets/getall`, { headers });
+  }
+
+  /**
+   * Filtra las incidencias según los datos pasados como parámetro.
+   * @param filter los datos de filtrado
+   * @returns Observable<any[]> con las incidencias.
+   */
+  filterTickets(filter: TicketFilterRequestDto): Observable<any[]> {
+    const token = localStorage.getItem('authToken');
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.get<any[]>(`${this.apiUrl}/tickets/getallfilter`, {
+      headers: headers,
+      params: new HttpParams()
+        .set("State", filter.state)
+        .set("Priority", filter.priority)
+        .set("UserId", filter.userId)
+        .set("Start", filter.start.toDateString())
+        .set("End", filter.end.toDateString())
+    });
   }
 
   /**

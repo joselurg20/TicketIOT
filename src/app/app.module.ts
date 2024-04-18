@@ -11,8 +11,10 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { IncidenceTicketsComponent } from "./components/incidences/incidence-tickets/incidence-tickets.component";
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 import { SidebarComponent } from "./components/sidebar/sidebar.component";
-import { SnackbarComponent } from './components/snackbar/snackbar.component';
-
+import { SnackbarIncidenceComponent } from './components/snackbars/snackbar-incidence/snackbar-incidence.component';
+import { SnackbarMenssageComponent } from './components/snackbars/snackbar-menssage/snackbar-menssage.component';
+import { SnackbarPasswordComponent } from './components/snackbars/snackbar-password/snackbar-password.component';
+import { SnackbarRecoveredComponent } from './components/snackbars/snackbar-recovered/snackbar-recovered.component';
 
 
 @NgModule({
@@ -22,7 +24,10 @@ import { SnackbarComponent } from './components/snackbar/snackbar.component';
     providers: [],
     bootstrap: [AppComponent],
     imports: [
-        SnackbarComponent,
+        SnackbarIncidenceComponent, 
+        SnackbarMenssageComponent, 
+        SnackbarPasswordComponent, 
+        SnackbarRecoveredComponent,
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
@@ -54,6 +59,7 @@ export function HttpLoaderFactory(http: HttpBackend) {
         { prefix: "./assets/i18n/menssages/", suffix: ".json" },
         { prefix: "./assets/i18n/recovered/", suffix: ".json" },
         { prefix: "./assets/i18n/sidenav/", suffix: ".json" },
+        { prefix: "./assets/i18n/snackbars/", suffix: ".json" },
         { prefix: "./assets/i18n/technical-table/", suffix: ".json" },
         { prefix: "./assets/i18n/test/", suffix: ".json" }
     ]);

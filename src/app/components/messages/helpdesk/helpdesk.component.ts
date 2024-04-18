@@ -9,7 +9,6 @@ import { Observable } from 'rxjs';
 import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SnackbarComponent } from '../../snackbar/snackbar.component';
 
 @Component({
   selector: 'app-helpdesk',
@@ -41,11 +40,6 @@ export class HelpdeskComponent {
     }
   }
 
-  openSnackBar() {
-    this._snackBar.openFromComponent(SnackbarComponent, {
-      duration: this.durationInSeconds * 1000,
-    });
-  }
 
   ngOnInit(): void {
     this.messageForm = new FormGroup({

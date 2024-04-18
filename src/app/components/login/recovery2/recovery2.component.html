@@ -21,10 +21,16 @@
                         placeholder="{{'recovered.passwordplaceholder2' | translate}}" formControlName="RepeatPassword">
                 </div>
 
+               
+
                 <div class="d-grid mb-3">
-                    <button type="submit" [disabled] class="iot-log-btn">{{'recovered.send' | translate}}</button>
+                    <button type="submit" id="liveToastBtn" (click)="openSnackBar()" [disabled] class="iot-log-btn">{{'recovered.send' | translate}}</button>
                 </div>
             </form>
+
+            <mat-progress-spinner *ngIf="isLoading" mode="indeterminate" color="warn" class="progressSpinner"></mat-progress-spinner>
+
+
         </div>
 
         <div class="logotipe">

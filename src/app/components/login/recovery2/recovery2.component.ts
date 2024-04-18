@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { iResetPasswordDto } from 'src/app/models/users/iResetPasswordDto';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LenguageComponent } from "../../lenguage/lenguage.component";
 import * as CryptoJS from 'crypto-js';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarPasswordComponent } from '../../snackbars/snackbar-password/snackbar-password.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 function passwordValidator(control: FormControl): { [key: string]: any } | null {
   const hasUppercase = /[A-Z]/.test(control.value); // Verifica si hay al menos una letra mayúscula
@@ -25,7 +28,7 @@ function passwordValidator(control: FormControl): { [key: string]: any } | null 
   standalone: true,
   templateUrl: './recovery2.component.html',
   styleUrls: ['./recovery2.component.scss'],
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, TranslateModule, LenguageComponent]
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, TranslateModule, LenguageComponent, MatProgressSpinnerModule]
 })
 export class Recovery2Component implements OnInit {
 
@@ -35,8 +38,10 @@ export class Recovery2Component implements OnInit {
   tld: string = '';
   email: string = '';
   hash: string = '';
+  durationInSeconds = 5;
+  isLoading: boolean = false;
 
-  constructor(private route: ActivatedRoute, private router: Router, private apiService: ApiService, private translate: TranslateService) {
+  constructor(private route: ActivatedRoute,private fb:FormBuilder, private _snackBar: MatSnackBar, private router: Router, private apiService: ApiService, private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -83,7 +88,6 @@ export class Recovery2Component implements OnInit {
       return;
     }
 
-
     const hashedPassword = CryptoJS.SHA256(password).toString().concat('@', 'A', 'a');
 
     // Si las contraseñas coinciden, continuar con el proceso de restablecimiento de contraseña
@@ -102,5 +106,13 @@ export class Recovery2Component implements OnInit {
         console.error('Error al restablecer la contraseña:', error);
       }
     });
+  }
+
+  openSnackBar() {
+    if (passwordValidator===null) {
+      this._snackBar.openFromComponent(SnackbarPasswordComponent, {
+      duration: this.durationInSeconds * 1000,
+    });
+    }
   }
 }

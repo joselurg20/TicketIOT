@@ -1,0 +1,8 @@
+{
+  "snackbars": {
+    "incidence": "Incidence sent.",
+    "menssage": "Message sent.",
+    "recovered": "Email sent successfully.",
+    "recovered2": "Password reset."
+  }
+}

@@ -15,7 +15,7 @@ import { ButtonComponent } from "../../button/button.component";
 import { SidebarComponent } from '../../sidebar/sidebar.component';
 import { LenguageComponent } from "../../lenguage/lenguage.component";
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { SnackbarComponent } from '../../snackbar/snackbar.component';
+import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/snackbar-incidence.component';
 
 
 @Component({
@@ -57,7 +57,7 @@ export class IncidenceIndexComponent implements OnInit {
   }
 
   openSnackBar() {
-    this._snackBar.openFromComponent(SnackbarComponent, {
+    this._snackBar.openFromComponent(SnackbarIncidenceComponent, {
       duration: this.durationInSeconds * 1000,
     });
   }

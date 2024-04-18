@@ -268,6 +268,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
         console.error('Error al obtener los tickets filtrados:', error);
       }
     })
+    this.showFilter = false;
   }
 
   /**

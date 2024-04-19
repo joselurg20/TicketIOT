@@ -74,7 +74,7 @@
         <div id="divTable"  [ngStyle]="{'display': isLoading ? 'none' : 'block'}">
 
             <table mat-table [dataSource]="dataSource" matSort #sort (matSortChange)="announceSortChange($event)"
-                class="mat-elevation-z8">
+                class="mat-elevation-z8 ticketTable">
 
                 <ng-container matColumnDef="state">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by symbol"

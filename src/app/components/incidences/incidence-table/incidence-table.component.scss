@@ -267,7 +267,20 @@ tr {
   margin-right: -4px;
   border-top: $bg-color-dark 1px solid;
   font-size: 20px;
-  height: 60px;
+  height: 50px;
+}
+
+::ng-deep .pages .mat-mdc-form-field-type-mat-select:not(.mat-form-field-disabled) .mat-mdc-text-field-wrapper {
+  cursor: pointer;
+  height: 40px;
+}
+
+::ng-deep .pages .mat-mdc-paginator-page-size {
+  margin-top: -15px;
+}
+
+::ng-deep .pages .mat-mdc-paginator-range-actions {
+  margin-top: -15px;
 }
 
 .mat-raised-button {

@@ -82,9 +82,9 @@ export class ChartPieComponent {
           title: {
             display: true,
             text: 'Prioridades de incidencias',
-            color: '#0c7c80',
+            color: '#EFB810',
             font: {
-              size: 20
+              size: 28
             }
           }
         },

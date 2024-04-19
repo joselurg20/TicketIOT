@@ -104,6 +104,7 @@ export class ApiService {
         .set("UserId", filter.userId)
         .set("Start", filter.start.toDateString())
         .set("End", filter.end.toDateString())
+        .set("SearchString", filter.searchString)
     });
   }
 

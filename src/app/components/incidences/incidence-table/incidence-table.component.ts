@@ -57,6 +57,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   selectedStateFilter: number = -1;
   selectedPriorityFilter: number = -1;
   selectedTechnicianFilter: number = -1;
+  searchString: string = '';
 
   //Filtro de incidencias
   filter: TicketFilterRequestDto = {
@@ -64,7 +65,8 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     priority: -1,
     userId: -1,
     start: new Date(1900, 0, 1),
-    end: new Date(3000, 0, 1)
+    end: new Date(3000, 0, 1),
+    searchString: ''
   }
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private apiService: ApiService,
@@ -221,6 +223,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     this.filter.state = this.selectedStateFilter;
     this.filter.priority = this.selectedPriorityFilter;
     this.filter.userId = this.selectedTechnicianFilter;
+    this.filter.searchString = this.searchString;
     this.apiService.filterTickets(this.filter).subscribe({
       next: (response: any) => {
         console.log('Tickets filtrados', response);
@@ -269,6 +272,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
       }
     })
     this.showFilter = false;
+    this.searchString = '';
   }
 
   /**

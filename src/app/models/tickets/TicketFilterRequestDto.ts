@@ -5,5 +5,6 @@ export interface TicketFilterRequestDto {
     priority: number,
     userId: number,
     start: Date,
-    end: Date
+    end: Date,
+    searchString: string
 }

@@ -14,6 +14,7 @@ import { IncidenceTableComponent } from "../../components/incidences/incidence-t
 import { MessageComponent } from "../../components/messages/menssage/message.component";
 import { SidebarComponent } from "../../components/sidebar/sidebar.component";
 import { TechnicalTableComponent } from "../../components/technical-table/technical-table.component";
+import { TicketsService } from 'src/app/services/tickets.service';
 
 interface Tile {
     cols: number;
@@ -32,13 +33,11 @@ interface Tile {
 })
 export class SupportManagerComponent implements OnInit {
 
-loggedUsername: string = "";
 tickets: iTicketTable[] = [];
 users: iUserTable[] = [];
-isShowingAll: boolean = false;
 isLoading: boolean = true;
 
-constructor(private loginService: LoginService, private router: Router) {
+constructor(private loginService: LoginService, private router: Router, private ticketsService: TicketsService) {
 }
 
 ngOnInit(): void {
@@ -51,28 +50,12 @@ ngOnInit(): void {
         this.router.navigate(['/login']);
     }
 
-    setTimeout(() => {
-        this.isLoading = false;
-      }, 1000);
+    this.ticketsService.getTickets(true);
+    this.ticketsService.tickets$.subscribe(tickets => {
+      this.tickets = tickets;
+      this.isLoading = false;
+    });
 }
-
-/**
- * Cierra sesión.
- */
-logout() {
-    this.loginService.logout();
-}
-
-/**
- * Recibe datos del componente hijo.
- * @param data los datos del componente hijo.
- */
-receiveDataFromChild(data: boolean) {
-    this.isShowingAll = data;
-    console.log('Datos recibidos en el padre:', this.isShowingAll);
-  }
-
-
 
 tiles: Tile[] = [
     {component: IncidenceTableComponent, cols: 4, rows: 4},

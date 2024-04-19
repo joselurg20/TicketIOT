@@ -18,7 +18,7 @@ import { TicketFilterRequestDto } from 'src/app/models/tickets/TicketFilterReque
 import { iTicketTableSM } from 'src/app/models/tickets/iTicketTableSM';
 import { iUserTable } from 'src/app/models/users/iUserTable';
 import { ApiService } from 'src/app/services/api.service';
-import { GraphUpdateService } from 'src/app/services/graphUpdateService';
+import { TicketsService } from 'src/app/services/tickets.service';
 
 @Component({
   selector: 'app-incidence-table',
@@ -43,14 +43,12 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   loggedUserName: string = "";
 
   //Flags de control
-  isIconChanged: boolean = false;
-  isShowingAll: boolean = false;
   isSupportManager: boolean = false;
-  isbadgeHidden: boolean = true;
   isLoading: boolean = false;
   showFilter: boolean = false;
 
-  //Lista de usuarios a representar en la tabla
+  //Listas de datos a representar en la tabla
+  tickets: iTicketTableSM[] = [];
   users: iUserTable[] = [];
 
   //Valores seleccionados en el formulario de filtros
@@ -70,8 +68,8 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   }
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private apiService: ApiService,
-              private router: Router, private graphUpdateService: GraphUpdateService,
-              private translate: TranslateService) {
+              private router: Router, private translate: TranslateService,
+              private ticketsService: TicketsService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -94,34 +92,8 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
       start: new FormControl(),
       end: new FormControl()
     })
-    const userNameFromLocalStorage = localStorage.getItem('userName');
-    if (!userNameFromLocalStorage) {
-      console.log('No se encontró ningún nombre de usuario en el localStorage.');
-    }
     if (localStorage.getItem('userRole') == 'SupportManager') {
       this.isSupportManager = true;
-      this.apiService.getTicketsByUser(-1).subscribe({
-        next: (response: any) => {
-          console.log('Tickets recibidos', response);
-          const tickets: iTicketTableSM[] = response.$values.map((value: any) => {
-            return {
-              id: value.id,
-              title: value.title,
-              name: value.name,
-              email: value.email,
-              timestamp: this.formatDate(value.timestamp),
-              priority: value.priority,
-              state: value.state,
-              techName: 'Sin asignar'
-            };
-          });
-          this.dataSource.data = tickets;
-          
-        },
-        error: (error: any) => {
-          console.error('Error al obtener los tickets del usuario:', error);
-        }
-      });
       this.apiService.getTechnicians().subscribe({
         next: (response: any) => {
           console.log('Users recibidos', response);
@@ -140,53 +112,18 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     } else {
       this.displayedColumns = ['state', 'id', 'title', 'name', 'email', 'priority', 'timestamp', 'technician', 'newMessages', 'show'];
       this.isSupportManager = false;
-      this.apiService.getTicketsByUser(parseInt(localStorage.getItem('userId')!)).subscribe({
-        next: (response: any) => {
-          console.log('Tickets recibidos', response);
-          // Mapear la respuesta de la API utilizando la interfaz iTicketTable
-          const tickets: iTicketTableSM[] = response.$values.map((value: any) => {
-            return {
-              id: value.id,
-              title: value.title,
-              name: value.name,
-              email: value.email,
-              timestamp: this.formatDate(value.timestamp),
-              priority: value.priority,
-              state: value.state,
-              hasNewMessages: value.hasNewMessages,
-              newMessagesCount: value.newMessagesCount
-            };
-          });
-          this.apiService.getUserById(parseInt(localStorage.getItem('userId')!)).subscribe({
-            next: (response: any) => {
-              tickets.forEach((ticket: iTicketTableSM) => {
-                ticket.techName = response.fullName;
-              });
-            },
-            error: (error: any) => {
-              console.error('Error al obtener el usuario:', error);
-            }
-          })
-          for (let ticket of tickets) {
-            if (ticket.state == 'FINISHED') {
-              tickets.splice(tickets.indexOf(ticket), 1);
-            }
-          }
-          this.dataSource.data = tickets; // Establecer los datos en la dataSource
-          console.log('Datos mapeados para tabla', tickets);
-        },
-        error: (error: any) => {
-          console.error('Error al obtener los tickets del usuario:', error);
-        }
-      });
     }
+    this.ticketsService.tickets$.subscribe(tickets => {
+      this.dataSource.data = tickets;
+      this.isLoading = false;
+    });
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     if (localStorage.getItem('userRole') == 'SupportManager') {
-      this.dataSource.sort.active = 'priority';
+      this.dataSource.sort.active = 'timestamp';
       this.dataSource.sort.direction = 'desc';
     } else {
       this.dataSource.sort.active = 'newMessages';
@@ -224,62 +161,10 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     this.filter.priority = this.selectedPriorityFilter;
     this.filter.userId = this.selectedTechnicianFilter;
     this.filter.searchString = this.searchString;
-    this.apiService.filterTickets(this.filter).subscribe({
-      next: (response: any) => {
-        console.log('Tickets filtrados', response);
-        const tickets: iTicketTableSM[] = response.tickets.$values.map((value: any) => {
-          return {
-            id: value.id,
-            title: value.title,
-            name: value.name,
-            email: value.email,
-            timestamp: this.formatDate(value.timestamp),
-            priority: value.priority,
-            state: value.state,
-            techId: value.userId,
-            techName: ''
-          };
-        });
-        this.apiService.getUsers().subscribe({
-          next: (response: any) => {
-            console.log('Users recibidos', response);
-            const users: iUserTable[] = response.map((value: any) => {
-              return {
-                id: value.id,
-                userName: value.fullName
-              };
-            });
-            tickets.forEach((ticket) => {
-              const user = users.find((user) => user.id === ticket.techId);
-              if (user) {
-                ticket.techName = user.userName;
-              } else {
-                ticket.techName = 'Sin asignar'
-              }
-            });
-            this.dataSource.data = tickets;
-            console.log('Datos mapeados para tabla', tickets);
-          },
-          error: (error: any) => {
-            console.error('Error al obtener los tickets del usuario:', error);
-          }
-        })
-        this.dataSource.data = tickets;
-        console.log('Datos mapeados para tabla', tickets);
-      },
-      error: (error: any) => {
-        console.error('Error al obtener los tickets filtrados:', error);
-      }
-    })
+    this.ticketsService.filterTickets(this.filter);
+    
     this.showFilter = false;
     this.searchString = '';
-  }
-
-  /**
-   * Cambia la visibilidad del badge.
-   */
-  toggleBadgeVisibility() {
-    this.isbadgeHidden = !this.isbadgeHidden;
   }
 
   /**
@@ -350,13 +235,13 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   onRowClicked(row: any) {
     this.selectedRow = row;
     localStorage.setItem('selectedTicket', this.selectedRow.id);
-    this.tickets();
+    this.goToTickets();
   }
 
   /**
    * Redirige a la vista correspondiente al ticket seleccionado y según el rol del usuario.
    */
-  tickets() {
+  goToTickets() {
     if (localStorage.getItem('userRole') == 'SupportManager') {
       if (localStorage.getItem('selectedTicket') != null) {
         this.router.navigate(['/revisar-manager']);
@@ -417,26 +302,11 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
 
   }
 
+  /**
+   * Muestra u oculta el formulario de filtrado.
+   */
   toggleFilter() {
     this.showFilter = !this.showFilter;
-  }
-
-
-  /**
-   * Da formato a la fecha.
-   * @param fecha la fecha a formatear.
-   * @returns la fecha con formato 'DD/MM/AAAA - HH:mm:ss'
-   */
-  formatDate(fecha: string): string {
-    const fechaObj = new Date(fecha);
-    const dia = fechaObj.getDate().toString().padStart(2, '0');
-    const mes = (fechaObj.getMonth() + 1).toString().padStart(2, '0'); // Se suma 1 porque los meses van de 0 a 11
-    const año = fechaObj.getFullYear();
-    const horas = fechaObj.getHours().toString().padStart(2, '0');
-    const minutos = fechaObj.getMinutes().toString().padStart(2, '0');
-    const segundos = fechaObj.getSeconds().toString().padStart(2, '0');
-
-    return `${dia}/${mes}/${año} - ${horas}:${minutos}:${segundos}`;
   }
 
 }

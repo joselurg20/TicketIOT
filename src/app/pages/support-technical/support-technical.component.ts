@@ -11,6 +11,8 @@ import { SidebarComponent } from 'src/app/components/sidebar/sidebar.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
+import { TicketsService } from 'src/app/services/tickets.service';
+import { iTicketTable } from 'src/app/models/tickets/iTicketTable';
 
 @Component({
     selector: 'app-support-technical',
@@ -23,9 +25,10 @@ import { Router } from '@angular/router';
 })
 export class SupportTechnicalComponent implements OnInit {
 
+    tickets: iTicketTable[] = [];
     isLoading: boolean = true;
 
-constructor(private loginService: LoginService, private router: Router) {}
+constructor(private loginService: LoginService, private router: Router, private ticketsService: TicketsService) {}
 
     ngOnInit(): void {
         window.onpopstate = (event) => {
@@ -37,8 +40,10 @@ constructor(private loginService: LoginService, private router: Router) {}
             this.router.navigate(['/login']);
         }
         
-        setTimeout(() => {
+        this.ticketsService.getTickets(false);
+        this.ticketsService.tickets$.subscribe(tickets => {
+            this.tickets = tickets;
             this.isLoading = false;
-        }, 1000);
+        });
     }
 }

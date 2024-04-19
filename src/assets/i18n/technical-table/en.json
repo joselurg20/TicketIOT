@@ -4,6 +4,6 @@
     "title": "ID",
     "name": "Name",
     "email": "Email",
-    "phone": "Phone"
+    "phone": "Phone Number"
   }
 }

@@ -26,7 +26,6 @@ export class ChartDoughnutComponent {
 
       this.apiService.getTechnicians().subscribe({
         next: (response: any) => {
-          console.log('Users recibidos', response);
           const users: iUserGraph[] = response.map((value: any) => {
             return {
               id: value.id,
@@ -34,7 +33,6 @@ export class ChartDoughnutComponent {
             };
           });
           this.users = users;
-          console.log('Datos mapeados para tabla', users);
           this.createChart();
         },
         error: (error) => {
@@ -51,7 +49,6 @@ export class ChartDoughnutComponent {
     if(localStorage.getItem('userRole') == 'SupportManager') {
       this.apiService.getTickets().subscribe({
         next: (response: any) => {
-          console.log('Tickets recibidos', response);
           // Mapear la respuesta de la API utilizando la interfaz iTicketTable
           const tickets: iTicketGraph[] = response.$values.map((value: any) => {
             return {
@@ -60,8 +57,7 @@ export class ChartDoughnutComponent {
               userId: value.userId
             };
           });
-          this.tickets = tickets; // Establecer los datos en la dataSource
-          console.log('Datos mapeados para tabla', tickets);
+          this.tickets = tickets;
           this.createChart();
         },
         error: (error: any) => {
@@ -71,7 +67,6 @@ export class ChartDoughnutComponent {
     } else {
       this.apiService.getTicketsByUser(parseInt(localStorage.getItem('userId')!)).subscribe({
         next: (response: any) => {
-          console.log('Tickets recibidos', response);
           // Mapear la respuesta de la API utilizando la interfaz iTicketTable
           const tickets: iTicketGraph[] = response.$values.map((value: any) => {
             return {
@@ -80,8 +75,7 @@ export class ChartDoughnutComponent {
               userId: value.userId
             };
           });
-          this.tickets = tickets; // Establecer los datos en la dataSource
-          console.log('Datos mapeados para tabla', tickets);
+          this.tickets = tickets;
           this.createChart();
         },
         error: (error: any) => {
@@ -134,12 +128,6 @@ export class ChartDoughnutComponent {
             'black',
             'black',
             'black'
-            /*'rgba(232, 19, 87, 1)',
-            'rgba(116, 92, 216, 1)',
-            'rgba(253, 183, 63, 1)',
-            'rgba(59, 235, 151, 1)',
-            'rgba(59, 214, 235, 1)',
-            'rgba(255, 255, 255, 1)'*/
           ],
           borderWidth: 1
         }]

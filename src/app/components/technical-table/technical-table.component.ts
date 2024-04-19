@@ -28,7 +28,6 @@ export class TechnicalTableComponent implements OnInit {
   ngOnInit(): void {
     this.apiService.getUsers().subscribe({
       next: (response: any) => {
-        console.log('Users recibidos', response);
         const users: iUserTable[] = response.map((value: any) => {
           return {
             id: value.id,
@@ -38,7 +37,6 @@ export class TechnicalTableComponent implements OnInit {
           };
         });
         this.users = users;
-        console.log('Datos mapeados para tabla', users);
       },
       error: (error) => {
         console.log(error);

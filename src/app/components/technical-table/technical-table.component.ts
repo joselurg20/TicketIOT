@@ -31,7 +31,7 @@ export class TechnicalTableComponent implements OnInit {
         const users: iUserTable[] = response.map((value: any) => {
           return {
             id: value.id,
-            userName: value.userName,
+            userName: value.fullName,
             email: value.email,
             phoneNumber: value.phoneNumber
           };

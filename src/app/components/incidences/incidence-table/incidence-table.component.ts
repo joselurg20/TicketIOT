@@ -96,7 +96,6 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
       this.isSupportManager = true;
       this.apiService.getTechnicians().subscribe({
         next: (response: any) => {
-          console.log('Users recibidos', response);
           this.users = response.map((value: any) => {
             return {
               id: value.id,

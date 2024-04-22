@@ -15,6 +15,7 @@ import { MessageComponent } from "../../components/messages/menssage/message.com
 import { SidebarComponent } from "../../components/sidebar/sidebar.component";
 import { TechnicalTableComponent } from "../../components/technical-table/technical-table.component";
 import { TicketsService } from 'src/app/services/tickets.service';
+import { GraphUpdateService } from 'src/app/services/graphUpdateService';
 
 interface Tile {
     cols: number;

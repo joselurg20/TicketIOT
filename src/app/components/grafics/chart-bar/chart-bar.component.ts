@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
+import { Subscription } from 'rxjs';
 import { iTicketGraph } from 'src/app/models/tickets/iTicketsGraph';
+import { GraphUpdateService } from 'src/app/services/graphUpdateService';
 import { TicketsService } from 'src/app/services/tickets.service';
 
 @Component({
@@ -15,14 +17,38 @@ export class ChartBarComponent implements OnInit {
 
   tickets: iTicketGraph[] = [];
   myChart: any;
+  titleEs: string = 'Incidencias por estado';
+  titleEn: string = 'Tickets by state';
+  title: string = this.titleEs;
+  private graphUpdateSubscription: Subscription = {} as Subscription;
 
-  constructor(private ticketsService: TicketsService) { }
+  constructor(private ticketsService: TicketsService, private graphUpdateService: GraphUpdateService) { }
 
   ngOnInit() {
+    if(localStorage.getItem('selectedLanguage') == 'en'){
+      this.title = this.titleEn;
+    }else if(localStorage.getItem('selectedLanguage') == 'es'){
+      this.title = this.titleEs;
+    }
     this.ticketsService.ticketGraphs$.subscribe(tickets => {
       this.tickets = tickets;
       this.createChart();
     });
+    this.graphUpdateSubscription = this.graphUpdateService.graphUpdated$.subscribe(() => {
+      this.switchLanguage();
+    })
+  }
+
+  /**
+   * Cambia el idioma del título
+   */
+  switchLanguage() {
+    if(localStorage.getItem('selectedLanguage') == 'en'){
+      this.title = this.titleEn;
+    }else if(localStorage.getItem('selectedLanguage') == 'es'){
+      this.title = this.titleEs;
+    }
+    this.createChart();
   }
 
   /**
@@ -74,7 +100,7 @@ export class ChartBarComponent implements OnInit {
           },
           title: {
             display: true,
-            text: 'Tickets por estado',
+            text: this.title,
             color: '#EFB810',
             font: {
               size: 28

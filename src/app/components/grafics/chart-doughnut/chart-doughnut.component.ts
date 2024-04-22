@@ -4,6 +4,8 @@ import { Chart, registerables } from 'chart.js';
 import { ApiService } from 'src/app/services/api.service';
 import { iTicketGraph } from 'src/app/models/tickets/iTicketsGraph';
 import { iUserGraph } from 'src/app/models/users/iUserGraph';
+import { GraphUpdateService } from 'src/app/services/graphUpdateService';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chart-doughnut',
@@ -17,11 +19,19 @@ export class ChartDoughnutComponent {
   users: iUserGraph[] = [];
   tickets: iTicketGraph[] = [];
   myChart: any;
+  titleEs: string = 'Incidencias por técnico';
+  titleEn: string = 'Tickets by technician';
+  title: string = this.titleEs;
+  private graphUpdateSubscription: Subscription = {} as Subscription;
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService, private graphUpdateService: GraphUpdateService) { }
 
   ngOnInit() {
-
+    if(localStorage.getItem('selectedLanguage') == 'en'){
+      this.title = this.titleEn;
+    }else if(localStorage.getItem('selectedLanguage') == 'es'){
+      this.title = this.titleEs;
+    }
     if(localStorage.getItem('userRole') == 'SupportManager') {
 
       this.apiService.getTechnicians().subscribe({
@@ -83,8 +93,23 @@ export class ChartDoughnutComponent {
         }
       });
     }
+    this.graphUpdateSubscription = this.graphUpdateService.graphUpdated$.subscribe(() => {
+      this.switchLanguage();
+    })
 
     
+  }
+
+  /**
+   * Cambia el idioma del título
+   */
+  switchLanguage() {
+    if(localStorage.getItem('selectedLanguage') == 'en'){
+      this.title = this.titleEn;
+    }else if(localStorage.getItem('selectedLanguage') == 'es'){
+      this.title = this.titleEs;
+    }
+    this.createChart();
   }
 
   /**
@@ -142,7 +167,7 @@ export class ChartDoughnutComponent {
           },
           title: {
             display: true,
-            text: 'Tickets por tecnico',
+            text: this.title,
             color: '#EFB810',
             font: {
               size: 28

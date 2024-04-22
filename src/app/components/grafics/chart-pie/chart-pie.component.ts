@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
 import { iTicketGraph } from 'src/app/models/tickets/iTicketsGraph';
 import { TicketsService } from 'src/app/services/tickets.service';
+import { GraphUpdateService } from 'src/app/services/graphUpdateService';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chart-pie',
@@ -15,15 +17,38 @@ export class ChartPieComponent {
 
   tickets: iTicketGraph[] = [];
   myChart: any;
+  titleEs: string = 'Incidencias por prioridad';
+  titleEn: string = 'Tickets by priority';
+  title: string = this.titleEs;
+  private graphUpdateSubscription: Subscription = {} as Subscription;
 
-  constructor(private ticketsService: TicketsService) {}
+  constructor(private ticketsService: TicketsService, private graphUpdateService: GraphUpdateService) {}
 
   ngOnInit() {
+    if(localStorage.getItem('selectedLanguage') == 'en'){
+      this.title = this.titleEn;
+    }else if(localStorage.getItem('selectedLanguage') == 'es'){
+      this.title = this.titleEs;
+    }
     this.ticketsService.ticketGraphs$.subscribe(tickets => {
       this.tickets = tickets;
       this.createChart();
     });
+    this.graphUpdateSubscription = this.graphUpdateService.graphUpdated$.subscribe(() => {
+      this.switchLanguage();
+    })
+  }
 
+  /**
+   * Cambia el idioma del título
+   */
+  switchLanguage() {
+    if(localStorage.getItem('selectedLanguage') == 'en'){
+      this.title = this.titleEn;
+    }else if(localStorage.getItem('selectedLanguage') == 'es'){
+      this.title = this.titleEs;
+    }
+    this.createChart();
   }
 
   /**
@@ -81,7 +106,7 @@ export class ChartPieComponent {
           },
           title: {
             display: true,
-            text: 'Prioridades de incidencias',
+            text: this.title,
             color: '#EFB810',
             font: {
               size: 28

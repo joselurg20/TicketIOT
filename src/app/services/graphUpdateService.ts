@@ -13,7 +13,6 @@ export class GraphUpdateService {
    * Trigger the graph update.
    */
   triggerGraphUpdate() {
-    console.log('Ticket update triggered')
     this.graphUpdatedSource.next();
   }
 }

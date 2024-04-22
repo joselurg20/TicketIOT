@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -15,13 +15,27 @@ import { SnackbarIncidenceComponent } from './components/snackbars/snackbar-inci
 import { SnackbarMenssageComponent } from './components/snackbars/snackbar-menssage/snackbar-menssage.component';
 import { SnackbarPasswordComponent } from './components/snackbars/snackbar-password/snackbar-password.component';
 import { SnackbarRecoveredComponent } from './components/snackbars/snackbar-recovered/snackbar-recovered.component';
+import { es , enGB } from 'date-fns/locale';
+import { registerLocaleData } from '@angular/common';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 
+registerLocaleData(es, 'es');
+registerLocaleData(enGB, 'en');
 
 @NgModule({
     declarations: [
         AppComponent,
     ],
-    providers: [],
+    providers: [
+        {
+            provide: MAT_DATE_LOCALE,
+            useValue: [es , enGB]
+        },
+        {
+            provide: MAT_DATE_FORMATS,
+            useValue: [es , enGB]
+        }
+    ],
     bootstrap: [AppComponent],
     imports: [
         SnackbarIncidenceComponent, 

@@ -4,15 +4,15 @@ import { Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class GraphUpdateService {
-  private graphUpdatedSource = new Subject<void>();
+export class LanguageUpdateService {
+  private langUpdatedSource = new Subject<void>();
 
-  graphUpdated$ = this.graphUpdatedSource.asObservable();
+  langUpdated$ = this.langUpdatedSource.asObservable();
 
   /**
    * Trigger the graph update.
    */
   triggerGraphUpdate() {
-    this.graphUpdatedSource.next();
+    this.langUpdatedSource.next();
   }
 }

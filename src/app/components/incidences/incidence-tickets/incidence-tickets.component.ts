@@ -11,7 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { iTicketTableSM } from 'src/app/models/tickets/iTicketTableSM';
 import { iUserTable } from 'src/app/models/users/iUserTable';
 import { ApiService } from 'src/app/services/api.service';
-import { GraphUpdateService } from 'src/app/services/graphUpdateService';
+import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 
 @Component({
   selector: 'app-incidence-tickets',
@@ -31,7 +31,7 @@ export class IncidenceTicketsComponent implements OnInit, AfterViewInit {
   isSupportManager: boolean = false;
   element: any;
 
-  constructor(private _liveAnnouncer: LiveAnnouncer, private apiService: ApiService, private router: Router, private graphUpdateService: GraphUpdateService) { }
+  constructor(private _liveAnnouncer: LiveAnnouncer, private apiService: ApiService, private router: Router, private langUpdateService: LanguageUpdateService) { }
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -134,7 +134,7 @@ export class IncidenceTicketsComponent implements OnInit, AfterViewInit {
   }
 
   showAll() {
-    this.graphUpdateService.triggerGraphUpdate();
+    this.langUpdateService.triggerGraphUpdate();
     if(!this.isShowingAll) {
       this.apiService.getTickets().subscribe({
         next: (response: any) => {

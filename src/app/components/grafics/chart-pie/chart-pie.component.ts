@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
 import { iTicketGraph } from 'src/app/models/tickets/iTicketsGraph';
 import { TicketsService } from 'src/app/services/tickets.service';
-import { GraphUpdateService } from 'src/app/services/graphUpdateService';
+import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -20,9 +20,9 @@ export class ChartPieComponent {
   titleEs: string = 'Incidencias por prioridad';
   titleEn: string = 'Tickets by priority';
   title: string = this.titleEs;
-  private graphUpdateSubscription: Subscription = {} as Subscription;
+  private langUpdateSubscription: Subscription = {} as Subscription;
 
-  constructor(private ticketsService: TicketsService, private graphUpdateService: GraphUpdateService) {}
+  constructor(private ticketsService: TicketsService, private langUpdateService: LanguageUpdateService) {}
 
   ngOnInit() {
     if(localStorage.getItem('selectedLanguage') == 'en'){
@@ -34,7 +34,7 @@ export class ChartPieComponent {
       this.tickets = tickets;
       this.createChart();
     });
-    this.graphUpdateSubscription = this.graphUpdateService.graphUpdated$.subscribe(() => {
+    this.langUpdateSubscription = this.langUpdateService.langUpdated$.subscribe(() => {
       this.switchLanguage();
     })
   }

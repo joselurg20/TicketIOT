@@ -4,7 +4,7 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
-import { MatNativeDateModule } from '@angular/material/core';
+import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -14,10 +14,12 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { TicketFilterRequestDto } from 'src/app/models/tickets/TicketFilterRequestDto';
 import { iTicketTableSM } from 'src/app/models/tickets/iTicketTableSM';
 import { iUserTable } from 'src/app/models/users/iUserTable';
 import { ApiService } from 'src/app/services/api.service';
+import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { TicketsService } from 'src/app/services/tickets.service';
 
 @Component({
@@ -51,6 +53,9 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   tickets: iTicketTableSM[] = [];
   users: iUserTable[] = [];
 
+  //Subscripción para triggers de cambio de idioma
+  private langUpdateSubscription: Subscription = {} as Subscription;
+
   //Valores seleccionados en el formulario de filtros
   selectedStateFilter: number = -1;
   selectedPriorityFilter: number = -1;
@@ -69,7 +74,8 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private apiService: ApiService,
               private router: Router, private translate: TranslateService,
-              private ticketsService: TicketsService) {
+              private ticketsService: TicketsService, private readonly dateAdapter: DateAdapter<Date>,
+              private langUpdateService: LanguageUpdateService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -92,6 +98,17 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
       start: new FormControl(),
       end: new FormControl()
     })
+    switch(localStorage.getItem('selectedLanguage')) {
+      case 'en':
+        this.setLocale('en');
+        break;
+      case 'es':
+        this.setLocale('es');
+        break;
+      default:
+        this.setLocale('es');
+        break;
+    }
     if (localStorage.getItem('userRole') == 'SupportManager') {
       this.isSupportManager = true;
       this.apiService.getTechnicians().subscribe({
@@ -115,6 +132,9 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     this.ticketsService.tickets$.subscribe(tickets => {
       this.dataSource.data = tickets;
       this.isLoading = false;
+    });
+    this.langUpdateService.langUpdated$.subscribe(() => {
+      this.setLocale(localStorage.getItem('selectedLanguage')!);
     });
   }
 
@@ -143,6 +163,14 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
           return typeof value === 'string' ? value.toLowerCase() : (typeof value === 'number' ? value : 0);
       }
     };
+  }
+
+  /**
+   * Cambia el locale para el componente de fechas.
+   * @param locale el nombre del locale a usar.
+   */
+  setLocale(locale: string) {
+    this.dateAdapter.setLocale(locale);
   }
 
   /**

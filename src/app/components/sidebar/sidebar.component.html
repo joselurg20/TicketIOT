@@ -10,14 +10,15 @@
   </div>
   <hr class="sidenav-hr">
   <ul class="sidenav-nav">
-    <li class="sidenav-nav-item">
-      <a class="sidenav-nav-link username">
-        <i class="sidenav-link-icon fa-solid fa-user"></i>
-        <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">{{loggedUserName}}</span>
+    <li class="usernameItem">
+      <a class="usernameLink">
+        <i *ngIf="!isSupportManager" class="usernameIcon fa-solid fa-user"></i>
+        <i *ngIf="isSupportManager" class="usernameIcon fa-solid fa-user-tie"></i>
+        <span class="usernameLinkText" @fadeInOut *ngIf="collapsed">{{loggedUserName}}</span>
       </a>
     </li>
     <li class="sidenav-nav-item">
-      <a class="sidenav-nav-link" routerLinkActive="active" routerLink="/support-manager" (click)="goToDashboard()">
+      <a class="sidenav-nav-link" routerLinkActive="active" *ngIf="isSupportManager" routerLink="/support-manager" (click)="goToDashboard()">
         <i class="sidenav-link-icon fa-solid fa-house"></i>
         <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">{{"sidenav.dashboard" | translate}}</span>
       </a>

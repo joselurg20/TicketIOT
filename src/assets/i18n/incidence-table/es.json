@@ -32,6 +32,9 @@
     "filterTechnician": "Filtrar por Técnico",
     "filterTechnicianDefaultValue": "Sin Asignar",
     "filterTechnicianValueAll": "Todos",
-    "filterButton": "Filtrar"
+    "filterButton": "Filtrar",
+    "search": "Buscar",
+    "startDate": "Fecha inicial",
+    "endDate": "Fecha final"
   }
 }

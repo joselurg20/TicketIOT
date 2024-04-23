@@ -46,7 +46,7 @@ export class ChartDoughnutComponent {
           this.createChart();
         },
         error: (error) => {
-          console.log(error);
+          console.error("Error al obtener los usuarios", error);
         }
       });
     }else{

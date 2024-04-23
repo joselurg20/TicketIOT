@@ -48,10 +48,8 @@ export class HelpdeskComponent {
     });
     this.route.params.subscribe(params => {
       this.ticketId = params['ticketId'];
-      console.log('TicketId', this.ticketId)
       this.apiService.getMessagesByTicket(this.ticketId).subscribe({
         next: (response: any) => {
-          console.log('response', response);
           this.messages = response.$values.map((message: any) => {
             return {
               Id: message.id,
@@ -93,12 +91,10 @@ export class HelpdeskComponent {
    */
   onSubmit() {
     if (this.messageForm.valid) {
-      console.log('Datos del formulario:', this.messageForm.value);
       const Content = this.messageForm.value.Content;
       this.createMessage(Content, this.ticketId)
         .subscribe({
           next: (response) => {
-            console.log('Message creado con éxito', response);
             this.successMsg = "Mensaje creado con éxito.";
             location.reload();
           },

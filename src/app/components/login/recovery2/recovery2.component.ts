@@ -97,7 +97,6 @@ export class Recovery2Component implements OnInit {
 
     this.apiService.resetPassword(formData).subscribe({
       next: (response) => {
-        console.log('Contraseña restablecida:', response);
         this.router.navigate(['/login']);
       },
       error: (error) => {

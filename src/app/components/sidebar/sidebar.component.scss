@@ -77,14 +77,43 @@
   }
 }
 
-.username {
-  background-color: #202124;
-  color: #fff;
-  cursor: auto;
+.usernameItem {
+  width: 100%;
+  margin-bottom: 0.625rem;
 
-  &:hover {
-    background-color: #202124 !important;
-    color: #fff !important;
+  .usernameLink {
+    display: flex;
+    align-items: center;
+    height: 3rem;
+    color: #f3f3f3;
+    text-decoration: none;
+    border-radius: 0.625rem;
+
+    .usernameIcon {
+      font-size: 22px;
+      width: 2rem;
+      min-width: 2rem;
+      margin: 0 0.5rem;
+      text-align: center;
+    }
+
+    .usernameLinkText {
+      margin-left: 1.5rem;
+    }
+  }
+}
+
+.usernameItem {
+  font-weight: bold;
+}
+
+.usernameItem:hover {
+  .usernameLink {
+    background-color: $bg-color-mid;
+    cursor: auto;
+  }
+  .usernameLinkText {
+    cursor: default;
   }
 }
 
@@ -107,7 +136,6 @@ img {
   flex-direction: column;
   align-items: center;
   height: calc(100% - 3.65rem);
-  cursor: pointer;
 
   .sidenav-nav-item {
     width: 100%;
@@ -143,6 +171,7 @@ img {
     .sidenav-nav-link {
       background-color: #EFB810;
       color: #000;
+      cursor: pointer;
     }
   }
 }
@@ -193,4 +222,9 @@ select {
       color: red
     }
   }
+}
+
+.dropdown-item:hover {
+  cursor: pointer;
+  background-color: $bg-color-primary;
 }

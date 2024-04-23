@@ -36,7 +36,6 @@ export class TechnicialComponent {
     if (this.selectedStateValue != -1) {
       this.apiService.changeTicketState(parseInt(localStorage.getItem('selectedTicket')!), this.selectedStateValue).subscribe({
         next: () => {
-          console.log('Estado cambiado correctamente');
           setTimeout(() => {
             this.ticketUpdateService.triggerTicketUpdate();
           }, 1000);

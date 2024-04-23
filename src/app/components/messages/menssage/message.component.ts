@@ -38,11 +38,9 @@ export class MessageComponent implements OnInit {
     if (ticketIdLS != null) {
       this.ticketId = +ticketIdLS;
     }
-    console.log('ticketId', this.ticketId);
     if (this.ticketId) {
       this.apiService.getMessagesByTicket(this.ticketId).subscribe({
         next: (response: any) => {
-          console.log('response', response);
           this.messages = response.$values.map((message: any) => {
             return {
               Id: message.id,
@@ -61,7 +59,6 @@ export class MessageComponent implements OnInit {
       });
 
       this.messagesUpdateSubscription = this.messagesUpdateService.messagesUpdated$.subscribe(() => {
-        console.log('Messages update received');
         
         this.refreshMessagesData();
       });
@@ -74,7 +71,6 @@ export class MessageComponent implements OnInit {
   refreshMessagesData() {
     this.apiService.getMessagesByTicket(this.ticketId).subscribe({
       next: (response: any) => {
-        console.log('response', response);
         this.messages = response.$values.map((message: any) => {
           return {
             Id: message.id,
@@ -109,7 +105,6 @@ export class MessageComponent implements OnInit {
         this.ticket = ticket;
         this.apiService.updateTicket(this.ticketId, this.ticket).subscribe({
           next: (response: any) => {
-            console.log('Ticket actualizado', response);
           },
           error: (error: any) => {
             console.error('Error al actualizar el ticket', error);
@@ -173,7 +168,6 @@ export class MessageComponent implements OnInit {
               }
             })
           }
-          console.log('Mensajes', this.messages);
         }
       
     }

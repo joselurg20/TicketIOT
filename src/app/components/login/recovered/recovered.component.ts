@@ -66,7 +66,6 @@ export class RecoveredComponent implements OnInit {
 
             this.apiService.checkEmail(username, domain, tld).subscribe({
                 next: (response) => {
-                    console.log('Email enviado:', response);
                     this.router.navigate(['/login']);
                 },
                 error: (error) => {

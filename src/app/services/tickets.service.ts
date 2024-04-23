@@ -106,7 +106,6 @@ ticketGraphs$: Observable<iTicketGraph[]> = this.ticketGraphsSubject.asObservabl
     filter.priority = +filter.priority;
     this.apiService.filterTickets(filter).subscribe({
         next: (response: any) => {
-          console.log('Tickets filtrados', response);
           const tickets: iTicketTableSM[] = response.tickets.$values.map((value: any) => {
             return {
               id: value.id,
@@ -129,7 +128,6 @@ ticketGraphs$: Observable<iTicketGraph[]> = this.ticketGraphsSubject.asObservabl
           });
           this.apiService.getUsers().subscribe({
             next: (response: any) => {
-              console.log('Users recibidos', response);
               const users: iUserTable[] = response.map((value: any) => {
                 return {
                   id: value.id,

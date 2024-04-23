@@ -129,9 +129,7 @@ export class SidebarComponent implements OnInit {
     const userNameFromLocalStorage = localStorage.getItem('userName');
     if (userNameFromLocalStorage) {
       this.loggedUserName = userNameFromLocalStorage;
-    } else {
-      console.log('No se encontró ningún nombre de usuario en el localStorage.');
-    };
+    }
     if (localStorage.getItem('userRole') == 'SupportManager') {
       this.isSupportManager = true;
     }

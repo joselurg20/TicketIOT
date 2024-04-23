@@ -39,7 +39,6 @@ export class HistoryComponent {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.ticketId = params['ticketId'];
-      console.log('TicketId', this.ticketId)
       this.refreshMessagesData();
     });
     this.apiService.getTicketById(this.ticketId).subscribe({
@@ -62,7 +61,6 @@ export class HistoryComponent {
       }
     });
     this.messagesUpdateSubscription = this.messagesUpdateService.messagesUpdated$.subscribe(() => {
-      console.log('Messages update received');
       
       this.refreshMessagesData();
     });
@@ -74,7 +72,6 @@ export class HistoryComponent {
   refreshMessagesData() {
     this.apiService.getMessagesByTicket(this.ticketId).subscribe({
       next: (response: any) => {
-        console.log('response', response);
         this.messages = response.$values.map((message: any) => {
           return {
             Id: message.id,
@@ -140,7 +137,6 @@ export class HistoryComponent {
                 }
               })
             }
-            console.log('Mensajes', this.messages);
           }
         
       }

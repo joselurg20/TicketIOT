@@ -45,7 +45,6 @@ export class IncidenceUserComponent {
     ngOnInit(): void {
       this.route.params.subscribe(params => {
         this.ticketId = params['ticketId'];
-        console.log('TicketId', this.ticketId);
         this.hashedId = params['hashedId'];
         const hashedId = CryptoJS.SHA256(this.ticketId.toString()).toString();
         if(this.hashedId !== hashedId) {

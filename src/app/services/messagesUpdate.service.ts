@@ -13,7 +13,6 @@ export class MessagesUpdateService {
    * Trigger the ticket update.
    */
   triggerMessagesUpdate() {
-    console.log('Messages update triggered')
     this.messagesUpdatedSource.next();
   }
 }

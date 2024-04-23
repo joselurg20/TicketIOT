@@ -32,6 +32,9 @@
     "filterTechnician": "Filter by Technician",
     "filterTechnicianDefaultValue": "Not Asigned",
     "filterTechnicianValueAll": "All",
-    "filterButton": "Filter"
+    "filterButton": "Filter",
+    "search": "Search",
+    "startDate": "Start date",
+    "endDate": "End date"
   }
 }

@@ -75,7 +75,6 @@ export class LoginComponent implements OnInit {
   
               this.errorMsg = "";
               localStorage.setItem('jwtToken', response);
-              console.log('Token JWT almacenado en localStorage:', response);
               if (localStorage.getItem('userRole') == 'SupportManager') {
                 this.router.navigate(['/support-manager']);
               } else if (localStorage.getItem('userRole') == 'SupportTechnician') {

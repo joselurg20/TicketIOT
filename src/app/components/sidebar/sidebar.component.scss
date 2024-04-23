@@ -77,8 +77,15 @@
   }
 }
 
-.username{
-  border: #000;
+.username {
+  background-color: #202124;
+  color: #fff;
+  cursor: auto;
+
+  &:hover {
+    background-color: #202124 !important;
+    color: #fff !important;
+  }
 }
 
 img {

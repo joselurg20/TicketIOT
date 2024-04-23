@@ -17,6 +17,8 @@ import { IncidenceTableComponent } from './components/incidences/incidence-table
 import { SnackbarIncidenceComponent } from './components/snackbars/snackbar-incidence/snackbar-incidence.component';
 import { HistoryComponent } from './components/messages/history/history.component';
 import { HelpdeskComponent } from './components/messages/helpdesk/helpdesk.component';
+import { LoadingComponent } from './components/shared/loading.component';
+import { IncidenceDataComponent } from './components/incidences/incidence-data/incidence-data.component';
 
 
 
@@ -44,7 +46,8 @@ const routes: Routes = [
   { path: "recuperar2", component: Recovery2Component },
   { path: "prueba6", component: HistoryComponent },
   { path: "prueba7", component: HelpdeskComponent },
-  { path: "prueba8", component: IncidenceUserComponent },
+  { path: "prueba8", component: LoadingComponent },
+  { path: "prueba9", component: IncidenceDataComponent },
 
 
   //accedibles el usuario

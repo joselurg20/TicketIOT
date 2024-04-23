@@ -54,9 +54,6 @@ img {
   height: auto;
 }
 
-.mat-mdc-progress-spinner.mat-warn{
-  --mdc-circular-progress-active-indicator-color:#fd6262;
-}
 
 .logotipe {
   text-align: center;
@@ -67,14 +64,6 @@ img {
   text-align: center;
 }
 
-.progressSpinner {
-  color: red;
-  margin: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
 
 @media screen and (max-width: 992px) {
   .container {

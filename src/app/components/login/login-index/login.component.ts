@@ -1,12 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginService } from '../../../services/login.service';
 import { Router } from '@angular/router';
 import { LenguageComponent } from "../../lenguage/lenguage.component";
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SidebarComponent } from "../../sidebar/sidebar.component";
 import * as CryptoJS from 'crypto-js';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ApiService } from 'src/app/services/api.service';
+import { LoadingService } from 'src/app/services/loading.service';
 
 
 function passwordValidator(control: FormControl): { [key: string]: any } | null {
@@ -26,13 +29,14 @@ function passwordValidator(control: FormControl): { [key: string]: any } | null 
   standalone: true,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  imports: [CommonModule, ReactiveFormsModule, LenguageComponent, TranslateModule, SidebarComponent]
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, LenguageComponent, TranslateModule, SidebarComponent, MatProgressSpinnerModule]
 })
 export class LoginComponent implements OnInit {
   public loginForm!: FormGroup; // Define loginForm como un FormGroup
   public errorMsg: string = "";
+  isLoading: boolean = false;
 
-  constructor(private loginService: LoginService, private router: Router, private translate: TranslateService) {
+  constructor(private loginService: LoginService, private loadingService: LoadingService, private router: Router, private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -44,42 +48,48 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Inicializa el formulario y sus controles
+    // Initialize the form and its controls
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, passwordValidator])
     });
   }
 
-
   /**
    * Envia la solicitud de inicio de sesión al backend.
    */
   onSubmit() {
-    if (this.loginForm.valid) {
-      const email = this.loginForm.value.email;
-      const password = this.loginForm.value.password;
-
-      const hashedPassword = CryptoJS.SHA256(password).toString().concat('@', 'A', 'a');
-
-      // Envia la solicitud de inicio de sesión al backend
-      this.loginService.login(email, hashedPassword)
-        .subscribe({
-          next: (response) => {
-            this.errorMsg = "";
-            localStorage.setItem('jwtToken', response);
-            console.log('Token JWT almacenado en localStorage:', response);
-            if (localStorage.getItem('userRole') == 'SupportManager') {
-              this.router.navigate(['/support-manager']);
-            } else if (localStorage.getItem('userRole') == 'SupportTechnician') {
-              this.router.navigate(['/support-technician']);
+      if (this.loginForm.valid) {
+        const email = this.loginForm.value.email;
+        const password = this.loginForm.value.password;
+        const hashedPassword = CryptoJS.SHA256(password).toString().concat('@', 'A', 'a');
+  
+        // Muestra el indicador de carga antes de iniciar la carga de datos
+        this.loadingService.showLoading();
+  
+        // Enviar solicitud de inicio de sesión
+        this.loginService.login(email, hashedPassword).subscribe({
+            next: (response) => {
+              // Oculta el indicador de carga una vez que los datos se han cargado
+              this.loadingService.hideLoading();
+  
+              this.errorMsg = "";
+              localStorage.setItem('jwtToken', response);
+              console.log('Token JWT almacenado en localStorage:', response);
+              if (localStorage.getItem('userRole') == 'SupportManager') {
+                this.router.navigate(['/support-manager']);
+              } else if (localStorage.getItem('userRole') == 'SupportTechnician') {
+                this.router.navigate(['/support-technician']);
+              }
+            },
+            error: (error) => {
+              console.error('Error en la solicitud:', error);
+              this.errorMsg = "Email o contraseña no válidos.";
+  
+              // En caso de error, también oculta el indicador de carga
+              this.loadingService.showLoading();
             }
-          },
-          error: (error) => {
-            console.error('Error en la solicitud:', error);
-            this.errorMsg = "Email o contraseña no válidos."
-          }
-        });
+          });
+      }
     }
-  }
 }

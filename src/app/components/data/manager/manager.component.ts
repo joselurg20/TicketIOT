@@ -5,6 +5,7 @@ import { iUserGraph } from 'src/app/models/users/iUserGraph';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TicketUpdateService } from 'src/app/services/ticketUpdate.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-manager',
@@ -25,7 +26,7 @@ export class ManagerComponent implements OnInit {
   selectedStateValue: number = -1;
   isWorking: boolean = false;
 
-  constructor(private apiService: ApiService, private ticketUpdateService: TicketUpdateService, private translate: TranslateService) {
+  constructor(private apiService: ApiService, private ticketUpdateService: TicketUpdateService, private loadingService: LoadingService, private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -39,7 +40,6 @@ export class ManagerComponent implements OnInit {
   ngOnInit(): void {
     this.apiService.getTechnicians().subscribe({
       next: (response: any) => {
-        console.log('Users recibidos', response);
         const users: iUserGraph[] = response.map((value: any) => {
           return {
             id: value.id,
@@ -47,7 +47,6 @@ export class ManagerComponent implements OnInit {
           };
         });
         this.users = users;
-        console.log('Datos mapeados para graficos', users);
       },
       error: (error) => {
         console.log(error);
@@ -59,43 +58,36 @@ export class ManagerComponent implements OnInit {
    * Actualiza los datos de una incidencia. Técnico asignado, prioridad y/o estado.
    */
   updateTicket() {
+    this.loadingService.showLoading();
     if (this.selectedUserId != -1) {
       this.apiService.assignTechnician(parseInt(localStorage.getItem('selectedTicket')!), this.selectedUserId).subscribe({
         next: () => {
-          console.log('Técnico asignado correctamente');
-          setTimeout(() => {
-            this.ticketUpdateService.triggerTicketUpdate();
-          }, 1000);
+          this.ticketUpdateService.triggerTicketUpdate();
+          this.loadingService.hideLoading();
         },
         error: (error: any) => {
           console.error('Error al asignar técnico', error);
         }
       });
     }
-    setTimeout(() => {
-    }, 10);
+    this.loadingService.showLoading();
     if (this.selectedPriorityValue != -1) {
       this.apiService.changeTicketPriority(parseInt(localStorage.getItem('selectedTicket')!), this.selectedPriorityValue).subscribe({
         next: () => {
-          console.log('Prioridad cambiada correctamente');
-          setTimeout(() => {
-            this.ticketUpdateService.triggerTicketUpdate();
-          }, 1000);
+          this.ticketUpdateService.triggerTicketUpdate();
+          this.loadingService.hideLoading();
         },
         error: (error: any) => {
           console.error('Error al cambiar la prioridad', error);
         }
       });
     }
-    setTimeout(() => {
-    }, 20);
+    this.loadingService.showLoading();
     if (this.selectedStateValue != -1) {
       this.apiService.changeTicketState(parseInt(localStorage.getItem('selectedTicket')!), this.selectedStateValue).subscribe({
         next: () => {
-          console.log('Estado cambiado correctamente');
-          setTimeout(() => {
-            this.ticketUpdateService.triggerTicketUpdate();
-          }, 1000);
+          this.ticketUpdateService.triggerTicketUpdate();
+          this.loadingService.hideLoading();
         },
         error: (error: any) => {
           console.error('Error al cambiar el estado', error);

@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService } from 'src/app/services/api.service';
-import { iResetPasswordDto } from 'src/app/models/users/iResetPasswordDto';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { LenguageComponent } from "../../lenguage/lenguage.component";
-import * as CryptoJS from 'crypto-js';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { SnackbarPasswordComponent } from '../../snackbars/snackbar-password/snackbar-password.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import * as CryptoJS from 'crypto-js';
+import { ApiService } from 'src/app/services/api.service';
+import { LenguageComponent } from "../../lenguage/lenguage.component";
+import { SnackbarPasswordComponent } from '../../snackbars/snackbar-password/snackbar-password.component';
 
 function passwordValidator(control: FormControl): { [key: string]: any } | null {
   const hasUppercase = /[A-Z]/.test(control.value); // Verifica si hay al menos una letra mayúscula
@@ -39,7 +38,6 @@ export class Recovery2Component implements OnInit {
   email: string = '';
   hash: string = '';
   durationInSeconds = 5;
-  isLoading: boolean = false;
 
   constructor(private route: ActivatedRoute,private fb:FormBuilder, private _snackBar: MatSnackBar, private router: Router, private apiService: ApiService, private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);

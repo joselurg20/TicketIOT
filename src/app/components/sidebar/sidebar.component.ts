@@ -49,6 +49,7 @@ interface SideNavToggle {
 export class SidebarComponent implements OnInit {
   esButtonPressed: boolean = true;
   enButtonPressed: boolean = false;
+  isSupportManager: boolean = false;
 
   @Output() onToggleSideNav: EventEmitter<SideNavToggle> = new EventEmitter();
   collapsed = false;
@@ -66,8 +67,10 @@ export class SidebarComponent implements OnInit {
     }
   }
 
+
   constructor(private loginService: LoginService, private router: Router, private translate: TranslateService,
               private langUpdateService: LanguageUpdateService) {
+    
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -128,6 +131,9 @@ export class SidebarComponent implements OnInit {
       this.loggedUserName = userNameFromLocalStorage;
     } else {
       console.log('No se encontró ningún nombre de usuario en el localStorage.');
+    };
+    if (localStorage.getItem('userRole') == 'SupportManager') {
+      this.isSupportManager = true;
     }
   }
 

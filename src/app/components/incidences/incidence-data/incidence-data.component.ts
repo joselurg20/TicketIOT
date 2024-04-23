@@ -3,32 +3,34 @@ import { CommonModule } from '@angular/common';
 import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
 import { ApiService } from 'src/app/services/api.service';
 import { TicketUpdateService } from 'src/app/services/ticketUpdate.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ButtonComponent } from "../../button/button.component";
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-
+import { LoadingComponent } from "../../shared/loading.component";
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
-    selector: 'app-incidence-data',
-    standalone: true,
-    imports: [CommonModule, ButtonComponent, TranslateModule],
-    templateUrl: './incidence-data.component.html',
-    styleUrls: ['./incidence-data.component.scss']
+  selector: 'app-incidence-data',
+  standalone: true,
+  templateUrl: './incidence-data.component.html',
+  styleUrls: ['./incidence-data.component.scss'],
+  imports: [CommonModule, ButtonComponent, TranslateModule, LoadingComponent]
 })
 export class IncidenceDataComponent implements OnInit {
 
-  ticket: iTicketDescriptor = {id: 0, title: '', name: '', email: '', timestamp: '', priority: '', state: '', userId: '0', userName: ''};
+  ticket: iTicketDescriptor = { id: 0, title: '', name: '', email: '', timestamp: '', priority: '', state: '', userId: '0', userName: '' };
   private ticketUpdateSubscription: Subscription = {} as Subscription;
+  loading$: Observable<boolean>;
 
-  constructor(private apiService: ApiService, private ticketUpdateService: TicketUpdateService, private cdr: ChangeDetectorRef, private translate: TranslateService) {
+  constructor(private apiService: ApiService, private ticketUpdateService: TicketUpdateService, private loadingService: LoadingService, private cdr: ChangeDetectorRef, private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
       this.translate.setDefaultLang('en');
     } else {
       this.translate.use('es');
-      
     }
+    this.loading$ = this.loadingService.loading$;
   }
 
   ngOnInit(): void {
@@ -37,28 +39,28 @@ export class IncidenceDataComponent implements OnInit {
         console.log('Ticket recibido', response);
         // Mapear la respuesta de la API utilizando la interfaz iTicketTable
         const ticket: iTicketDescriptor = {
-            id: response.id,
-            title: response.title,
-            name: response.name,
-            email: response.email,
-            timestamp: this.formatDate(response.timestamp),
-            priority: response.priority,
-            state: response.state,
-            userId: response.userId,
-            userName: ''
-          };
-        if(response.userId != -1){
+          id: response.id,
+          title: response.title,
+          name: response.name,
+          email: response.email,
+          timestamp: this.formatDate(response.timestamp),
+          priority: response.priority,
+          state: response.state,
+          userId: response.userId,
+          userName: ''
+        };
+        if (response.userId != -1) {
           this.apiService.getUserById(parseInt(ticket.userId)).subscribe({
             next: (response: any) => {
               ticket.userName = response.userName;
-              
+
               this.ticket = ticket;
             },
             error: (error: any) => {
               console.error('Error al obtener el usuario', error);
             }
           });
-        }else{
+        } else {
           this.ticket = ticket;
           this.ticket.userId = '';
           this.ticket.userName = 'Sin asignar';
@@ -68,10 +70,10 @@ export class IncidenceDataComponent implements OnInit {
         console.error('Error al obtener los tickets del usuario:', error);
       }
     });
-    
+
     this.ticketUpdateSubscription = this.ticketUpdateService.ticketUpdated$.subscribe(() => {
       console.log('Ticket update received');
-      
+
       this.refreshTicketData();
     });
   }
@@ -102,7 +104,7 @@ export class IncidenceDataComponent implements OnInit {
    */
   goBack() {
     window.history.back();
-    }
+  }
 
   /**
    * Actualiza los datos del ticket.
@@ -141,5 +143,4 @@ export class IncidenceDataComponent implements OnInit {
       }
     });
   }
- 
 }

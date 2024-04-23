@@ -1,0 +1,53 @@
+@import '../../../styles/imports.scss';
+
+.loader {
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+  display: inline-block;
+  border-top: 10px solid $color-warning;
+  border-right: 10px solid transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+.loader::after {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+  border-left: 10px solid $color-light;
+  border-bottom: 10px solid transparent;
+  animation: rotation 0.5s linear infinite reverse;
+}
+
+.loading {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $color-light;
+  font-size: 20px;
+  text-shadow: 0 0 15px $color-dark;
+}
+
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -33,6 +33,19 @@ input::placeholder {
   font-weight: bold;
 }
 
+
+.mat-mdc-progress-spinner.mat-warn {
+  --mdc-circular-progress-active-indicator-color: #074b4d !important;
+}
+
+.progressSpinner {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
 .container input:focus,
 .container textarea:focus,
 .container select:focus {

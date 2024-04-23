@@ -39,7 +39,7 @@ export class TechnicalTableComponent implements OnInit {
         this.users = users;
       },
       error: (error) => {
-        console.log(error);
+        console.error(error);
       }
     });
   }

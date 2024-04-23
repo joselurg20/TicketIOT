@@ -37,7 +37,6 @@ export class ComunicationComponent implements OnInit {
       this.translate.setDefaultLang('en');
     } else {
       this.translate.use('es');
-
     }
     this.messageForm = this.formBuilder.group({
       Attachments: [null, Validators.required],
@@ -65,7 +64,6 @@ export class ComunicationComponent implements OnInit {
             userId: response.userId,
             userName: ''
           };
-          console.log('Ticket Recibido', this.ticket);
         },
         error: (error: any) => {
           console.error('Error al obtener el ticket', error);
@@ -89,7 +87,6 @@ export class ComunicationComponent implements OnInit {
     });
   }
 
-
   previewUrls: Array<string | ArrayBuffer | null> = new Array();
   isFileSelected: boolean = false;
 
@@ -99,13 +96,10 @@ export class ComunicationComponent implements OnInit {
   onSubmit() {
     if (this.ticket.state !== 'FINISHED') {
       if (this.messageForm.valid) {
-        console.log('Datos del formulario:', this.messageForm.value);
-        console.log('Ticket:', this.ticket.id);
         const Content = this.messageForm.value.Content;
         this.createMessage(Content, this.ticket.id)
           .subscribe({
             next: (response) => {
-              console.log('Message creado con éxito', response);
               this.success = true;
               this.successMsg = "Mensaje creado con éxito.";
               this.messagesUpdateService.triggerMessagesUpdate();
@@ -117,18 +111,12 @@ export class ComunicationComponent implements OnInit {
               console.error('Error en la solicitud', error);
               this.success = false;
               this.successMsg = "Error al crear el mensaje.";
-              setTimeout(() => {
-                this.successMsg = "";
-              }, 5000);
             }
           });
 
       }
     } else {
       this.successMsg = "El ticket ya ha sido cerrado.";
-      setTimeout(() => {
-        this.successMsg = "";
-      }, 5000);
     }
   }
 
@@ -155,9 +143,6 @@ export class ComunicationComponent implements OnInit {
         };
         ticket.NewMessagesCount++;
         this.apiService.updateTicket(TicketId, ticket).subscribe({
-          next: (response: any) => {
-            console.log('Ticket actualizado', response);
-          },
           error: (error: any) => {
             console.error('Error al actualizar el ticket', error);
           }
@@ -231,7 +216,6 @@ export class ComunicationComponent implements OnInit {
           // Verificar el tipo de archivo
           if (file.type) {
 
-            console.log('Tipo de archivo:', file.type);
             switch (file.type) {
               case 'image/jpeg':
               case 'image/png':

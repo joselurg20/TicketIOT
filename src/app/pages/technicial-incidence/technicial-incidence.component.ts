@@ -7,6 +7,9 @@ import { ButtonComponent } from "../../components/button/button.component";
 import { Router } from '@angular/router';
 import { SidebarComponent } from 'src/app/components/sidebar/sidebar.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { LoadingComponent } from "../../components/shared/loading.component";
+import { LoadingService } from 'src/app/services/loading.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-technicial-incidence',
@@ -14,13 +17,15 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     templateUrl: './technicial-incidence.component.html',
     styleUrls: ['./technicial-incidence.component.scss'],
     imports: [CommonModule, IncidenceDataComponent, ComunicationComponent,
-        TechnicialComponent, ButtonComponent, SidebarComponent, MatProgressSpinnerModule]
+        TechnicialComponent, ButtonComponent, SidebarComponent, MatProgressSpinnerModule, LoadingComponent]
 })
 export class TechnicialIncidenceComponent implements OnInit {
 
-    isLoading: boolean = true;
+    loading$: Observable<boolean>;
 
-    constructor(private router: Router) {}
+    constructor(private router: Router, private loadingService: LoadingService) {
+        this.loading$ = this.loadingService.loading$;
+    }
 
     ngOnInit(): void {
         window.onpopstate = (event) => {
@@ -30,9 +35,5 @@ export class TechnicialIncidenceComponent implements OnInit {
         if(localStorage.getItem('userRole') !== 'SupportTechnician') {
             this.router.navigate(['/login']);
         }
-        
-        setTimeout(() => {
-            this.isLoading = false;
-        }, 1000);
     }
 }

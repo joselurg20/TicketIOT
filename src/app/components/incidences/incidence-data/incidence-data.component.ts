@@ -36,7 +36,6 @@ export class IncidenceDataComponent implements OnInit {
   ngOnInit(): void {
     this.apiService.getTicketById(parseInt(localStorage.getItem('selectedTicket')!)).subscribe({
       next: (response: any) => {
-        console.log('Ticket recibido', response);
         // Mapear la respuesta de la API utilizando la interfaz iTicketTable
         const ticket: iTicketDescriptor = {
           id: response.id,
@@ -72,8 +71,6 @@ export class IncidenceDataComponent implements OnInit {
     });
 
     this.ticketUpdateSubscription = this.ticketUpdateService.ticketUpdated$.subscribe(() => {
-      console.log('Ticket update received');
-
       this.refreshTicketData();
     });
   }
@@ -113,6 +110,7 @@ export class IncidenceDataComponent implements OnInit {
     const selectedTicketId = parseInt(localStorage.getItem('selectedTicket')!);
     this.apiService.getTicketById(selectedTicketId).subscribe({
       next: (response: any) => {
+        this.loadingService.showLoading();
         // Actualizar solo los campos que han cambiado
         if (this.ticket.userId !== response.userId) {
           this.ticket.userId = response.userId;
@@ -121,17 +119,18 @@ export class IncidenceDataComponent implements OnInit {
             next: (userResponse: any) => {
               this.ticket.userName = userResponse.userName;
               this.cdr.detectChanges();
+              this.loadingService.hideLoading();
             },
             error: (error: any) => {
               console.error('Error al obtener el usuario', error);
             }
           });
         }
-        console.log('Nueva prioridad', response.priority);
         if (this.ticket.priority !== response.priority) {
           this.ticket.priority = response.priority;
-          console.log('Nueva prioridad', this.ticket.priority);
           this.cdr.detectChanges();
+          this.loadingService.hideLoading();
+
         }
         if (this.ticket.state !== response.state) {
           this.ticket.state = response.state;

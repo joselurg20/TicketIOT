@@ -4,6 +4,7 @@ import { TicketUpdateService } from 'src/app/services/ticketUpdate.service';
 import { ApiService } from 'src/app/services/api.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-technicial',
@@ -18,7 +19,7 @@ export class TechnicialComponent {
   selectedState: string = '';
   selectedStateValue: number = -1;
 
-  constructor(private apiService: ApiService, private ticketUpdateService: TicketUpdateService, private translate: TranslateService) {
+  constructor(private apiService: ApiService, private ticketUpdateService: TicketUpdateService, private loadingService: LoadingService, private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -33,12 +34,12 @@ export class TechnicialComponent {
    * Actualiza el estado de una incidencia.
    */
   updateTicket() {
+    this.loadingService.showLoading();
     if (this.selectedStateValue != -1) {
       this.apiService.changeTicketState(parseInt(localStorage.getItem('selectedTicket')!), this.selectedStateValue).subscribe({
         next: () => {
-          setTimeout(() => {
-            this.ticketUpdateService.triggerTicketUpdate();
-          }, 1000);
+          this.ticketUpdateService.triggerTicketUpdate();
+          this.loadingService.hideLoading();
         },
         error: (error: any) => {
           console.error('Error al cambiar el estado', error);

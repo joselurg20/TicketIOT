@@ -1,16 +1,21 @@
-<app-sidebar></app-sidebar>
-<mat-progress-spinner *ngIf="isLoading" mode="indeterminate" color="warn" class="progressSpinner"></mat-progress-spinner>
-<div class="container" [ngStyle]="{'display': isLoading ? 'none' : 'block'}">
-    <form>
-        <app-incidence-data></app-incidence-data>
+<div id="loading" *ngIf="loading$ | async" class="w-100 h-100">
+    <app-loading></app-loading>
+</div>
+<div>
+    <app-sidebar *ngIf="!(loading$ | async)"></app-sidebar>
+    <div class="container" *ngIf="!(loading$ | async)">
+        <form>
+            <app-incidence-data></app-incidence-data>
+            <hr>
+            <app-technicial></app-technicial>
+        </form>
         <hr>
-        <app-technicial></app-technicial>
-    </form>
-    <hr>
-    <form enctype="multipart/form-data">
-        <app-comunication></app-comunication>
-    </form>
-    <div class="logotipe">
-        <img src="assets/images/logo/IoTlogo.png" alt="">
+        <form enctype="multipart/form-data">
+            <app-comunication></app-comunication>
+        </form>
+
+        <div class="logotipe">
+            <img src="assets/images/logo/IoTlogo.png" alt="">
+        </div>
     </div>
 </div>

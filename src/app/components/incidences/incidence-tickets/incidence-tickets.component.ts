@@ -138,7 +138,6 @@ export class IncidenceTicketsComponent implements OnInit, AfterViewInit {
     if(!this.isShowingAll) {
       this.apiService.getTickets().subscribe({
         next: (response: any) => {
-          console.log('Tickets recibidos', response);
           const tickets: iTicketTableSM[] = response.$values.map((value: any) => {
             return {
               id: value.id,
@@ -154,7 +153,6 @@ export class IncidenceTicketsComponent implements OnInit, AfterViewInit {
           });
           this.apiService.getUsers().subscribe({
             next: (response: any) => {
-              console.log('Users recibidos', response);
               const users: iUserTable[] = response.map((value: any) => {
                 return {
                   id: value.id,
@@ -170,14 +168,12 @@ export class IncidenceTicketsComponent implements OnInit, AfterViewInit {
                 } 
               });
               this.dataSource.data = tickets;
-              console.log('Datos mapeados para tabla', tickets);
             },
             error: (error: any) => {
               console.error('Error al obtener los tickets del usuario:', error);
             }
           })
           this.dataSource.data = tickets;
-          console.log('Datos mapeados para tabla', tickets);
         },
         error: (error: any) => {
           console.error('Error al obtener los tickets del usuario:', error);
@@ -186,7 +182,6 @@ export class IncidenceTicketsComponent implements OnInit, AfterViewInit {
     } else {
       this.apiService.getTicketsByUser(-1).subscribe({
         next: (response: any) => {
-          console.log('Tickets recibidos', response);
           const tickets: iTicketTableSM[] = response.$values.map((value: any) => {
             return {
               id: value.id,
@@ -200,7 +195,6 @@ export class IncidenceTicketsComponent implements OnInit, AfterViewInit {
             };
           });
           this.dataSource.data = tickets;
-          console.log('Datos mapeados para tabla', tickets);
         },
         error: (error: any) => {
           console.error('Error al obtener los tickets del usuario:', error);
@@ -214,13 +208,11 @@ export class IncidenceTicketsComponent implements OnInit, AfterViewInit {
 
     const userNameFromLocalStorage = localStorage.getItem('userName');
     if (!userNameFromLocalStorage) {
-      console.log('No se encontró ningún nombre de usuario en el localStorage.');
     }
     if (localStorage.getItem('userRole') == 'SupportManager') {
       this.isSupportManager = true;
       this.apiService.getTicketsByUser(-1).subscribe({
         next: (response: any) => {
-          console.log('Tickets recibidos', response);
           const tickets: iTicketTableSM[] = response.$values.map((value: any) => {
             return {
               id: value.id,
@@ -234,7 +226,6 @@ export class IncidenceTicketsComponent implements OnInit, AfterViewInit {
             };
           });
           this.dataSource.data = tickets;
-          console.log('Datos mapeados para tabla', tickets);
         },
         error: (error: any) => {
           console.error('Error al obtener los tickets del usuario:', error);
@@ -245,7 +236,6 @@ export class IncidenceTicketsComponent implements OnInit, AfterViewInit {
       this.isSupportManager = false;
       this.apiService.getTicketsByUser(parseInt(localStorage.getItem('userId')!)).subscribe({
         next: (response: any) => {
-          console.log('Tickets recibidos', response);
           // Mapear la respuesta de la API utilizando la interfaz iTicketTable
           const tickets: iTicketTableSM[] = response.$values.map((value: any) => {
             return {
@@ -270,7 +260,6 @@ export class IncidenceTicketsComponent implements OnInit, AfterViewInit {
             }
           })
           this.dataSource.data = tickets; // Establecer los datos en la dataSource
-          console.log('Datos mapeados para tabla', tickets);
         },
         error: (error: any) => {
           console.error('Error al obtener los tickets del usuario:', error);

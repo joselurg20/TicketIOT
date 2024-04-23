@@ -1,15 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { LoginService } from '../../../services/login.service';
-import { Router } from '@angular/router';
-import { LenguageComponent } from "../../lenguage/lenguage.component";
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { SidebarComponent } from "../../sidebar/sidebar.component";
-import * as CryptoJS from 'crypto-js';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ApiService } from 'src/app/services/api.service';
+import { Router } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import * as CryptoJS from 'crypto-js';
 import { LoadingService } from 'src/app/services/loading.service';
+import { LoginService } from '../../../services/login.service';
+import { LenguageComponent } from "../../lenguage/lenguage.component";
+import { SidebarComponent } from "../../sidebar/sidebar.component";
 
 
 function passwordValidator(control: FormControl): { [key: string]: any } | null {

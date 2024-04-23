@@ -91,7 +91,6 @@ export class IncidencePruebaComponent implements OnInit {
    */
   onSubmit() {
     if (this.ticketForm.valid) {
-      console.log('Datos del formulario:', this.ticketForm.value);
       const Title = this.ticketForm.value.Title;
       const Content = this.ticketForm.value.Content;
       const Name = this.ticketForm.value.Name;
@@ -100,7 +99,6 @@ export class IncidencePruebaComponent implements OnInit {
       this.createTicket(Title, Content, Name, Email)
         .subscribe({
           next: (response) => {
-            console.log('Ticket creado con éxito', response);
             this.ticketForm.reset();
             setTimeout(() => {
               this.clearAttachments(); // Limpiar campos del formulario
@@ -133,7 +131,6 @@ export class IncidencePruebaComponent implements OnInit {
     formData.append('MessageDTO.Content', Content);
 
     var attachments = this.selectedFiles;
-    console.log('Attachments:', attachments);
 
     if (attachments.length > 0) {
 
@@ -183,7 +180,6 @@ export class IncidencePruebaComponent implements OnInit {
           // Verificar el tipo de archivo
           if (file.type) {
 
-            console.log('Tipo de archivo:', file.type);
             switch (file.type) {
               case 'image/jpeg':
               case 'image/png':

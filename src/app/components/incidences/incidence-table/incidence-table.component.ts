@@ -77,11 +77,22 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
               private ticketsService: TicketsService, private readonly dateAdapter: DateAdapter<Date>,
               private langUpdateService: LanguageUpdateService) {
     this.translate.addLangs(['en', 'es']);
-    const lang = this.translate.getBrowserLang();
+    var lang = '';
+    switch(localStorage.getItem('userLanguage')) {
+      case '1':
+        lang = 'en';
+        break;
+      case '2':
+        lang = 'es';
+        break;
+      default:
+        lang = 'es';
+        break;
+    }
     if (lang !== 'en' && lang !== 'es') {
       this.translate.setDefaultLang('en');
     } else {
-      this.translate.use('es');
+      this.translate.use(lang);
 
     }
   }

@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LoginService } from 'src/app/services/login.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { GraphUpdateService } from 'src/app/services/graphUpdateService';
+import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -67,7 +67,10 @@ export class SidebarComponent implements OnInit {
     }
   }
 
-  constructor(private loginService: LoginService, private router: Router, private translate: TranslateService, private graphUpdateService: GraphUpdateService) {
+
+  constructor(private loginService: LoginService, private router: Router, private translate: TranslateService,
+              private langUpdateService: LanguageUpdateService) {
+    
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -86,7 +89,7 @@ export class SidebarComponent implements OnInit {
     this.translate.use(language);
     localStorage.setItem('selectedLanguage', language);
     this.setLanguageImage(language);
-    this.graphUpdateService.triggerGraphUpdate();
+    this.langUpdateService.triggerGraphUpdate();
   }
 
   /**

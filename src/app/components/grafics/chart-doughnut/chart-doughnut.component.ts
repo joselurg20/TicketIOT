@@ -4,7 +4,7 @@ import { Chart, registerables } from 'chart.js';
 import { ApiService } from 'src/app/services/api.service';
 import { iTicketGraph } from 'src/app/models/tickets/iTicketsGraph';
 import { iUserGraph } from 'src/app/models/users/iUserGraph';
-import { GraphUpdateService } from 'src/app/services/graphUpdateService';
+import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -22,9 +22,9 @@ export class ChartDoughnutComponent {
   titleEs: string = 'Incidencias por técnico';
   titleEn: string = 'Tickets by technician';
   title: string = this.titleEs;
-  private graphUpdateSubscription: Subscription = {} as Subscription;
+  private langUpdateSubscription: Subscription = {} as Subscription;
 
-  constructor(private apiService: ApiService, private graphUpdateService: GraphUpdateService) { }
+  constructor(private apiService: ApiService, private langUpdateService: LanguageUpdateService) { }
 
   ngOnInit() {
     if(localStorage.getItem('selectedLanguage') == 'en'){
@@ -93,7 +93,7 @@ export class ChartDoughnutComponent {
         }
       });
     }
-    this.graphUpdateSubscription = this.graphUpdateService.graphUpdated$.subscribe(() => {
+    this.langUpdateSubscription = this.langUpdateService.langUpdated$.subscribe(() => {
       this.switchLanguage();
     })
 

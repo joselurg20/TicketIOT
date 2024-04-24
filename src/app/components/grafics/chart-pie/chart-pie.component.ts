@@ -5,6 +5,7 @@ import { iTicketGraph } from 'src/app/models/tickets/iTicketsGraph';
 import { TicketsService } from 'src/app/services/tickets.service';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { Subscription } from 'rxjs';
+import { Priorities } from 'src/app/utilities/enum';
 
 @Component({
   selector: 'app-chart-pie',
@@ -60,11 +61,12 @@ export class ChartPieComponent {
       this.myChart.destroy();
     }
 
-    const priorities: string[] = ['HIGHEST', 'HIGH', 'MEDIUM', 'LOW', 'LOWEST', 'NOT_SURE'];
+    const labels: string[] = ['HIGHEST', 'HIGH', 'MEDIUM', 'LOW', 'LOWEST', 'NOT_SURE'];
+    const priorities: Priorities[] = [0, 1, 2, 3, 4, 5];
 
     const incidentCounts = priorities.map(prio => {
       // Calcular el número de incidentes para cada técnico
-      return this.tickets.filter((ticket: { priority: string; }) => ticket.priority === prio).length;
+      return this.tickets.filter((ticket: { priority: Priorities; }) => ticket.priority === prio).length;
     });
 
     Chart.register(...registerables);
@@ -73,7 +75,7 @@ export class ChartPieComponent {
     this.myChart = new Chart(ctx, {
       type: 'pie',
       data: {
-        labels: priorities,
+        labels: labels,
         datasets: [{
           label: 'Cantidad de incidencias',
           data: incidentCounts,

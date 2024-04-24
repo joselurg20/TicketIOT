@@ -6,6 +6,7 @@ import { iTicketGraph } from 'src/app/models/tickets/iTicketsGraph';
 import { iUserGraph } from 'src/app/models/users/iUserGraph';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { Subscription } from 'rxjs';
+import { TicketsService } from 'src/app/services/tickets.service';
 
 @Component({
   selector: 'app-chart-doughnut',
@@ -24,7 +25,8 @@ export class ChartDoughnutComponent {
   title: string = this.titleEs;
   private langUpdateSubscription: Subscription = {} as Subscription;
 
-  constructor(private apiService: ApiService, private langUpdateService: LanguageUpdateService) { }
+  constructor(private apiService: ApiService, private langUpdateService: LanguageUpdateService,
+              private ticketsService: TicketsService) { }
 
   ngOnInit() {
     if(localStorage.getItem('selectedLanguage') == 'en'){
@@ -33,71 +35,27 @@ export class ChartDoughnutComponent {
       this.title = this.titleEs;
     }
     if(localStorage.getItem('userRole') == 'SupportManager') {
-
-      this.apiService.getTechnicians().subscribe({
-        next: (response: any) => {
-          const users: iUserGraph[] = response.map((value: any) => {
-            return {
-              id: value.id,
-              userName: value.userName
-            };
-          });
-          this.users = users;
-          this.createChart();
-        },
-        error: (error) => {
-          console.error("Error al obtener los usuarios", error);
-        }
+      this.ticketsService.users$.subscribe(users => {
+        this.users = users;
+        this.createChart();
+      });
+      this.ticketsService.usersGraph$.subscribe(usersGraph => {
+        this.tickets = usersGraph;
+        this.createChart();
       });
     }else{
       const userName = localStorage.getItem('userName');
       const userId = localStorage.getItem('userId');
       this.users[0] = {id: parseInt(userId!), userName: userName};
       this.createChart();
-    }
-
-    if(localStorage.getItem('userRole') == 'SupportManager') {
-      this.apiService.getTickets().subscribe({
-        next: (response: any) => {
-          // Mapear la respuesta de la API utilizando la interfaz iTicketTable
-          const tickets: iTicketGraph[] = response.$values.map((value: any) => {
-            return {
-              priority: value.priority,
-              state: value.state,
-              userId: value.userId
-            };
-          });
-          this.tickets = tickets;
-          this.createChart();
-        },
-        error: (error: any) => {
-          console.error('Error al obtener los tickets del usuario:', error);
-        }
-      });
-    } else {
-      this.apiService.getTicketsByUser(parseInt(localStorage.getItem('userId')!)).subscribe({
-        next: (response: any) => {
-          // Mapear la respuesta de la API utilizando la interfaz iTicketTable
-          const tickets: iTicketGraph[] = response.$values.map((value: any) => {
-            return {
-              priority: value.priority,
-              state: value.state,
-              userId: value.userId
-            };
-          });
-          this.tickets = tickets;
-          this.createChart();
-        },
-        error: (error: any) => {
-          console.error('Error al obtener los tickets del usuario:', error);
-        }
-      });
+      this.ticketsService.ticketGraphs$.subscribe(ticketGraphs => {
+        this.tickets = ticketGraphs;
+        this.createChart();
+      })
     }
     this.langUpdateSubscription = this.langUpdateService.langUpdated$.subscribe(() => {
       this.switchLanguage();
     })
-
-    
   }
 
   /**

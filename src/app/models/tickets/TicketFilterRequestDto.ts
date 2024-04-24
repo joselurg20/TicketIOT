@@ -1,7 +1,7 @@
 
 
 export interface TicketFilterRequestDto {
-    state: number,
+    status: number,
     priority: number,
     userId: number,
     start: Date,

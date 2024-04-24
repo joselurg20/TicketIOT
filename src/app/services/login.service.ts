@@ -67,6 +67,17 @@ export class LoginService {
                     if(response.languageId) {
                         localStorage.setItem(this.userLanguageKey, response.languageId);
                         this.userLanguageSubject.next(response.languageId);
+                        switch(localStorage.getItem(this.userLanguageKey)) {
+                            case '1':
+                                localStorage.setItem('selectedLanguage', 'en');
+                                break;
+                            case '2':
+                                localStorage.setItem('selectedLanguage', 'es');
+                                break;
+                            default:
+                                localStorage.setItem('selectedLanguage', 'es');
+                                break;
+                        }
                     }
                 }
             })

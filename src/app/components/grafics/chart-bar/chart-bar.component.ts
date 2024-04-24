@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { iTicketGraph } from 'src/app/models/tickets/iTicketsGraph';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { TicketsService } from 'src/app/services/tickets.service';
+import { Status } from 'src/app/utilities/enum';
 
 @Component({
   selector: 'app-chart-bar',
@@ -59,24 +60,27 @@ export class ChartBarComponent implements OnInit {
     if(this.myChart) {
       this.myChart.destroy();
     }
-    var states: string[] = [];
-    Chart.register(...registerables);
+    var status: Status[] = [];
+    var labels: string[] = [];
     if(localStorage.getItem('userRole') == 'SupportManager') {
-      states = ['OPENED', 'PAUSED', 'PENDING'];
+      status = [1, 2, 0];
+      labels = ['OPENED', 'PAUSED', 'PENDING'];
     }else{
-      states = ['OPENED', 'PAUSED'];
+      status = [1, 2];
+      labels = ['OPENED', 'PAUSED'];
     }
 
-    const incidentCounts = states.map(state => {
-      // Calcular el número de incidentes para cada técnico
-      return this.tickets.filter((ticket: { state: string; }) => ticket.state === state).length;
+    const incidentCounts = status.map(status => {
+      return this.tickets.filter((ticket: { status: Status; }) => ticket.status === status).length;
     });
+
+    Chart.register(...registerables);
 
     const ctx = document.getElementById('myChart') as HTMLCanvasElement;
     this.myChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: states,
+        labels: labels,
         datasets: [{
           label: '',
           data: incidentCounts,

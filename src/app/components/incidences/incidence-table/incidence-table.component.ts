@@ -21,6 +21,7 @@ import { iUserTable } from 'src/app/models/users/iUserTable';
 import { ApiService } from 'src/app/services/api.service';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { TicketsService } from 'src/app/services/tickets.service';
+import { Priorities, Status } from 'src/app/utilities/enum';
 
 @Component({
   selector: 'app-incidence-table',
@@ -37,7 +38,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   range!: FormGroup;
 
   //Variables referentes a la tabla
-  displayedColumns: string[] = ['state', 'id', 'title', 'name', 'email', 'priority', 'timestamp', 'technician', 'show'];
+  displayedColumns: string[] = ['status', 'id', 'title', 'name', 'email', 'priority', 'timestamp', 'technician', 'show'];
   dataSource = new MatTableDataSource<iTicketTableSM>();
   selectedRow: any;
 
@@ -57,14 +58,14 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   private langUpdateSubscription: Subscription = {} as Subscription;
 
   //Valores seleccionados en el formulario de filtros
-  selectedStateFilter: number = -1;
+  selectedStatusFilter: number = -1;
   selectedPriorityFilter: number = -1;
   selectedTechnicianFilter: number = -1;
   searchString: string = '';
 
   //Filtro de incidencias
   filter: TicketFilterRequestDto = {
-    state: -1,
+    status: -1,
     priority: -1,
     userId: -1,
     start: new Date(1900, 0, 1),
@@ -124,7 +125,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
       this.isSupportManager = true;
       this.apiService.getTechnicians().subscribe({
         next: (response: any) => {
-          this.users = response.map((value: any) => {
+          this.users = response.result.map((value: any) => {
             return {
               id: value.id,
               userName: value.fullName
@@ -137,7 +138,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
       });
         
     } else {
-      this.displayedColumns = ['state', 'id', 'title', 'name', 'email', 'priority', 'timestamp', 'technician', 'newMessages', 'show'];
+      this.displayedColumns = ['status', 'id', 'title', 'name', 'email', 'priority', 'timestamp', 'technician', 'newMessages', 'show'];
       this.isSupportManager = false;
     }
     this.ticketsService.tickets$.subscribe(tickets => {
@@ -162,7 +163,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     this.dataSource.sortingDataAccessor = (data: iTicketTableSM, sortHeaderId: string) => {
       switch (sortHeaderId) {
         case 'priority':
-          return this.getPriorityValue(data.priority);
+          return data.priority;
         case 'timestamp':
           return data.timestamp;
         case 'technician':
@@ -195,7 +196,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
       this.filter.start = new Date(1900, 1, 1);
       this.filter.end = new Date(3000, 1, 1);
     }
-    this.filter.state = this.selectedStateFilter;
+    this.filter.status = this.selectedStatusFilter;
     this.filter.priority = this.selectedPriorityFilter;
     this.filter.userId = this.selectedTechnicianFilter;
     this.filter.searchString = this.searchString;
@@ -234,22 +235,6 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   unhighlightRow(event: MouseEvent) {
     const row = event.currentTarget as HTMLTableRowElement;
     row.classList.remove('highlighted');
-  }
-
-  /**
-   * Traduce un valor de prioridad a un valor numérico.
-   * @param priority el valor de la prioridad.
-   * @returns el valor numérico de la prioridad.
-   */
-  getPriorityValue(priority: string): number {
-    switch (priority) {
-      case 'HIGHEST': return 5;
-      case 'HIGH': return 4;
-      case 'MEDIUM': return 3;
-      case 'LOW': return 2;
-      case 'LOWEST': return 1;
-      default: return 0;
-    }
   }
 
   /**
@@ -297,18 +282,18 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
    * @param priority la prioridad.
    * @returns la línea de css correspondiente a la prioridad.
    */
-  getButtonPriority(priority: string): any {
+  getButtonPriority(priority: Priorities): any {
     let buttonStyles = {};
 
-    if (priority == 'HIGHEST') {
+    if (priority == 5) {
       buttonStyles = { 'background-color': '#c82337' };
-    } else if (priority == 'HIGH') {
+    } else if (priority == 4) {
       buttonStyles = { 'background-color': '#e06236' };
-    } else if (priority == 'MEDIUM') {
+    } else if (priority == 3) {
       buttonStyles = { 'background-color': '#fdb83f' };
-    } else if (priority == 'LOW') {
+    } else if (priority == 2) {
       buttonStyles = { 'background-color': '#3beb97' };
-    } else if (priority == 'LOWEST') {
+    } else if (priority == 1) {
       buttonStyles = { 'background-color': '#3bd6eb' };
     } else {
       buttonStyles = { 'background-color': '#7B7B7B' };
@@ -320,17 +305,17 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
 
   /**
    * Da color a los cuadros de estado.
-   * @param state el estado.
+   * @param status el estado.
    * @returns la línea de css correspondiente al estado.
    */
-  getButtonState(state: string): any {
+  getButtonState(status: Status): any {
     let buttonStyles = {};
 
-    if (state == 'FINISHED') {
+    if (status == 3) {
       buttonStyles = { 'background-color': '#c82337' };
-    } else if (state == 'PAUSED') {
+    } else if (status == 2) {
       buttonStyles = { 'background-color': '#e06236' };
-    } else if (state == 'OPENED') {
+    } else if (status == 1) {
       buttonStyles = { 'background-color': '#3beb97' };
     } else {
       buttonStyles = { 'background-color': '#7B7B7B' };

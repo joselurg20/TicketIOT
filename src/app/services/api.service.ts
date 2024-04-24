@@ -99,7 +99,7 @@ export class ApiService {
     return this.http.get<any[]>(`${this.apiUrl}/tickets/getallfilter`, {
       headers: headers,
       params: new HttpParams()
-        .set("State", filter.state)
+        .set("Status", filter.status)
         .set("Priority", filter.priority)
         .set("UserId", filter.userId)
         .set("Start", filter.start.toDateString())

@@ -64,7 +64,7 @@ export class IncidenceTicketsComponent implements OnInit, AfterViewInit {
     this.dataSource.sortingDataAccessor = (data: iTicketTableSM, sortHeaderId: string) => {
       switch (sortHeaderId) {
         case 'priority':
-          return this.getPriorityValue(data.priority);
+          return data.priority;
         case 'timestamp':
           return new Date(data.timestamp).getTime(); // Convertir la fecha a milisegundos para ordenar correctamente
         case 'newMessages':

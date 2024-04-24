@@ -69,8 +69,7 @@ export class SidebarComponent implements OnInit {
 
 
   constructor(private loginService: LoginService, private router: Router, private translate: TranslateService,
-              private langUpdateService: LanguageUpdateService) {
-    
+    private langUpdateService: LanguageUpdateService) {
     this.translate.addLangs(['en', 'es']);
     var lang = '';
     switch(localStorage.getItem('userLanguage')) {
@@ -88,14 +87,13 @@ export class SidebarComponent implements OnInit {
       this.translate.setDefaultLang('en');
     } else {
       this.translate.use(lang);
-
     }
   }
 
   /**
-   * Cambia el lenguaje.
-   * @param language el nuevo lenguaje Ej: 'en'.
-   */
+  * Cambia el lenguaje.
+  * @param language el nuevo lenguaje Ej: 'en'.
+  */
   switchLanguage(language: string) {
     this.translate.use(language);
     localStorage.setItem('selectedLanguage', language);
@@ -104,9 +102,9 @@ export class SidebarComponent implements OnInit {
   }
 
   /**
-   * Cambia el icono del idioma.
-   * @param language el nuevo lenguaje Ej: 'en'.
-   */
+  * Cambia el icono del idioma.
+  * @param language el nuevo lenguaje Ej: 'en'.
+  */
   private setLanguageImage(language: string): void {
     const button = document.querySelector('.dropdown-toggle img') as HTMLImageElement;
     if (language === 'spanish') {
@@ -117,9 +115,9 @@ export class SidebarComponent implements OnInit {
   }
 
   /**
-   * Obtiene el icono del idioma.
-   * @returns la ruta al icono.
-   */
+  * Obtiene el icono del idioma.
+  * @returns la ruta al icono.
+  */
   getLanguageImage(): string {
     const selectedLanguage = localStorage.getItem('selectedLanguage');
     if (selectedLanguage === 'es') {
@@ -148,24 +146,25 @@ export class SidebarComponent implements OnInit {
 
   /**
    * Cambia el estado de la barra lateral.
-   *
-   */
+   * @param screenWidth el ancho de la barra lateral.
+   * @param collapsed el estado de la barra lateral.
+  */
   toggleCollapse(): void {
     this.collapsed = !this.collapsed;
     this.onToggleSideNav.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
   }
 
   /**
-   * Cierra la barra lateral.
-   */
+  * Cierra la barra lateral.
+  */
   closeSidenav(): void {
     this.collapsed = false;
     this.onToggleSideNav.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
   }
 
   /**
-   * Navega a la ruta correspondiente.
-   */
+  * Navega a la ruta correspondiente.
+  */
   goToDashboard() {
     if (localStorage.getItem('userRole') == 'SupportManager') {
       this.router.navigate(['/support-manager']);
@@ -176,17 +175,17 @@ export class SidebarComponent implements OnInit {
   }
 
   /**
-   * Cierra la sesión.
-   */
+  * Cierra la sesión.
+  */
   logout() {
     this.loginService.logout();
   }
 
 
   /**
-   * Obtiene la ruta al dashboard.
-   * @returns la ruta al dashboard.
-   */
+  * Obtiene la ruta al dashboard.
+  * @returns la ruta al dashboard.
+  */
   getDashboardRoute(): string {
     const userRole = localStorage.getItem('userRole');
     if (userRole === 'SupportManager') {
@@ -197,9 +196,9 @@ export class SidebarComponent implements OnInit {
   }
 
   /**
-   * Cambia el idioma.
-   * @param language el nuevo idioma.
-   */
+  * Cambia el idioma.
+  * @param language el nuevo idioma.
+  */
   changeLanguage(language: string): void {
     const button = document.querySelector('.dropdown-toggle img') as HTMLImageElement;
     if (language === 'spanish') {

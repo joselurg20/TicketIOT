@@ -55,7 +55,7 @@ h1 {
 .grid-container {
   display: grid;
   grid-template-areas:
-    'iso iso  iso iso  iso leng  '
+    'iso iso  iso iso none leng  '
     'hist hist  hist hist hist status '
     'hist hist  hist hist hist status '
     'hist hist  hist hist  hist msg '

@@ -28,6 +28,7 @@ export class TechnicialIncidenceComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.loadingService.showLoading();
         window.onpopstate = (event) => {
             this.router.navigate(['/support-technician']);
         }
@@ -35,5 +36,6 @@ export class TechnicialIncidenceComponent implements OnInit {
         if(localStorage.getItem('userRole') !== 'SupportTechnician') {
             this.router.navigate(['/login']);
         }
+        this.loadingService.hideLoading();
     }
 }

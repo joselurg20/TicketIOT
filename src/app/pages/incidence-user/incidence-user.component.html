@@ -1,4 +1,7 @@
 <div class="grid-container">
+  <div id="loading" *ngIf="loading$ | async" class="w-100 h-100">
+    <app-loading></app-loading>
+</div>
   <div class="item1"><img src="../../../assets/images/logo/IoTlogo.png" alt=""></div>
   <div class="item2"><app-lenguage class="d-flex justify-content-end"></app-lenguage></div>
   <div class="item3"><app-history></app-history></div>

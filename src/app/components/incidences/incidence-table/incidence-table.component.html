@@ -68,10 +68,12 @@
                     
             </form>
         </div>
-    
-    <mat-progress-spinner *ngIf="isLoading" mode="indeterminate" color="warn"
-            class="progressSpinner"></mat-progress-spinner>
-        <div id="divTable"  [ngStyle]="{'display': isLoading ? 'none' : 'block'}">
+
+        <div id="loading" *ngIf="loading$ | async" class="w-100 h-100">
+            <app-loading></app-loading>
+        </div>
+        
+        <div id="divTable"  *ngIf="!(loading$ | async)">
 
             <table mat-table [dataSource]="dataSource" matSort #sort (matSortChange)="announceSortChange($event)"
                 class="mat-elevation-z8 ticketTable">
@@ -179,7 +181,7 @@
                 [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
                 aria-label="Select page"
                 showFirstLastButtons
-                [ngStyle]="{'display': isLoading ? 'none' : 'block'}">
+                [ngStyle]="{'display': (loading$ | async) ? 'none' : 'block'}">
             </mat-paginator>
         </div>
     </div>

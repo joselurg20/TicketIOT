@@ -25,34 +25,33 @@
             </div>
 
             <div class="form-group">
-                <label for="Content"><i class="fa-solid fa-file-lines"></i> {{'incidence-index.content' | translate}}</label>
+                <label for="Content"><i class="fa-solid fa-file-pen"></i> {{'incidence-index.content' | translate}}</label>
                 <textarea class="form-control  form-control-lg" id="Content" rows="3"
                     placeholder="{{'incidence-index.contentplaceholder' | translate}}" formControlName="Content"></textarea>
             </div>
 
             <div class="form-group">
-                <label for="Attachments"><i class="fa-solid fa-folder"></i> {{'incidence-index.attachments' | translate}}</label> <br>
-                <input type="file" id="Attachments" formControlName="Attachments" multiple
-                    (change)="onFileChange($event)" style="display: none;">
+                <label for="Attachments"><i class="fa-solid fa-folder"></i> {{"comunication.upload" | translate}}</label> <br>
+                <input type="file" id="Attachments" formControlName="Attachments" (change)="onFileChange($event)"
+                    style="display: none;" multiple>
                 <button type="button" onclick="document.getElementById('Attachments').click()"
-                    class="custom-file-button btn btn-lg"><i class="fa-solid fa-arrow-up-from-bracket"></i> {{'incidence-index.upload' | translate}}</button>
-
-                <div *ngIf="isFileSelected" class="logotipe">
-                    <div *ngIf="isImageSelected">
-                        <img *ngFor="let previewUrl of previewUrls" [src]="previewUrl" alt="Vista previa del archivo" class="preview-image">
-                    </div>
-                    <div *ngIf="!isImageSelected">
-                        <a *ngFor="let previewUrl of previewUrls" class="preview-link" [href]="previewUrl" target="_blank"> {{'incidence-index.download' | translate}}</a>
+                    class="custom-file-button btn btn-lg"><i class="fa-solid fa-arrow-up-from-bracket"></i>
+                    {{"comunication.select" | translate}}</button>
+                <div *ngIf="isFileSelected" class="logotipe preview">
+                    <div *ngFor="let previewUrl of previewUrls; let i = index">
+                        <img *ngIf="isImage(previewUrl)" [src]="previewUrl" class="preview-image"
+                            alt="Vista previa del archivo">
+                        <div *ngIf="!isImage(previewUrl)">
+                            <img [src]="previewUrl" class="preview-image" alt="Vista previa del archivo">
+                            <p>{{ selectFilesNames[i] }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
-
             <br>
-
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <button [disabled]="!ticketForm.valid" (click)="openSnackBar()" type="submit" class="btn btn-lg" id="liveToastBtn"><i class="fa-regular fa-paper-plane"></i> {{'incidence-index.send' | translate}}</button>
             </div>
-            
         </form>
         <div class="logotipe">
             <img src="assets/images/logo/IoTlogo.png" alt="">

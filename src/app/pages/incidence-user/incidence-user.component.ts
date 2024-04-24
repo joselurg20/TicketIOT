@@ -14,13 +14,16 @@ import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
 import * as CryptoJS from 'crypto-js';
 import { LenguageComponent } from "../../components/lenguage/lenguage.component";
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { LoadingComponent } from 'src/app/components/shared/loading.component';
+import { LoadingService } from 'src/app/services/loading.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-incidence-user',
     standalone: true,
     templateUrl: './incidence-user.component.html',
     styleUrls: ['./incidence-user.component.scss'],
-    imports: [CommonModule, MatGridListModule, NgFor, IncidenceTableComponent, IncidenceDataComponent, MessageComponent, HelpdeskComponent, ComunicationComponent, HistoryComponent, LenguageComponent, TranslateModule]
+    imports: [CommonModule, MatGridListModule, NgFor, IncidenceTableComponent, IncidenceDataComponent, MessageComponent, HelpdeskComponent, ComunicationComponent, HistoryComponent, LenguageComponent, TranslateModule, LoadingComponent]
 })
 export class IncidenceUserComponent {
   public messages: iMessage[] = [];
@@ -29,20 +32,22 @@ export class IncidenceUserComponent {
   public ticket = {} as iTicketDescriptor;
   public userName: string = '';
   hashedId: string = '';
+  loading$: Observable<boolean>;
   
   
-    constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router , private translate: TranslateService) {
+    constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router , private translate: TranslateService, private loadingService: LoadingService) {
       this.translate.addLangs(['en', 'es']);
       const lang = this.translate.getBrowserLang();
       if (lang !== 'en' && lang !== 'es') {
         this.translate.setDefaultLang('en');
       } else {
-        this.translate.use('es');
-        
+        this.translate.use('es');  
       }
+      this.loading$ = this.loadingService.loading$;
     }
   
     ngOnInit(): void {
+      this.loadingService.showLoading();
       this.route.params.subscribe(params => {
         this.ticketId = params['ticketId'];
         this.hashedId = params['hashedId'];
@@ -65,6 +70,7 @@ export class IncidenceUserComponent {
             userName: ""
           }
           this.userName = this.ticket.name;
+          this.loadingService.hideLoading();
         },
         error: (error: any) => {
           console.error('Error al obtener el usuario', error);

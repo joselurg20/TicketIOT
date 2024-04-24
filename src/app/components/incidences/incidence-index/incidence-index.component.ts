@@ -19,14 +19,14 @@ import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/s
 
 
 @Component({
-    selector: 'app-incidence-index',
-    standalone: true,
-    templateUrl: './incidence-index.component.html',
-    styleUrls: ['./incidence-index.component.scss'],
-    imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatFormFieldModule,
-        MatSelectModule, MatButtonModule, MatSnackBarModule, MatInputModule, MatButtonModule,
-        MatSnackBarModule, ChartBarComponent, ChartPieComponent,
-        ChartDoughnutComponent, ButtonComponent, SidebarComponent, LenguageComponent, TranslateModule]
+  selector: 'app-incidence-index',
+  standalone: true,
+  templateUrl: './incidence-index.component.html',
+  styleUrls: ['./incidence-index.component.scss'],
+  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatFormFieldModule,
+    MatSelectModule, MatButtonModule, MatSnackBarModule, MatInputModule, MatButtonModule,
+    MatSnackBarModule, ChartBarComponent, ChartPieComponent,
+    ChartDoughnutComponent, ButtonComponent, SidebarComponent, LenguageComponent, TranslateModule]
 })
 export class IncidenceIndexComponent implements OnInit {
 
@@ -43,16 +43,16 @@ export class IncidenceIndexComponent implements OnInit {
   durationInSeconds = 5;
   selectFilesNames: string[] = [];
   isSupportManager: boolean = true;
-  
 
-  constructor(private _snackBar: MatSnackBar, private apiService: ApiService , private translate: TranslateService) {
+
+  constructor(private _snackBar: MatSnackBar, private apiService: ApiService, private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
       this.translate.setDefaultLang('en');
     } else {
       this.translate.use('es');
-      
+
     }
   }
 
@@ -71,7 +71,7 @@ export class IncidenceIndexComponent implements OnInit {
       Email: new FormControl('', [Validators.required, Validators.email])
     });
 
-    if(localStorage.getItem('authToken') != null){
+    if (localStorage.getItem('authToken') != null) {
       this.isLogged = true;
     } else {
       this.isLogged = false;
@@ -124,9 +124,9 @@ export class IncidenceIndexComponent implements OnInit {
     formData.append('MessageDTO.Content', Content);
 
     var attachments = this.selectedFiles;
-      
+
     if (attachments.length > 0) {
-          
+
       if (attachments.length == 1) {
         const fileInput = <HTMLInputElement>document.getElementById('Attachments');
         if (fileInput && fileInput.files && fileInput.files.length > 0) {
@@ -148,10 +148,10 @@ export class IncidenceIndexComponent implements OnInit {
 
   isImage(previewUrl: string | ArrayBuffer | null): boolean {
     if (typeof previewUrl === 'string' && previewUrl.startsWith('data:image')) {
-        return true;
+      return true;
     }
     return false;
-}
+  }
 
 
   /**
@@ -230,8 +230,4 @@ export class IncidenceIndexComponent implements OnInit {
     this.previewUrls = [];
     this.isImageSelected = false;
   }
-
-  
-
-
 }

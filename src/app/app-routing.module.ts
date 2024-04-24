@@ -19,6 +19,8 @@ import { HistoryComponent } from './components/messages/history/history.componen
 import { HelpdeskComponent } from './components/messages/helpdesk/helpdesk.component';
 import { LoadingComponent } from './components/shared/loading.component';
 import { IncidenceDataComponent } from './components/incidences/incidence-data/incidence-data.component';
+import { CloseComponent } from './components/login/close/close.component';
+import { TechnicalTableComponent } from './components/technical-table/technical-table.component';
 
 
 
@@ -40,21 +42,23 @@ const routes: Routes = [
   { path: "prueba2", component: IncidenceTicketsComponent },
   { path: "prueba3/:ticketId", component: MessageComponent },
   { path: "prueba4", component: IncidencePruebaComponent },
-  { path: "enlace", component: IncidenceUserComponent },
-  { path: "prueba5", component: SnackbarIncidenceComponent },
-  { path: "recuperar", component: RecoveredComponent },
-  { path: "recuperar2", component: Recovery2Component },
+  { path: "prueba5", component: TechnicalTableComponent },
   { path: "prueba6", component: HistoryComponent },
   { path: "prueba7", component: HelpdeskComponent },
   { path: "prueba8", component: LoadingComponent },
   { path: "prueba9", component: IncidenceDataComponent },
+  { path: "enlace", component: IncidenceUserComponent },  
+  { path: "recuperar", component: RecoveredComponent },
+  { path: "recuperar2", component: Recovery2Component },
 
 
   //accedibles el usuario
   { path: "incidencia", component: IncidenceIndexComponent },
   { path: "enlace/:hashedId/:ticketId", component: IncidenceUserComponent },
   { path: "404", component: Error404Component },
-  { path: "**", redirectTo: "/404" }
+  { path: "**", redirectTo: "/404" },
+  { path: "cls", component: CloseComponent }
+
 ];
 
 @NgModule({

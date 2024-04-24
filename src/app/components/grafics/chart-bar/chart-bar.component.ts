@@ -19,7 +19,7 @@ export class ChartBarComponent implements OnInit {
   tickets: iTicketGraph[] = [];
   myChart: any;
   titleEs: string = 'Incidencias por estado';
-  titleEn: string = 'Tickets by state';
+  titleEn: string = 'Tickets by status';
   title: string = this.titleEs;
   private langUpdateSubscription: Subscription = {} as Subscription;
 

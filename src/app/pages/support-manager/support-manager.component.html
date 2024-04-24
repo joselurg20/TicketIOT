@@ -1,7 +1,9 @@
 <app-sidebar></app-sidebar>
-<mat-progress-spinner *ngIf="isLoading" mode="indeterminate" color="warn" class="progressSpinner"></mat-progress-spinner>
-<div class="dashboard">
-    <div class="main-content"  [ngStyle]="{'display': isLoading ? 'none' : 'block'}">
+<div id="loading" *ngIf="(loading$ | async)" class="w-100 h-100">
+    <app-loading></app-loading>
+</div>
+<div class="dashboard" *ngIf="!(loading$ | async)">
+    <div class="main-content">
         <app-incidence-table></app-incidence-table>
 
         <div class="grid-container">

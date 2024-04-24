@@ -7,5 +7,9 @@
     "passwordplaceholder": "Enter your Password",
     "login": "Access",
     "forgotpassword": "Forgot your Password? Recover it here"
+  },
+  "close": {
+    "title": "Back to the App",
+    "text":"All set. You can now access your account."
   }
 }

@@ -28,6 +28,7 @@ export class ManagerIncidenceComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.loadingService.showLoading();
         window.onpopstate = (event) => {
             this.router.navigate(['/support-manager']);
         }
@@ -35,5 +36,6 @@ export class ManagerIncidenceComponent implements OnInit {
         if (localStorage.getItem('userRole') !== 'SupportManager') {
             this.router.navigate(['/login']);
         };
+        this.loadingService.hideLoading();
     }
 }

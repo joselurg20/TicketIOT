@@ -62,7 +62,7 @@ export class ChartPieComponent {
     }
 
     const labels: string[] = ['HIGHEST', 'HIGH', 'MEDIUM', 'LOW', 'LOWEST', 'NOT_SURE'];
-    const priorities: Priorities[] = [0, 1, 2, 3, 4, 5];
+    const priorities: Priorities[] = [5, 4, 3, 2, 1, 0];
 
     const incidentCounts = priorities.map(prio => {
       // Calcular el número de incidentes para cada técnico

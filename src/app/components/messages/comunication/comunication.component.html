@@ -1,5 +1,5 @@
-<form [formGroup]="messageForm" (submit)="onSubmit()" enctype="multipart/form-data">
     <h1>{{"comunication.title" | translate}}</h1>
+    <form [formGroup]="messageForm" (submit)="onSubmit()" enctype="multipart/form-data">
     <div class="form-group">
         <label for="Attachments"><i class="fa-solid fa-folder"></i> {{"comunication.upload" | translate}}</label> <br>
         <input type="file" id="Attachments" formControlName="Attachments" (change)="onFileChange($event)"

@@ -1,0 +1,30 @@
+@import '../../../../styles/imports.scss';
+
+
+.from-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: $bg-color-dark;
+}
+
+#userSettingsCategories {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: $bg-color-dark;
+}
+
+.header {
+    width: 10rem;
+    height: 10rem;
+}
+
+#accountLinkEndForm{
+    text-align: center;
+    color: $text-color-mid;
+}

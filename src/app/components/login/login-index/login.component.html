@@ -1,6 +1,6 @@
-<app-lenguage class="d-flex justify-content-end" [ngStyle]="{'display': isLoading ? 'none' : 'block'}"></app-lenguage>
+<app-lenguage class="d-flex justify-content-end"></app-lenguage>
 
-<div class="container mt-lg-5" [ngStyle]="{'display': isLoading ? 'none' : 'block'}">
+<div class="container mt-lg-5" *ngIf="!(loading$ | async)">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <form [formGroup]="loginForm" (submit)="onSubmit()">
@@ -25,10 +25,13 @@
                     </p>
                 </div>
 
-                <mat-progress-spinner *ngIf="isLoading" mode="indeterminate" color="warn" class="progressSpinner"></mat-progress-spinner>
+                <div id="loading" *ngIf="loading$ | async" class="w-100 h-100">
+                    <app-loading></app-loading>
+                </div>
 
                 <div class="d-grid mb-3">
-                    <button [disabled]="!loginForm.valid" type="submit" class="iot-log-btn">{{'login.login' | translate}}</button>
+                    <button [disabled]="!loginForm.valid" type="submit" class="iot-log-btn">{{'login.login' |
+                        translate}}</button>
                 </div>
 
                 <div class="link mb-3">
@@ -43,4 +46,6 @@
     </div>
 </div>
 
-<mat-progress-spinner *ngIf="isLoading" mode="indeterminate" color="warn" class="progressSpinner"></mat-progress-spinner>
+<div id="loading" *ngIf="loading$ | async" class="w-100 h-100">
+    <app-loading></app-loading>
+</div>

@@ -101,7 +101,6 @@ export class ComunicationComponent implements OnInit {
           .subscribe({
             next: (response) => {
               this.success = true;
-              this.successMsg = "Mensaje creado con éxito.";
               this.messagesUpdateService.triggerMessagesUpdate();
               this.messageForm.reset();
               this.openSnackBar();
@@ -193,10 +192,10 @@ export class ComunicationComponent implements OnInit {
 
   isImage(previewUrl: string | ArrayBuffer | null): boolean {
     if (typeof previewUrl === 'string' && previewUrl.startsWith('data:image')) {
-        return true;
+      return true;
     }
     return false;
-}
+  }
 
 
   /**

@@ -9,7 +9,7 @@ label {
 }
 
 .container {
-  width: 900px;
+  width: 800px;
 
   & input:focus,
   & textarea:focus,
@@ -96,6 +96,18 @@ label {
 
   }
 }
+
+.preview {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 1vw;
+
+}
+
+.preview-link {
+  color: $text-color-dark;
+} 
 
 
 @media screen and (max-width: 992px) {

@@ -8,10 +8,15 @@
             class="custom-file-button btn btn-lg"><i class="fa-solid fa-arrow-up-from-bracket"></i>
             {{"comunication.select" | translate}}</button>
 
-        <div *ngIf="previewUrl" class="logotipe">
-            <img [src]="previewUrl" *ngIf="isImageSelected" alt="Vista previa del archivo" class="preview-image">
-            <a class="preview-link" [href]="previewUrl" *ngIf="!isImageSelected"
-                target="_blank">{{"comunication.download" | translate}}</a>
+        <div *ngIf="isFileSelected" class="logotipe preview">
+            <div *ngFor="let previewUrl of previewUrls; let i = index">
+                <img *ngIf="isImage(previewUrl)" [src]="previewUrl" class="preview-image"
+                    alt="Vista previa del archivo">
+                <div *ngIf="!isImage(previewUrl)">
+                    <img [src]="previewUrl" class="preview-image" alt="Vista previa del archivo">
+                    <p>{{ selectFilesNames[i] }}</p>
+                </div>
+            </div>
         </div>
     </div>
     <div class="mb-3 form-group">
@@ -20,8 +25,9 @@
         <textarea class="form-control  form-control-lg" id="content" rows="3"
             placeholder="{{'comunication.nameplaceholder' | translate}}" formControlName="Content"></textarea>
     </div>
-    <div class="mt-3 d-md-flex justify-content-end">
-        <button [disabled]="!messageForm.valid" id="liveToastBtn" type="submit" class="mt-1 btn btn-lg coment"> {{"comunication.send" |translate}}</button>
+    <div class="d-flex justify-content-end">
+        <button [disabled]="!messageForm.valid" type="submit" class="m-1 btn btn-lg"><i class="fa-solid fa-paper-plane"
+                (click)="openSnackBar()" id="liveToastBtn"></i> {{"comunication.send" | translate}}</button>
     </div>
     <div class="logotipe">
         <img src="assets/images/logo/IoTlogo.png" alt="">

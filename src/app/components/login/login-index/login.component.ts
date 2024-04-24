@@ -9,6 +9,8 @@ import { LoadingService } from 'src/app/services/loading.service';
 import { LoginService } from '../../../services/login.service';
 import { LenguageComponent } from "../../lenguage/lenguage.component";
 import { SidebarComponent } from "../../sidebar/sidebar.component";
+import { LoadingComponent } from '../../shared/loading.component';
+import { Observable } from 'rxjs';
 
 
 function passwordValidator(control: FormControl): { [key: string]: any } | null {
@@ -28,12 +30,12 @@ function passwordValidator(control: FormControl): { [key: string]: any } | null 
   standalone: true,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, LenguageComponent, TranslateModule, SidebarComponent, MatProgressSpinnerModule]
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, LenguageComponent, TranslateModule, SidebarComponent, MatProgressSpinnerModule, LoadingComponent]
 })
 export class LoginComponent implements OnInit {
   public loginForm!: FormGroup; // Define loginForm como un FormGroup
   public errorMsg: string = "";
-  isLoading: boolean = false;
+  loading$: Observable<boolean>;	
 
   constructor(private loginService: LoginService, private loadingService: LoadingService, private router: Router, private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);
@@ -42,8 +44,8 @@ export class LoginComponent implements OnInit {
       this.translate.setDefaultLang('en');
     } else {
       this.translate.use('es');
-
     }
+    this.loading$ = this.loadingService.loading$;
   }
 
   ngOnInit() {
@@ -58,36 +60,36 @@ export class LoginComponent implements OnInit {
    * Envia la solicitud de inicio de sesión al backend.
    */
   onSubmit() {
-      if (this.loginForm.valid) {
-        const email = this.loginForm.value.email;
-        const password = this.loginForm.value.password;
-        const hashedPassword = CryptoJS.SHA256(password).toString().concat('@', 'A', 'a');
-  
-        // Muestra el indicador de carga antes de iniciar la carga de datos
-        this.loadingService.showLoading();
-  
-        // Enviar solicitud de inicio de sesión
-        this.loginService.login(email, hashedPassword).subscribe({
-            next: (response) => {
-              // Oculta el indicador de carga una vez que los datos se han cargado
-              this.loadingService.hideLoading();
-  
-              this.errorMsg = "";
-              localStorage.setItem('jwtToken', response);
-              if (localStorage.getItem('userRole') == 'SupportManager') {
-                this.router.navigate(['/support-manager']);
-              } else if (localStorage.getItem('userRole') == 'SupportTechnician') {
-                this.router.navigate(['/support-technician']);
-              }
-            },
-            error: (error) => {
-              console.error('Error en la solicitud:', error);
-              this.errorMsg = "Email o contraseña no válidos.";
-  
-              // En caso de error, también oculta el indicador de carga
-              this.loadingService.showLoading();
-            }
-          });
-      }
+    if (this.loginForm.valid) {
+      const email = this.loginForm.value.email;
+      const password = this.loginForm.value.password;
+      const hashedPassword = CryptoJS.SHA256(password).toString().concat('@', 'A', 'a');
+
+      // Muestra el indicador de carga antes de iniciar la carga de datos
+      this.loadingService.showLoading();
+
+      // Enviar solicitud de inicio de sesión
+      this.loginService.login(email, hashedPassword).subscribe({
+        next: (response) => {
+          // Oculta el indicador de carga una vez que los datos se han cargado
+          this.loadingService.hideLoading();
+
+          this.errorMsg = "";
+          localStorage.setItem('jwtToken', response);
+          if (localStorage.getItem('userRole') == 'SupportManager') {
+            this.router.navigate(['/support-manager']);
+          } else if (localStorage.getItem('userRole') == 'SupportTechnician') {
+            this.router.navigate(['/support-technician']);
+          }
+        },
+        error: (error) => {
+          console.error('Error en la solicitud:', error);
+          this.errorMsg = "Email o contraseña no válidos.";
+
+          // En caso de error, también oculta el indicador de carga
+          this.loadingService.showLoading();
+        }
+      });
     }
+  }
 }

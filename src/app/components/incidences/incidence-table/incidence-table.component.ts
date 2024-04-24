@@ -14,20 +14,22 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { TicketFilterRequestDto } from 'src/app/models/tickets/TicketFilterRequestDto';
 import { iTicketTableSM } from 'src/app/models/tickets/iTicketTableSM';
 import { iUserTable } from 'src/app/models/users/iUserTable';
 import { ApiService } from 'src/app/services/api.service';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { TicketsService } from 'src/app/services/tickets.service';
+import { LoadingComponent } from '../../shared/loading.component';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-incidence-table',
   standalone: true,
   imports: [CommonModule, MatTableModule, MatSortModule, MatPaginatorModule, MatButtonModule,
     MatTooltipModule, MatBadgeModule, MatProgressSpinnerModule, TranslateModule, FormsModule,
-    ReactiveFormsModule, MatInputModule, MatDatepickerModule, MatNativeDateModule],
+    ReactiveFormsModule, MatInputModule, MatDatepickerModule, MatNativeDateModule, LoadingComponent],
   templateUrl: './incidence-table.component.html',
   styleUrls: ['./incidence-table.component.scss']
 })
@@ -46,7 +48,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
 
   //Flags de control
   isSupportManager: boolean = false;
-  isLoading: boolean = false;
+  loading$: Observable<boolean>;
   showFilter: boolean = false;
 
   //Listas de datos a representar en la tabla
@@ -74,7 +76,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private apiService: ApiService,
               private router: Router, private translate: TranslateService,
-              private ticketsService: TicketsService, private readonly dateAdapter: DateAdapter<Date>,
+              private ticketsService: TicketsService, private loadingService: LoadingService, private readonly dateAdapter: DateAdapter<Date>,
               private langUpdateService: LanguageUpdateService) {
     this.translate.addLangs(['en', 'es']);
     var lang = '';
@@ -93,8 +95,8 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
       this.translate.setDefaultLang('en');
     } else {
       this.translate.use(lang);
-
     }
+    this.loading$ = this.loadingService.loading$;
   }
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -105,6 +107,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   iconElement!: ElementRef;
 
   ngOnInit(): void {
+    this.loadingService.showLoading();
     this.range = new FormGroup({
       start: new FormControl(),
       end: new FormControl()
@@ -142,7 +145,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     }
     this.ticketsService.tickets$.subscribe(tickets => {
       this.dataSource.data = tickets;
-      this.isLoading = false;
+      this.loadingService.hideLoading();
     });
     this.langUpdateService.langUpdated$.subscribe(() => {
       this.setLocale(localStorage.getItem('selectedLanguage')!);

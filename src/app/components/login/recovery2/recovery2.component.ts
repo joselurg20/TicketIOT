@@ -97,7 +97,7 @@ export class Recovery2Component implements OnInit {
 
     this.apiService.resetPassword(formData).subscribe({
       next: (response) => {
-        this.router.navigate(['/login']);
+        this.router.navigate(['/cls']);
       },
       error: (error) => {
         console.error('Error al restablecer la contraseña:', error);

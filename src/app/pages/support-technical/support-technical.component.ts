@@ -13,6 +13,9 @@ import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
 import { TicketsService } from 'src/app/services/tickets.service';
 import { iTicketTable } from 'src/app/models/tickets/iTicketTable';
+import { Observable } from 'rxjs';
+import { LoadingService } from 'src/app/services/loading.service';
+import { LoadingComponent } from "../../components/shared/loading.component";
 
 @Component({
     selector: 'app-support-technical',
@@ -21,14 +24,17 @@ import { iTicketTable } from 'src/app/models/tickets/iTicketTable';
     styleUrls: ['./support-technical.component.scss'],
     imports: [CommonModule, IncidenceTableComponent, TechnicalTableComponent, ChartPieComponent,
         ChartDoughnutComponent, ChartBarComponent, IncidenceDataComponent, IncidenceIndexComponent,
-        SidebarComponent, MatProgressSpinnerModule]
+        SidebarComponent, MatProgressSpinnerModule, LoadingComponent]
 })
 export class SupportTechnicalComponent implements OnInit {
 
     tickets: iTicketTable[] = [];
-    isLoading: boolean = true;
+    loading$: Observable<boolean>;
 
-constructor(private loginService: LoginService, private router: Router, private ticketsService: TicketsService) {}
+
+constructor(private loginService: LoginService, private router: Router, private ticketsService: TicketsService, private loadingService: LoadingService) {
+    this.loading$ = this.loadingService.loading$;
+}
 
     ngOnInit(): void {
         window.onpopstate = (event) => {
@@ -42,8 +48,9 @@ constructor(private loginService: LoginService, private router: Router, private 
         
         this.ticketsService.getTickets(false);
         this.ticketsService.tickets$.subscribe(tickets => {
+            this.loadingService.showLoading();
             this.tickets = tickets;
-            this.isLoading = false;
+            this.loadingService.hideLoading();
         });
     }
 }

@@ -1,10 +1,9 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { TicketFilterRequestDto } from '../models/tickets/TicketFilterRequestDto';
 import { iTicketTableSM } from '../models/tickets/iTicketTableSM';
 import { iTicketGraph } from '../models/tickets/iTicketsGraph';
-import { TicketFilterRequestDto } from '../models/tickets/TicketFilterRequestDto';
-import { iUserTable } from '../models/users/iUserTable';
 import { iUserGraph } from '../models/users/iUserGraph';
 import { LanguageUpdateService } from './languageUpdateService';
 

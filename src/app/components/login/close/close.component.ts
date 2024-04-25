@@ -4,11 +4,11 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LenguageComponent } from "../../lenguage/lenguage.component";
 
 @Component({
-    selector: 'app-close',
-    standalone: true,
-    templateUrl: './close.component.html',
-    styleUrls: ['./close.component.scss'],
-    imports: [CommonModule, TranslateModule, LenguageComponent]
+  selector: 'app-close',
+  standalone: true,
+  imports: [CommonModule, TranslateModule, LenguageComponent],
+  templateUrl: './close.component.html',
+  styleUrls: ['./close.component.scss']
 })
 export class CloseComponent {
 

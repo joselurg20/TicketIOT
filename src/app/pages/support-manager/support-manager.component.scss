@@ -67,3 +67,31 @@ mat-grid-tile {
   margin-left: 48vw;
   margin-top: 45vh;
 }
+
+@media screen and (max-width: 900px) {
+
+  .grid-container {
+    grid-template-areas:
+      'pie'
+      'douhth'
+      'bar';
+  }
+
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .grid-container {
+    grid-template-areas:
+      'pie'
+      'douhth'
+      'bar';
+  }
+
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+
+}

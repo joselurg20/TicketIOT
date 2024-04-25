@@ -1,32 +1,33 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarModule, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { ChartBarComponent } from '../../grafics/chart-bar/chart-bar.component';
-import { ChartDoughnutComponent } from '../../grafics/chart-doughnut/chart-doughnut.component';
-import { ChartPieComponent } from '../../grafics/chart-pie/chart-pie.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarModule, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { ButtonComponent } from "../../button/button.component";
-import { SidebarComponent } from '../../sidebar/sidebar.component';
+import { ChartBarComponent } from '../../grafics/chart-bar/chart-bar.component';
+import { ChartDoughnutComponent } from '../../grafics/chart-doughnut/chart-doughnut.component';
+import { ChartPieComponent } from '../../grafics/chart-pie/chart-pie.component';
 import { LenguageComponent } from "../../lenguage/lenguage.component";
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { SidebarComponent } from '../../sidebar/sidebar.component';
 import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/snackbar-incidence.component';
 
 
 @Component({
   selector: 'app-incidence-index',
   standalone: true,
-  templateUrl: './incidence-index.component.html',
-  styleUrls: ['./incidence-index.component.scss'],
   imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatFormFieldModule,
     MatSelectModule, MatButtonModule, MatSnackBarModule, MatInputModule, MatButtonModule,
     MatSnackBarModule, ChartBarComponent, ChartPieComponent,
-    ChartDoughnutComponent, ButtonComponent, SidebarComponent, LenguageComponent, TranslateModule]
+    ChartDoughnutComponent, ButtonComponent, SidebarComponent, LenguageComponent, TranslateModule],
+  templateUrl: './incidence-index.component.html',
+  styleUrls: ['./incidence-index.component.scss']
+
 })
 export class IncidenceIndexComponent implements OnInit {
 

@@ -5,15 +5,17 @@ import { ApiService } from 'src/app/services/api.service';
 import { iTicketGraph } from 'src/app/models/tickets/iTicketsGraph';
 import { iUserGraph } from 'src/app/models/users/iUserGraph';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { TicketsService } from 'src/app/services/tickets.service';
+import { LoadingComponent } from "../../shared/loading.component";
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
-  selector: 'app-chart-doughnut',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './chart-doughnut.component.html',
-  styleUrls: ['./chart-doughnut.component.scss']
+    selector: 'app-chart-doughnut',
+    standalone: true,
+    imports: [CommonModule, LoadingComponent],
+    templateUrl: './chart-doughnut.component.html',
+    styleUrls: ['./chart-doughnut.component.scss']
 })
 export class ChartDoughnutComponent {
 
@@ -24,9 +26,11 @@ export class ChartDoughnutComponent {
   titleEn: string = 'Tickets by technician';
   title: string = this.titleEs;
   private langUpdateSubscription: Subscription = {} as Subscription;
+  loading$: Observable<boolean>;
 
-  constructor(private apiService: ApiService, private langUpdateService: LanguageUpdateService,
-              private ticketsService: TicketsService) { }
+  constructor(private apiService: ApiService, private langUpdateService: LanguageUpdateService, private ticketsService: TicketsService, private loadingService: LoadingService) {
+    this.loading$ = this.loadingService.loading$;
+   }
 
   ngOnInit() {
     if(localStorage.getItem('selectedLanguage') == 'en'){
@@ -38,6 +42,7 @@ export class ChartDoughnutComponent {
       this.ticketsService.users$.subscribe(users => {
         this.users = users;
         this.createChart();
+        this.loadingService.hideLoading();
       });
       this.ticketsService.usersGraph$.subscribe(usersGraph => {
         this.tickets = usersGraph;
@@ -51,6 +56,7 @@ export class ChartDoughnutComponent {
       this.ticketsService.ticketGraphs$.subscribe(ticketGraphs => {
         this.tickets = ticketGraphs;
         this.createChart();
+        this.loadingService.hideLoading();
       })
     }
     this.langUpdateSubscription = this.langUpdateService.langUpdated$.subscribe(() => {

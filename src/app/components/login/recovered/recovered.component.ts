@@ -12,10 +12,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
     selector: 'app-recovered',
     standalone: true,
+    imports: [CommonModule, ButtonComponent, ReactiveFormsModule, FormsModule, LenguageComponent, TranslateModule],
     templateUrl: './recovered.component.html',
-    styleUrls: ['./recovered.component.scss'],
-    imports: [CommonModule, ButtonComponent, ReactiveFormsModule, FormsModule, LenguageComponent, TranslateModule]
-})
+    styleUrls: ['./recovered.component.scss']
+    })
 export class RecoveredComponent implements OnInit {
 
     recoveryForm!: FormGroup;

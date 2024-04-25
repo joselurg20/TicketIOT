@@ -4,11 +4,11 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LenguageComponent } from "../lenguage/lenguage.component";
 
 @Component({
-    selector: 'app-error404',
-    standalone: true,
-    templateUrl: './error404.component.html',
-    styleUrls: ['./error404.component.scss'],
-    imports: [CommonModule, TranslateModule, LenguageComponent]
+  selector: 'app-error404',
+  standalone: true,
+  imports: [CommonModule, TranslateModule, LenguageComponent],
+  templateUrl: './error404.component.html',
+  styleUrls: ['./error404.component.scss']
 })
 export class Error404Component {
 
@@ -19,7 +19,7 @@ export class Error404Component {
       this.translate.setDefaultLang('en');
     } else {
       this.translate.use('es');
-      
+
     }
   }
 }

@@ -1,11 +1,12 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Observable, Subscription } from 'rxjs';
 import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
 import { ApiService } from 'src/app/services/api.service';
+import { LoadingService } from 'src/app/services/loading.service';
 import { TicketUpdateService } from 'src/app/services/ticketUpdate.service';
-import { Observable, Subscription } from 'rxjs';
 import { ButtonComponent } from "../../button/button.component";
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LoadingComponent } from "../../shared/loading.component";
 import { LoadingService } from 'src/app/services/loading.service';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
@@ -13,9 +14,10 @@ import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 @Component({
   selector: 'app-incidence-data',
   standalone: true,
+  imports: [CommonModule, ButtonComponent, TranslateModule, LoadingComponent],
   templateUrl: './incidence-data.component.html',
-  styleUrls: ['./incidence-data.component.scss'],
-  imports: [CommonModule, ButtonComponent, TranslateModule, LoadingComponent]
+  styleUrls: ['./incidence-data.component.scss']
+
 })
 export class IncidenceDataComponent implements OnInit {
 

@@ -25,9 +25,9 @@ function passwordValidator(control: FormControl): { [key: string]: any } | null 
 @Component({
   selector: 'app-recovery2',
   standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, TranslateModule, LenguageComponent, MatProgressSpinnerModule],
   templateUrl: './recovery2.component.html',
-  styleUrls: ['./recovery2.component.scss'],
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, TranslateModule, LenguageComponent, MatProgressSpinnerModule]
+  styleUrls: ['./recovery2.component.scss']
 })
 export class Recovery2Component implements OnInit {
 

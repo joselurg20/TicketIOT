@@ -1,7 +1,7 @@
 <h1>{{'history.title' | translate}}</h1>
+<hr>
 <div class="modal-content">
     <div class="modal-body">
-        <hr>
         <div class="modal-mensage" *ngFor="let message of messages">
             <div class="d-flex justify-content-between">
                 <h4>{{message.Author}}</h4>
@@ -16,12 +16,13 @@
                             <img [src]="attachment.previewUrl" alt="">
                             <button class="custom-file-button btn-lg"
                                 (click)="downloadAttachment(attachment.attachmentPath)"><i
-                                    class="fa-solid fa-download"></i> {{'message.download' | translate}}</button>
+                                    class="fa-solid fa-download"></i> {{'message.download' | translate}}
+                                </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <hr>
     </div>
 </div>
+<hr>

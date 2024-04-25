@@ -205,17 +205,17 @@ export class ApiService {
   /**
    * Cambia el estado de una incidencia.
    * @param ticketId el id de la incidencia.
-   * @param state el valor del nuevo estado.
+   * @param status el valor del nuevo estado.
    * @returns 
    */
-  changeTicketState(ticketId: number, state: number) {
+  changeTicketStatus(ticketId: number, status: number) {
     const token = localStorage.getItem('authToken');
   
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.put<any>(`${this.apiUrl}/tickets/changestate/${ticketId}/${state}`, null, {headers});
+    return this.http.put<any>(`${this.apiUrl}/tickets/changestatus/${ticketId}/${status}`, null, {headers});
   }
 
   /**

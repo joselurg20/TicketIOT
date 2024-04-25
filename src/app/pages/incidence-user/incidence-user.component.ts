@@ -46,29 +46,35 @@ export class IncidenceUserComponent {
     }
     this.loading$ = this.loadingService.loading$;
   }
-
-  ngOnInit(): void {
-    this.loadingService.showLoading();
-    this.route.params.subscribe(params => {
-      this.ticketId = params['ticketId'];
-      this.hashedId = params['hashedId'];
-      const hashedId = CryptoJS.SHA256(this.ticketId.toString()).toString();
-      if (this.hashedId !== hashedId) {
-        this.router.navigate(['/404']);
-      }
-    });
-    this.apiService.getTicketById(this.ticketId).subscribe({
-      next: (response: any) => {
-        this.ticket = {
-          id: response.id,
-          title: response.title,
-          name: response.name,
-          email: response.email,
-          timestamp: response.timestamp,
-          priority: response.priority,
-          state: response.state,
-          userId: response.userId,
-          userName: ""
+  
+    ngOnInit(): void {
+      this.loadingService.showLoading();
+      this.route.params.subscribe(params => {
+        this.ticketId = params['ticketId'];
+        this.hashedId = params['hashedId'];
+        const hashedId = CryptoJS.SHA256(this.ticketId.toString()).toString();
+        if(this.hashedId !== hashedId) {
+          this.router.navigate(['/404']);
+        }
+      });
+      this.apiService.getTicketById(this.ticketId).subscribe({
+        next: (response: any) => {
+          this.ticket = {
+            id: response.id,
+            title: response.title,
+            name: response.name,
+            email: response.email,
+            timestamp: response.timestamp,
+            priority: response.priority,
+            status: response.status,
+            userId: response.userId,
+            userName: ""
+          }
+          this.userName = this.ticket.name;
+          this.loadingService.hideLoading();
+        },
+        error: (error: any) => {
+          console.error('Error al obtener el usuario', error);
         }
         this.userName = this.ticket.name;
         this.loadingService.hideLoading();

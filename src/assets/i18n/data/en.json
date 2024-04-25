@@ -16,6 +16,8 @@
     "optionS2": "In Progress",
     "optionS3": "Paused",
     "optionS4": "Finished",
-    "save": "Modify incidence"
+    "saveTech": "Assign Ticket",
+    "savePrio": "Set Priority",
+    "saveStatus": "Set Status"
   }
 }

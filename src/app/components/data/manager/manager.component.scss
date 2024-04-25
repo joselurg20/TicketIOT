@@ -29,7 +29,7 @@ label {
   border-radius: 5px;
   color: $color-dark;
   background-color: $bg-color-warning;
-  height: 53.5px;
+  height: 40px;
 
 
   &:hover {
@@ -37,4 +37,45 @@ label {
     background-color: $bg-color-dark;
     border-color: $color-light;
   }
+}
+
+.prioStatusContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.prioContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 22vw;
+}
+
+.prioContainer label {
+  align-self: start;
+}
+
+.prioContainer button {
+  width: 21.3vw;
+  height: 40px;
+}
+
+.statusContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 22vw;
+}
+
+.statusContainer label {
+  align-self: start;
+}
+
+.statusContainer button {
+  width: 21.3vw;
+  height: 40px;
 }

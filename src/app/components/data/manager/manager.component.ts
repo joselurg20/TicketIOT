@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TicketUpdateService } from 'src/app/services/ticketUpdate.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LoadingService } from 'src/app/services/loading.service';
+import { TicketsService } from 'src/app/services/tickets.service';
 
 @Component({
   selector: 'app-manager',
@@ -17,16 +18,14 @@ import { LoadingService } from 'src/app/services/loading.service';
 export class ManagerComponent implements OnInit {
 
   users: iUserGraph[] = [];
-  public priorities: string[] = ['NOT_SURE', 'LOWEST', 'LOW', 'MEDIUM', 'HIGH', 'HIGHEST'];
-  public states: string[] = ['PENDING', 'OPENED', 'PAUSED', 'FINISHED'];
   selectedUserId: number = -1;
-  selectedPriority: string = '';
   selectedPriorityValue: number = -1;
-  selectedState: string = '';
-  selectedStateValue: number = -1;
+  selectedStatusValue: number = -1;
   isWorking: boolean = false;
 
-  constructor(private apiService: ApiService, private ticketUpdateService: TicketUpdateService, private loadingService: LoadingService, private translate: TranslateService) {
+  constructor(private apiService: ApiService, private ticketsService: TicketsService,
+              private ticketUpdateService: TicketUpdateService, private loadingService: LoadingService,
+              private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -38,28 +37,28 @@ export class ManagerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.apiService.getTechnicians().subscribe({
+    this.ticketsService.usersFN$.subscribe({
       next: (response: any) => {
-        const users: iUserGraph[] = response.map((value: any) => {
+        const users = response.map((value: any) => {
           return {
             id: value.id,
             userName: value.userName
           };
-        });
+        })
         this.users = users;
       },
-      error: (error) => {
-        console.log(error);
+      error: (error: any) => {
+        console.error('Error al obtener los usuarios', error);
       }
     })
   }
 
   /**
-   * Actualiza los datos de una incidencia. Técnico asignado, prioridad y/o estado.
+   * Asigna la incidencia seleccionada a un técnico.
    */
-  updateTicket() {
-    this.loadingService.showLoading();
+  assignTicket() {
     if (this.selectedUserId != -1) {
+      this.loadingService.showLoading();
       this.apiService.assignTechnician(parseInt(localStorage.getItem('selectedTicket')!), this.selectedUserId).subscribe({
         next: () => {
           this.ticketUpdateService.triggerTicketUpdate();
@@ -70,8 +69,14 @@ export class ManagerComponent implements OnInit {
         }
       });
     }
-    this.loadingService.showLoading();
+  }
+
+  /**
+   * Cambia la prioridad a la incidencia seleccionada.
+   */
+  updatePrio() {
     if (this.selectedPriorityValue != -1) {
+      this.loadingService.showLoading();
       this.apiService.changeTicketPriority(parseInt(localStorage.getItem('selectedTicket')!), this.selectedPriorityValue).subscribe({
         next: () => {
           this.ticketUpdateService.triggerTicketUpdate();
@@ -82,9 +87,15 @@ export class ManagerComponent implements OnInit {
         }
       });
     }
-    this.loadingService.showLoading();
-    if (this.selectedStateValue != -1) {
-      this.apiService.changeTicketState(parseInt(localStorage.getItem('selectedTicket')!), this.selectedStateValue).subscribe({
+  }
+
+  /**
+   * Cambia el estado a la incidencia seleccionada.
+   */
+  updateStatus() {
+    if (this.selectedStatusValue != -1) {
+      this.loadingService.showLoading();
+      this.apiService.changeTicketStatus(parseInt(localStorage.getItem('selectedTicket')!), this.selectedStatusValue).subscribe({
         next: () => {
           this.ticketUpdateService.triggerTicketUpdate();
           this.loadingService.hideLoading();
@@ -94,6 +105,5 @@ export class ManagerComponent implements OnInit {
         }
       })
     }
-    this.ticketUpdateService.triggerTicketUpdate();
   }
 }

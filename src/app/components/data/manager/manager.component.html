@@ -4,39 +4,47 @@
             translate}}</label>
         <select class="form-select form-select-lg" id="tecnico" required [(ngModel)]="selectedUserId" name="tecnico">
             <option value="-1">{{"data.option1" | translate}}</option>
-            <option *ngFor="let user of users" [value]="user.id">{{user.id}} - {{user.userName}}</option>
+            <option *ngFor="let user of users" [value]="user.id">{{user.userName}}</option>
         </select>
     </div>
-
-    <div class="mb-3">
-        <label for="prioridad" class="form-label"><i class="fa-solid fa-bell"></i> {{"data.priority" |
-            translate}}</label>
-        <select class="form-select form-select-lg" id="prioridad" required [(ngModel)]="selectedPriorityValue"
-            name="prioridad">
-            <option value="-1">{{"data.option2" | translate}}</option>
-            <option value="5">{{"data.optionP1" | translate}}</option>
-            <option value="4">{{"data.optionP2" | translate}}</option>
-            <option value="3">{{"data.optionP3" | translate}}</option>
-            <option value="2">{{"data.optionP4" | translate}}</option>
-            <option value="1">{{"data.optionP5" | translate}}</option>
-            <option value="0">{{"data.optionP6" | translate}}</option>
-        </select>
-    </div>
-
-    <div class="mb-3">
-        <label for="estado" class="form-label"><i class="fa-solid fa-traffic-light"></i> {{"data.status" |
-            translate}}</label>
-        <select class="form-select form-select-lg" id="estado" required [(ngModel)]="selectedStateValue" name="estado">
-            <option value="-1">{{"data.option3" | translate}}</option>
-            <option value="0">{{"data.optionS1" | translate}}</option>
-            <option value="1">{{"data.optionS2" | translate}}</option>
-            <option value="2">{{"data.optionS3" | translate}}</option>
-            <option value="3">{{"data.optionS4" | translate}}</option>
-        </select>
-    </div>
-
     <div class="d-grid gap-2">
-        <button type="submit" class="btn btn-lg" (click)="updateTicket()"><i class="fa-solid fa-floppy-disk"></i>
-            {{"data.save" | translate}}</button>
+        <button type="submit" class="btn btn-lg" (click)="assignTicket()"><i class="fa-solid fa-floppy-disk"></i>
+            {{"data.saveTech" | translate}}</button>
+    </div>
+    <div class="prioStatusContainer">
+        <div class="mb-3 prioContainer">
+            <label for="prioridad" class="form-label"><i class="fa-solid fa-bell"></i> {{"data.priority" |
+                translate}}</label>
+            <select class="form-select form-select-lg" id="prioridad" required [(ngModel)]="selectedPriorityValue"
+                name="prioridad">
+                <option value="-1">{{"data.option2" | translate}}</option>
+                <option value="5">{{"data.optionP1" | translate}}</option>
+                <option value="4">{{"data.optionP2" | translate}}</option>
+                <option value="3">{{"data.optionP3" | translate}}</option>
+                <option value="2">{{"data.optionP4" | translate}}</option>
+                <option value="1">{{"data.optionP5" | translate}}</option>
+                <option value="0">{{"data.optionP6" | translate}}</option>
+            </select>
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-lg" (click)="updatePrio()"><i class="fa-solid fa-floppy-disk"></i>
+                    {{"data.savePrio" | translate}}</button>
+            </div>
+        </div>
+
+        <div class="mb-3 statusContainer">
+            <label for="estado" class="form-label"><i class="fa-solid fa-traffic-light"></i> {{"data.status" |
+                translate}}</label>
+            <select class="form-select form-select-lg" id="estado" required [(ngModel)]="selectedStatusValue" name="estado">
+                <option value="-1">{{"data.option3" | translate}}</option>
+                <option value="0">{{"data.optionS1" | translate}}</option>
+                <option value="1">{{"data.optionS2" | translate}}</option>
+                <option value="2">{{"data.optionS3" | translate}}</option>
+                <option value="3">{{"data.optionS4" | translate}}</option>
+            </select>
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-lg" (click)="updateStatus()"><i class="fa-solid fa-floppy-disk"></i>
+                    {{"data.saveStatus" | translate}}</button>
+            </div>
+        </div>
     </div>
 </form>

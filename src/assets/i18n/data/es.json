@@ -16,6 +16,8 @@
     "optionS2": "En Progreso",
     "optionS3": "Pausado",
     "optionS4": "Finalizado",
-    "save": "Modificar incidencia"
+    "saveTech": "Asignar Incidencia",
+    "savePrio": "Modificar Prioridad",
+    "saveStatus": "Modificar Estado"
   }
 }

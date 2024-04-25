@@ -14,10 +14,11 @@ import { LoadingComponent } from "../../components/shared/loading.component";
 @Component({
     selector: 'app-support-incidence',
     standalone: true,
-    templateUrl: './manager-incidence.component.html',
-    styleUrls: ['./manager-incidence.component.scss'],
     imports: [CommonModule, IncidenceDataComponent, ManagerComponent,
-        ComunicationComponent, ButtonComponent, SidebarComponent, MatProgressSpinnerModule, LoadingComponent]
+        ComunicationComponent, ButtonComponent, SidebarComponent, MatProgressSpinnerModule, LoadingComponent],
+    templateUrl: './manager-incidence.component.html',
+    styleUrls: ['./manager-incidence.component.scss']
+    
 })
 export class ManagerIncidenceComponent implements OnInit {
 

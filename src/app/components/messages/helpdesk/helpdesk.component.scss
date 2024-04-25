@@ -9,7 +9,8 @@ label {
 }
 
 .container {
-  width: 800px;
+  color: $text-color-dark;
+  width: 900px;
 
   & input:focus,
   & textarea:focus,

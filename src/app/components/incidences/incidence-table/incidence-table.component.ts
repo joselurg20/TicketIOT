@@ -1,6 +1,6 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,17 +20,16 @@ import { iTicketTableSM } from 'src/app/models/tickets/iTicketTableSM';
 import { iUserTable } from 'src/app/models/users/iUserTable';
 import { ApiService } from 'src/app/services/api.service';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
+import { LoadingService } from 'src/app/services/loading.service';
 import { TicketsService } from 'src/app/services/tickets.service';
 import { Priorities, Status } from 'src/app/utilities/enum';
 import { LoadingComponent } from '../../shared/loading.component';
-import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-incidence-table',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatSortModule, MatPaginatorModule, MatButtonModule,
-    MatTooltipModule, MatBadgeModule, MatProgressSpinnerModule, TranslateModule, FormsModule,
-    ReactiveFormsModule, MatInputModule, MatDatepickerModule, MatNativeDateModule, LoadingComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatNativeDateModule, MatDatepickerModule, MatInputModule, MatTableModule,
+    MatPaginatorModule, MatSortModule, MatTooltipModule, MatProgressSpinnerModule, MatBadgeModule, MatButtonModule, TranslateModule, LoadingComponent],
   templateUrl: './incidence-table.component.html',
   styleUrls: ['./incidence-table.component.scss']
 })
@@ -76,12 +75,12 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   }
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private apiService: ApiService,
-              private router: Router, private translate: TranslateService,
-              private ticketsService: TicketsService, private loadingService: LoadingService, private readonly dateAdapter: DateAdapter<Date>,
-              private langUpdateService: LanguageUpdateService) {
+    private router: Router, private translate: TranslateService, private cdr: ChangeDetectorRef,
+    private ticketsService: TicketsService, private loadingService: LoadingService, private readonly dateAdapter: DateAdapter<Date>,
+    private langUpdateService: LanguageUpdateService) {
     this.translate.addLangs(['en', 'es']);
     var lang = '';
-    switch(localStorage.getItem('userLanguage')) {
+    switch (localStorage.getItem('userLanguage')) {
       case '1':
         lang = 'en';
         break;
@@ -113,7 +112,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
       start: new FormControl(),
       end: new FormControl()
     })
-    switch(localStorage.getItem('selectedLanguage')) {
+    switch (localStorage.getItem('selectedLanguage')) {
       case 'en':
         this.setLocale('en');
         break;
@@ -139,7 +138,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
           console.error('Error al obtener los tickets del usuario:', error);
         }
       });
-        
+
     } else {
       this.displayedColumns = ['status', 'id', 'title', 'name', 'email', 'priority', 'timestamp', 'technician', 'newMessages', 'show'];
       this.isSupportManager = false;
@@ -147,6 +146,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     this.ticketsService.tickets$.subscribe(tickets => {
       this.dataSource.data = tickets;
       this.loadingService.hideLoading();
+      this.cdr.detectChanges();
     });
     this.langUpdateService.langUpdated$.subscribe(() => {
       this.setLocale(localStorage.getItem('selectedLanguage')!);
@@ -178,6 +178,8 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
           return typeof value === 'string' ? value.toLowerCase() : (typeof value === 'number' ? value : 0);
       }
     };
+    // Detectar manualmente los cambios
+    this.cdr.detectChanges();
   }
 
   /**
@@ -195,7 +197,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     if (this.range.value['start'] && this.range.value['end']) {
       this.filter.start = this.range.value['start'];
       this.filter.end = this.range.value['end'];
-    }else {
+    } else {
       this.filter.start = new Date(1900, 1, 1);
       this.filter.end = new Date(3000, 1, 1);
     }
@@ -204,7 +206,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     this.filter.userId = this.selectedTechnicianFilter;
     this.filter.searchString = this.searchString;
     this.ticketsService.filterTickets(this.filter);
-    
+
     this.showFilter = false;
     this.searchString = '';
   }

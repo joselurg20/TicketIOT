@@ -1,3 +1,6 @@
 <div class="container" id="section3">
-  <canvas id="myChart"></canvas>
+  <canvas id="myChart" *ngIf="!(loading$ | async)"></canvas>
+  <div id="loading" *ngIf="(loading$ | async)" class="w-100 h-100">
+    <app-loading></app-loading>
+  </div>
 </div>

@@ -1,9 +1,9 @@
-import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule, MatSnackBarRef } from '@angular/material/snack-bar';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-snackbar-menssage',

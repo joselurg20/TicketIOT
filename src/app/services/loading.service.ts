@@ -11,12 +11,18 @@ export class LoadingService {
 
   constructor() { }
 
+  /**
+   * Muestra el loading
+   */
   showLoading() {
     if(!this._loading.value){
       this._loading.next(true);
     }
   }
 
+  /**
+   * Oculta el loading
+   */
   hideLoading() {
     this._loading.next(false);
   }

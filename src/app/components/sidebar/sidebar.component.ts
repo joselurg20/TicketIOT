@@ -1,11 +1,11 @@
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
-import { Component, Output, EventEmitter, OnInit, HostListener } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { LoginService } from 'src/app/services/login.service';
+import { Router, RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
+import { LoginService } from 'src/app/services/login.service';
 
 interface SideNavToggle {
   screenWidth: number;

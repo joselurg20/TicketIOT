@@ -1,23 +1,23 @@
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 
+import { registerLocaleData } from '@angular/common';
 import { HttpBackend, HttpClientModule } from '@angular/common/http';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { IncidenceTicketsComponent } from "./components/incidences/incidence-tickets/incidence-tickets.component";
+import { enGB, es } from 'date-fns/locale';
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
+import { IncidenceTicketsComponent } from "./components/incidences/incidence-tickets/incidence-tickets.component";
 import { SidebarComponent } from "./components/sidebar/sidebar.component";
 import { SnackbarIncidenceComponent } from './components/snackbars/snackbar-incidence/snackbar-incidence.component';
 import { SnackbarMenssageComponent } from './components/snackbars/snackbar-menssage/snackbar-menssage.component';
 import { SnackbarPasswordComponent } from './components/snackbars/snackbar-password/snackbar-password.component';
 import { SnackbarRecoveredComponent } from './components/snackbars/snackbar-recovered/snackbar-recovered.component';
-import { es , enGB } from 'date-fns/locale';
-import { registerLocaleData } from '@angular/common';
-import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 
 registerLocaleData(es, 'es');
 registerLocaleData(enGB, 'en');

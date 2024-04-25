@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { iUserTable } from 'src/app/models/users/iUserTable';
 import { ApiService } from 'src/app/services/api.service';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 
 @Component({

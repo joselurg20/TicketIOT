@@ -1,22 +1,22 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MessageComponent } from "../menssage/message.component";
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
-import { ApiService } from 'src/app/services/api.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { TicketDto } from 'src/app/models/tickets/TicketDTO';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
+import { ApiService } from 'src/app/services/api.service';
 import { MessagesUpdateService } from 'src/app/services/messagesUpdate.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarMenssageComponent } from '../../snackbars/snackbar-menssage/snackbar-menssage.component';
+import { MessageComponent } from "../menssage/message.component";
 
 @Component({
   selector: 'app-comunication',
   standalone: true,
+  imports: [CommonModule, MessageComponent, FormsModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './comunication.component.html',
-  styleUrls: ['./comunication.component.scss'],
-  imports: [CommonModule, MessageComponent, FormsModule, ReactiveFormsModule, TranslateModule]
+  styleUrls: ['./comunication.component.scss']
 })
 export class ComunicationComponent implements OnInit {
 

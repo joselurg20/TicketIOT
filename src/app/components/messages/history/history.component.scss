@@ -2,8 +2,11 @@
 
 .modal-content {
   background-color: $bg-color-mid-2;
-  max-height: 100vh;
-  overflow-y: auto;
+  height: 37rem;
+}
+
+.modal-body{
+  overflow-y: scroll;
 }
 
 h1 {

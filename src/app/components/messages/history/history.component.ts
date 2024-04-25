@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ApiService } from 'src/app/services/api.service';
-import { iMessage } from 'src/app/models/tickets/iMessage';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { MessagesUpdateService } from 'src/app/services/messagesUpdate.service';
 import { Subscription } from 'rxjs';
 import { iAttachment } from 'src/app/models/attachments/iAttachment';
+import { iMessage } from 'src/app/models/tickets/iMessage';
+import { ApiService } from 'src/app/services/api.service';
+import { MessagesUpdateService } from 'src/app/services/messagesUpdate.service';
 
 
 

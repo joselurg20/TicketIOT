@@ -21,6 +21,9 @@ export class ChartBarComponent implements OnInit {
   titleEs: string = 'Incidencias por estado';
   titleEn: string = 'Tickets by status';
   title: string = this.titleEs;
+  labelsEs: string[] = ['ABIERTA', 'PAUSADA', 'PENDIENTE'];
+  labelsEn: string[] = ['OPENED', 'PAUSED', 'PENDING'];
+  labels: string[] = this.labelsEs;
   private langUpdateSubscription: Subscription = {} as Subscription;
 
   constructor(private ticketsService: TicketsService, private langUpdateService: LanguageUpdateService) { }
@@ -28,8 +31,18 @@ export class ChartBarComponent implements OnInit {
   ngOnInit() {
     if(localStorage.getItem('selectedLanguage') == 'en'){
       this.title = this.titleEn;
+      if(localStorage.getItem('userRole') == 'SupportManager') {
+        this.labels = this.labelsEn;
+      }else{
+        this.labels = ['OPENED', 'PAUSED'];
+      }
     }else if(localStorage.getItem('selectedLanguage') == 'es'){
       this.title = this.titleEs;
+      if(localStorage.getItem('userRole') == 'SupportManager') {
+        this.labels = this.labelsEs;
+      }else{
+        this.labels = ['ABIERTA', 'PAUSADA'];
+      }
     }
     this.ticketsService.ticketGraphs$.subscribe(tickets => {
       this.tickets = tickets;
@@ -41,13 +54,23 @@ export class ChartBarComponent implements OnInit {
   }
 
   /**
-   * Cambia el idioma del título
+   * Cambia el idioma del gráfico
    */
   switchLanguage() {
     if(localStorage.getItem('selectedLanguage') == 'en'){
       this.title = this.titleEn;
+      if(localStorage.getItem('userRole') == 'SupportManager') {
+        this.labels = this.labelsEn;
+      }else{
+        this.labels = ['OPENED', 'PAUSED'];
+      }
     }else if(localStorage.getItem('selectedLanguage') == 'es'){
       this.title = this.titleEs;
+      if(localStorage.getItem('userRole') == 'SupportManager') {
+        this.labels = this.labelsEs;
+      }else{
+        this.labels = ['ABIERTA', 'PAUSADA'];
+      }
     }
     this.createChart();
   }
@@ -61,13 +84,10 @@ export class ChartBarComponent implements OnInit {
       this.myChart.destroy();
     }
     var status: Status[] = [];
-    var labels: string[] = [];
     if(localStorage.getItem('userRole') == 'SupportManager') {
       status = [1, 2, 0];
-      labels = ['OPENED', 'PAUSED', 'PENDING'];
     }else{
       status = [1, 2];
-      labels = ['OPENED', 'PAUSED'];
     }
 
     const incidentCounts = status.map(status => {
@@ -80,7 +100,7 @@ export class ChartBarComponent implements OnInit {
     this.myChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: labels,
+        labels: this.labels,
         datasets: [{
           label: '',
           data: incidentCounts,

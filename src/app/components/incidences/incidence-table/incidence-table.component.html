@@ -84,7 +84,7 @@
                         {{'incidence-table.state' | translate}}
                     </th>
                     <td mat-cell *matCellDef="let element" class="imgRow">
-                        <button mat-raised-button #tooltip="matTooltip" [matTooltip]="element.status"
+                        <button mat-raised-button #tooltip="matTooltip" [matTooltip]="element.statusString"
                             matTooltipPosition="above" [ngStyle]="getButtonState(element.status)">
                         </button>
                     </td>
@@ -124,7 +124,7 @@
                         {{'incidence-table.priority' | translate}}
                     </th>
                     <td mat-cell *matCellDef="let element" class="imgRow">
-                        <button mat-raised-button #tooltip="matTooltip" [matTooltip]="element.priority"
+                        <button mat-raised-button #tooltip="matTooltip" [matTooltip]="element.prioString"
                             matTooltipPosition="above" [ngStyle]="getButtonPriority(element.priority)">
                         </button>
                     </td>

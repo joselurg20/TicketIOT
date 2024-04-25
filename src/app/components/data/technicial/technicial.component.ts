@@ -15,9 +15,7 @@ import { LoadingService } from 'src/app/services/loading.service';
 })
 export class TechnicialComponent {
 
-  public states: string[] = ['OPENED', 'PAUSED', 'FINISHED'];
-  selectedState: string = '';
-  selectedStateValue: number = -1;
+  selectedStatusValue: number = -1;
 
   constructor(private apiService: ApiService, private ticketUpdateService: TicketUpdateService, private loadingService: LoadingService, private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);
@@ -34,9 +32,9 @@ export class TechnicialComponent {
    * Actualiza el estado de una incidencia.
    */
   updateTicket() {
-    this.loadingService.showLoading();
-    if (this.selectedStateValue != -1) {
-      this.apiService.changeTicketState(parseInt(localStorage.getItem('selectedTicket')!), this.selectedStateValue).subscribe({
+    if (this.selectedStatusValue != -1) {
+      this.loadingService.showLoading();
+      this.apiService.changeTicketStatus(parseInt(localStorage.getItem('selectedTicket')!), this.selectedStatusValue).subscribe({
         next: () => {
           this.ticketUpdateService.triggerTicketUpdate();
           this.loadingService.hideLoading();
@@ -46,7 +44,6 @@ export class TechnicialComponent {
         }
       })
     }
-    this.ticketUpdateService.triggerTicketUpdate();
   }
 
 }

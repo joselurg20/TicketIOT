@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { ApiService } from './api.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { iTicketTableSM } from '../models/tickets/iTicketTableSM';
@@ -6,6 +6,7 @@ import { iTicketGraph } from '../models/tickets/iTicketsGraph';
 import { TicketFilterRequestDto } from '../models/tickets/TicketFilterRequestDto';
 import { iUserTable } from '../models/users/iUserTable';
 import { iUserGraph } from '../models/users/iUserGraph';
+import { LanguageUpdateService } from './languageUpdateService';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +21,11 @@ private usersSubject: BehaviorSubject<iUserGraph[]> = new BehaviorSubject<iUserG
 users$: Observable<iUserGraph[]> = this.usersSubject.asObservable();
 private usersGraphSubject: BehaviorSubject<iTicketGraph[]> = new BehaviorSubject<iTicketGraph[]>([]);
 usersGraph$: Observable<iTicketGraph[]> = this.usersGraphSubject.asObservable();
+private usersFNSubject: BehaviorSubject<iUserGraph[]> = new BehaviorSubject<iUserGraph[]>([]);
+usersFN$: Observable<iUserGraph[]> = this.usersFNSubject.asObservable();
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService, private langUpdateService: LanguageUpdateService) { }
+
 
   /**
    * Obtiene las incidencias de la api
@@ -39,7 +43,9 @@ usersGraph$: Observable<iTicketGraph[]> = this.usersGraphSubject.asObservable();
                 email: value.email,
                 timestamp: this.formatDate(value.timestamp),
                 priority: value.priority,
+                prioString: this.getPriorityString(value.priority),
                 status: value.status,
+                statusString: this.getStatusString(value.status),
                 techName: 'Sin asignar'
               };
           });
@@ -65,6 +71,13 @@ usersGraph$: Observable<iTicketGraph[]> = this.usersGraphSubject.asObservable();
               userName: value.userName
             }
           })
+          const usersFN: iUserGraph[] = response.result.map((value: any) => {
+            return {
+              id: value.id,
+              userName: value.fullName
+            }
+          })
+          this.usersFNSubject.next(usersFN);
           this.usersSubject.next(users);
         },
         error: (error: any) => {
@@ -97,7 +110,9 @@ usersGraph$: Observable<iTicketGraph[]> = this.usersGraphSubject.asObservable();
                   email: value.email,
                   timestamp: this.formatDate(value.timestamp),
                   priority: value.priority,
+                  prioString: this.getPriorityString(value.priority),
                   status: value.status,
+                  statusString: this.getStatusString(value.status),
                   hasNewMessages: value.hasNewMessages,
                   newMessagesCount: value.newMessagesCount
                 };
@@ -149,7 +164,9 @@ usersGraph$: Observable<iTicketGraph[]> = this.usersGraphSubject.asObservable();
               email: value.email,
               timestamp: this.formatDate(value.timestamp),
               priority: value.priority,
+              prioString: this.getPriorityString(value.priority),
               status: value.status,
+              statusString: this.getStatusString(value.status),
               techId: value.userId,
               techName: ''
             };
@@ -208,5 +225,79 @@ usersGraph$: Observable<iTicketGraph[]> = this.usersGraphSubject.asObservable();
     const segundos = fechaObj.getSeconds().toString().padStart(2, '0');
 
     return `${dia}/${mes}/${año} - ${horas}:${minutos}:${segundos}`;
+  }
+
+  
+
+  /**
+   * Obtiene el texto a representar en función de la prioridad y el idioma.
+   * @param priority la prioridad.
+   * @returns la cadena de texto a representar.
+   */
+  getPriorityString(priority: number): string {
+    if(localStorage.getItem('selectedLanguage') == 'en') {
+      switch (priority) {
+        case 1:
+          return 'LOWEST';
+        case 2:
+          return 'LOW';
+        case 3:
+          return 'MEDIUM';
+        case 4:
+          return 'HIGH';
+        case 5:
+          return 'HIGHEST';
+        default:
+          return 'NOT SURE';
+      }
+    } else if (localStorage.getItem('selectedLanguage') == 'es') {
+      switch (priority) {
+        case 1:
+          return 'MUY BAJA';
+        case 2:
+          return 'BAJA';
+        case 3:
+          return 'MEDIA';
+        case 4:
+          return 'ALTA';
+        case 5:
+          return 'MUY ALTA';
+        default:
+          return 'INDEFINIDA';
+      }
+    }
+    return '';
+  }
+
+  /**
+   * Obtiene el texto a representar en función del estado y el idioma.
+   * @param status el estado.
+   * @returns la cadena de texto a representar.
+   */
+  getStatusString(status: number): string {
+    if(localStorage.getItem('selectedLanguage') == 'en') {
+      switch (status) {
+        case 1:
+          return 'OPENED';
+        case 2:
+          return 'PAUSED';
+        case 3:
+          return 'FINISHED';
+        default:
+          return 'PENDING';
+      }
+    } else if (localStorage.getItem('selectedLanguage') == 'es') {
+      switch (status) {
+        case 1:
+          return 'ABIERTA';
+        case 2:
+          return 'PAUSADA';
+        case 3:
+          return 'TERMINADA';
+        default:
+          return 'PENDIENTE';
+      }
+    }
+    return '';
   }
 }

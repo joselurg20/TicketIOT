@@ -24,7 +24,7 @@ registerLocaleData(enGB, 'en');
 
 @NgModule({
     declarations: [
-        AppComponent,
+        AppComponent
     ],
     providers: [
         {

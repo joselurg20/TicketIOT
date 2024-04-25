@@ -77,7 +77,8 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private apiService: ApiService,
               private router: Router, private translate: TranslateService,
-              private ticketsService: TicketsService, private loadingService: LoadingService, private readonly dateAdapter: DateAdapter<Date>,
+              private ticketsService: TicketsService, private loadingService: LoadingService,
+              private readonly dateAdapter: DateAdapter<Date>,
               private langUpdateService: LanguageUpdateService) {
     this.translate.addLangs(['en', 'es']);
     var lang = '';
@@ -150,6 +151,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     });
     this.langUpdateService.langUpdated$.subscribe(() => {
       this.setLocale(localStorage.getItem('selectedLanguage')!);
+      this.ticketsService.getTickets(this.isSupportManager);
     });
   }
 
@@ -333,6 +335,78 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
    */
   toggleFilter() {
     this.showFilter = !this.showFilter;
+  }
+
+  /**
+   * Obtiene el texto a representar en función de la prioridad y el idioma.
+   * @param priority la prioridad.
+   * @returns la cadena de texto a representar.
+   */
+  getPriorityString(priority: number): string {
+    if(localStorage.getItem('selectedLanguage') == 'en') {
+      switch (priority) {
+        case 1:
+          return 'LOWEST';
+        case 2:
+          return 'LOW';
+        case 3:
+          return 'MEDIUM';
+        case 4:
+          return 'HIGH';
+        case 5:
+          return 'HIGHEST';
+        default:
+          return 'NOT SURE';
+      }
+    } else if (localStorage.getItem('selectedLanguage') == 'es') {
+      switch (priority) {
+        case 1:
+          return 'MUY BAJA';
+        case 2:
+          return 'BAJA';
+        case 3:
+          return 'MEDIA';
+        case 4:
+          return 'ALTA';
+        case 5:
+          return 'MUY ALTA';
+        default:
+          return 'INDEFINIDA';
+      }
+    }
+    return '';
+  }
+
+  /**
+   * Obtiene el texto a representar en función del estado y el idioma.
+   * @param status el estado.
+   * @returns la cadena de texto a representar.
+   */
+  getStatusString(status: number): string {
+    if(localStorage.getItem('selectedLanguage') == 'en') {
+      switch (status) {
+        case 1:
+          return 'OPENED';
+        case 2:
+          return 'PAUSED';
+        case 3:
+          return 'FINISHED';
+        default:
+          return 'PENDING';
+      }
+    } else if (localStorage.getItem('selectedLanguage') == 'es') {
+      switch (status) {
+        case 1:
+          return 'ABIERTA';
+        case 2:
+          return 'PAUSADA';
+        case 3:
+          return 'TERMINADA';
+        default:
+          return 'PENDIENTE';
+      }
+    }
+    return '';
   }
 
 }

@@ -21,6 +21,9 @@ export class ChartPieComponent {
   titleEs: string = 'Incidencias por prioridad';
   titleEn: string = 'Tickets by priority';
   title: string = this.titleEs;
+  labelsEs: string[] = ['MUY ALTA', 'ALTA', 'MEDIA', 'BAJA', 'MUY BAJA', 'INDEFINIDA'];
+  labelsEn: string[] = ['HIGHEST', 'HIGH', 'MEDIUM', 'LOW', 'LOWEST', 'NOT SURE'];
+  labels: string[] = this.labelsEs;
   private langUpdateSubscription: Subscription = {} as Subscription;
 
   constructor(private ticketsService: TicketsService, private langUpdateService: LanguageUpdateService) {}
@@ -28,8 +31,10 @@ export class ChartPieComponent {
   ngOnInit() {
     if(localStorage.getItem('selectedLanguage') == 'en'){
       this.title = this.titleEn;
+      this.labels = this.labelsEn;
     }else if(localStorage.getItem('selectedLanguage') == 'es'){
       this.title = this.titleEs;
+      this.labels = this.labelsEs;
     }
     this.ticketsService.ticketGraphs$.subscribe(tickets => {
       this.tickets = tickets;
@@ -46,8 +51,10 @@ export class ChartPieComponent {
   switchLanguage() {
     if(localStorage.getItem('selectedLanguage') == 'en'){
       this.title = this.titleEn;
+      this.labels = this.labelsEn;
     }else if(localStorage.getItem('selectedLanguage') == 'es'){
       this.title = this.titleEs;
+      this.labels = this.labelsEs;
     }
     this.createChart();
   }
@@ -61,7 +68,6 @@ export class ChartPieComponent {
       this.myChart.destroy();
     }
 
-    const labels: string[] = ['HIGHEST', 'HIGH', 'MEDIUM', 'LOW', 'LOWEST', 'NOT_SURE'];
     const priorities: Priorities[] = [5, 4, 3, 2, 1, 0];
 
     const incidentCounts = priorities.map(prio => {
@@ -75,7 +81,7 @@ export class ChartPieComponent {
     this.myChart = new Chart(ctx, {
       type: 'pie',
       data: {
-        labels: labels,
+        labels: this.labels,
         datasets: [{
           label: 'Cantidad de incidencias',
           data: incidentCounts,

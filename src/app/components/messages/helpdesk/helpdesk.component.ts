@@ -60,7 +60,7 @@ export class HelpdeskComponent {
             email: response.email,
             timestamp: this.formatDate(response.timestamp),
             priority: response.priority,
-            state: response.state,
+            status: response.status,
             userId: response.userId,
             userName: ''
           };
@@ -94,7 +94,7 @@ export class HelpdeskComponent {
   * Envía un mensaje a la incidencia seleccionada.
   */
   onSubmit() {
-    if (this.ticket.state !== 'FINISHED') {
+    if (this.ticket.status !== 3) {
       if (this.messageForm.valid) {
         const Content = this.messageForm.value.Content;
         this.createMessage(Content, this.ticket.id)

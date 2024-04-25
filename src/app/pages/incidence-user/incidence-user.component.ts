@@ -65,7 +65,7 @@ export class IncidenceUserComponent {
             email: response.email,
             timestamp: response.timestamp,
             priority: response.priority,
-            state: response.state,
+            status: response.status,
             userId: response.userId,
             userName: ""
           }

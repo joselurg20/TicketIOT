@@ -6,6 +6,7 @@ import { iTicketTableSM } from '../models/tickets/iTicketTableSM';
 import { iTicketGraph } from '../models/tickets/iTicketsGraph';
 import { iUserGraph } from '../models/users/iUserGraph';
 import { LanguageUpdateService } from './languageUpdateService';
+import { iUserTable } from '../models/users/iUserTable';
 
 @Injectable({
   providedIn: 'root'

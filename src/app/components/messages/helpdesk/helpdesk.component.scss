@@ -9,8 +9,10 @@ label {
 }
 
 .container {
-  color: $text-color-dark;
-  width: 900px;
+  color: $text-color-mid;
+  width: 750px;
+  //height: 27rem;
+  overflow: auto;
 
   & input:focus,
   & textarea:focus,
@@ -51,16 +53,26 @@ label {
     background-color: $bg-color-dark;
     border-color: $color-light;
   }
+
+  .btn-danger{
+    color: $color-light;
+    background-color: $bg-color-danger;
+    border-color: $color-light;
+  }
 }
 
 .btn2 {
-  border-color: #D25454;
-  color: black;
+  border-color:$color-danger;
+  color: $color-danger;
+  background-color: transparent;
+  border:1px solid $bg-color-danger;
+  width: 100px;
+  border-radius: 5px;
 
   &:hover {
+    border-color:$color-danger;
     color: $color-light;
-    background-color: $bg-color-dark;
-    border-color: $color-light;
+    background-color: $bg-color-danger;
   }
 }
 
@@ -106,9 +118,6 @@ label {
 
 }
 
-.preview-link {
-  color: $text-color-dark;
-} 
 
 
 @media screen and (max-width: 992px) {

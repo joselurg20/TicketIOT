@@ -1,5 +1,4 @@
 <h1>{{"comunication.title" | translate}}</h1>
-<hr>
 <form [formGroup]="messageForm" (submit)="onSubmit()" enctype="multipart/form-data" class="container">
     <div class="form-group">
         <label for="Attachments"><i class="fa-solid fa-folder"></i> {{"comunication.upload" | translate}}</label> <br>
@@ -9,16 +8,36 @@
             class="custom-file-button btn btn-lg"><i class="fa-solid fa-arrow-up-from-bracket"></i>
             {{"comunication.select" | translate}}</button>
 
-        <div *ngIf="isFileSelected" class="logotipe preview">
-            <div *ngFor="let previewUrl of previewUrls; let i = index">
-                <img *ngIf="isImage(previewUrl)" [src]="previewUrl" class="preview-image"
-                    alt="Vista previa del archivo">
-                <div *ngIf="!isImage(previewUrl)">
-                    <img [src]="previewUrl" class="preview-image" alt="Vista previa del archivo">
-                    <p>{{ selectFilesNames[i] }}</p>
+        <div class="carousel-container">
+
+            <div *ngIf="isFileSelected" class="carousel slide logotipe preview" id="carouselExampleIndicators"
+                data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div *ngFor="let previewUrl of previewUrls; let i = index" class="carousel-item"
+                        [class.active]="i === 0">
+                        <img *ngIf="isImage(previewUrl)" [src]="previewUrl" class="d-block">
+                        <div *ngIf="!isImage(previewUrl)" class="d-block">
+                            <img [src]="previewUrl" class="d-block" data-bs-toggle="tooltip" data-bs-placement="top"         matTooltip="{{selectFilesNames[i]}}"
+                                title="{{selectFilesNames[i]}}" class="preview-image" alt="Vista previa del archivo">
+                            <p>{{truncateFileName(selectFilesNames[i], 20)}}</p>
+                            <button (click)="deleteFile(i)" class="btn2"><i class="fa-solid fa-trash-can"></i></button>
+                        </div>
+                    </div>
                 </div>
+
+                <button *ngIf="previewUrls.length > 1" class="carousel-control-prev" type="button"
+                    data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </button>
+                <button *ngIf="previewUrls.length > 1" class="carousel-control-next" type="button"
+                    data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </button>
             </div>
         </div>
+
+
+
     </div>
     <div class="mb-3 form-group">
         <label for="Content" class="form-label"><i class="fa-solid fa-message"></i> {{"comunication.name" |

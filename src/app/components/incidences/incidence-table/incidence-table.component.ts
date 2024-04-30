@@ -75,7 +75,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   }
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private apiService: ApiService,
-              private router: Router, private translate: TranslateService,
+              private router: Router, private translate: TranslateService, private cdr: ChangeDetectorRef,
               private ticketsService: TicketsService, private loadingService: LoadingService,
               private readonly dateAdapter: DateAdapter<Date>,
               private langUpdateService: LanguageUpdateService) {

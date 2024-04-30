@@ -55,7 +55,7 @@ h1 {
 .grid-container {
   display: grid;
   grid-template-areas:
-    'iso iso  iso iso none leng  '
+    'iso iso  iso iso . leng  '
     'hist hist  hist hist hist status '
     'hist hist  hist hist hist status '
     'hist hist  hist hist  hist msg '
@@ -89,7 +89,7 @@ img {
     grid-gap: 10px;
     border-radius: 20px;
     padding: 10px;
-    height: 75rem;
+    height: 58rem;
   }
 
   img{

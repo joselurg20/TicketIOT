@@ -3,8 +3,11 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
+import { MessageJsonResult } from 'src/app/models/JsonResult';
 import { iAttachment } from 'src/app/models/attachments/iAttachment';
 import { iMessage } from 'src/app/models/tickets/iMessage';
+import { iTicket } from 'src/app/models/tickets/iTicket';
+import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
 import { ApiService } from 'src/app/services/api.service';
 import { MessagesUpdateService } from 'src/app/services/messagesUpdate.service';
 
@@ -21,7 +24,7 @@ export class HistoryComponent {
 
   ticketId: number = 0;
   messages: iMessage[] = [];
-  ticket: any;
+  ticket: iTicketDescriptor = {} as iTicketDescriptor;
   userName: string = '';
   private messagesUpdateSubscription: Subscription = {} as Subscription;
 
@@ -42,7 +45,7 @@ export class HistoryComponent {
       this.refreshMessagesData();
     });
     this.apiService.getTicketById(this.ticketId).subscribe({
-      next: (response: any) => {
+      next: (response: iTicket) => {
         this.ticket = {
           id: response.id,
           title: response.title,
@@ -50,8 +53,8 @@ export class HistoryComponent {
           email: response.email,
           timestamp: response.timestamp,
           priority: response.priority,
-          state: response.state,
-          userId: response.userId,
+          status: response.status,
+          userId: response.userId.toString(),
           userName: ""
         }
         this.userName = this.ticket.name;
@@ -71,27 +74,27 @@ export class HistoryComponent {
    */
   refreshMessagesData() {
     this.apiService.getMessagesByTicket(this.ticketId).subscribe({
-      next: (response: any) => {
-        this.messages = response.$values.map((message: any) => {
+      next: (response: MessageJsonResult) => {
+        this.messages = response.result.map((message: iMessage) => {
           return {
-            Id: message.id,
-            Author: message.author,
-            Content: message.content,
-            AttachmentPaths: message.attachmentPaths.$values.map((attachmentPath: any) => attachmentPath.path),
-            Attachments: [],
+            id: message.id,
+            author: message.author,
+            content: message.content,
+            attachmentPaths: message.attachmentPaths.map((attachmentPath: any) => attachmentPath.path),
+            attachments: [],
             ticketID: message.ticketID,
-            Timestamp: this.formatDate(message.timestamp)
+            timestamp: this.formatDate(message.timestamp)
           }
         });
 
         // Archivos adjuntos
         for (const message of this.messages) {
-          if (message.AttachmentPaths.length > 0) {
-            for (const attachmentPath of message.AttachmentPaths) {
+          if (message.attachmentPaths.length > 0) {
+            for (const attachmentPath of message.attachmentPaths) {
               var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/' + this.ticketId + '/';
               const fileName = attachmentPath.substring(pathPrefix.length);
               this.apiService.downloadAttachment(fileName, +localStorage.getItem('selectedTicket')!).subscribe({
-                next: (response: any) => {
+                next: (response: BlobPart) => {
                   var attachment: iAttachment = {} as iAttachment;
                   attachment.attachmentPath = attachmentPath;
                   attachment.attachmentUrl = URL.createObjectURL(new Blob([response], { type: 'application/octet-stream' }));
@@ -130,7 +133,7 @@ export class HistoryComponent {
                   } else {
                     attachment.previewUrl = 'assets/images/file-previews/unknown_file.png'
                   }
-                  message.Attachments.push(attachment);
+                  message.attachments.push(attachment);
                 },
                 error: (error: any) => {
                   console.error('Error al descargar el archivo adjunto', error);
@@ -155,7 +158,7 @@ export class HistoryComponent {
     var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/' + this.ticketId + '/';
     const fileName = attachmentPath.substring(pathPrefix.length);
     this.apiService.downloadAttachment(fileName, +localStorage.getItem('selectedTicket')!).subscribe({
-      next: (response: any) => {
+      next: (response: BlobPart) => {
         const blob = new Blob([response], { type: 'application/octet-stream' });
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');

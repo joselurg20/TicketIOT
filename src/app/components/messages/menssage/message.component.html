@@ -17,15 +17,15 @@
         <hr>
         <div class="modal-mensage" *ngFor="let message of messages">
           <div class="d-flex justify-content-between">
-            <h4>{{message.Author}}</h4>
-            <span class="justify-content-end">{{message.Timestamp}}</span>
+            <h4>{{message.author}}</h4>
+            <span class="justify-content-end">{{message.timestamp}}</span>
           </div>
-          <p>{{message.Content}}</p>
+          <p>{{message.content}}</p>
           <div>
             <div>
-              <div *ngIf="message.AttachmentPaths && message.AttachmentPaths.length > 0"
+              <div *ngIf="message.attachmentPaths && message.attachmentPaths.length > 0"
                 class="d-flex justify-content-center preview">
-                <div *ngFor="let attachment of message.Attachments">
+                <div *ngFor="let attachment of message.attachments">
                   <img [src]="attachment.previewUrl" alt="">
                   <button class="custom-file-button btn-lg" (click)="downloadAttachment(attachment.attachmentPath)"><i
                       class="fa-solid fa-download"></i> {{"message.download" | translate}}</button>

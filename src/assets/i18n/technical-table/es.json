@@ -1,7 +1,7 @@
 {
   "technical-table": {
     "header": "Tabla de técnicos",
-    "title": "ID",
+    "title": "Id",
     "name": "Nombre",
     "email": "Email",
     "phone": "Teléfono"

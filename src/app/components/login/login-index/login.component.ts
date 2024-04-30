@@ -37,7 +37,8 @@ export class LoginComponent implements OnInit {
   public errorMsg: string = "";
   loading$: Observable<boolean>;	
 
-  constructor(private loginService: LoginService, private loadingService: LoadingService, private router: Router, private translate: TranslateService) {
+  constructor(private loginService: LoginService, private loadingService: LoadingService,
+              private router: Router, private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -49,7 +50,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Initialize the form and its controls
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, passwordValidator])
@@ -87,7 +87,7 @@ export class LoginComponent implements OnInit {
           this.errorMsg = "Email o contraseña no válidos.";
 
           // En caso de error, también oculta el indicador de carga
-          this.loadingService.showLoading();
+          this.loadingService.hideLoading();
         }
       });
     }

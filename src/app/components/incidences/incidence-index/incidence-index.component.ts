@@ -36,7 +36,7 @@ export class IncidenceIndexComponent implements OnInit {
   successMessage: string = "";
   previewUrls: Array<string | ArrayBuffer | null> = new Array();
   isFileSelected: boolean = false;
-  isImageSelected: any;
+  isImageSelected: boolean = false;
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   isLogged: boolean = false;

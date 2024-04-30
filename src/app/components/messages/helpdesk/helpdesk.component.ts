@@ -11,6 +11,8 @@ import { MessagesUpdateService } from 'src/app/services/messagesUpdate.service';
 import { SnackbarMenssageComponent } from '../../snackbars/snackbar-menssage/snackbar-menssage.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
+import { iUserGraph } from 'src/app/models/users/iUserGraph';
+import { iTicket } from 'src/app/models/tickets/iTicket';
 
 
 @Component({
@@ -26,13 +28,14 @@ export class HelpdeskComponent {
   public ticket: iTicketDescriptor = {} as iTicketDescriptor;
   public success: boolean = true;
   successMsg: string = '';
-  public userName: string = '';
+  public userName: string | null = '';
   selectedFiles: File[] = [];
   durationInSeconds = 3;
   public selectFilesNames: string[] = [];
 
 
-  constructor(private apiService: ApiService, private _snackBar: MatSnackBar, private translate: TranslateService, private formBuilder: FormBuilder, private messagesUpdateService: MessagesUpdateService) {
+  constructor(private apiService: ApiService, private _snackBar: MatSnackBar, private translate: TranslateService,
+              private formBuilder: FormBuilder, private messagesUpdateService: MessagesUpdateService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -54,7 +57,7 @@ export class HelpdeskComponent {
     const selectedTicket = localStorage.getItem('selectedTicket');
     if (selectedTicket != null) {
       this.apiService.getTicketById(+selectedTicket).subscribe({
-        next: (response: any) => {
+        next: (response: iTicket) => {
           this.ticket = {
             id: response.id,
             title: response.title,
@@ -63,7 +66,7 @@ export class HelpdeskComponent {
             timestamp: this.formatDate(response.timestamp),
             priority: response.priority,
             status: response.status,
-            userId: response.userId,
+            userId: response.userId.toString(),
             userName: ''
           };
         },
@@ -74,7 +77,7 @@ export class HelpdeskComponent {
     }
 
     this.apiService.getUserById(parseInt(localStorage.getItem('userId')!)).subscribe({
-      next: (response: any) => {
+      next: (response: iUserGraph) => {
         this.userName = response.fullName;
       },
       error: (error: any) => {
@@ -144,20 +147,20 @@ export class HelpdeskComponent {
   */
   createMessage(Content: string, TicketId: number): Observable<any> {
     const formData = new FormData();
-    formData.append('Author', this.userName);
+    formData.append('Author', this.userName!);
     formData.append('Content', Content);
     formData.append('TicketId', TicketId.toString());
 
     this.apiService.getTicketById(TicketId).subscribe({
-      next: (response: any) => {
+      next: (response: TicketDto) => {
         var ticket: TicketDto = {
-          Title: response.title,
-          Name: response.name,
-          Email: response.email,
-          HasNewMessages: true,
-          NewMessagesCount: response.newMessagesCount
+          title: response.title,
+          name: response.name,
+          email: response.email,
+          hasNewMessages: true,
+          newMessagesCount: response.newMessagesCount
         };
-        ticket.NewMessagesCount++;
+        ticket.newMessagesCount++;
         this.apiService.updateTicket(TicketId, ticket).subscribe({
           error: (error: any) => {
             console.error('Error al actualizar el ticket', error);

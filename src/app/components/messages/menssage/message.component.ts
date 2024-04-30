@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
+import { MessageJsonResult } from 'src/app/models/JsonResult';
 import { iAttachment } from 'src/app/models/attachments/iAttachment';
 import { TicketDto } from 'src/app/models/tickets/TicketDTO';
 import { iMessage } from 'src/app/models/tickets/iMessage';
@@ -18,11 +19,12 @@ import { MessagesUpdateService } from 'src/app/services/messagesUpdate.service';
 export class MessageComponent implements OnInit {
 
   ticketId: number = 0;
-  ticket: TicketDto = { Name: '', Email: '', Title: '', HasNewMessages: false, NewMessagesCount: 0 };
+  ticket: TicketDto = { name: '', email: '', title: '', hasNewMessages: false, newMessagesCount: 0 };
   messages: iMessage[] = [];
   private messagesUpdateSubscription: Subscription = {} as Subscription;
 
-  constructor(private apiService: ApiService, private translate: TranslateService, private messagesUpdateService: MessagesUpdateService) {
+  constructor(private apiService: ApiService, private translate: TranslateService,
+              private messagesUpdateService: MessagesUpdateService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -40,16 +42,16 @@ export class MessageComponent implements OnInit {
     }
     if (this.ticketId) {
       this.apiService.getMessagesByTicket(this.ticketId).subscribe({
-        next: (response: any) => {
-          this.messages = response.$values.map((message: any) => {
+        next: (response: MessageJsonResult) => {
+          this.messages = response.result.map((message: iMessage) => {
             return {
-              Id: message.id,
-              Author: message.author,
-              Content: message.content,
-              AttachmentPaths: message.attachmentPaths.$values.map((attachmentPath: any) => attachmentPath.path),
-              Attachments: [],
+              id: message.id,
+              author: message.author,
+              content: message.content,
+              attachmentPaths: message.attachmentPaths.map((attachmentPath: any) => attachmentPath.path),
+              attachments: [],
               ticketID: message.ticketID,
-              Timestamp: this.formatDate(message.timestamp)
+              timestamp: this.formatDate(message.timestamp)
             }
           })
         },
@@ -70,16 +72,16 @@ export class MessageComponent implements OnInit {
    */
   refreshMessagesData() {
     this.apiService.getMessagesByTicket(this.ticketId).subscribe({
-      next: (response: any) => {
-        this.messages = response.$values.map((message: any) => {
+      next: (response: MessageJsonResult) => {
+        this.messages = response.result.map((message: iMessage) => {
           return {
-            Id: message.id,
-            Author: message.author,
-            Content: message.content,
-            AttachmentPaths: message.attachmentPaths.$values.map((attachmentPath: any) => attachmentPath.path),
-            Attachments: [],
+            id: message.id,
+            author: message.author,
+            content: message.content,
+            attachmentPaths: message.attachmentPaths.map((attachmentPath: any) => attachmentPath.path),
+            attachments: [],
             ticketID: message.ticketID,
-            Timestamp: this.formatDate(message.timestamp)
+            timestamp: this.formatDate(message.timestamp)
           }
         })
       },
@@ -94,13 +96,13 @@ export class MessageComponent implements OnInit {
    */
   readMessages() {
     this.apiService.getTicketById(this.ticketId).subscribe({
-      next: (response: any) => {
+      next: (response: TicketDto) => {
         const ticket: TicketDto = {
-          Title: response.title,
-          Name: response.name,
-          Email: response.email,
-          HasNewMessages: false,
-          NewMessagesCount: 0
+          title: response.title,
+          name: response.name,
+          email: response.email,
+          hasNewMessages: false,
+          newMessagesCount: 0
         }
         this.ticket = ticket;
         this.apiService.updateTicket(this.ticketId, this.ticket).subscribe({
@@ -117,12 +119,12 @@ export class MessageComponent implements OnInit {
     });
 
       for (const message of this.messages) {
-        if (message.AttachmentPaths.length > 0) {
-          for (const attachmentPath of message.AttachmentPaths) {
+        if (message.attachmentPaths.length > 0) {
+          for (const attachmentPath of message.attachmentPaths) {
             var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/' + this.ticketId + '/';
             const fileName = attachmentPath.substring(pathPrefix.length);
             this.apiService.downloadAttachment(fileName, +localStorage.getItem('selectedTicket')!).subscribe({
-              next: (response: any) => {
+              next: (response: BlobPart) => {
                 var attachment: iAttachment = {} as iAttachment;
                   attachment.attachmentPath = attachmentPath;
                   attachment.attachmentUrl = URL.createObjectURL(new Blob([response], { type: 'application/octet-stream' }));
@@ -161,7 +163,7 @@ export class MessageComponent implements OnInit {
                   } else {
                     attachment.previewUrl = 'assets/images/file-previews/unknown_file.png'
                   }
-                  message.Attachments.push(attachment);
+                  message.attachments.push(attachment);
               },
               error: (error: any) => {
                 console.error('Error al descargar el archivo adjunto', error);
@@ -181,7 +183,7 @@ export class MessageComponent implements OnInit {
     var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/' + this.ticketId + '/';
     const fileName = attachmentPath.substring(pathPrefix.length);
     this.apiService.downloadAttachment(fileName, +localStorage.getItem('selectedTicket')!).subscribe({
-      next: (response: any) => {
+      next: (response: BlobPart) => {
         const blob = new Blob([response], { type: 'application/octet-stream' });
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');

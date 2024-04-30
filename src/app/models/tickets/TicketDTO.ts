@@ -1,7 +1,7 @@
 export interface TicketDto {
-    Title: string,
-    Name: string,
-    Email: string,
-    HasNewMessages: boolean,
-    NewMessagesCount: number
+    title: string,
+    name: string,
+    email: string,
+    hasNewMessages: boolean,
+    newMessagesCount: number
 }

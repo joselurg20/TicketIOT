@@ -9,6 +9,9 @@ import { ButtonComponent } from "../../button/button.component";
 import { LoadingComponent } from "../../shared/loading.component";
 import { LoadingService } from 'src/app/services/loading.service';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
+import { iUserDTO } from 'src/app/models/users/iUserDTO';
+import { iUser } from 'src/app/models/users/iUser';
+import { iTicket } from 'src/app/models/tickets/iTicket';
 
 @Component({
   selector: 'app-incidence-data',
@@ -51,7 +54,7 @@ export class IncidenceDataComponent implements OnInit {
 
   ngOnInit(): void {
     this.apiService.getTicketById(parseInt(localStorage.getItem('selectedTicket')!)).subscribe({
-      next: (response: any) => {
+      next: (response: iTicket) => {
         // Mapear la respuesta de la API utilizando la interfaz iTicketTable
         const ticket: iTicketDescriptor = {
           id: response.id,
@@ -61,14 +64,14 @@ export class IncidenceDataComponent implements OnInit {
           timestamp: this.formatDate(response.timestamp),
           priority: response.priority,
           status: response.status,
-          userId: response.userId,
+          userId: response.userId.toString(),
           userName: ''
         };
         this.ticketPrio = this.getPriorityString(ticket.priority);
         this.ticketStatus = this.getStatusString(ticket.status);
         if (response.userId != -1) {
           this.apiService.getUserById(parseInt(ticket.userId)).subscribe({
-            next: (response: any) => {
+            next: (response: iUser) => {
               ticket.userName = response.fullName;
 
               this.ticket = ticket;
@@ -138,7 +141,7 @@ export class IncidenceDataComponent implements OnInit {
           this.ticket.userId = response.userId;
           // Obtener el nombre de usuario actualizado
           this.apiService.getUserById(response.userId).subscribe({
-            next: (userResponse: any) => {
+            next: (userResponse: iUser) => {
               this.ticket.userName = userResponse.userName;
               this.loadingService.hideLoading();
               this.cdr.detectChanges();

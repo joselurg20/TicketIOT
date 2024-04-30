@@ -1,17 +1,17 @@
 {
   "incidence-index": {
-    "title": "Create Incidence",
+    "title": "Create Ticket",
     "name": "Name (max. 45 characters):",
     "nameplaceholder": "Enter your name",
     "email": "Email:",
     "emailplaceholder": "Enter your email",
     "titleincidence": "Title (max. 45 characters):",
-    "titleplaceholder": "Enter the title of the incidence",
+    "titleplaceholder": "Enter the title of the ticket",
     "content": "Description:",
-    "contentplaceholder": "Enter the description of the incidence",
+    "contentplaceholder": "Enter the description of the ticket",
     "attachments": "Attachments:",
     "upload": "Select Files",
     "download": "View Attachment",
-    "send": "Send Incidence"
+    "send": "Send Ticket"
   }
 }

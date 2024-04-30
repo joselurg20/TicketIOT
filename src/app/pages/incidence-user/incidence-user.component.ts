@@ -17,6 +17,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LoadingComponent } from 'src/app/components/shared/loading.component';
 import { LoadingService } from 'src/app/services/loading.service';
 import { Observable } from 'rxjs';
+import { iTicket } from 'src/app/models/tickets/iTicket';
 @Component({
     selector: 'app-incidence-user',
     standalone: true,
@@ -32,7 +33,8 @@ export class IncidenceUserComponent {
   public userName: string = '';
   hashedId: string = '';
   loading$: Observable<boolean>;
-    constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router , private translate: TranslateService, private loadingService: LoadingService) {
+    constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router ,
+                private translate: TranslateService, private loadingService: LoadingService) {
       this.translate.addLangs(['en', 'es']);
       const lang = this.translate.getBrowserLang();
       if (lang !== 'en' && lang !== 'es') {
@@ -53,7 +55,7 @@ export class IncidenceUserComponent {
         }
       });
       this.apiService.getTicketById(this.ticketId).subscribe({
-        next: (response: any) => {
+        next: (response: iTicket) => {
           this.ticket = {
             id: response.id,
             title: response.title,
@@ -62,7 +64,7 @@ export class IncidenceUserComponent {
             timestamp: response.timestamp,
             priority: response.priority,
             status: response.status,
-            userId: response.userId,
+            userId: response.userId.toString(),
             userName: ""
           }
           this.userName = this.ticket.name;

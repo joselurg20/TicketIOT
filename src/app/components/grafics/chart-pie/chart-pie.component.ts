@@ -30,7 +30,8 @@ export class ChartPieComponent implements OnInit {
   private langUpdateSubscription: Subscription = {} as Subscription;
   loading$: Observable<boolean>;
 
-  constructor(private ticketsService: TicketsService, private langUpdateService: LanguageUpdateService, private loadingService: LoadingService) {
+  constructor(private ticketsService: TicketsService, private langUpdateService: LanguageUpdateService,
+              private loadingService: LoadingService) {
     this.loading$ = this.loadingService.loading$;
   }
 
@@ -47,7 +48,7 @@ export class ChartPieComponent implements OnInit {
       this.tickets = tickets;
       this.createChart();
       this.loadingService.hideLoading();
-    });
+      });
     this.langUpdateSubscription = this.langUpdateService.langUpdated$.subscribe(() => {
       this.switchLanguage();
     });
@@ -73,10 +74,11 @@ export class ChartPieComponent implements OnInit {
   */
   createChart(): void {
 
-    if (this.myChart) {
+    if (this.myChart != null) {
       this.myChart.destroy();
     }
 
+    console.log(this.myChart);
     const priorities: Priorities[] = [5, 4, 3, 2, 1, 0];
 
     const incidentCounts = priorities.map(prio => {

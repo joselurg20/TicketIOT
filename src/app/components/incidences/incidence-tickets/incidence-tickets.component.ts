@@ -162,7 +162,7 @@ export class IncidenceTicketsComponent implements OnInit, AfterViewInit {
               tickets.forEach((ticket) => {
                 const user = users.find((user) => user.id === ticket.techId);
                 if (user) {
-                    ticket.techName = user.userName;             
+                    ticket.techName = user.fullName;             
                 } else {
                   ticket.techName = 'Sin asignar'
                 } 

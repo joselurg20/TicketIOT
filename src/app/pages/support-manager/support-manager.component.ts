@@ -41,7 +41,8 @@ export class SupportManagerComponent implements OnInit {
     isLoading: boolean = true;
     loading$: Observable<boolean>;
 
-    constructor(private loginService: LoginService, private router: Router, private ticketsService: TicketsService, private loadingService: LoadingService) {
+    constructor(private loginService: LoginService, private router: Router, private ticketsService: TicketsService,
+                private loadingService: LoadingService) {
         this.loading$ = this.loadingService.loading$;
     }
 
@@ -58,11 +59,11 @@ export class SupportManagerComponent implements OnInit {
         }
 
         this.ticketsService.getTickets(true);
-        this.ticketsService.tickets$.subscribe(tickets => {
-            this.loadingService.showLoading();
-            this.tickets = tickets;
-            this.loadingService.hideLoading();
-        });
+
+        this.ticketsService.getTechnicians();
+
+        
+        
     }
 
     tiles: Tile[] = [

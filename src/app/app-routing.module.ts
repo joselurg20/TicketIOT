@@ -24,7 +24,7 @@ import { TechnicialIncidenceComponent } from './pages/technicial-incidence/techn
 
 const routes: Routes = [
 
-  //accedibles por los trabajadores
+  //accesibles por los trabajadores
   { path: "", component: LoginComponent },
   { path: "login", component: LoginComponent },
   { path: "recuperar", component: RecoveredComponent },

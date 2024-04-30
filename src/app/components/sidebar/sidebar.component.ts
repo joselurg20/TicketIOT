@@ -69,7 +69,7 @@ export class SidebarComponent implements OnInit {
 
 
   constructor(private loginService: LoginService, private router: Router, private translate: TranslateService,
-    private langUpdateService: LanguageUpdateService) {
+              private langUpdateService: LanguageUpdateService) {
     this.translate.addLangs(['en', 'es']);
     var lang = '';
     switch(localStorage.getItem('userLanguage')) {

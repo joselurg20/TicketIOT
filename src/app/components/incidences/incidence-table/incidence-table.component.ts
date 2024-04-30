@@ -24,6 +24,9 @@ import { LoadingService } from 'src/app/services/loading.service';
 import { TicketsService } from 'src/app/services/tickets.service';
 import { Priorities, Status } from 'src/app/utilities/enum';
 import { LoadingComponent } from '../../shared/loading.component';
+import { iUserGraph } from 'src/app/models/users/iUserGraph';
+import { iUser } from 'src/app/models/users/iUser';
+import { UserJsonResult } from 'src/app/models/JsonResult';
 
 @Component({
   selector: 'app-incidence-table',
@@ -53,7 +56,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
 
   //Listas de datos a representar en la tabla
   tickets: iTicketTableSM[] = [];
-  users: iUserTable[] = [];
+  users: iUserGraph[] = [];
 
   //Subscripción para triggers de cambio de idioma
   private langUpdateSubscription: Subscription = {} as Subscription;
@@ -127,11 +130,12 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     if (localStorage.getItem('userRole') == 'SupportManager') {
       this.isSupportManager = true;
       this.apiService.getTechnicians().subscribe({
-        next: (response: any) => {
-          this.users = response.result.map((value: any) => {
+        next: (response: UserJsonResult) => {
+          this.users = response.result.map((value: iUser) => {
             return {
               id: value.id,
-              userName: value.fullName
+              userName: value.userName,
+              fullName: value.fullName
             };
           });
         },

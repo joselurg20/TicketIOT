@@ -32,17 +32,20 @@ export class SupportTechnicalComponent implements OnInit {
     tickets: iTicketTable[] = [];
     loading$: Observable<boolean>;
 
-    constructor(private loginService: LoginService, private router: Router, private ticketsService: TicketsService, private loadingService: LoadingService) {
+    constructor(private loginService: LoginService, private router: Router, private ticketsService: TicketsService,
+                private loadingService: LoadingService) {
         this.loading$ = this.loadingService.loading$;
     }
 
     ngOnInit(): void {
         window.onpopstate = (event) => {
+            this.loadingService.showLoading();
             this.loginService.logout();
             this.router.navigate(['/login']);
         }
 
         if (localStorage.getItem('userRole') !== 'SupportTechnician') {
+            this.loadingService.showLoading();
             this.router.navigate(['/login']);
         }
 

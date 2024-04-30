@@ -10,6 +10,8 @@ import { ApiService } from 'src/app/services/api.service';
 import { MessagesUpdateService } from 'src/app/services/messagesUpdate.service';
 import { SnackbarMenssageComponent } from '../../snackbars/snackbar-menssage/snackbar-menssage.component';
 import { MessageComponent } from "../menssage/message.component";
+import { iUserGraph } from 'src/app/models/users/iUserGraph';
+import { iTicket } from 'src/app/models/tickets/iTicket';
 
 @Component({
   selector: 'app-comunication',
@@ -24,7 +26,7 @@ export class ComunicationComponent implements OnInit {
   public ticket: iTicketDescriptor = {} as iTicketDescriptor;
   public success: boolean = true;
   successMsg: string = '';
-  public userName: string = '';
+  public userName: string | null = '';
   selectedFiles: File[] = [];
   durationInSeconds = 3;
   public selectFilesNames: string[] = [];
@@ -52,7 +54,7 @@ export class ComunicationComponent implements OnInit {
     const selectedTicket = localStorage.getItem('selectedTicket');
     if (selectedTicket != null) {
       this.apiService.getTicketById(+selectedTicket).subscribe({
-        next: (response: any) => {
+        next: (response: iTicket) => {
           this.ticket = {
             id: response.id,
             title: response.title,
@@ -61,7 +63,7 @@ export class ComunicationComponent implements OnInit {
             timestamp: this.formatDate(response.timestamp),
             priority: response.priority,
             status: response.status,
-            userId: response.userId,
+            userId: response.userId.toString(),
             userName: ''
           };
         },
@@ -72,7 +74,7 @@ export class ComunicationComponent implements OnInit {
     }
 
     this.apiService.getUserById(parseInt(localStorage.getItem('userId')!)).subscribe({
-      next: (response: any) => {
+      next: (response: iUserGraph) => {
         this.userName = response.fullName;
       },
       error: (error: any) => {
@@ -127,20 +129,20 @@ export class ComunicationComponent implements OnInit {
   */
   createMessage(Content: string, TicketId: number): Observable<any> {
     const formData = new FormData();
-    formData.append('Author', this.userName);
+    formData.append('Author', this.userName!);
     formData.append('Content', Content);
     formData.append('TicketId', TicketId.toString());
 
     this.apiService.getTicketById(TicketId).subscribe({
-      next: (response: any) => {
+      next: (response: TicketDto) => {
         var ticket: TicketDto = {
-          Title: response.title,
-          Name: response.name,
-          Email: response.email,
-          HasNewMessages: true,
-          NewMessagesCount: response.newMessagesCount
+          title: response.title,
+          name: response.name,
+          email: response.email,
+          hasNewMessages: true,
+          newMessagesCount: response.newMessagesCount
         };
-        ticket.NewMessagesCount++;
+        ticket.newMessagesCount++;
         this.apiService.updateTicket(TicketId, ticket).subscribe({
           error: (error: any) => {
             console.error('Error al actualizar el ticket', error);

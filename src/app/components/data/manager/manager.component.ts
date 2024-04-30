@@ -38,11 +38,12 @@ export class ManagerComponent implements OnInit {
 
   ngOnInit(): void {
     this.ticketsService.usersFN$.subscribe({
-      next: (response: any) => {
-        const users = response.map((value: any) => {
+      next: (response: iUserGraph[]) => {
+        const users = response.map((value: iUserGraph) => {
           return {
             id: value.id,
-            userName: value.userName
+            userName: value.userName,
+            fullName: value.fullName
           };
         })
         this.users = users;

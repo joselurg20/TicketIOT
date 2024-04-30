@@ -19,7 +19,7 @@ import { LoadingService } from 'src/app/services/loading.service';
 export class ChartBarComponent implements OnInit {
 
   tickets: iTicketGraph[] = [];
-  myChart: Chart | null = null;
+  myChart: any;
   titleEs: string = 'Incidencias por estado';
   titleEn: string = 'Tickets by status';
   title: string = this.titleEs;
@@ -28,8 +28,10 @@ export class ChartBarComponent implements OnInit {
   labels: string[] = this.labelsEs;
   loading$: Observable<boolean>;
   private langUpdateSubscription: Subscription = {} as Subscription;
+  isFirstLoad: boolean = true;
 
-  constructor(private ticketsService: TicketsService, private langUpdateService: LanguageUpdateService, private loadingService: LoadingService) {
+  constructor(private ticketsService: TicketsService, private langUpdateService: LanguageUpdateService,
+              private loadingService: LoadingService) {
     this.loading$ = this.loadingService.loading$;
   }
 
@@ -51,13 +53,16 @@ export class ChartBarComponent implements OnInit {
       }
     }
     this.ticketsService.ticketGraphs$.subscribe(tickets => {
+      this.loadingService.showLoading();
       this.tickets = tickets;
       this.createChart();
       this.loadingService.hideLoading();
     });
     this.langUpdateSubscription = this.langUpdateService.langUpdated$.subscribe(() => {
+      this.loadingService.showLoading();
       this.switchLanguage();
-    })
+      this.loadingService.hideLoading();
+    });
   }
 
   /**
@@ -93,9 +98,7 @@ export class ChartBarComponent implements OnInit {
    * @returns Crea el gráfico.
    */
   createChart(): void {
-    if (this.myChart) {
-      this.myChart.destroy();
-    }
+    this.myChart?.destroy();
     var status: Status[] = [];
     if(localStorage.getItem('userRole') == 'SupportManager') {
       status = [1, 2, 0];

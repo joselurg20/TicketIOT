@@ -1,10 +1,11 @@
 import { iTicket } from "../tickets/iTicket";
 
 export interface iUser {
-    id?: number,
+    id: number,
+    fullName: string,
     userName: string,
     email: string,
     phoneNumber: string,
     role: string,
-    tickets?: iTicket[]
+    language: number
 }

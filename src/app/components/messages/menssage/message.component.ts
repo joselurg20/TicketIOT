@@ -2,12 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
-import { MessageJsonResult } from 'src/app/models/JsonResult';
+import { AttachmentJsonResult, MessageJsonResult } from 'src/app/models/JsonResult';
 import { iAttachment } from 'src/app/models/attachments/iAttachment';
 import { TicketDto } from 'src/app/models/tickets/TicketDTO';
 import { iMessage } from 'src/app/models/tickets/iMessage';
-import { ApiService } from 'src/app/services/api.service';
-import { MessagesUpdateService } from 'src/app/services/messagesUpdate.service';
+import { iMessageDto } from 'src/app/models/tickets/iMessageDto';
+import { MessagesService } from 'src/app/services/tickets/messages.service';
+import { MessagesUpdateService } from 'src/app/services/tickets/messagesUpdate.service';
+import { TicketsService } from 'src/app/services/tickets/tickets.service';
 
 @Component({
   selector: 'app-message',
@@ -20,11 +22,11 @@ export class MessageComponent implements OnInit {
 
   ticketId: number = 0;
   ticket: TicketDto = { name: '', email: '', title: '', hasNewMessages: false, newMessagesCount: 0 };
-  messages: iMessage[] = [];
+  messages: iMessageDto[] = [];
   private messagesUpdateSubscription: Subscription = {} as Subscription;
 
-  constructor(private apiService: ApiService, private translate: TranslateService,
-              private messagesUpdateService: MessagesUpdateService) {
+  constructor(private messagesService: MessagesService, private translate: TranslateService,
+              private messagesUpdateService: MessagesUpdateService, private ticketsService: TicketsService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -41,24 +43,7 @@ export class MessageComponent implements OnInit {
       this.ticketId = +ticketIdLS;
     }
     if (this.ticketId) {
-      this.apiService.getMessagesByTicket(this.ticketId).subscribe({
-        next: (response: MessageJsonResult) => {
-          this.messages = response.result.map((message: iMessage) => {
-            return {
-              id: message.id,
-              author: message.author,
-              content: message.content,
-              attachmentPaths: message.attachmentPaths.map((attachmentPath: any) => attachmentPath.path),
-              attachments: [],
-              ticketID: message.ticketID,
-              timestamp: this.formatDate(message.timestamp)
-            }
-          })
-        },
-        error: (error: any) => {
-          console.error('Error al obtener los mensajes del ticket', error);
-        }
-      });
+      this.refreshMessagesData();
 
       this.messagesUpdateSubscription = this.messagesUpdateService.messagesUpdated$.subscribe(() => {
         
@@ -71,19 +56,21 @@ export class MessageComponent implements OnInit {
    * Actualiza los mensajes de la incidencia.
    */
   refreshMessagesData() {
-    this.apiService.getMessagesByTicket(this.ticketId).subscribe({
+    this.messagesService.getMessagesByTicket(this.ticketId).subscribe({
       next: (response: MessageJsonResult) => {
-        this.messages = response.result.map((message: iMessage) => {
+        console.log ('response', response);
+        this.messages = response.$values.map((message: iMessage) => {
           return {
             id: message.id,
             author: message.author,
             content: message.content,
-            attachmentPaths: message.attachmentPaths.map((attachmentPath: any) => attachmentPath.path),
+            attachmentPaths: message.attachmentPaths.$values.map((attachmentPath: iAttachment) => attachmentPath.path),
             attachments: [],
             ticketID: message.ticketID,
             timestamp: this.formatDate(message.timestamp)
           }
         })
+        console.log('messages', this.messages);
       },
       error: (error: any) => {
         console.error('Error al obtener los mensajes del ticket', error);
@@ -95,7 +82,7 @@ export class MessageComponent implements OnInit {
    * Marca los mensajes de una incidencia como leídos.
    */
   readMessages() {
-    this.apiService.getTicketById(this.ticketId).subscribe({
+    this.ticketsService.getTicketById(this.ticketId).subscribe({
       next: (response: TicketDto) => {
         const ticket: TicketDto = {
           title: response.title,
@@ -105,7 +92,7 @@ export class MessageComponent implements OnInit {
           newMessagesCount: 0
         }
         this.ticket = ticket;
-        this.apiService.updateTicket(this.ticketId, this.ticket).subscribe({
+        this.ticketsService.updateTicket(this.ticketId, this.ticket).subscribe({
           next: (response: any) => {
           },
           error: (error: any) => {
@@ -120,13 +107,15 @@ export class MessageComponent implements OnInit {
 
       for (const message of this.messages) {
         if (message.attachmentPaths.length > 0) {
+          console.log('message', message);
           for (const attachmentPath of message.attachmentPaths) {
-            var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/' + this.ticketId + '/';
+            console.log('attachmentPath', attachmentPath);
+            var pathPrefix: string = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/' + this.ticketId + '/';
             const fileName = attachmentPath.substring(pathPrefix.length);
-            this.apiService.downloadAttachment(fileName, +localStorage.getItem('selectedTicket')!).subscribe({
+            this.messagesService.downloadAttachment(fileName, +localStorage.getItem('selectedTicket')!).subscribe({
               next: (response: BlobPart) => {
                 var attachment: iAttachment = {} as iAttachment;
-                  attachment.attachmentPath = attachmentPath;
+                  attachment.path = attachmentPath;
                   attachment.attachmentUrl = URL.createObjectURL(new Blob([response], { type: 'application/octet-stream' }));
                   if(fileName.endsWith('.jpg') || fileName.endsWith('.jpeg') || fileName.endsWith('.png')){
 
@@ -182,7 +171,7 @@ export class MessageComponent implements OnInit {
   downloadAttachment(attachmentPath: string) {
     var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/' + this.ticketId + '/';
     const fileName = attachmentPath.substring(pathPrefix.length);
-    this.apiService.downloadAttachment(fileName, +localStorage.getItem('selectedTicket')!).subscribe({
+    this.messagesService.downloadAttachment(fileName, +localStorage.getItem('selectedTicket')!).subscribe({
       next: (response: BlobPart) => {
         const blob = new Blob([response], { type: 'application/octet-stream' });
         const url = window.URL.createObjectURL(blob);

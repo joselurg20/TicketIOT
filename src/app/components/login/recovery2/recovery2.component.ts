@@ -6,9 +6,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import * as CryptoJS from 'crypto-js';
-import { ApiService } from 'src/app/services/api.service';
 import { LenguageComponent } from "../../lenguage/lenguage.component";
 import { SnackbarPasswordComponent } from '../../snackbars/snackbar-password/snackbar-password.component';
+import { UsersService } from 'src/app/services/users/users.service';
 
 function passwordValidator(control: FormControl): { [key: string]: any } | null {
   const hasUppercase = /[A-Z]/.test(control.value); // Verifica si hay al menos una letra mayúscula
@@ -40,7 +40,7 @@ export class Recovery2Component implements OnInit {
   durationInSeconds = 5;
 
   constructor(private route: ActivatedRoute,private fb:FormBuilder, private _snackBar: MatSnackBar,
-              private router: Router, private apiService: ApiService, private translate: TranslateService) {
+              private router: Router, private usersService: UsersService, private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -96,7 +96,7 @@ export class Recovery2Component implements OnInit {
     formData.append('Tld', this.tld);
     formData.append('Password', hashedPassword);
 
-    this.apiService.resetPassword(formData).subscribe({
+    this.usersService.resetPassword(formData).subscribe({
       next: (response) => {
         this.router.navigate(['/cls']);
       },

@@ -8,7 +8,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarModule, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { ApiService } from 'src/app/services/api.service';
 import { ButtonComponent } from "../../button/button.component";
 import { ChartBarComponent } from '../../grafics/chart-bar/chart-bar.component';
 import { ChartDoughnutComponent } from '../../grafics/chart-doughnut/chart-doughnut.component';
@@ -16,6 +15,7 @@ import { ChartPieComponent } from '../../grafics/chart-pie/chart-pie.component';
 import { LenguageComponent } from "../../lenguage/lenguage.component";
 import { SidebarComponent } from '../../sidebar/sidebar.component';
 import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/snackbar-incidence.component';
+import { TicketsService } from 'src/app/services/tickets/tickets.service';
 
 
 @Component({
@@ -46,7 +46,7 @@ export class IncidencePruebaComponent implements OnInit {
   isSupportManager: boolean = true;
 
 
-  constructor(private _snackBar: MatSnackBar, private apiService: ApiService, private translate: TranslateService) {
+  constructor(private _snackBar: MatSnackBar, private ticketsService: TicketsService, private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -149,7 +149,7 @@ export class IncidencePruebaComponent implements OnInit {
     this.previewUrls = new Array();
     this.isFileSelected = false;
 
-    return this.apiService.createTicket(formData);
+    return this.ticketsService.createTicket(formData);
   }
 
   /**

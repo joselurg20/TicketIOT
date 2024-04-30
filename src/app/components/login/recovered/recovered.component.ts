@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { ButtonComponent } from "../../button/button.component";
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ApiService } from 'src/app/services/api.service';
 import { LenguageComponent } from "../../lenguage/lenguage.component";
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SnackbarMenssageComponent } from '../../snackbars/snackbar-menssage/snackbar-menssage.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UsersService } from 'src/app/services/users/users.service';
 
 @Component({
     selector: 'app-recovered',
@@ -22,7 +22,7 @@ export class RecoveredComponent implements OnInit {
     email: string = '';
     durationInSeconds = 5;
 
-    constructor(private router: Router, private _snackBar: MatSnackBar, private apiService: ApiService,
+    constructor(private router: Router, private _snackBar: MatSnackBar, private usersService: UsersService,
                 private translate: TranslateService) {
         this.translate.addLangs(['en', 'es']);
         const lang = this.translate.getBrowserLang();
@@ -65,7 +65,7 @@ export class RecoveredComponent implements OnInit {
             const domain = emailParts[2];
             const tld = emailParts[3];
 
-            this.apiService.checkEmail(username, domain, tld).subscribe({
+            this.usersService.checkEmail(username, domain, tld).subscribe({
                 next: (response) => {
                     this.router.navigate(['/login']);
                 },

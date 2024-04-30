@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TicketUpdateService } from 'src/app/services/ticketUpdate.service';
-import { ApiService } from 'src/app/services/api.service';
+import { TicketUpdateService } from 'src/app/services/tickets/ticketUpdate.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LoadingService } from 'src/app/services/loading.service';
+import { TicketsService } from 'src/app/services/tickets/tickets.service';
 
 @Component({
   selector: 'app-technicial',
@@ -17,7 +17,8 @@ export class TechnicialComponent {
 
   selectedStatusValue: number = -1;
 
-  constructor(private apiService: ApiService, private ticketUpdateService: TicketUpdateService, private loadingService: LoadingService, private translate: TranslateService) {
+  constructor(private ticketsService: TicketsService, private ticketUpdateService: TicketUpdateService,
+              private loadingService: LoadingService, private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -34,7 +35,7 @@ export class TechnicialComponent {
   updateTicket() {
     if (this.selectedStatusValue != -1) {
       this.loadingService.showLoading();
-      this.apiService.changeTicketStatus(parseInt(localStorage.getItem('selectedTicket')!), this.selectedStatusValue).subscribe({
+      this.ticketsService.changeTicketStatus(parseInt(localStorage.getItem('selectedTicket')!), this.selectedStatusValue).subscribe({
         next: () => {
           this.ticketUpdateService.triggerTicketUpdate();
           this.loadingService.hideLoading();

@@ -27,7 +27,7 @@
                 class="d-flex justify-content-center preview">
                 <div *ngFor="let attachment of message.attachments">
                   <img [src]="attachment.previewUrl" alt="">
-                  <button class="custom-file-button btn-lg" (click)="downloadAttachment(attachment.attachmentPath)"><i
+                  <button class="custom-file-button btn-lg" (click)="downloadAttachment(attachment.path)"><i
                       class="fa-solid fa-download"></i> {{"message.download" | translate}}</button>
                 </div>
               </div>

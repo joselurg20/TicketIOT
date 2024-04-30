@@ -3,9 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { UserJsonResult } from 'src/app/models/JsonResult';
-import { iUser } from 'src/app/models/users/iUser';
 import { iUserTable } from 'src/app/models/users/iUserTable';
-import { ApiService } from 'src/app/services/api.service';
+import { UsersService } from 'src/app/services/users/users.service';
 
 
 @Component({
@@ -18,7 +17,7 @@ import { ApiService } from 'src/app/services/api.service';
 export class TechnicalTableComponent implements OnInit {
   users: iUserTable[] = [];
 
-  constructor(private apiService: ApiService, private translate: TranslateService) {
+  constructor(private usersService: UsersService, private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -28,7 +27,7 @@ export class TechnicalTableComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    this.apiService.getTechnicians().subscribe({
+    this.usersService.getTechnicians().subscribe({
       next: (response: UserJsonResult) => {
         const users: iUserTable[] = response.result.map((value: iUserTable) => {
           return {

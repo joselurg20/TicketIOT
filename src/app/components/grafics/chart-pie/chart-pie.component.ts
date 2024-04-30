@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
 import { iTicketGraph } from 'src/app/models/tickets/iTicketsGraph';
-import { TicketsService } from 'src/app/services/tickets.service';
+import { TicketDataService } from 'src/app/services/tickets/ticketData.service';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { Observable, Subscription } from 'rxjs';
 import { Priorities } from 'src/app/utilities/enum';
@@ -30,7 +30,7 @@ export class ChartPieComponent implements OnInit {
   private langUpdateSubscription: Subscription = {} as Subscription;
   loading$: Observable<boolean>;
 
-  constructor(private ticketsService: TicketsService, private langUpdateService: LanguageUpdateService,
+  constructor(private ticketsService: TicketDataService, private langUpdateService: LanguageUpdateService,
               private loadingService: LoadingService) {
     this.loading$ = this.loadingService.loading$;
   }
@@ -78,7 +78,6 @@ export class ChartPieComponent implements OnInit {
       this.myChart.destroy();
     }
 
-    console.log(this.myChart);
     const priorities: Priorities[] = [5, 4, 3, 2, 1, 0];
 
     const incidentCounts = priorities.map(prio => {

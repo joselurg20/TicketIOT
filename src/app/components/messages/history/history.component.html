@@ -15,7 +15,7 @@
                         <div *ngFor="let attachment of message.attachments">
                             <img [src]="attachment.previewUrl" alt="">
                             <button class="custom-file-button btn-lg"
-                                (click)="downloadAttachment(attachment.attachmentPath)"><i
+                                (click)="downloadAttachment(attachment.path)"><i
                                     class="fa-solid fa-download"></i> {{'message.download' | translate}}
                                 </button>
                         </div>

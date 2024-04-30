@@ -17,16 +17,15 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
 import { TicketFilterRequestDto } from 'src/app/models/tickets/TicketFilterRequestDto';
 import { iTicketTableSM } from 'src/app/models/tickets/iTicketTableSM';
-import { iUserTable } from 'src/app/models/users/iUserTable';
-import { ApiService } from 'src/app/services/api.service';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { LoadingService } from 'src/app/services/loading.service';
-import { TicketsService } from 'src/app/services/tickets.service';
+import { TicketDataService } from 'src/app/services/tickets/ticketData.service';
 import { Priorities, Status } from 'src/app/utilities/enum';
 import { LoadingComponent } from '../../shared/loading.component';
 import { iUserGraph } from 'src/app/models/users/iUserGraph';
 import { iUser } from 'src/app/models/users/iUser';
 import { UserJsonResult } from 'src/app/models/JsonResult';
+import { UsersService } from 'src/app/services/users/users.service';
 
 @Component({
   selector: 'app-incidence-table',
@@ -77,9 +76,9 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     searchString: ''
   }
 
-  constructor(private _liveAnnouncer: LiveAnnouncer, private apiService: ApiService,
+  constructor(private _liveAnnouncer: LiveAnnouncer, private usersService: UsersService,
               private router: Router, private translate: TranslateService, private cdr: ChangeDetectorRef,
-              private ticketsService: TicketsService, private loadingService: LoadingService,
+              private ticketDataService: TicketDataService, private loadingService: LoadingService,
               private readonly dateAdapter: DateAdapter<Date>, private langUpdateService: LanguageUpdateService) {
     this.translate.addLangs(['en', 'es']);
     var lang = '';
@@ -128,7 +127,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     }
     if (localStorage.getItem('userRole') == 'SupportManager') {
       this.isSupportManager = true;
-      this.apiService.getTechnicians().subscribe({
+      this.usersService.getTechnicians().subscribe({
         next: (response: UserJsonResult) => {
           this.users = response.result.map((value: iUser) => {
             return {
@@ -147,14 +146,14 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
       this.displayedColumns = ['status', 'id', 'title', 'name', 'email', 'priority', 'timestamp', 'technician', 'newMessages', 'show'];
       this.isSupportManager = false;
     }
-    this.ticketsService.tickets$.subscribe(tickets => {
+    this.ticketDataService.tickets$.subscribe(tickets => {
       this.dataSource.data = tickets;
       this.loadingService.hideLoading();
       this.cdr.detectChanges();
     });
     this.langUpdateService.langUpdated$.subscribe(() => {
       this.setLocale(localStorage.getItem('selectedLanguage')!);
-      this.ticketsService.getTickets(this.isSupportManager);
+      this.ticketDataService.getTickets(this.isSupportManager);
     });
   }
 
@@ -210,7 +209,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     this.filter.priority = this.selectedPriorityFilter;
     this.filter.userId = this.selectedTechnicianFilter;
     this.filter.searchString = this.searchString;
-    this.ticketsService.filterTickets(this.filter);
+    this.ticketDataService.filterTickets(this.filter);
 
     this.showFilter = false;
     this.searchString = '';

@@ -12,8 +12,8 @@ import { SidebarComponent } from 'src/app/components/sidebar/sidebar.component';
 import { TechnicalTableComponent } from 'src/app/components/technical-table/technical-table.component';
 import { iTicketTable } from 'src/app/models/tickets/iTicketTable';
 import { LoadingService } from 'src/app/services/loading.service';
-import { LoginService } from 'src/app/services/login.service';
-import { TicketsService } from 'src/app/services/tickets.service';
+import { LoginService } from 'src/app/services/users/login.service';
+import { TicketDataService } from 'src/app/services/tickets/ticketData.service';
 import { IncidenceDataComponent } from "../../components/incidences/incidence-data/incidence-data.component";
 import { LoadingComponent } from "../../components/shared/loading.component";
 
@@ -32,7 +32,7 @@ export class SupportTechnicalComponent implements OnInit {
     tickets: iTicketTable[] = [];
     loading$: Observable<boolean>;
 
-    constructor(private loginService: LoginService, private router: Router, private ticketsService: TicketsService,
+    constructor(private loginService: LoginService, private router: Router, private ticketsService: TicketDataService,
                 private loadingService: LoadingService) {
         this.loading$ = this.loadingService.loading$;
     }

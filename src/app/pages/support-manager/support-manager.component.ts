@@ -8,8 +8,8 @@ import { ChartBarComponent } from 'src/app/components/grafics/chart-bar/chart-ba
 import { iTicketTable } from 'src/app/models/tickets/iTicketTable';
 import { iUserTable } from 'src/app/models/users/iUserTable';
 import { LoadingService } from 'src/app/services/loading.service';
-import { LoginService } from 'src/app/services/login.service';
-import { TicketsService } from 'src/app/services/tickets.service';
+import { LoginService } from 'src/app/services/users/login.service';
+import { TicketDataService } from 'src/app/services/tickets/ticketData.service';
 import { ChartDoughnutComponent } from "../../components/grafics/chart-doughnut/chart-doughnut.component";
 import { ChartPieComponent } from "../../components/grafics/chart-pie/chart-pie.component";
 import { IncidenceIndexComponent } from "../../components/incidences/incidence-index/incidence-index.component";
@@ -41,7 +41,7 @@ export class SupportManagerComponent implements OnInit {
     isLoading: boolean = true;
     loading$: Observable<boolean>;
 
-    constructor(private loginService: LoginService, private router: Router, private ticketsService: TicketsService,
+    constructor(private loginService: LoginService, private router: Router, private ticketsService: TicketDataService,
                 private loadingService: LoadingService) {
         this.loading$ = this.loadingService.loading$;
     }

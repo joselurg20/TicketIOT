@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
-import { LoginService } from 'src/app/services/login.service';
+import { LoginService } from 'src/app/services/users/login.service';
 
 interface SideNavToggle {
   screenWidth: number;

@@ -5,12 +5,13 @@ import { Observable, Subscription } from 'rxjs';
 import { iTicket } from 'src/app/models/tickets/iTicket';
 import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
 import { iUser } from 'src/app/models/users/iUser';
-import { ApiService } from 'src/app/services/api.service';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { LoadingService } from 'src/app/services/loading.service';
-import { TicketUpdateService } from 'src/app/services/ticketUpdate.service';
+import { TicketUpdateService } from 'src/app/services/tickets/ticketUpdate.service';
 import { ButtonComponent } from "../../button/button.component";
 import { LoadingComponent } from "../../shared/loading.component";
+import { TicketsService } from 'src/app/services/tickets/tickets.service';
+import { UsersService } from 'src/app/services/users/users.service';
 
 @Component({
   selector: 'app-incidence-data',
@@ -38,9 +39,10 @@ export class IncidenceDataComponent implements OnInit {
   private ticketUpdateSubscription: Subscription = {} as Subscription;
   loading$: Observable<boolean>;
 
-  constructor(private apiService: ApiService, private ticketUpdateService: TicketUpdateService,
-    private loadingService: LoadingService, private cdr: ChangeDetectorRef,
-    private translate: TranslateService, private languageUpdateService: LanguageUpdateService) {
+  constructor(private ticketsService: TicketsService, private ticketUpdateService: TicketUpdateService,
+              private loadingService: LoadingService, private cdr: ChangeDetectorRef,
+              private translate: TranslateService, private languageUpdateService: LanguageUpdateService,
+              private usersService: UsersService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -52,7 +54,7 @@ export class IncidenceDataComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.apiService.getTicketById(parseInt(localStorage.getItem('selectedTicket')!)).subscribe({
+    this.ticketsService.getTicketById(parseInt(localStorage.getItem('selectedTicket')!)).subscribe({
       next: (response: iTicket) => {
         // Mapear la respuesta de la API utilizando la interfaz iTicketTable
         const ticket: iTicketDescriptor = {
@@ -69,7 +71,7 @@ export class IncidenceDataComponent implements OnInit {
         this.ticketPrio = this.getPriorityString(ticket.priority);
         this.ticketStatus = this.getStatusString(ticket.status);
         if (response.userId != -1) {
-          this.apiService.getUserById(parseInt(ticket.userId)).subscribe({
+          this.usersService.getUserById(parseInt(ticket.userId)).subscribe({
             next: (response: iUser) => {
               ticket.userName = response.fullName;
 
@@ -133,13 +135,13 @@ export class IncidenceDataComponent implements OnInit {
   refreshTicketData() {
     this.loadingService.showLoading();
     const selectedTicketId = parseInt(localStorage.getItem('selectedTicket')!);
-    this.apiService.getTicketById(selectedTicketId).subscribe({
+    this.ticketsService.getTicketById(selectedTicketId).subscribe({
       next: (response: any) => {
         // Actualizar solo los campos que han cambiado
         if (this.ticket.userId !== response.userId) {
           this.ticket.userId = response.userId;
           // Obtener el nombre de usuario actualizado
-          this.apiService.getUserById(response.userId).subscribe({
+          this.usersService.getUserById(response.userId).subscribe({
             next: (userResponse: iUser) => {
               this.ticket.userName = userResponse.userName;
               this.loadingService.hideLoading();

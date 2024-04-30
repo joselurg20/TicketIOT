@@ -6,12 +6,14 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { TicketDto } from 'src/app/models/tickets/TicketDTO';
 import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
-import { ApiService } from 'src/app/services/api.service';
-import { MessagesUpdateService } from 'src/app/services/messagesUpdate.service';
+import { MessagesUpdateService } from 'src/app/services/tickets/messagesUpdate.service';
 import { SnackbarMenssageComponent } from '../../snackbars/snackbar-menssage/snackbar-menssage.component';
 import { MessageComponent } from "../menssage/message.component";
 import { iUserGraph } from 'src/app/models/users/iUserGraph';
 import { iTicket } from 'src/app/models/tickets/iTicket';
+import { MessagesService } from 'src/app/services/tickets/messages.service';
+import { TicketsService } from 'src/app/services/tickets/tickets.service';
+import { UsersService } from 'src/app/services/users/users.service';
 
 @Component({
   selector: 'app-comunication',
@@ -32,7 +34,10 @@ export class ComunicationComponent implements OnInit {
   public selectFilesNames: string[] = [];
 
 
-  constructor(private apiService: ApiService, private _snackBar: MatSnackBar, private translate: TranslateService, private formBuilder: FormBuilder, private messagesUpdateService: MessagesUpdateService) {
+  constructor(private messagesService: MessagesService, private _snackBar: MatSnackBar,
+              private translate: TranslateService, private formBuilder: FormBuilder,
+              private messagesUpdateService: MessagesUpdateService, private ticketsService: TicketsService,
+              private usersService: UsersService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -53,7 +58,7 @@ export class ComunicationComponent implements OnInit {
     });
     const selectedTicket = localStorage.getItem('selectedTicket');
     if (selectedTicket != null) {
-      this.apiService.getTicketById(+selectedTicket).subscribe({
+      this.ticketsService.getTicketById(+selectedTicket).subscribe({
         next: (response: iTicket) => {
           this.ticket = {
             id: response.id,
@@ -73,7 +78,7 @@ export class ComunicationComponent implements OnInit {
       });
     }
 
-    this.apiService.getUserById(parseInt(localStorage.getItem('userId')!)).subscribe({
+    this.usersService.getUserById(parseInt(localStorage.getItem('userId')!)).subscribe({
       next: (response: iUserGraph) => {
         this.userName = response.fullName;
       },
@@ -133,7 +138,7 @@ export class ComunicationComponent implements OnInit {
     formData.append('Content', Content);
     formData.append('TicketId', TicketId.toString());
 
-    this.apiService.getTicketById(TicketId).subscribe({
+    this.ticketsService.getTicketById(TicketId).subscribe({
       next: (response: TicketDto) => {
         var ticket: TicketDto = {
           title: response.title,
@@ -143,7 +148,7 @@ export class ComunicationComponent implements OnInit {
           newMessagesCount: response.newMessagesCount
         };
         ticket.newMessagesCount++;
-        this.apiService.updateTicket(TicketId, ticket).subscribe({
+        this.ticketsService.updateTicket(TicketId, ticket).subscribe({
           error: (error: any) => {
             console.error('Error al actualizar el ticket', error);
           }
@@ -172,7 +177,7 @@ export class ComunicationComponent implements OnInit {
     this.selectedFiles = [];
     this.previewUrls = new Array();
     this.isFileSelected = false;
-    return this.apiService.createMessage(formData);
+    return this.messagesService.createMessage(formData);
   }
 
   /**

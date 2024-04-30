@@ -6,10 +6,12 @@ import { Subscription } from 'rxjs';
 import { MessageJsonResult } from 'src/app/models/JsonResult';
 import { iAttachment } from 'src/app/models/attachments/iAttachment';
 import { iMessage } from 'src/app/models/tickets/iMessage';
+import { iMessageDto } from 'src/app/models/tickets/iMessageDto';
 import { iTicket } from 'src/app/models/tickets/iTicket';
 import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
-import { ApiService } from 'src/app/services/api.service';
-import { MessagesUpdateService } from 'src/app/services/messagesUpdate.service';
+import { MessagesService } from 'src/app/services/tickets/messages.service';
+import { MessagesUpdateService } from 'src/app/services/tickets/messagesUpdate.service';
+import { TicketsService } from 'src/app/services/tickets/tickets.service';
 
 
 
@@ -23,12 +25,14 @@ import { MessagesUpdateService } from 'src/app/services/messagesUpdate.service';
 export class HistoryComponent {
 
   ticketId: number = 0;
-  messages: iMessage[] = [];
+  messages: iMessageDto[] = [];
   ticket: iTicketDescriptor = {} as iTicketDescriptor;
   userName: string = '';
   private messagesUpdateSubscription: Subscription = {} as Subscription;
 
-  constructor(private apiService: ApiService, private route: ActivatedRoute, private translate: TranslateService, private messagesUpdateService: MessagesUpdateService) {
+  constructor(private messagesService: MessagesService, private route: ActivatedRoute,
+              private translate: TranslateService, private messagesUpdateService: MessagesUpdateService,
+              private ticketsService: TicketsService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -44,7 +48,7 @@ export class HistoryComponent {
       this.ticketId = params['ticketId'];
       this.refreshMessagesData();
     });
-    this.apiService.getTicketById(this.ticketId).subscribe({
+    this.ticketsService.getTicketById(this.ticketId).subscribe({
       next: (response: iTicket) => {
         this.ticket = {
           id: response.id,
@@ -73,14 +77,14 @@ export class HistoryComponent {
    * Actualiza los mensajes de la incidencia.
    */
   refreshMessagesData() {
-    this.apiService.getMessagesByTicket(this.ticketId).subscribe({
+    this.messagesService.getMessagesByTicket(this.ticketId).subscribe({
       next: (response: MessageJsonResult) => {
-        this.messages = response.result.map((message: iMessage) => {
+        this.messages = response.$values.map((message: iMessage) => {
           return {
             id: message.id,
             author: message.author,
             content: message.content,
-            attachmentPaths: message.attachmentPaths.map((attachmentPath: any) => attachmentPath.path),
+            attachmentPaths: message.attachmentPaths.$values.map((attachmentPath: iAttachment) => attachmentPath.path),
             attachments: [],
             ticketID: message.ticketID,
             timestamp: this.formatDate(message.timestamp)
@@ -93,10 +97,10 @@ export class HistoryComponent {
             for (const attachmentPath of message.attachmentPaths) {
               var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/' + this.ticketId + '/';
               const fileName = attachmentPath.substring(pathPrefix.length);
-              this.apiService.downloadAttachment(fileName, +localStorage.getItem('selectedTicket')!).subscribe({
+              this.messagesService.downloadAttachment(fileName, +localStorage.getItem('selectedTicket')!).subscribe({
                 next: (response: BlobPart) => {
                   var attachment: iAttachment = {} as iAttachment;
-                  attachment.attachmentPath = attachmentPath;
+                  attachment.path = attachmentPath;
                   attachment.attachmentUrl = URL.createObjectURL(new Blob([response], { type: 'application/octet-stream' }));
                   if(fileName.endsWith('.jpg') || fileName.endsWith('.jpeg') || fileName.endsWith('.png')){
 
@@ -157,7 +161,7 @@ export class HistoryComponent {
   downloadAttachment(attachmentPath: string) {
     var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/' + this.ticketId + '/';
     const fileName = attachmentPath.substring(pathPrefix.length);
-    this.apiService.downloadAttachment(fileName, +localStorage.getItem('selectedTicket')!).subscribe({
+    this.messagesService.downloadAttachment(fileName, +localStorage.getItem('selectedTicket')!).subscribe({
       next: (response: BlobPart) => {
         const blob = new Blob([response], { type: 'application/octet-stream' });
         const url = window.URL.createObjectURL(blob);

@@ -5,7 +5,6 @@ import { IncidenceTableComponent } from "../../components/incidences/incidence-t
 import { IncidenceDataComponent } from "../../components/incidences/incidence-data/incidence-data.component";
 import { MessageComponent } from "../../components/messages/menssage/message.component";
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService } from 'src/app/services/api.service';
 import { iMessage } from 'src/app/models/tickets/iMessage';
 import { HelpdeskComponent } from "../../components/messages/helpdesk/helpdesk.component";
 import { ComunicationComponent } from "../../components/messages/comunication/comunication.component";
@@ -19,6 +18,7 @@ import { LoadingService } from 'src/app/services/loading.service';
 import { Observable } from 'rxjs';
 import { iTicket } from 'src/app/models/tickets/iTicket';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
+import { TicketsService } from 'src/app/services/tickets/tickets.service';
 
 @Component({
     selector: 'app-incidence-user',
@@ -38,8 +38,9 @@ export class IncidenceUserComponent {
   ticketStatus: string = '';
 
   
-    constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router ,
-                private translate: TranslateService, private loadingService: LoadingService, private languageUpdateService: LanguageUpdateService) {
+    constructor(private route: ActivatedRoute, private ticketsService: TicketsService, private router: Router ,
+                private translate: TranslateService, private loadingService: LoadingService,
+                private languageUpdateService: LanguageUpdateService) {
       this.translate.addLangs(['en', 'es']);
       const lang = this.translate.getBrowserLang();
       if (lang !== 'en' && lang !== 'es') {
@@ -59,7 +60,7 @@ export class IncidenceUserComponent {
           this.router.navigate(['/404']);
         }
       });
-      this.apiService.getTicketById(this.ticketId).subscribe({
+      this.ticketsService.getTicketById(this.ticketId).subscribe({
         next: (response: iTicket) => {
           this.ticket = {
             id: response.id,

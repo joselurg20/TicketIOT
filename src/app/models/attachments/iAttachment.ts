@@ -1,5 +1,5 @@
 export interface iAttachment {
-    attachmentPath: string,
+    path: string,
     attachmentUrl: string,
     previewUrl: string
 }

@@ -1,21 +1,22 @@
 import { Injectable, OnInit } from '@angular/core';
-import { ApiService } from './api.service';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { TicketFilterRequestDto } from '../models/tickets/TicketFilterRequestDto';
-import { iTicketTableSM } from '../models/tickets/iTicketTableSM';
-import { iTicketGraph } from '../models/tickets/iTicketsGraph';
-import { iUserGraph } from '../models/users/iUserGraph';
-import { LanguageUpdateService } from './languageUpdateService';
-import { iUserTable } from '../models/users/iUserTable';
-import { LoginService } from './login.service';
-import { iTicket } from '../models/tickets/iTicket';
-import { iUser } from '../models/users/iUser';
-import { FilterTicketJsonResult, TicketJsonResult, UserJsonResult } from '../models/JsonResult';
+import { TicketFilterRequestDto } from '../../models/tickets/TicketFilterRequestDto';
+import { iTicketTableSM } from '../../models/tickets/iTicketTableSM';
+import { iTicketGraph } from '../../models/tickets/iTicketsGraph';
+import { iUserGraph } from '../../models/users/iUserGraph';
+import { LanguageUpdateService } from '../languageUpdateService';
+import { iUserTable } from '../../models/users/iUserTable';
+import { LoginService } from '../users/login.service';
+import { iTicket } from '../../models/tickets/iTicket';
+import { iUser } from '../../models/users/iUser';
+import { FilterTicketJsonResult, TicketJsonResult, UserJsonResult } from '../../models/JsonResult';
+import { TicketsService } from './tickets.service';
+import { UsersService } from '../users/users.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TicketsService {
+export class TicketDataService {
   
   private ticketsSubject: BehaviorSubject<iTicketTableSM[]> = new BehaviorSubject<iTicketTableSM[]>([]);
   tickets$: Observable<iTicketTableSM[]> = this.ticketsSubject.asObservable();
@@ -28,8 +29,8 @@ export class TicketsService {
   private usersFNSubject: BehaviorSubject<iUserGraph[]> = new BehaviorSubject<iUserGraph[]>([]);
   usersFN$: Observable<iUserGraph[]> = this.usersFNSubject.asObservable();
 
-  constructor(private apiService: ApiService, private langUpdateService: LanguageUpdateService,
-              private loginService: LoginService) { }
+  constructor(private ticketsService: TicketsService, private langUpdateService: LanguageUpdateService,
+              private loginService: LoginService, private usersService: UsersService) { }
 
 
   /**
@@ -40,7 +41,7 @@ export class TicketsService {
     console.log('Entrando a getTickets');
     if (isSupportManager) {
       console.log('Es SupportManager');
-      this.apiService.getTicketsByUser(-1).subscribe({
+      this.ticketsService.getTicketsByUser(-1).subscribe({
         next: (response: TicketJsonResult) => {
           const tickets: iTicketTableSM[] = response.$values.map((value: iTicket) => {
             return {
@@ -76,7 +77,7 @@ export class TicketsService {
         }
       });
       
-      this.apiService.getTickets().subscribe({
+      this.ticketsService.getTickets().subscribe({
         next: (response: TicketJsonResult) => {
           const tickets: iTicketGraph[] = response.$values.map((value: iTicketGraph) => {
             return {
@@ -94,7 +95,7 @@ export class TicketsService {
       })
     } else {
       console.log('No es SupportManager');
-        this.apiService.getTicketsByUser(parseInt(localStorage.getItem('userId')!)).subscribe({
+        this.ticketsService.getTicketsByUser(parseInt(localStorage.getItem('userId')!)).subscribe({
             next: (response: TicketJsonResult) => {
               const tickets: iTicketTableSM[] = response.$values.map((value: iTicket) => {
                 return {
@@ -120,7 +121,7 @@ export class TicketsService {
                     userId: value.userId
                   };
               });
-              this.apiService.getUserById(parseInt(localStorage.getItem('userId')!)).subscribe({
+              this.usersService.getUserById(parseInt(localStorage.getItem('userId')!)).subscribe({
                 next: (response: iUser) => {
                   tickets.forEach((ticket: iTicketTableSM) => {
                     ticket.techName = response.fullName;
@@ -150,7 +151,7 @@ export class TicketsService {
 
   getTechnicians() {
     console.log('Entrando a getTechnicians');
-    this.apiService.getTechnicians().subscribe({
+    this.usersService.getTechnicians().subscribe({
       next: (response: UserJsonResult) => {
         const users: iUserGraph[] = response.result.map((value: iUser) => {
           return {
@@ -181,7 +182,7 @@ export class TicketsService {
     filter.status = +filter.status;
     filter.priority = +filter.priority;
     filter.userId = +filter.userId;
-    this.apiService.filterTickets(filter).subscribe({
+    this.ticketsService.filterTickets(filter).subscribe({
         next: (response: FilterTicketJsonResult) => {
           console.log('response', response);
           const tickets: iTicketTableSM[] = response.tickets.$values.map((value: iTicket) => {
@@ -208,7 +209,7 @@ export class TicketsService {
                 userId: value.userId
               };
           });
-          this.apiService.getUsers().subscribe({
+          this.usersService.getUsers().subscribe({
             next: (response: UserJsonResult) => {
               const users: iUserTable[] = response.result.map((value: iUser) => {
                 return {

@@ -4,7 +4,7 @@ import { Chart, registerables } from 'chart.js';
 import { Observable, Subscription } from 'rxjs';
 import { iTicketGraph } from 'src/app/models/tickets/iTicketsGraph';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
-import { TicketsService } from 'src/app/services/tickets.service';
+import { TicketDataService } from 'src/app/services/tickets/ticketData.service';
 import { Status } from 'src/app/utilities/enum';
 import { LoadingComponent } from "../../shared/loading.component";
 import { LoadingService } from 'src/app/services/loading.service';
@@ -30,7 +30,7 @@ export class ChartBarComponent implements OnInit {
   private langUpdateSubscription: Subscription = {} as Subscription;
   isFirstLoad: boolean = true;
 
-  constructor(private ticketsService: TicketsService, private langUpdateService: LanguageUpdateService,
+  constructor(private ticketsService: TicketDataService, private langUpdateService: LanguageUpdateService,
               private loadingService: LoadingService) {
     this.loading$ = this.loadingService.loading$;
   }

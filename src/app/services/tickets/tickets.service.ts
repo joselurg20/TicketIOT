@@ -1,78 +1,20 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TicketDto } from '../models/tickets/TicketDTO';
-import { TicketFilterRequestDto } from '../models/tickets/TicketFilterRequestDto';
-import { iUser } from '../models/users/iUser';
-import { iTicket } from '../models/tickets/iTicket';
-import { iMessage } from '../models/tickets/iMessage';
-import { FilterTicketJsonResult, MessageJsonResult, TicketJsonResult, UserJsonResult } from '../models/JsonResult';
+import { FilterTicketJsonResult, TicketJsonResult } from 'src/app/models/JsonResult';
+import { TicketDto } from 'src/app/models/tickets/TicketDTO';
+import { TicketFilterRequestDto } from 'src/app/models/tickets/TicketFilterRequestDto';
+import { iTicket } from 'src/app/models/tickets/iTicket';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService {
+export class TicketsService {
   private apiUrl = 'https://localhost:7131/gateway';
   
 
   constructor(private http: HttpClient) { }
 
-  /**
-   * Obtiene todos los usuarios.
-   * @returns Observable<iUser[]> con todos los usuarios.
-   */
-  getUsers(): Observable<UserJsonResult> {
-    const token = localStorage.getItem('authToken');
-  
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-
-    return this.http.get<UserJsonResult>(`${this.apiUrl}/Users/users/getall`, { headers });
-  }
-
-  /**
-   * Obtiene un usuario por su ID.
-   * @param userId el Id del usuario.
-   * @returns Observable<iuser> con el usuario obtenido.
-   */
-  getUserById(userId: number): Observable<iUser> {
-    return this.http.get<iUser>(`${this.apiUrl}/Users/users/getbyid/${userId}`);
-  }
-
-  /**
-   * Obtiene todos los usuarios con rol 'SupportTechnician'.
-   * @returns Observable<iUser[]> con los técnicos.
-   */
-  getTechnicians(): Observable<UserJsonResult> {
-    const token = localStorage.getItem('authToken');
-  
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-    return this.http.get<UserJsonResult>(`${this.apiUrl}/Users/users/gettechnicians`, { headers });
-  }
-
-  /**
-   * Comprueba si un correo existe en la base de datos y, si existe envía un mail
-   * de recuperación de contraseña.
-   * @param username el nombre del email.
-   * @param domain el dominio del email.
-   * @param tld la terminación del email.
-   * @returns 
-   */
-  checkEmail(username: string, domain: string, tld: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.apiUrl}/Users/users/sendemail/${username}/${domain}/${tld}`);
-  }
-
-  /**
-   * Cambia la contraseña de un usuario por la pasada como parámetro.
-   * @param formData FormData con la nueva contraseña.
-   * @returns 
-   */
-  resetPassword(formData: FormData): Observable<boolean> {
-    return this.http.post<boolean>(`${this.apiUrl}/Users/users/resetpassword`, formData);
-  }
 
   /**
    * Obtiene todas las incidencias de la base de datos.
@@ -144,25 +86,6 @@ export class ApiService {
   getTicketById(ticketId: number): Observable<iTicket> {
     return this.http.get<iTicket>(`${this.apiUrl}/tickets/getbyid/${ticketId}`);
   }
-
-  /**
-   * Obtiene los mensajes de una incidencia por su ID.
-   * @param ticketId el id de la incidencia.
-   * @returns Observable<iMessage[]> con los mensajes.
-   */
-  getMessagesByTicket(ticketId: number): Observable<MessageJsonResult> {
-    return this.http.get<MessageJsonResult>(`${this.apiUrl}/messages/getbyticket/${ticketId}`);
-  }
-
-  /**
-   * Descarga un archivo del servidor.
-   * @param attachmentPath ruta del archivo.
-   * @param ticketId el id de la incidencia a la que pertenece.
-   * @returns Observable<Blob> con el archivo.
-   */
-  downloadAttachment(attachmentPath: string, ticketId: number): Observable<Blob> {
-    return this.http.get(`${this.apiUrl}/messages/download/${ticketId}/${attachmentPath}`, { responseType: 'blob' });
-  }
   
   /**
    * Asigna una incidencia a un técnico.
@@ -220,14 +143,5 @@ export class ApiService {
     });
 
     return this.http.put<boolean>(`${this.apiUrl}/tickets/changestatus/${ticketId}/${status}`, null, {headers});
-  }
-
-  /**
-   * Crea un nuevo mensaje para una incidencia.
-   * @param formData FormData con los datos del mensaje.
-   * @returns 
-   */
-  createMessage(formData: FormData): Observable<boolean> {
-    return this.http.post<boolean>(`${this.apiUrl}/messages/create`, formData);
   }
 }

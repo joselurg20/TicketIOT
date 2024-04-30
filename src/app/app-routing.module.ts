@@ -5,7 +5,6 @@ import { IncidenceDataComponent } from './components/incidences/incidence-data/i
 import { IncidenceIndexComponent } from './components/incidences/incidence-index/incidence-index.component';
 import { IncidencePruebaComponent } from './components/incidences/incidence-prueba/incidence-prueba.component';
 import { IncidenceTableComponent } from './components/incidences/incidence-table/incidence-table.component';
-import { IncidenceTicketsComponent } from './components/incidences/incidence-tickets/incidence-tickets.component';
 import { CloseComponent } from './components/login/close/close.component';
 import { LoginComponent } from './components/login/login-index/login.component';
 import { RecoveredComponent } from './components/login/recovered/recovered.component';
@@ -36,7 +35,6 @@ const routes: Routes = [
 
   //Pruebas 
   { path: "prueba", component: IncidenceTableComponent },
-  { path: "prueba2", component: IncidenceTicketsComponent },
   { path: "prueba3/:ticketId", component: MessageComponent },
   { path: "prueba4", component: IncidencePruebaComponent },
   { path: "prueba5", component: TechnicalTableComponent },

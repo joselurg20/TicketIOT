@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ApiService } from 'src/app/services/api.service';
 import { iUserGraph } from 'src/app/models/users/iUserGraph';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TicketUpdateService } from 'src/app/services/ticketUpdate.service';
+import { TicketUpdateService } from 'src/app/services/tickets/ticketUpdate.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LoadingService } from 'src/app/services/loading.service';
-import { TicketsService } from 'src/app/services/tickets.service';
+import { TicketDataService } from 'src/app/services/tickets/ticketData.service';
+import { TicketsService } from 'src/app/services/tickets/tickets.service';
 
 @Component({
   selector: 'app-manager',
@@ -23,9 +23,9 @@ export class ManagerComponent implements OnInit {
   selectedStatusValue: number = -1;
   isWorking: boolean = false;
 
-  constructor(private apiService: ApiService, private ticketsService: TicketsService,
-              private ticketUpdateService: TicketUpdateService, private loadingService: LoadingService,
-              private translate: TranslateService) {
+  constructor(private ticketDataService: TicketDataService, private ticketUpdateService: TicketUpdateService,
+              private loadingService: LoadingService, private translate: TranslateService,
+              private ticketsService: TicketsService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -37,7 +37,7 @@ export class ManagerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.ticketsService.usersFN$.subscribe({
+    this.ticketDataService.usersFN$.subscribe({
       next: (response: iUserGraph[]) => {
         const users = response.map((value: iUserGraph) => {
           return {
@@ -60,7 +60,7 @@ export class ManagerComponent implements OnInit {
   assignTicket() {
     if (this.selectedUserId != -1) {
       this.loadingService.showLoading();
-      this.apiService.assignTechnician(parseInt(localStorage.getItem('selectedTicket')!), this.selectedUserId).subscribe({
+      this.ticketsService.assignTechnician(parseInt(localStorage.getItem('selectedTicket')!), this.selectedUserId).subscribe({
         next: () => {
           this.ticketUpdateService.triggerTicketUpdate();
           this.loadingService.hideLoading();
@@ -78,7 +78,7 @@ export class ManagerComponent implements OnInit {
   updatePrio() {
     if (this.selectedPriorityValue != -1) {
       this.loadingService.showLoading();
-      this.apiService.changeTicketPriority(parseInt(localStorage.getItem('selectedTicket')!), this.selectedPriorityValue).subscribe({
+      this.ticketsService.changeTicketPriority(parseInt(localStorage.getItem('selectedTicket')!), this.selectedPriorityValue).subscribe({
         next: () => {
           this.ticketUpdateService.triggerTicketUpdate();
           this.loadingService.hideLoading();
@@ -96,7 +96,7 @@ export class ManagerComponent implements OnInit {
   updateStatus() {
     if (this.selectedStatusValue != -1) {
       this.loadingService.showLoading();
-      this.apiService.changeTicketStatus(parseInt(localStorage.getItem('selectedTicket')!), this.selectedStatusValue).subscribe({
+      this.ticketsService.changeTicketStatus(parseInt(localStorage.getItem('selectedTicket')!), this.selectedStatusValue).subscribe({
         next: () => {
           this.ticketUpdateService.triggerTicketUpdate();
           this.loadingService.hideLoading();

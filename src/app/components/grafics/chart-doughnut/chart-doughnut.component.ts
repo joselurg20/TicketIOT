@@ -1,15 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
-import { ApiService } from 'src/app/services/api.service';
 import { iTicketGraph } from 'src/app/models/tickets/iTicketsGraph';
 import { iUserGraph } from 'src/app/models/users/iUserGraph';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { Observable, Subscription } from 'rxjs';
-import { TicketsService } from 'src/app/services/tickets.service';
+import { TicketDataService } from 'src/app/services/tickets/ticketData.service';
 import { LoadingComponent } from "../../shared/loading.component";
 import { LoadingService } from 'src/app/services/loading.service';
-import { LoginService } from 'src/app/services/login.service';
 
 @Component({
     selector: 'app-chart-doughnut',
@@ -30,8 +28,8 @@ export class ChartDoughnutComponent {
   loading$: Observable<boolean>;
   isFirstLoad: boolean = true;
 
-  constructor(private apiService: ApiService, private langUpdateService: LanguageUpdateService,
-              private ticketsService: TicketsService, private loadingService: LoadingService) {
+  constructor(private langUpdateService: LanguageUpdateService, private ticketsService: TicketDataService,
+              private loadingService: LoadingService) {
     this.loading$ = this.loadingService.loading$;
    }
 

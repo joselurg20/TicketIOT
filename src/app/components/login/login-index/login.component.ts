@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import * as CryptoJS from 'crypto-js';
 import { LoadingService } from 'src/app/services/loading.service';
-import { LoginService } from '../../../services/login.service';
+import { LoginService } from '../../../services/users/login.service';
 import { LenguageComponent } from "../../lenguage/lenguage.component";
 import { SidebarComponent } from "../../sidebar/sidebar.component";
 import { LoadingComponent } from '../../shared/loading.component';

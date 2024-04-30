@@ -18,6 +18,7 @@ import { LoadingComponent } from 'src/app/components/shared/loading.component';
 import { LoadingService } from 'src/app/services/loading.service';
 import { Observable } from 'rxjs';
 import { iTicket } from 'src/app/models/tickets/iTicket';
+import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 
 @Component({
     selector: 'app-incidence-user',
@@ -38,7 +39,7 @@ export class IncidenceUserComponent {
 
   
     constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router ,
-                private translate: TranslateService, private loadingService: LoadingService) {
+                private translate: TranslateService, private loadingService: LoadingService, private languageUpdateService: LanguageUpdateService) {
       this.translate.addLangs(['en', 'es']);
       const lang = this.translate.getBrowserLang();
       if (lang !== 'en' && lang !== 'es') {
@@ -78,7 +79,7 @@ export class IncidenceUserComponent {
           console.error('Error al obtener el usuario', error);
         }
       });
-          this.languageUpdateService.langUpdated$.subscribe(() => {
+      this.languageUpdateService.langUpdated$.subscribe(() => {
       this.ticketStatus = this.getStatusString(this.ticket.status);
     });
     }

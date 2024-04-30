@@ -2,21 +2,15 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
+import { iTicket } from 'src/app/models/tickets/iTicket';
 import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
+import { iUser } from 'src/app/models/users/iUser';
 import { ApiService } from 'src/app/services/api.service';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { LoadingService } from 'src/app/services/loading.service';
 import { TicketUpdateService } from 'src/app/services/ticketUpdate.service';
 import { ButtonComponent } from "../../button/button.component";
 import { LoadingComponent } from "../../shared/loading.component";
-import { TicketUpdateService } from 'src/app/services/ticketUpdate.service';
-import { ButtonComponent } from "../../button/button.component";
-import { LoadingComponent } from "../../shared/loading.component";
-import { LoadingService } from 'src/app/services/loading.service';
-import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
-import { iUserDTO } from 'src/app/models/users/iUserDTO';
-import { iUser } from 'src/app/models/users/iUser';
-import { iTicket } from 'src/app/models/tickets/iTicket';
 
 @Component({
   selector: 'app-incidence-data',

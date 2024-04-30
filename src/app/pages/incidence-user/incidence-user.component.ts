@@ -18,12 +18,13 @@ import { LoadingComponent } from 'src/app/components/shared/loading.component';
 import { LoadingService } from 'src/app/services/loading.service';
 import { Observable } from 'rxjs';
 import { iTicket } from 'src/app/models/tickets/iTicket';
+
 @Component({
     selector: 'app-incidence-user',
     standalone: true,
+    imports: [CommonModule, MatGridListModule, NgFor, IncidenceTableComponent, IncidenceDataComponent, MessageComponent, HelpdeskComponent, ComunicationComponent, HistoryComponent, LenguageComponent, TranslateModule, LoadingComponent],
     templateUrl: './incidence-user.component.html',
-    styleUrls: ['./incidence-user.component.scss'],
-    imports: [CommonModule, MatGridListModule, NgFor, IncidenceTableComponent, IncidenceDataComponent, MessageComponent, HelpdeskComponent, ComunicationComponent, HistoryComponent, LenguageComponent, TranslateModule, LoadingComponent]
+    styleUrls: ['./incidence-user.component.scss']
 })
 export class IncidenceUserComponent {
   public messages: iMessage[] = [];
@@ -33,6 +34,9 @@ export class IncidenceUserComponent {
   public userName: string = '';
   hashedId: string = '';
   loading$: Observable<boolean>;
+  ticketStatus: string = '';
+
+  
     constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router ,
                 private translate: TranslateService, private loadingService: LoadingService) {
       this.translate.addLangs(['en', 'es']);
@@ -74,5 +78,35 @@ export class IncidenceUserComponent {
           console.error('Error al obtener el usuario', error);
         }
       });
+          this.languageUpdateService.langUpdated$.subscribe(() => {
+      this.ticketStatus = this.getStatusString(this.ticket.status);
+    });
     }
+  
+   getStatusString(status: number): string {
+    if (localStorage.getItem('selectedLanguage') == 'en') {
+      switch (status) {
+        case 1:
+          return 'OPENED';
+        case 2:
+          return 'PAUSED';
+        case 3:
+          return 'FINISHED';
+        default:
+          return 'PENDING';
+      }
+    } else if (localStorage.getItem('selectedLanguage') == 'es') {
+      switch (status) {
+        case 1:
+          return 'ABIERTA';
+        case 2:
+          return 'PAUSADA';
+        case 3:
+          return 'TERMINADA';
+        default:
+          return 'PENDIENTE';
+      }
+    }
+    return '';
+  }
 }

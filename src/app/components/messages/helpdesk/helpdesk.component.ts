@@ -9,6 +9,8 @@ import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
 import { ApiService } from 'src/app/services/api.service';
 import { MessagesUpdateService } from 'src/app/services/messagesUpdate.service';
 import { SnackbarMenssageComponent } from '../../snackbars/snackbar-menssage/snackbar-menssage.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
 import { iUserGraph } from 'src/app/models/users/iUserGraph';
 import { iTicket } from 'src/app/models/tickets/iTicket';
 
@@ -16,12 +18,12 @@ import { iTicket } from 'src/app/models/tickets/iTicket';
 @Component({
   selector: 'app-helpdesk',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule, MatButtonModule, MatTooltipModule],
   templateUrl: './helpdesk.component.html',
   styleUrls: ['./helpdesk.component.scss']
 })
 export class HelpdeskComponent {
- 
+
   public messageForm!: FormGroup;
   public ticket: iTicketDescriptor = {} as iTicketDescriptor;
   public success: boolean = true;
@@ -82,6 +84,21 @@ export class HelpdeskComponent {
         console.error('Error al obtener el usuario', error);
       }
     })
+  }
+
+  deleteFile(index: number) : void {
+  
+      this.previewUrls.splice(index, 1);
+      this.selectedFiles.splice(index, 1);
+ 
+  }
+
+
+  truncateFileName(fileName: string, maxLength: number): string {
+    if (fileName.length > maxLength) {
+      return fileName.substr(0, maxLength) + '...';
+    }
+    return fileName;
   }
 
   openSnackBar() {
@@ -205,7 +222,6 @@ export class HelpdeskComponent {
   * Actualiza la previsualización de un archivo adjunto.
   * @param event el evento que lanza la función.
   */
-
 
   onFileChange(event: any) {
     this.selectedFiles = event.target.files;

@@ -4,6 +4,11 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
 import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
 import { ApiService } from 'src/app/services/api.service';
+import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
+import { LoadingService } from 'src/app/services/loading.service';
+import { TicketUpdateService } from 'src/app/services/ticketUpdate.service';
+import { ButtonComponent } from "../../button/button.component";
+import { LoadingComponent } from "../../shared/loading.component";
 import { TicketUpdateService } from 'src/app/services/ticketUpdate.service';
 import { ButtonComponent } from "../../button/button.component";
 import { LoadingComponent } from "../../shared/loading.component";
@@ -24,24 +29,24 @@ import { iTicket } from 'src/app/models/tickets/iTicket';
 export class IncidenceDataComponent implements OnInit {
 
   ticket: iTicketDescriptor = {
-                                id: 0,
-                                title: '',
-                                name: '',
-                                email: '',
-                                timestamp: '',
-                                priority: 0,
-                                status: 0,
-                                userId: '0',
-                                userName: '' 
-                              };
+    id: 0,
+    title: '',
+    name: '',
+    email: '',
+    timestamp: '',
+    priority: 0,
+    status: 0,
+    userId: '0',
+    userName: ''
+  };
   ticketPrio: string = '';
   ticketStatus: string = '';
   private ticketUpdateSubscription: Subscription = {} as Subscription;
   loading$: Observable<boolean>;
 
   constructor(private apiService: ApiService, private ticketUpdateService: TicketUpdateService,
-              private loadingService: LoadingService, private cdr: ChangeDetectorRef,
-              private translate: TranslateService, private languageUpdateService: LanguageUpdateService) {
+    private loadingService: LoadingService, private cdr: ChangeDetectorRef,
+    private translate: TranslateService, private languageUpdateService: LanguageUpdateService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -178,7 +183,7 @@ export class IncidenceDataComponent implements OnInit {
    * @returns la cadena de texto a representar.
    */
   getPriorityString(priority: number): string {
-    if(localStorage.getItem('selectedLanguage') == 'en') {
+    if (localStorage.getItem('selectedLanguage') == 'en') {
       switch (priority) {
         case 1:
           return 'LOWEST';
@@ -218,7 +223,7 @@ export class IncidenceDataComponent implements OnInit {
    * @returns la cadena de texto a representar.
    */
   getStatusString(status: number): string {
-    if(localStorage.getItem('selectedLanguage') == 'en') {
+    if (localStorage.getItem('selectedLanguage') == 'en') {
       switch (status) {
         case 1:
           return 'OPENED';

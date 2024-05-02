@@ -3,9 +3,7 @@
         <label for="estado" class="form-label"><i class="fa-solid fa-traffic-light"></i> {{"data.status" | translate}}</label>
         <select class="form-select form-select-lg" id="estado" required [(ngModel)]="selectedStatusValue" name="estado">
             <option value="-1">{{"data.option3" | translate}}</option>
-            <option value="1">{{"data.optionS2" | translate}}</option>
-            <option value="2">{{"data.optionS3" | translate}}</option>
-            <option value="3">{{"data.optionS4" | translate}}</option>
+            <option *ngFor="let s of status" value="s">{{getStatusString(s)}}</option>
         </select>
     </div>
 

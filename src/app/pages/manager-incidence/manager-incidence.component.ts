@@ -10,6 +10,9 @@ import { ManagerComponent } from "../../components/data/manager/manager.componen
 import { IncidenceDataComponent } from "../../components/incidences/incidence-data/incidence-data.component";
 import { ComunicationComponent } from "../../components/messages/comunication/comunication.component";
 import { LoadingComponent } from "../../components/shared/loading.component";
+import { LocalStorageKeys, Roles } from 'src/app/utilities/literals';
+import { UsersService } from 'src/app/services/users/users.service';
+import { iUser } from 'src/app/models/users/iUser';
 
 @Component({
     selector: 'app-support-incidence',
@@ -24,7 +27,8 @@ export class ManagerIncidenceComponent implements OnInit {
 
     loading$: Observable<boolean>;
 
-    constructor(private router: Router, private loadingService: LoadingService) {
+    constructor(private router: Router, private loadingService: LoadingService,
+                private usersService: UsersService) {
         this.loading$ = this.loadingService.loading$;
     }
 
@@ -34,7 +38,7 @@ export class ManagerIncidenceComponent implements OnInit {
             this.router.navigate(['/support-manager']);
         }
 
-        if (localStorage.getItem('userRole') !== 'SupportManager') {
+        if (this.usersService.currentUser?.role !== Roles.managerRole) {
             this.router.navigate(['/login']);
         };
         this.loadingService.hideLoading();

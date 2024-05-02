@@ -11,6 +11,9 @@ import { LenguageComponent } from "../../lenguage/lenguage.component";
 import { SidebarComponent } from "../../sidebar/sidebar.component";
 import { LoadingComponent } from '../../shared/loading.component';
 import { Observable } from 'rxjs';
+import { LocalStorageKeys, Roles } from 'src/app/utilities/literals';
+import { iUser } from 'src/app/models/users/iUser';
+import { UsersService } from 'src/app/services/users/users.service';
 
 
 function passwordValidator(control: FormControl): { [key: string]: any } | null {
@@ -35,10 +38,10 @@ function passwordValidator(control: FormControl): { [key: string]: any } | null 
 export class LoginComponent implements OnInit {
   public loginForm!: FormGroup; // Define loginForm como un FormGroup
   public errorMsg: string = "";
-  loading$: Observable<boolean>;	
+  loading$: Observable<boolean>;
 
   constructor(private loginService: LoginService, private loadingService: LoadingService,
-              private router: Router, private translate: TranslateService) {
+              private router: Router, private translate: TranslateService, private usersService: UsersService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -54,6 +57,7 @@ export class LoginComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, passwordValidator])
     });
+    this.loadingService.hideLoading();
   }
 
   /**
@@ -75,10 +79,9 @@ export class LoginComponent implements OnInit {
           this.loadingService.hideLoading();
 
           this.errorMsg = "";
-          localStorage.setItem('jwtToken', response);
-          if (localStorage.getItem('userRole') == 'SupportManager') {
+          if (this.usersService.currentUser?.role === Roles.managerRole) {
             this.router.navigate(['/support-manager']);
-          } else if (localStorage.getItem('userRole') == 'SupportTechnician') {
+          } else if (this.usersService.currentUser?.role === Roles.technicianRole) {
             this.router.navigate(['/support-technician']);
           }
         },

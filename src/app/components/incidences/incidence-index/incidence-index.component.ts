@@ -16,6 +16,7 @@ import { LenguageComponent } from "../../lenguage/lenguage.component";
 import { SidebarComponent } from '../../sidebar/sidebar.component';
 import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/snackbar-incidence.component';
 import { TicketsService } from 'src/app/services/tickets/tickets.service';
+import { LocalStorageKeys } from 'src/app/utilities/literals';
 
 
 @Component({
@@ -72,7 +73,7 @@ export class IncidenceIndexComponent implements OnInit {
       Email: new FormControl('', [Validators.required, Validators.email])
     });
 
-    if (localStorage.getItem('authToken') != null) {
+    if (localStorage.getItem(LocalStorageKeys.tokenKey) != null) {
       this.isLogged = true;
     } else {
       this.isLogged = false;

@@ -9,9 +9,11 @@ import { iUserTable } from '../../models/users/iUserTable';
 import { LoginService } from '../users/login.service';
 import { iTicket } from '../../models/tickets/iTicket';
 import { iUser } from '../../models/users/iUser';
-import { FilterTicketJsonResult, TicketJsonResult, UserJsonResult } from '../../models/JsonResult';
 import { TicketsService } from './tickets.service';
 import { UsersService } from '../users/users.service';
+import { iTicketFilterDto } from 'src/app/models/tickets/iTicketFilterDto';
+import { iTicketUserDto } from 'src/app/models/tickets/iTicketUserDto';
+import { LocalStorageKeys } from 'src/app/utilities/literals';
 
 @Injectable({
   providedIn: 'root'
@@ -38,12 +40,10 @@ export class TicketDataService {
    * @param isSupportManager boolean para saber si el usuario es SupportManager
    */
   getTickets(isSupportManager: boolean) {
-    console.log('Entrando a getTickets');
     if (isSupportManager) {
-      console.log('Es SupportManager');
-      this.ticketsService.getTicketsByUser(-1).subscribe({
-        next: (response: TicketJsonResult) => {
-          const tickets: iTicketTableSM[] = response.$values.map((value: iTicket) => {
+      this.ticketsService.getTicketsByUserWithNames(-1).subscribe({
+        next: (response: iTicketUserDto[]) => {
+          const tickets: iTicketTableSM[] = response.map((value: iTicketUserDto) => {
             return {
                 id: value.id,
                 title: value.title,
@@ -54,22 +54,20 @@ export class TicketDataService {
                 prioString: this.getPriorityString(value.priority),
                 status: value.status,
                 statusString: this.getStatusString(value.status),
-                techName: 'Sin asignar',
+                techName: value.fullName,
                 techId: value.userId,
                 hasNewMessages: value.hasNewMessages,
                 newMessagesCount: value.newMessagesCount
               };
           });
-          const ticketGraphs: iTicketGraph[] = response.$values.map((value: iTicketGraph) => {
+          const ticketGraphs: iTicketGraph[] = response.map((value: iTicketGraph) => {
             return {
                 priority: value.priority,
                 status: value.status,
                 userId: value.userId
               };
           });
-          console.log('Lanzando trigger de Tickets');
           this.ticketsSubject.next(tickets);
-          console.log('Lanzando trigger de TicketGraphs');
           this.ticketGraphsSubject.next(ticketGraphs);
         },
         error: (error: any) => {
@@ -78,15 +76,14 @@ export class TicketDataService {
       });
       
       this.ticketsService.getTickets().subscribe({
-        next: (response: TicketJsonResult) => {
-          const tickets: iTicketGraph[] = response.$values.map((value: iTicketGraph) => {
+        next: (response: iTicket[]) => {
+          const tickets: iTicketGraph[] = response.map((value: iTicketGraph) => {
             return {
                 priority: value.priority,
                 status: value.status,
                 userId: value.userId
               };
           })
-          console.log('Lanzando trigger de UsersGraph');
           this.usersGraphSubject.next(tickets);
         },
         error: (error: any) => {
@@ -94,10 +91,9 @@ export class TicketDataService {
         }
       })
     } else {
-      console.log('No es SupportManager');
-        this.ticketsService.getTicketsByUser(parseInt(localStorage.getItem('userId')!)).subscribe({
-            next: (response: TicketJsonResult) => {
-              const tickets: iTicketTableSM[] = response.$values.map((value: iTicket) => {
+        this.ticketsService.getTicketsByUserWithNames(this.usersService.currentUser?.id!).subscribe({
+            next: (response: iTicketUserDto[]) => {
+              const tickets: iTicketTableSM[] = response.map((value: iTicketUserDto) => {
                 return {
                   id: value.id,
                   title: value.title,
@@ -111,26 +107,16 @@ export class TicketDataService {
                   hasNewMessages: value.hasNewMessages,
                   newMessagesCount: value.newMessagesCount,
                   techId: value.userId,
-                  techName: ''
+                  techName: value.fullName
                 };
               });
-              const ticketGraphs: iTicketGraph[] = response.$values.map((value: iTicketGraph) => {
+              const ticketGraphs: iTicketGraph[] = response.map((value: iTicketGraph) => {
                 return {
                     priority: value.priority,
                     status: value.status,
                     userId: value.userId
                   };
               });
-              this.usersService.getUserById(parseInt(localStorage.getItem('userId')!)).subscribe({
-                next: (response: iUser) => {
-                  tickets.forEach((ticket: iTicketTableSM) => {
-                    ticket.techName = response.fullName;
-                  });
-                },
-                error: (error: any) => {
-                  console.error('Error al obtener el usuario:', error);
-                }
-              })
               for (let ticket of tickets) {
                 if (ticket.status == 3) {
                   tickets.splice(tickets.indexOf(ticket), 1);
@@ -150,26 +136,23 @@ export class TicketDataService {
   }
 
   getTechnicians() {
-    console.log('Entrando a getTechnicians');
     this.usersService.getTechnicians().subscribe({
-      next: (response: UserJsonResult) => {
-        const users: iUserGraph[] = response.result.map((value: iUser) => {
+      next: (response: iUser[]) => {
+        const users: iUserGraph[] = response.map((value: iUser) => {
           return {
             id: value.id,
             userName: value.userName,
             fullName: value.fullName
           }
         })
-        const usersFN: iUserGraph[] = response.result.map((value: iUser) => {
+        const usersFN: iUserGraph[] = response.map((value: iUser) => {
           return {
             id: value.id,
             userName: value.fullName,
             fullName: value.fullName
           }
         })
-        console.log('Lanzando trigger de UsersFN');
         this.usersFNSubject.next(usersFN);
-        console.log('Lanzando trigger de Users');
         this.usersSubject.next(users);
       },
       error: (error: any) => {
@@ -183,9 +166,8 @@ export class TicketDataService {
     filter.priority = +filter.priority;
     filter.userId = +filter.userId;
     this.ticketsService.filterTickets(filter).subscribe({
-        next: (response: FilterTicketJsonResult) => {
-          console.log('response', response);
-          const tickets: iTicketTableSM[] = response.tickets.$values.map((value: iTicket) => {
+        next: (response: iTicketFilterDto) => {
+          const tickets: iTicketTableSM[] = response.tickets.map((value: iTicketUserDto) => {
             return {
               id: value.id,
               title: value.title,
@@ -197,44 +179,18 @@ export class TicketDataService {
               status: value.status,
               statusString: this.getStatusString(value.status),
               techId: value.userId,
-              techName: '',
+              techName: value.fullName,
               hasNewMessages: value.hasNewMessages,
               newMessagesCount: value.newMessagesCount
             };
           });
-          const ticketGraphs: iTicketGraph[] = response.tickets.$values.map((value: iTicket) => {
+          const ticketGraphs: iTicketGraph[] = response.tickets.map((value: iTicket) => {
             return {
                 priority: value.priority,
                 status: value.status,
                 userId: value.userId
               };
           });
-          this.usersService.getUsers().subscribe({
-            next: (response: UserJsonResult) => {
-              const users: iUserTable[] = response.result.map((value: iUser) => {
-                return {
-                  id: value.id,
-                  userName: value.fullName,
-                  fullName: value.fullName,
-                  email: value.email,
-                  phoneNumber: value.phoneNumber
-                };
-              });
-              tickets.forEach((ticket) => {
-                const user = users.find((user) => user.id === ticket.techId);
-                if (user) {
-                  ticket.techName = user.fullName;
-                } else {
-                  ticket.techName = 'Sin asignar'
-                }
-              });
-              this.ticketsSubject.next(tickets);
-              this.ticketGraphsSubject.next(ticketGraphs);
-            },
-            error: (error: any) => {
-              console.error('Error al obtener los tickets del usuario:', error);
-            }
-          })
           this.ticketsSubject.next(tickets);
           this.ticketGraphsSubject.next(ticketGraphs);
         },
@@ -269,7 +225,7 @@ export class TicketDataService {
    * @returns la cadena de texto a representar.
    */
   getPriorityString(priority: number): string {
-    if(localStorage.getItem('selectedLanguage') == 'en') {
+    if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
       switch (priority) {
         case 1:
           return 'LOWEST';
@@ -284,7 +240,7 @@ export class TicketDataService {
         default:
           return 'NOT SURE';
       }
-    } else if (localStorage.getItem('selectedLanguage') == 'es') {
+    } else if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es') {
       switch (priority) {
         case 1:
           return 'MUY BAJA';
@@ -309,7 +265,7 @@ export class TicketDataService {
    * @returns la cadena de texto a representar.
    */
   getStatusString(status: number): string {
-    if(localStorage.getItem('selectedLanguage') == 'en') {
+    if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
       switch (status) {
         case 1:
           return 'OPENED';
@@ -320,7 +276,7 @@ export class TicketDataService {
         default:
           return 'PENDING';
       }
-    } else if (localStorage.getItem('selectedLanguage') == 'es') {
+    } else if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es') {
       switch (status) {
         case 1:
           return 'ABIERTA';

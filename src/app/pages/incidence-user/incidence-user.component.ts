@@ -19,6 +19,7 @@ import { Observable } from 'rxjs';
 import { iTicket } from 'src/app/models/tickets/iTicket';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { TicketsService } from 'src/app/services/tickets/tickets.service';
+import { LocalStorageKeys } from 'src/app/utilities/literals';
 
 @Component({
     selector: 'app-incidence-user',
@@ -86,7 +87,7 @@ export class IncidenceUserComponent {
     }
   
    getStatusString(status: number): string {
-    if (localStorage.getItem('selectedLanguage') == 'en') {
+    if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
       switch (status) {
         case 1:
           return 'OPENED';
@@ -97,7 +98,7 @@ export class IncidenceUserComponent {
         default:
           return 'PENDING';
       }
-    } else if (localStorage.getItem('selectedLanguage') == 'es') {
+    } else if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es') {
       switch (status) {
         case 1:
           return 'ABIERTA';

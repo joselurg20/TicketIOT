@@ -1,4 +1,3 @@
-import { AttachmentJsonResult } from "../JsonResult";
 import { iAttachment } from "../attachments/iAttachment";
 
 export interface iMessageDto {

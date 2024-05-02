@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
-import { AttachmentJsonResult, MessageJsonResult } from 'src/app/models/JsonResult';
 import { iAttachment } from 'src/app/models/attachments/iAttachment';
 import { TicketDto } from 'src/app/models/tickets/TicketDTO';
 import { iMessage } from 'src/app/models/tickets/iMessage';
@@ -10,6 +9,7 @@ import { iMessageDto } from 'src/app/models/tickets/iMessageDto';
 import { MessagesService } from 'src/app/services/tickets/messages.service';
 import { MessagesUpdateService } from 'src/app/services/tickets/messagesUpdate.service';
 import { TicketsService } from 'src/app/services/tickets/tickets.service';
+import { LocalStorageKeys } from 'src/app/utilities/literals';
 
 @Component({
   selector: 'app-message',
@@ -38,7 +38,7 @@ export class MessageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    var ticketIdLS = localStorage.getItem('selectedTicket');
+    var ticketIdLS = localStorage.getItem(LocalStorageKeys.selectedTicket);
     if (ticketIdLS != null) {
       this.ticketId = +ticketIdLS;
     }
@@ -57,20 +57,18 @@ export class MessageComponent implements OnInit {
    */
   refreshMessagesData() {
     this.messagesService.getMessagesByTicket(this.ticketId).subscribe({
-      next: (response: MessageJsonResult) => {
-        console.log ('response', response);
-        this.messages = response.$values.map((message: iMessage) => {
+      next: (response: iMessage[]) => {
+        this.messages = response.map((message: iMessage) => {
           return {
             id: message.id,
             author: message.author,
             content: message.content,
-            attachmentPaths: message.attachmentPaths.$values.map((attachmentPath: iAttachment) => attachmentPath.path),
+            attachmentPaths: message.attachmentPaths.map((attachmentPath: iAttachment) => attachmentPath.path),
             attachments: [],
             ticketID: message.ticketID,
             timestamp: this.formatDate(message.timestamp)
           }
         })
-        console.log('messages', this.messages);
       },
       error: (error: any) => {
         console.error('Error al obtener los mensajes del ticket', error);
@@ -171,7 +169,7 @@ export class MessageComponent implements OnInit {
   downloadAttachment(attachmentPath: string) {
     var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/' + this.ticketId + '/';
     const fileName = attachmentPath.substring(pathPrefix.length);
-    this.messagesService.downloadAttachment(fileName, +localStorage.getItem('selectedTicket')!).subscribe({
+    this.messagesService.downloadAttachment(fileName, +localStorage.getItem(LocalStorageKeys.selectedTicket)!).subscribe({
       next: (response: BlobPart) => {
         const blob = new Blob([response], { type: 'application/octet-stream' });
         const url = window.URL.createObjectURL(blob);

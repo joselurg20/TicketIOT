@@ -1,31 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { LocalStorageKeys } from 'src/app/utilities/literals';
+import { UsersService } from './users.service';
+import { iUser } from 'src/app/models/users/iUser';
 
 @Injectable({
     providedIn: 'root'
 })
 export class LoginService {
     private readonly apiUrl = 'https://localhost:7131/gateway/users/authenticate';
-    private readonly tokenKey = 'authToken';
-    private readonly userIdKey = 'userId';
-    private readonly userNameKey = 'userName';
-    private readonly userEmailKey = 'userEmail';
-    private readonly roleKey = 'userRole';
-    private readonly userLanguageKey = 'userLanguage';
 
     private authTokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
-    private userIdSubject: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(null);
-    private userNameSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
-    private emailSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
-    private roleSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
-    private userLanguageSubject: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(null);
 
-    constructor(private http: HttpClient, private router: Router) {
+    constructor(private http: HttpClient, private router: Router, private usersService: UsersService) {
 
-        const storedToken = localStorage.getItem(this.tokenKey);
+        const storedToken = localStorage.getItem(LocalStorageKeys.tokenKey);
         if (storedToken) {
             this.authTokenSubject.next(storedToken);
         }
@@ -43,39 +35,29 @@ export class LoginService {
         return this.http.post<any>(this.apiUrl, loginData).pipe(
             tap(response => {
                 if (response && response.token) {
-                    // Almacenar el token de autenticación en localStorage
-                    localStorage.setItem(this.tokenKey, response.token);
-                    // Actualizar el BehaviorSubject con el nuevo token
+                    localStorage.setItem(LocalStorageKeys.tokenKey, response.token);
                     this.authTokenSubject.next(response.token);
-                    // Almacenar otros datos del usuario si son devueltos por el backend
-                    if (response.userId) {
-                        localStorage.setItem(this.userIdKey, response.userId);
-                        this.userIdSubject.next(response.userId);
-                    }
-                    if (response.userName) {
-                        localStorage.setItem(this.userNameKey, response.userName);
-                        this.userNameSubject.next(response.userName);
-                    }
-                    if (response.email) {
-                        localStorage.setItem(this.userEmailKey, response.email);
-                        this.emailSubject.next(response.email);
-                    }
-                    if (response.role) {
-                        localStorage.setItem(this.roleKey, response.role);
-                        this.roleSubject.next(response.role);
-                    }
+
+                    const loggedUser: iUser = {
+                        id: response.userId, userName: response.userName,
+                        email: response.email, phoneNumber: response.phoneNumber,
+                        role: response.role, language: response.languageId,
+                        fullName: response.fullName
+                     }
+
+                    this.usersService.currentUser = loggedUser;
+                    
                     if(response.languageId) {
-                        localStorage.setItem(this.userLanguageKey, response.languageId);
-                        this.userLanguageSubject.next(response.languageId);
-                        switch(localStorage.getItem(this.userLanguageKey)) {
+                        localStorage.setItem(LocalStorageKeys.userLanguageKey, response.languageId);
+                        switch(localStorage.getItem(LocalStorageKeys.userLanguageKey)) {
                             case '1':
-                                localStorage.setItem('selectedLanguage', 'en');
+                                localStorage.setItem(LocalStorageKeys.selectedLanguage, 'en');
                                 break;
                             case '2':
-                                localStorage.setItem('selectedLanguage', 'es');
+                                localStorage.setItem(LocalStorageKeys.selectedLanguage, 'es');
                                 break;
                             default:
-                                localStorage.setItem('selectedLanguage', 'es');
+                                localStorage.setItem(LocalStorageKeys.selectedLanguage, 'es');
                                 break;
                         }
                     }
@@ -89,43 +71,15 @@ export class LoginService {
      * para manejar el cierre de sesión.
      */
     logout(): void {
-        localStorage.removeItem(this.tokenKey);
-        localStorage.removeItem(this.userIdKey);
-        localStorage.removeItem(this.userNameKey);
-        localStorage.removeItem(this.userEmailKey);
-        localStorage.removeItem(this.roleKey);
-        localStorage.removeItem(this.userLanguageKey);
+        localStorage.removeItem(LocalStorageKeys.tokenKey);
+        localStorage.removeItem(LocalStorageKeys.userLanguageKey);
+        this.usersService.currentUser = null;
         this.authTokenSubject.next(null);
-        this.userIdSubject.next(null);
-        this.userNameSubject.next(null);
-        this.emailSubject.next(null);
-        this.roleSubject.next(null);
-        this.userLanguageSubject.next(null);
         this.router.navigate(['/login']);
     }
 
 
     getAuthToken(): Observable<string | null> {
         return this.authTokenSubject.asObservable();
-    }
-
-    getUserId(): Observable<number | null> {
-        return this.userIdSubject.asObservable();
-    }
-
-    getUserName(): Observable<string | null> {
-        return this.userNameSubject.asObservable();
-    }
-
-    getUserEmail(): Observable<string | null> {
-        return this.emailSubject.asObservable();
-    }
-
-    getUserRole(): Observable<string | null> {
-        return this.roleSubject.asObservable();
-    }
-
-    getUserLanguage(): Observable<number | null> {
-        return this.userLanguageSubject.asObservable();
     }
 }

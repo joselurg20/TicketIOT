@@ -13,7 +13,7 @@ section {
   margin-right: 2vw;
 }
 
-.headerRow {
+.header-row {
   font-weight: bold;
 }
 
@@ -69,7 +69,7 @@ label {
   margin-top: -5px;
 }
 
-.datepicker2 {
+.datepicker-2 {
   display: flex;
   flex-direction: row;
   margin-top: -1px;
@@ -170,7 +170,7 @@ mat-form-field {
   }
 }
 
-.btnL {
+.btn-l {
   border-radius: 5px;
   border: $bg-color-light 3px solid;
   color: $color-dark;
@@ -290,7 +290,7 @@ tr {
 
 }
 
-.editIcon {
+.edit-icon {
   cursor: pointer;
 }
 
@@ -299,7 +299,7 @@ tr {
   margin-top: 5px;
 }
 
-.progressSpinner {
+.progress-spinner {
   margin: auto;
   display: flex;
   justify-content: center;

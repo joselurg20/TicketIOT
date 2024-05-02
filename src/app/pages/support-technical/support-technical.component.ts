@@ -16,6 +16,9 @@ import { LoginService } from 'src/app/services/users/login.service';
 import { TicketDataService } from 'src/app/services/tickets/ticketData.service';
 import { IncidenceDataComponent } from "../../components/incidences/incidence-data/incidence-data.component";
 import { LoadingComponent } from "../../components/shared/loading.component";
+import { LocalStorageKeys, Roles } from 'src/app/utilities/literals';
+import { UsersService } from 'src/app/services/users/users.service';
+import { iUser } from 'src/app/models/users/iUser';
 
 @Component({
     selector: 'app-support-technical',
@@ -33,7 +36,7 @@ export class SupportTechnicalComponent implements OnInit {
     loading$: Observable<boolean>;
 
     constructor(private loginService: LoginService, private router: Router, private ticketsService: TicketDataService,
-                private loadingService: LoadingService) {
+                private loadingService: LoadingService, private usersService: UsersService) {
         this.loading$ = this.loadingService.loading$;
     }
 
@@ -44,7 +47,7 @@ export class SupportTechnicalComponent implements OnInit {
             this.router.navigate(['/login']);
         }
 
-        if (localStorage.getItem('userRole') !== 'SupportTechnician') {
+        if (this.usersService.currentUser?.role !== Roles.technicianRole) {
             this.loadingService.showLoading();
             this.router.navigate(['/login']);
         }

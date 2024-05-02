@@ -20,7 +20,7 @@ h2 {
   text-align: center;
 }
 
-.contenedor {
+.custom-container {
   margin: 2rem auto;
   border-radius: 25px;
   background-color: $bg-color;
@@ -126,7 +126,7 @@ h2 {
 
 // Media queries
 @media screen and (max-width: 992px) {
-  .contenedor {
+  .custom-container {
     width: 100%;
     height: auto;
     margin: 0;
@@ -136,7 +136,7 @@ h2 {
 }
 
 @media screen and (max-width: 600px) {
-  .contenedor {
+  .custom-container {
     width: 100%;
     padding: 20px;
     border-radius: 0;

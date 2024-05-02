@@ -10,13 +10,13 @@
   </div>
   <hr class="sidenav-hr">
   <ul class="sidenav-nav">
-    <li class="usernameItem">
-      <a class="usernameLink">
+    <li class="username-item">
+      <a class="username-link">
         <i *ngIf="!isSupportManager" data-bs-toggle="tooltip" data-bs-placement="top" title="{{loggedUserName}}"
-          class="usernameIcon fa-solid fa-user"></i>
+          class="username-icon fa-solid fa-user"></i>
         <i *ngIf="isSupportManager" data-bs-toggle="tooltip" data-bs-placement="top" title="{{loggedUserName}}"
-          class="usernameIcon fa-solid fa-user-tie"></i>
-        <span class="usernameLinkText" @fadeInOut *ngIf="collapsed">{{loggedUserName}}</span>
+          class="username-icon fa-solid fa-user-tie"></i>
+        <span class="username-link-text" @fadeInOut *ngIf="collapsed">{{loggedUserName}}</span>
       </a>
     </li>
     <li class="sidenav-nav-item">

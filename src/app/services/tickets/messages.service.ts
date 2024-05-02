@@ -1,7 +1,8 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MessageJsonResult } from 'src/app/models/JsonResult';
+import { iMessage } from 'src/app/models/tickets/iMessage';
+import { Messages } from 'src/app/utilities/enum-http-routes';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,8 @@ export class MessagesService {
    * @param ticketId el id de la incidencia.
    * @returns Observable<iMessage[]> con los mensajes.
    */
-  getMessagesByTicket(ticketId: number): Observable<MessageJsonResult> {
-    return this.http.get<MessageJsonResult>(`${this.apiUrl}/messages/getbyticket/${ticketId}`);
+  getMessagesByTicket(ticketId: number): Observable<iMessage[]> {
+    return this.http.get<iMessage[]>(`${this.apiUrl}` + Messages.getByTicket + `${ticketId}`);
   }
 
   /**
@@ -29,7 +30,7 @@ export class MessagesService {
    * @returns Observable<Blob> con el archivo.
    */
   downloadAttachment(attachmentPath: string, ticketId: number): Observable<Blob> {
-    return this.http.get(`${this.apiUrl}/messages/download/${ticketId}/${attachmentPath}`, { responseType: 'blob' });
+    return this.http.get(`${this.apiUrl}` + Messages.downloadAttachment + `${ticketId}/${attachmentPath}`, { responseType: 'blob' });
   }
 
   /**
@@ -38,6 +39,6 @@ export class MessagesService {
    * @returns 
    */
   createMessage(formData: FormData): Observable<boolean> {
-    return this.http.post<boolean>(`${this.apiUrl}/messages/create`, formData);
+    return this.http.post<boolean>(`${this.apiUrl}` + Messages.createMessage, formData);
   }
 }

@@ -76,11 +76,11 @@
   }
 }
 
-.usernameItem {
+.username-item {
   width: 100%;
   margin-bottom: 0.625rem;
 
-  .usernameLink {
+  .username-link {
     display: flex;
     align-items: center;
     height: 3rem;
@@ -88,7 +88,7 @@
     text-decoration: none;
     border-radius: 0.625rem;
 
-    .usernameIcon {
+    .username-icon {
       font-size: 22px;
       width: 2rem;
       min-width: 2rem;
@@ -96,22 +96,22 @@
       text-align: center;
     }
 
-    .usernameLinkText {
+    .username-link-text {
       margin-left: 1.5rem;
     }
   }
 }
 
-.usernameItem {
+.username-item {
   font-weight: bold;
 }
 
-.usernameItem:hover {
-  .usernameLink {
+.username-item:hover {
+  .username-link {
     background-color: $bg-color-mid;
     cursor: auto;
   }
-  .usernameLinkText {
+  .username-link-text {
     cursor: default;
   }
 }

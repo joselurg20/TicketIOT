@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
+import { LocalStorageKeys } from 'src/app/utilities/literals';
 
 @Component({
   selector: 'app-lenguage',
@@ -16,7 +17,7 @@ export class LenguageComponent implements OnInit {
 
   constructor(private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);
-    const lang = localStorage.getItem('selectedLanguage') || this.translate.getBrowserLang();
+    const lang = localStorage.getItem(LocalStorageKeys.selectedLanguage) || this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
       this.translate.setDefaultLang('en');
     } else {
@@ -28,7 +29,7 @@ export class LenguageComponent implements OnInit {
   ngOnInit() {
     this.translate.onLangChange.subscribe((event) => {
       this.updateButtonState(event.lang);
-      localStorage.setItem('selectedLanguage', event.lang);
+      localStorage.setItem(LocalStorageKeys.selectedLanguage, event.lang);
     });
   }
 

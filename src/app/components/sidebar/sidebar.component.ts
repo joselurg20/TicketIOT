@@ -4,8 +4,11 @@ import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { iUser } from 'src/app/models/users/iUser';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { LoginService } from 'src/app/services/users/login.service';
+import { UsersService } from 'src/app/services/users/users.service';
+import { LocalStorageKeys, Roles } from 'src/app/utilities/literals';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -69,10 +72,10 @@ export class SidebarComponent implements OnInit {
 
 
   constructor(private loginService: LoginService, private router: Router, private translate: TranslateService,
-              private langUpdateService: LanguageUpdateService) {
+              private langUpdateService: LanguageUpdateService, private usersService: UsersService) {
     this.translate.addLangs(['en', 'es']);
     var lang = '';
-    switch(localStorage.getItem('userLanguage')) {
+    switch(localStorage.getItem(LocalStorageKeys.userLanguageKey)) {
       case '1':
         lang = 'en';
         break;
@@ -96,7 +99,7 @@ export class SidebarComponent implements OnInit {
   */
   switchLanguage(language: string) {
     this.translate.use(language);
-    localStorage.setItem('selectedLanguage', language);
+    localStorage.setItem(LocalStorageKeys.selectedLanguage, language);
     this.setLanguageImage(language);
     this.langUpdateService.triggerGraphUpdate();
   }
@@ -119,7 +122,7 @@ export class SidebarComponent implements OnInit {
   * @returns la ruta al icono.
   */
   getLanguageImage(): string {
-    const selectedLanguage = localStorage.getItem('selectedLanguage');
+    const selectedLanguage = localStorage.getItem(LocalStorageKeys.selectedLanguage);
     if (selectedLanguage === 'es') {
       return '../../../assets/images/flags/spain.png';
     } else {
@@ -130,16 +133,16 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
-    const selectedLanguage = localStorage.getItem('selectedLanguage');
+    const selectedLanguage = localStorage.getItem(LocalStorageKeys.selectedLanguage);
     if (selectedLanguage) {
       this.translate.use(selectedLanguage);
       this.setLanguageImage(selectedLanguage);
     }
-    const userNameFromLocalStorage = localStorage.getItem('userName');
+    const userNameFromLocalStorage = this.usersService.currentUser?.userName;
     if (userNameFromLocalStorage) {
       this.loggedUserName = userNameFromLocalStorage;
     }
-    if (localStorage.getItem('userRole') == 'SupportManager') {
+    if (this.usersService.currentUser?.role === Roles.managerRole) {
       this.isSupportManager = true;
     }
   }
@@ -166,7 +169,7 @@ export class SidebarComponent implements OnInit {
   * Navega a la ruta correspondiente.
   */
   goToDashboard() {
-    if (localStorage.getItem('userRole') == 'SupportManager') {
+    if (this.usersService.currentUser?.role === Roles.managerRole) {
       this.router.navigate(['/support-manager']);
     } else {
       this.router.navigate(['/support-technician']);
@@ -187,8 +190,7 @@ export class SidebarComponent implements OnInit {
   * @returns la ruta al dashboard.
   */
   getDashboardRoute(): string {
-    const userRole = localStorage.getItem('userRole');
-    if (userRole === 'SupportManager') {
+    if (this.usersService.currentUser?.role === Roles.managerRole) {
       return '/support-manager';
     } else {
       return '/support-technician';

@@ -10,6 +10,9 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { LoadingComponent } from "../../components/shared/loading.component";
 import { LoadingService } from 'src/app/services/loading.service';
 import { Observable } from 'rxjs';
+import { LocalStorageKeys, Roles } from 'src/app/utilities/literals';
+import { iUser } from 'src/app/models/users/iUser';
+import { UsersService } from 'src/app/services/users/users.service';
 
 @Component({
     selector: 'app-technicial-incidence',
@@ -23,7 +26,8 @@ export class TechnicialIncidenceComponent implements OnInit {
 
     loading$: Observable<boolean>;
 
-    constructor(private router: Router, private loadingService: LoadingService) {
+    constructor(private router: Router, private loadingService: LoadingService,
+                private usersService: UsersService) {
         this.loading$ = this.loadingService.loading$;
     }
 
@@ -33,7 +37,7 @@ export class TechnicialIncidenceComponent implements OnInit {
             this.router.navigate(['/support-technician']);
         }
 
-        if(localStorage.getItem('userRole') !== 'SupportTechnician') {
+        if(this.usersService.currentUser?.role !== Roles.technicianRole) {
             this.router.navigate(['/login']);
         }
         this.loadingService.hideLoading();

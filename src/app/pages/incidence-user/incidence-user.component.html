@@ -2,21 +2,21 @@
   <div id="loading" *ngIf="loading$ | async" class="w-100 h-100">
     <app-loading></app-loading>
   </div>
-  <div class="item1"><img src="../../../assets/images/logo/IoTlogo.png" alt=""></div>
-  <div class="item2"><app-lenguage class="d-flex justify-content-end"></app-lenguage></div>
-  <div class="item3"><app-history></app-history></div>
-  <div class="item4">
+  <div class="logo"><img src="../../../assets/images/logo/IoTlogo.png" alt=""></div>
+  <div class="language"><app-lenguage class="d-flex justify-content-end"></app-lenguage></div>
+  <div class="history"><app-history></app-history></div>
+  <div class="status">
     <h1 class="my-4">{{"incidence-data.title" | translate}}</h1>
     <form>
       <div class="row gy-1">
         <div class="status col-12">
           <div class="p-3">
-            <h2 class="ticketdata">{{"incidence-data.status" | translate}}</h2>
+            <h2 class="ticket-data">{{"incidence-data.status" | translate}}</h2>
             <p class="font">{{ticketStatus}}</p>
           </div>
         </div>
       </div>
     </form>
   </div>
-  <div class="item5"><app-helpdesk></app-helpdesk></div>
+  <div class="message-form"><app-helpdesk></app-helpdesk></div>
 </div>

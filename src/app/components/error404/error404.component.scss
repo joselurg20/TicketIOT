@@ -4,10 +4,10 @@
   padding: 20px;
 }
 
-.item1 { grid-area: header; }
-.item2 { grid-area: menu; }
-.item3 { grid-area: main; }
-.item4 { grid-area: footer; }
+.logo { grid-area: header; }
+.image { grid-area: menu; }
+.title { grid-area: main; }
+.description { grid-area: footer; }
 
 .grid-container {
   display: grid;
@@ -29,14 +29,14 @@
 
 
 
-.item2{
+.image{
   display: flex;
   justify-content: center;
   background-color: $bg-color-mid-2;
   border-radius: 25px;
 }
 
-.item3{
+.title{
   color: $text-color-dark !important;
   font-weight: bold;
   font-size: 50px;
@@ -44,7 +44,7 @@
 }
 
 
-.item4{
+.description{
   text-align: left !important;
 }
 

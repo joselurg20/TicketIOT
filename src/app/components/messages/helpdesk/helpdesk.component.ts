@@ -15,6 +15,8 @@ import { iTicket } from 'src/app/models/tickets/iTicket';
 import { MessagesService } from 'src/app/services/tickets/messages.service';
 import { TicketsService } from 'src/app/services/tickets/tickets.service';
 import { UsersService } from 'src/app/services/users/users.service';
+import { LocalStorageKeys } from 'src/app/utilities/literals';
+import { iUser } from 'src/app/models/users/iUser';
 
 
 @Component({
@@ -57,7 +59,7 @@ export class HelpdeskComponent {
       Attachments: new FormControl('', null),
       Content: new FormControl('', Validators.required)
     });
-    const selectedTicket = localStorage.getItem('selectedTicket');
+    const selectedTicket = localStorage.getItem(LocalStorageKeys.selectedTicket);
     if (selectedTicket != null) {
       this.ticketsService.getTicketById(+selectedTicket).subscribe({
         next: (response: iTicket) => {
@@ -79,7 +81,7 @@ export class HelpdeskComponent {
       });
     }
 
-    this.usersService.getUserById(parseInt(localStorage.getItem('userId')!)).subscribe({
+    this.usersService.getUserById(this.usersService.currentUser?.id!).subscribe({
       next: (response: iUserGraph) => {
         this.userName = response.fullName;
       },

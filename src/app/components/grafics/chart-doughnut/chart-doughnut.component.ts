@@ -8,6 +8,9 @@ import { Observable, Subscription } from 'rxjs';
 import { TicketDataService } from 'src/app/services/tickets/ticketData.service';
 import { LoadingComponent } from "../../shared/loading.component";
 import { LoadingService } from 'src/app/services/loading.service';
+import { LocalStorageKeys , Roles } from 'src/app/utilities/literals';
+import { iUser } from 'src/app/models/users/iUser';
+import { UsersService } from 'src/app/services/users/users.service';
 
 @Component({
     selector: 'app-chart-doughnut',
@@ -29,17 +32,17 @@ export class ChartDoughnutComponent {
   isFirstLoad: boolean = true;
 
   constructor(private langUpdateService: LanguageUpdateService, private ticketsService: TicketDataService,
-              private loadingService: LoadingService) {
+              private loadingService: LoadingService, private usersService: UsersService) {
     this.loading$ = this.loadingService.loading$;
    }
 
   ngOnInit() {
-    if(localStorage.getItem('selectedLanguage') == 'en'){
+    if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en'){
       this.title = this.titleEn;
-    }else if(localStorage.getItem('selectedLanguage') == 'es'){
+    }else if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es'){
       this.title = this.titleEs;
     }
-    if(localStorage.getItem('userRole') == 'SupportManager') {
+    if(this.usersService.currentUser?.role === Roles.managerRole) {
       this.ticketsService.users$.subscribe(users => {
         this.users = users;
         if(!this.isFirstLoad){
@@ -57,30 +60,31 @@ export class ChartDoughnutComponent {
         this.isFirstLoad = false
       });
     }else{
-      const userName = localStorage.getItem('userName');
-      const userId = localStorage.getItem('userId');
-      this.users[0] = {id: parseInt(userId!), userName: userName, fullName: ''};
-      this.ticketsService.ticketGraphs$.subscribe(ticketGraphs => {
-        this.tickets = ticketGraphs;
-        if(!this.isFirstLoad){
-        this.createChart();
-        this.loadingService.hideLoading();
-        }
-        this.isFirstLoad = false
-      })
+      if(this.usersService.currentUser !== null) {
+        var user: iUserGraph | null = {id: this.usersService.currentUser.id,
+                                userName: this.usersService.currentUser.userName,
+                                fullName: this.usersService.currentUser.fullName};
+        console.log('ticketGraph', user)
+        this.users[0] = user;
+        this.ticketsService.ticketGraphs$.subscribe(ticketGraphs => {
+          this.tickets = ticketGraphs;
+          this.createChart();
+          this.loadingService.hideLoading();
+        })
+      }
+      this.langUpdateSubscription = this.langUpdateService.langUpdated$.subscribe(() => {
+        this.switchLanguage();
+      });
     }
-    this.langUpdateSubscription = this.langUpdateService.langUpdated$.subscribe(() => {
-      this.switchLanguage();
-    });
   }
 
   /**
    * Cambia el idioma del título
    */
   switchLanguage() {
-    if(localStorage.getItem('selectedLanguage') == 'en'){
+    if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en'){
       this.title = this.titleEn;
-    }else if(localStorage.getItem('selectedLanguage') == 'es'){
+    }else if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es'){
       this.title = this.titleEs;
     }
     this.createChart();
@@ -90,10 +94,6 @@ export class ChartDoughnutComponent {
    * Crea el gráfico.
    */
   createChart(): void {
-
-    if (!this.users || !this.tickets) {
-        return;
-    }
     if(this.myChart) {
       this.myChart.destroy();
     }

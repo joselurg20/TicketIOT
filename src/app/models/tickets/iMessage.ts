@@ -1,4 +1,3 @@
-import { AttachmentJsonResult } from "../JsonResult";
 import { iAttachment } from "../attachments/iAttachment";
 
 export interface iMessage {
@@ -6,7 +5,7 @@ export interface iMessage {
     author: string;
     content: string;
     timestamp: string;
-    attachmentPaths: AttachmentJsonResult;
+    attachmentPaths: iAttachment[];
     attachments: iAttachment[];
     ticketID: number;
   }

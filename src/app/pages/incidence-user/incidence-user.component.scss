@@ -17,7 +17,7 @@ h1 {
   margin-right: 1rem;
 }
 
-.ticketdata {
+.ticket-data {
   color: #EFB810;
   font-size: 30px;
 }
@@ -28,27 +28,27 @@ h1 {
   margin-left: 18px;
 }
 
-.item1 {
+.logo {
   grid-area: iso;
   background-color: $bg-color-dark  !important;
   height: 10rem;
 }
 
-.item2 {
+.language {
   grid-area: leng;
   background-color: $bg-color-dark  !important;
 }
 
-.item3 {
+.history {
   grid-area: hist;
   width:100%;
 }
 
-.item4 {
+.status {
   grid-area: status;
 }
 
-.item5 {
+.message-form {
   grid-area: msg;
 }
 

@@ -8,6 +8,7 @@ import { Observable, Subscription } from 'rxjs';
 import { Priorities } from 'src/app/utilities/enum';
 import { LoadingComponent } from "../../shared/loading.component";
 import { LoadingService } from 'src/app/services/loading.service';
+import { LocalStorageKeys } from 'src/app/utilities/literals';
 
 @Component({
   selector: 'app-chart-pie',
@@ -37,10 +38,10 @@ export class ChartPieComponent implements OnInit {
 
   ngOnInit() {
     this.loadingService.showLoading();
-    if (localStorage.getItem('selectedLanguage') == 'en') {
+    if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
       this.title = this.titleEn;
       this.labels = this.labelsEn;
-    }else if(localStorage.getItem('selectedLanguage') == 'es'){
+    }else if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es'){
       this.title = this.titleEs;
       this.labels = this.labelsEs;
     }
@@ -59,10 +60,10 @@ export class ChartPieComponent implements OnInit {
   * Cambia el idioma del título
   */
   switchLanguage() {
-    if (localStorage.getItem('selectedLanguage') == 'en') {
+    if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
       this.title = this.titleEn;
       this.labels = this.labelsEn;
-    }else if(localStorage.getItem('selectedLanguage') == 'es'){
+    }else if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es'){
       this.title = this.titleEs;
       this.labels = this.labelsEs;
     }

@@ -1,10 +1,13 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FilterTicketJsonResult, TicketJsonResult } from 'src/app/models/JsonResult';
 import { TicketDto } from 'src/app/models/tickets/TicketDTO';
 import { TicketFilterRequestDto } from 'src/app/models/tickets/TicketFilterRequestDto';
 import { iTicket } from 'src/app/models/tickets/iTicket';
+import { iTicketFilterDto } from 'src/app/models/tickets/iTicketFilterDto';
+import { iTicketUserDto } from 'src/app/models/tickets/iTicketUserDto';
+import { Tickets } from 'src/app/utilities/enum-http-routes';
+import { LocalStorageKeys } from 'src/app/utilities/literals';
 
 @Injectable({
   providedIn: 'root'
@@ -20,14 +23,28 @@ export class TicketsService {
    * Obtiene todas las incidencias de la base de datos.
    * @returns Observable<iTicket[]> con todas las incidencias.
    */
-  getTickets(): Observable<TicketJsonResult> {
-    const token = localStorage.getItem('authToken');
+  getTickets(): Observable<iTicket[]> {
+    const token = localStorage.getItem(LocalStorageKeys.tokenKey);
   
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
   
-    return this.http.get<TicketJsonResult>(`${this.apiUrl}/tickets/getall`, { headers });
+    return this.http.get<iTicket[]>(`${this.apiUrl}` + Tickets.getTickets, { headers });
+  }
+
+  /**
+   * Obtiene todas las incidencias de la base de datos con el nombre del técnico asignado.
+   * @returns Observable<iTicketUserDto[]> con todas las incidencias.
+   */
+  getTicketsWithNames(): Observable<iTicketUserDto[]> {
+    const token = localStorage.getItem(LocalStorageKeys.tokenKey);
+  
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+  
+    return this.http.get<iTicketUserDto[]>(`${this.apiUrl}` + Tickets.getTicketsWithNames, { headers });
   }
 
   /**
@@ -35,14 +52,14 @@ export class TicketsService {
    * @param filter los datos de filtrado
    * @returns Observable<iTicket[]> con las incidencias.
    */
-  filterTickets(filter: TicketFilterRequestDto): Observable<FilterTicketJsonResult> {
-    const token = localStorage.getItem('authToken');
+  filterTickets(filter: TicketFilterRequestDto): Observable<iTicketFilterDto> {
+    const token = localStorage.getItem(LocalStorageKeys.tokenKey);
 
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.get<FilterTicketJsonResult>(`${this.apiUrl}/tickets/getallfilter`, {
+    return this.http.get<iTicketFilterDto>(`${this.apiUrl}` + Tickets.filterTickets, {
       headers: headers,
       params: new HttpParams()
         .set("Status", filter.status)
@@ -60,7 +77,7 @@ export class TicketsService {
    * @returns 
    */
   createTicket(formData: FormData): Observable<boolean> {
-    return this.http.post<boolean>(`${this.apiUrl}/tickets/create`, formData);
+    return this.http.post<boolean>(`${this.apiUrl}` + Tickets.createTicket, formData);
   }
 
   /**
@@ -68,14 +85,29 @@ export class TicketsService {
    * @param userId el id del usuario.
    * @returns Observable<iTicket[]> con las incidencias.
    */
-  getTicketsByUser(userId: number): Observable<TicketJsonResult> {
-    const token = localStorage.getItem('authToken');
+  getTicketsByUser(userId: number): Observable<iTicket[]> {
+    const token = localStorage.getItem(LocalStorageKeys.tokenKey);
   
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.get<TicketJsonResult>(`${this.apiUrl}/tickets/getbyuser/${userId}`, { headers });
+    return this.http.get<iTicket[]>(`${this.apiUrl}` +  Tickets.getTicketsByUser + `${userId}`, { headers });
+  }
+
+  /**
+   * Obtiene las incidencias + nombre de técnico asignadas al técnico con el ID pasado como parámetro.
+   * @param userId el id del usuario.
+   * @returns Observable<iTicketUserDto[]> con las incidencias.
+   */
+  getTicketsByUserWithNames(userId: number): Observable<iTicketUserDto[]> {
+    const token = localStorage.getItem(LocalStorageKeys.tokenKey);
+  
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.get<iTicketUserDto[]>(`${this.apiUrl}` + Tickets.getTicketsByUserWithNames + `${userId}`, { headers });
   }
 
   /**
@@ -84,7 +116,16 @@ export class TicketsService {
    * @returns Observable<iTicket> con la incidencia.
    */
   getTicketById(ticketId: number): Observable<iTicket> {
-    return this.http.get<iTicket>(`${this.apiUrl}/tickets/getbyid/${ticketId}`);
+    return this.http.get<iTicket>(`${this.apiUrl}` + Tickets.getTicketById + `${ticketId}`);
+  }
+
+   /**
+   * Obtiene una incidencia con el nombre del técnico asignado por su ID.
+   * @param ticketId el id de la incidencia.
+   * @returns Observable<iTicket> con la incidencia.
+   */
+   getTicketByIdWithName(ticketId: number): Observable<iTicketUserDto> {
+    return this.http.get<iTicketUserDto>(`${this.apiUrl}` + Tickets.getTicketByIdWithName + `${ticketId}`);
   }
   
   /**
@@ -94,13 +135,13 @@ export class TicketsService {
    * @returns 
    */
   assignTechnician(ticketId: number, userId: number): Observable<boolean> {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem(LocalStorageKeys.tokenKey);
   
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.put<boolean>(`${this.apiUrl}/tickets/asign/${ticketId}/${userId}`, null, {headers});
+    return this.http.put<boolean>(`${this.apiUrl}` + Tickets.assignTechnician + `${ticketId}/${userId}`, null, {headers});
   }
 
   /**
@@ -110,7 +151,7 @@ export class TicketsService {
    * @returns 
    */
   updateTicket(ticketId: number, newTicket: TicketDto): Observable<boolean> {
-    return this.http.put<boolean>(`${this.apiUrl}/tickets/update/${ticketId}`, newTicket);
+    return this.http.put<boolean>(`${this.apiUrl}` + Tickets.updateTicket + `${ticketId}`, newTicket);
   }
 
   /**
@@ -120,13 +161,13 @@ export class TicketsService {
    * @returns 
    */
   changeTicketPriority(ticketId: number, priority: number): Observable<boolean> {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem(LocalStorageKeys.tokenKey);
   
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.put<boolean>(`${this.apiUrl}/tickets/changepriority/${ticketId}/${priority}`, null, {headers});
+    return this.http.put<boolean>(`${this.apiUrl}` + Tickets.changeTicketPriority + `${ticketId}/${priority}`, null, {headers});
   }
 
   /**
@@ -136,12 +177,12 @@ export class TicketsService {
    * @returns 
    */
   changeTicketStatus(ticketId: number, status: number): Observable<boolean> {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem(LocalStorageKeys.tokenKey);
   
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.put<boolean>(`${this.apiUrl}/tickets/changestatus/${ticketId}/${status}`, null, {headers});
+    return this.http.put<boolean>(`${this.apiUrl}` + Tickets.changeTicketStatus + `${ticketId}/${status}`, null, {headers});
   }
 }

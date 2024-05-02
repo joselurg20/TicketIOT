@@ -8,6 +8,9 @@ import { TicketDataService } from 'src/app/services/tickets/ticketData.service';
 import { Status } from 'src/app/utilities/enum';
 import { LoadingComponent } from "../../shared/loading.component";
 import { LoadingService } from 'src/app/services/loading.service';
+import { LocalStorageKeys , Roles } from 'src/app/utilities/literals';
+import { UsersService } from 'src/app/services/users/users.service';
+import { iUser } from 'src/app/models/users/iUser';
 
 @Component({
   selector: 'app-chart-bar',
@@ -31,22 +34,22 @@ export class ChartBarComponent implements OnInit {
   isFirstLoad: boolean = true;
 
   constructor(private ticketsService: TicketDataService, private langUpdateService: LanguageUpdateService,
-              private loadingService: LoadingService) {
+              private loadingService: LoadingService, private usersService: UsersService) {
     this.loading$ = this.loadingService.loading$;
   }
 
   ngOnInit() {
     this.loadingService.showLoading();
-    if (localStorage.getItem('selectedLanguage') == 'en') {
+    if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
       this.title = this.titleEn;
-      if(localStorage.getItem('userRole') == 'SupportManager') {
+      if(this.usersService.currentUser?.role === Roles.managerRole) {
         this.labels = this.labelsEn;
       }else{
         this.labels = ['OPENED', 'PAUSED'];
       }
-    }else if(localStorage.getItem('selectedLanguage') == 'es'){
+    }else if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es'){
       this.title = this.titleEs;
-      if(localStorage.getItem('userRole') == 'SupportManager') {
+      if(this.usersService.currentUser?.role === Roles.managerRole) {
         this.labels = this.labelsEs;
       }else{
         this.labels = ['ABIERTA', 'PAUSADA'];
@@ -69,16 +72,16 @@ export class ChartBarComponent implements OnInit {
    * Cambia el idioma del gráfico
    */
   switchLanguage() {
-    if (localStorage.getItem('selectedLanguage') == 'en') {
+    if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
       this.title = this.titleEn;
-      if(localStorage.getItem('userRole') == 'SupportManager') {
+      if(this.usersService.currentUser?.role === Roles.managerRole) {
         this.labels = this.labelsEn;
       }else{
         this.labels = ['OPENED', 'PAUSED'];
       }
-    }else if(localStorage.getItem('selectedLanguage') == 'es'){
+    }else if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es'){
       this.title = this.titleEs;
-      if(localStorage.getItem('userRole') == 'SupportManager') {
+      if(this.usersService.currentUser?.role === Roles.managerRole) {
         this.labels = this.labelsEs;
       }else{
         this.labels = ['ABIERTA', 'PAUSADA'];
@@ -100,7 +103,7 @@ export class ChartBarComponent implements OnInit {
   createChart(): void {
     this.myChart?.destroy();
     var status: Status[] = [];
-    if(localStorage.getItem('userRole') == 'SupportManager') {
+    if(this.usersService.currentUser?.role === Roles.managerRole) {
       status = [1, 2, 0];
     }else{
       status = [1, 2];

@@ -18,6 +18,9 @@ import { MessageComponent } from "../../components/messages/menssage/message.com
 import { LoadingComponent } from "../../components/shared/loading.component";
 import { SidebarComponent } from "../../components/sidebar/sidebar.component";
 import { TechnicalTableComponent } from "../../components/technical-table/technical-table.component";
+import { LocalStorageKeys, Roles } from 'src/app/utilities/literals';
+import { UsersService } from 'src/app/services/users/users.service';
+import { iUser } from 'src/app/models/users/iUser';
 
 interface Tile {
     cols: number;
@@ -42,7 +45,7 @@ export class SupportManagerComponent implements OnInit {
     loading$: Observable<boolean>;
 
     constructor(private loginService: LoginService, private router: Router, private ticketsService: TicketDataService,
-                private loadingService: LoadingService) {
+                private loadingService: LoadingService, private usersService: UsersService) {
         this.loading$ = this.loadingService.loading$;
     }
 
@@ -53,7 +56,7 @@ export class SupportManagerComponent implements OnInit {
             this.router.navigate(['/login']);
         }
 
-        if (localStorage.getItem('userRole') !== 'SupportManager') {
+        if (this.usersService.currentUser?.role !== Roles.managerRole) {
             this.loadingService.showLoading();
             this.router.navigate(['/login']);
         }

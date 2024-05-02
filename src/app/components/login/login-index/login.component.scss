@@ -38,7 +38,7 @@ input::placeholder {
   --mdc-circular-progress-active-indicator-color: #074b4d !important;
 }
 
-.progressSpinner {
+.progress-spinner {
   margin: auto;
   display: flex;
   justify-content: center;
@@ -70,7 +70,7 @@ img {
   text-align: center;
 }
 
-.errorMsg {
+.error-msg {
   color: $color-danger;
   text-align: center;
 }

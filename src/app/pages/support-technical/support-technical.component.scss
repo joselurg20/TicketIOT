@@ -32,19 +32,19 @@ mat-grid-tile {
   padding: 20px;
 }
 
-.item1 {
+.chart-pie {
   grid-area: pie;
   background-color: $bg-color-mid-2;
   border-radius: 25px;
 }
 
-.item2 {
+.chart-doughnut {
   grid-area: douhth;
   background-color: $bg-color-mid-2;
   border-radius: 25px;
 }
 
-.item3 {
+.chart-bar {
   grid-area: bar;
   background-color: $bg-color-mid-2;
   border-radius: 25px;
@@ -63,7 +63,7 @@ mat-grid-tile {
   grid-gap: 10px;
 }
 
-.progressSpinner {
+.progress-spinner {
   margin-left: 48vw;
   margin-top: 45vh;
 }

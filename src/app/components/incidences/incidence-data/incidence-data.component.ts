@@ -12,6 +12,8 @@ import { ButtonComponent } from "../../button/button.component";
 import { LoadingComponent } from "../../shared/loading.component";
 import { TicketsService } from 'src/app/services/tickets/tickets.service';
 import { UsersService } from 'src/app/services/users/users.service';
+import { LocalStorageKeys } from 'src/app/utilities/literals';
+import { iTicketUserDto } from 'src/app/models/tickets/iTicketUserDto';
 
 @Component({
   selector: 'app-incidence-data',
@@ -54,8 +56,8 @@ export class IncidenceDataComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.ticketsService.getTicketById(parseInt(localStorage.getItem('selectedTicket')!)).subscribe({
-      next: (response: iTicket) => {
+    this.ticketsService.getTicketByIdWithName(parseInt(localStorage.getItem(LocalStorageKeys.selectedTicket)!)).subscribe({
+      next: (response: iTicketUserDto) => {
         // Mapear la respuesta de la API utilizando la interfaz iTicketTable
         const ticket: iTicketDescriptor = {
           id: response.id,
@@ -66,26 +68,11 @@ export class IncidenceDataComponent implements OnInit {
           priority: response.priority,
           status: response.status,
           userId: response.userId.toString(),
-          userName: ''
+          userName: response.fullName
         };
         this.ticketPrio = this.getPriorityString(ticket.priority);
         this.ticketStatus = this.getStatusString(ticket.status);
-        if (response.userId != -1) {
-          this.usersService.getUserById(parseInt(ticket.userId)).subscribe({
-            next: (response: iUser) => {
-              ticket.userName = response.fullName;
-
-              this.ticket = ticket;
-            },
-            error: (error: any) => {
-              console.error('Error al obtener el usuario', error);
-            }
-          });
-        } else {
-          this.ticket = ticket;
-          this.ticket.userId = '';
-          this.ticket.userName = 'Sin asignar';
-        }
+        this.ticket = ticket;
       },
       error: (error: any) => {
         console.error('Error al obtener los tickets del usuario:', error);
@@ -134,7 +121,7 @@ export class IncidenceDataComponent implements OnInit {
    */
   refreshTicketData() {
     this.loadingService.showLoading();
-    const selectedTicketId = parseInt(localStorage.getItem('selectedTicket')!);
+    const selectedTicketId = parseInt(localStorage.getItem(LocalStorageKeys.selectedTicket)!);
     this.ticketsService.getTicketById(selectedTicketId).subscribe({
       next: (response: any) => {
         // Actualizar solo los campos que han cambiado
@@ -179,7 +166,7 @@ export class IncidenceDataComponent implements OnInit {
    * @returns la cadena de texto a representar.
    */
   getPriorityString(priority: number): string {
-    if (localStorage.getItem('selectedLanguage') == 'en') {
+    if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
       switch (priority) {
         case 1:
           return 'LOWEST';
@@ -194,7 +181,7 @@ export class IncidenceDataComponent implements OnInit {
         default:
           return 'NOT SURE';
       }
-    } else if (localStorage.getItem('selectedLanguage') == 'es') {
+    } else if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es') {
       switch (priority) {
         case 1:
           return 'MUY BAJA';
@@ -219,7 +206,7 @@ export class IncidenceDataComponent implements OnInit {
    * @returns la cadena de texto a representar.
    */
   getStatusString(status: number): string {
-    if (localStorage.getItem('selectedLanguage') == 'en') {
+    if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
       switch (status) {
         case 1:
           return 'OPENED';
@@ -230,7 +217,7 @@ export class IncidenceDataComponent implements OnInit {
         default:
           return 'PENDING';
       }
-    } else if (localStorage.getItem('selectedLanguage') == 'es') {
+    } else if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es') {
       switch (status) {
         case 1:
           return 'ABIERTA';

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { UserJsonResult } from 'src/app/models/JsonResult';
+import { iUser } from 'src/app/models/users/iUser';
 import { iUserTable } from 'src/app/models/users/iUserTable';
 import { UsersService } from 'src/app/services/users/users.service';
 
@@ -28,8 +28,8 @@ export class TechnicalTableComponent implements OnInit {
   }
   ngOnInit(): void {
     this.usersService.getTechnicians().subscribe({
-      next: (response: UserJsonResult) => {
-        const users: iUserTable[] = response.result.map((value: iUserTable) => {
+      next: (response: iUser[]) => {
+        const users: iUserTable[] = response.map((value: iUserTable) => {
           return {
             id: value.id,
             fullName: value.fullName,

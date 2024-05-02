@@ -1,8 +1,9 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { UserJsonResult } from 'src/app/models/JsonResult';
 import { iUser } from 'src/app/models/users/iUser';
+import { Users } from 'src/app/utilities/enum-http-routes';
+import { LocalStorageKeys } from 'src/app/utilities/literals';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,7 @@ import { iUser } from 'src/app/models/users/iUser';
 export class UsersService {
   private apiUrl = 'https://localhost:7131/gateway';
 
-  private currentUserSubject: BehaviorSubject<iUser> = new BehaviorSubject<iUser>({} as iUser);
-  currentUser$: Observable<iUser> = this.currentUserSubject.asObservable();
+  currentUser: iUser | null = {} as iUser;
   
 
   constructor(private http: HttpClient) { }
@@ -20,14 +20,14 @@ export class UsersService {
    * Obtiene todos los usuarios.
    * @returns Observable<iUser[]> con todos los usuarios.
    */
-  getUsers(): Observable<UserJsonResult> {
-    const token = localStorage.getItem('authToken');
+  getUsers(): Observable<iUser[]> {
+    const token = localStorage.getItem(LocalStorageKeys.tokenKey);
   
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.get<UserJsonResult>(`${this.apiUrl}/Users/users/getall`, { headers });
+    return this.http.get<iUser[]>(`${this.apiUrl}` + Users.getUsers, { headers });
   }
 
   /**
@@ -36,20 +36,20 @@ export class UsersService {
    * @returns Observable<iuser> con el usuario obtenido.
    */
   getUserById(userId: number): Observable<iUser> {
-    return this.http.get<iUser>(`${this.apiUrl}/Users/users/getbyid/${userId}`);
+    return this.http.get<iUser>(`${this.apiUrl}` + Users.getUserById + `${userId}`);
   }
 
   /**
    * Obtiene todos los usuarios con rol 'SupportTechnician'.
    * @returns Observable<iUser[]> con los técnicos.
    */
-  getTechnicians(): Observable<UserJsonResult> {
-    const token = localStorage.getItem('authToken');
+  getTechnicians(): Observable<iUser[]> {
+    const token = localStorage.getItem(LocalStorageKeys.tokenKey);
   
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<UserJsonResult>(`${this.apiUrl}/Users/users/gettechnicians`, { headers });
+    return this.http.get<iUser[]>(`${this.apiUrl}` + Users.getTechnicians, { headers });
   }
 
   /**
@@ -61,7 +61,7 @@ export class UsersService {
    * @returns 
    */
   checkEmail(username: string, domain: string, tld: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.apiUrl}/Users/users/sendemail/${username}/${domain}/${tld}`);
+    return this.http.get<boolean>(`${this.apiUrl}` + Users.checkEmail + `${username}/${domain}/${tld}`);
   }
 
   /**
@@ -70,6 +70,6 @@ export class UsersService {
    * @returns 
    */
   resetPassword(formData: FormData): Observable<boolean> {
-    return this.http.post<boolean>(`${this.apiUrl}/Users/users/resetpassword`, formData);
+    return this.http.post<boolean>(`${this.apiUrl}` + Users.resetPassword, formData);
   }
 }

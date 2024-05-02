@@ -24,8 +24,8 @@ import { Priorities, Status } from 'src/app/utilities/enum';
 import { LoadingComponent } from '../../shared/loading.component';
 import { iUserGraph } from 'src/app/models/users/iUserGraph';
 import { iUser } from 'src/app/models/users/iUser';
-import { UserJsonResult } from 'src/app/models/JsonResult';
 import { UsersService } from 'src/app/services/users/users.service';
+import { LocalStorageKeys, Roles } from 'src/app/utilities/literals';
 
 @Component({
   selector: 'app-incidence-table',
@@ -45,9 +45,6 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   dataSource = new MatTableDataSource<iTicketTableSM>();
   selectedRow: any;
 
-  //Nombre del usuario logueado
-  loggedUserName: string = "";
-
   //Flags de control
   isSupportManager: boolean = false;
   loading$: Observable<boolean>;
@@ -66,6 +63,10 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   selectedTechnicianFilter: number = -1;
   searchString: string = '';
 
+  //Prioridades y Estados a mostrar en selectores
+  priorities: Priorities[] = Object.values(Priorities).filter(value => typeof value === 'number') as Priorities[];
+  status: Status[] = Object.values(Status).filter(value => typeof value === 'number') as Status[];
+
   //Filtro de incidencias
   filter: TicketFilterRequestDto = {
     status: -1,
@@ -82,7 +83,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
               private readonly dateAdapter: DateAdapter<Date>, private langUpdateService: LanguageUpdateService) {
     this.translate.addLangs(['en', 'es']);
     var lang = '';
-    switch (localStorage.getItem('userLanguage')) {
+    switch (localStorage.getItem(LocalStorageKeys.userLanguageKey)) {
       case '1':
         lang = 'en';
         break;
@@ -114,7 +115,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
       start: new FormControl(),
       end: new FormControl()
     })
-    switch (localStorage.getItem('selectedLanguage')) {
+    switch (localStorage.getItem(LocalStorageKeys.selectedLanguage)) {
       case 'en':
         this.setLocale('en');
         break;
@@ -125,11 +126,12 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
         this.setLocale('es');
         break;
     }
-    if (localStorage.getItem('userRole') == 'SupportManager') {
+    console.log('priostatus', this.priorities, this.status);
+    if (this.usersService.currentUser?.role === Roles.managerRole) {
       this.isSupportManager = true;
       this.usersService.getTechnicians().subscribe({
-        next: (response: UserJsonResult) => {
-          this.users = response.result.map((value: iUser) => {
+        next: (response: iUser[]) => {
+          this.users = response.map((value: iUser) => {
             return {
               id: value.id,
               userName: value.userName,
@@ -152,7 +154,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
       this.cdr.detectChanges();
     });
     this.langUpdateService.langUpdated$.subscribe(() => {
-      this.setLocale(localStorage.getItem('selectedLanguage')!);
+      this.setLocale(localStorage.getItem(LocalStorageKeys.selectedLanguage)!);
       this.ticketDataService.getTickets(this.isSupportManager);
     });
   }
@@ -160,7 +162,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    if (localStorage.getItem('userRole') == 'SupportManager') {
+    if (this.usersService.currentUser?.role === Roles.managerRole) {
       this.dataSource.sort.active = 'timestamp';
       this.dataSource.sort.direction = 'desc';
     } else {
@@ -266,7 +268,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
    */
   onRowClicked(row: any) {
     this.selectedRow = row;
-    localStorage.setItem('selectedTicket', this.selectedRow.id);
+    localStorage.setItem(LocalStorageKeys.selectedTicket, this.selectedRow.id);
     this.goToTickets();
   }
 
@@ -274,13 +276,12 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
    * Redirige a la vista correspondiente al ticket seleccionado y según el rol del usuario.
    */
   goToTickets() {
-    if (localStorage.getItem('userRole') == 'SupportManager') {
-      if (localStorage.getItem('selectedTicket') != null) {
-        this.router.navigate(['/revisar-manager']);
-      }
-    } else {
-      if (localStorage.getItem('selectedTicket') != null) {
-        this.router.navigate(['/revisar-tecnico']);
+    if (localStorage.getItem(LocalStorageKeys.selectedTicket) != null) {
+      if (this.usersService.currentUser?.role === Roles.managerRole) {
+        
+          this.router.navigate(['/revisar-manager']);
+      } else {
+          this.router.navigate(['/revisar-tecnico']);
       }
     }
 
@@ -347,7 +348,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
    * @returns la cadena de texto a representar.
    */
   getPriorityString(priority: number): string {
-    if(localStorage.getItem('selectedLanguage') == 'en') {
+    if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
       switch (priority) {
         case 1:
           return 'LOWEST';
@@ -362,7 +363,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
         default:
           return 'NOT SURE';
       }
-    } else if (localStorage.getItem('selectedLanguage') == 'es') {
+    } else if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es') {
       switch (priority) {
         case 1:
           return 'MUY BAJA';
@@ -387,7 +388,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
    * @returns la cadena de texto a representar.
    */
   getStatusString(status: number): string {
-    if(localStorage.getItem('selectedLanguage') == 'en') {
+    if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
       switch (status) {
         case 1:
           return 'OPENED';
@@ -398,7 +399,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
         default:
           return 'PENDING';
       }
-    } else if (localStorage.getItem('selectedLanguage') == 'es') {
+    } else if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es') {
       switch (status) {
         case 1:
           return 'ABIERTA';

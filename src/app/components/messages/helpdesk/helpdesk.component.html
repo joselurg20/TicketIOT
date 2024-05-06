@@ -11,32 +11,31 @@
         <div class="carousel-container">
 
             <div *ngIf="isFileSelected" class="carousel slide logotipe preview" id="carouselExampleIndicators"
-                data-bs-ride="carousel">
+            data-bs-ride="carousel">
                 <div class="carousel-inner">
-                    <div *ngFor="let previewUrl of previewUrls; let i = index" class="carousel-item"
-                        [class.active]="i === 0">
-                        <img *ngIf="isImage(previewUrl)" [src]="previewUrl" class="d-block">
+                    <div *ngFor="let previewUrl of previewUrls; let i = index" class="carousel-item " [class.active]="i === currentIndex">
+                        <img *ngIf="isImage(previewUrl)" [src]="previewUrl" class="preview-image">
+                        <button class="btnTrahs" (click)="deleteFile(i)" *ngIf="isImage(previewUrl)"><i class="fa-solid fa-x"></i></button>
                         <div *ngIf="!isImage(previewUrl)" class="d-block">
-                            <img [src]="previewUrl" class="d-block" data-bs-toggle="tooltip" data-bs-placement="top"         matTooltip="{{selectFilesNames[i]}}"
-                                title="{{selectFilesNames[i]}}" class="preview-image" alt="Vista previa del archivo">
-                            <p>{{truncateFileName(selectFilesNames[i], 20)}}</p>
-                            <button (click)="deleteFile(i)" class="btn-2"><i class="fa-solid fa-trash-can"></i></button>
+                            <img [src]="previewUrl" class="d-block w-100" alt="...">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>{{truncateFileName(selectFilesNames[i], 20)}}</h5>
+                                <button class="btnTrahs" *ngIf="!isImage(previewUrl)" (click)="deleteFile(i)"><i class="fa-solid fa-trash"></i></button>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <button *ngIf="previewUrls.length > 1" class="carousel-control-prev" type="button"
-                    data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <button *ngIf="previewUrls.length > 1" class="carousel-control-prev" type="button" (click)="prevFile()">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden"></span>
                 </button>
-                <button *ngIf="previewUrls.length > 1" class="carousel-control-next" type="button"
-                    data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <button *ngIf="previewUrls.length > 1" class="carousel-control-next" type="button" (click)="nextFile()">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden"></span>
                 </button>
             </div>
+            
         </div>
-
-
 
     </div>
     <div class="mb-3 form-group">
@@ -50,6 +49,6 @@
                 (click)="openSnackBar()" id="liveToastBtn"></i> {{"comunication.send" | translate}}</button>
     </div>
     <div class="logotipe">
-        <img src="assets/images/logo/IoTlogo.png" alt="">
+        <img class="logo" src="assets/images/logo/IoTlogo.png" alt="">
     </div>
 </form>

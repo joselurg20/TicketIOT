@@ -1,22 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { TicketDto } from 'src/app/models/tickets/TicketDTO';
+import { iTicket } from 'src/app/models/tickets/iTicket';
 import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
+import { iUserGraph } from 'src/app/models/users/iUserGraph';
 import { MessagesUpdateService } from 'src/app/services/tickets/messagesUpdate.service';
 import { SnackbarMenssageComponent } from '../../snackbars/snackbar-menssage/snackbar-menssage.component';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatButtonModule } from '@angular/material/button';
-import { iUserGraph } from 'src/app/models/users/iUserGraph';
-import { iTicket } from 'src/app/models/tickets/iTicket';
-import { MessagesService } from 'src/app/services/tickets/messages.service';
 import { TicketsService } from 'src/app/services/tickets/tickets.service';
 import { UsersService } from 'src/app/services/users/users.service';
-import { LocalStorageKeys } from 'src/app/utilities/literals';
-import { iUser } from 'src/app/models/users/iUser';
+import { MessagesService } from 'src/app/services/tickets/messages.service';
 
 
 @Component({
@@ -36,11 +34,12 @@ export class HelpdeskComponent {
   selectedFiles: File[] = [];
   durationInSeconds = 3;
   public selectFilesNames: string[] = [];
+  previewUrls: Array<string | ArrayBuffer | null> = new Array();
+  isFileSelected: boolean = false;
+  currentIndex: number = 0;
 
 
-  constructor(private messagesService: MessagesService, private _snackBar: MatSnackBar, private translate: TranslateService,
-              private formBuilder: FormBuilder, private messagesUpdateService: MessagesUpdateService,
-              private ticketsService: TicketsService, private usersService: UsersService) {
+  constructor(private msgService: MessagesService, private ticketsService: TicketsService, private userService: UsersService, private _snackBar: MatSnackBar, private translate: TranslateService, private formBuilder: FormBuilder, private messagesUpdateService: MessagesUpdateService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -52,14 +51,16 @@ export class HelpdeskComponent {
       Attachments: [null, Validators.required],
       Content: [null, Validators.required]
     });
+    this.selectedFiles = [];
   }
 
   ngOnInit(): void {
+    this.selectedFiles = [];
     this.messageForm = new FormGroup({
       Attachments: new FormControl('', null),
       Content: new FormControl('', Validators.required)
     });
-    const selectedTicket = localStorage.getItem(LocalStorageKeys.selectedTicket);
+    const selectedTicket = localStorage.getItem('selectedTicket');
     if (selectedTicket != null) {
       this.ticketsService.getTicketById(+selectedTicket).subscribe({
         next: (response: iTicket) => {
@@ -81,7 +82,7 @@ export class HelpdeskComponent {
       });
     }
 
-    this.usersService.getUserById(this.usersService.currentUser?.id!).subscribe({
+    this.userService.getUserById(parseInt(localStorage.getItem('userId')!)).subscribe({
       next: (response: iUserGraph) => {
         this.userName = response.fullName;
       },
@@ -91,11 +92,55 @@ export class HelpdeskComponent {
     })
   }
 
-  deleteFile(index: number) : void {
-  
-      this.previewUrls.splice(index, 1);
-      this.selectedFiles.splice(index, 1);
- 
+  /*
+    deleteProduct(index: number) {
+      this.selectFilesNames = [];
+      this.previewUrls = [];
+      this.selectedFiles = [];
+      this.isFileSelected = false;
+      this.messageForm.get('Attachments')?.setValue(null);
+    }
+  */
+
+  deleteFile(index: number) {
+    if (index >= 0 && index < this.selectedFiles.length) {
+      if (Array.isArray(this.selectedFiles)) {
+        this.selectedFiles = this.selectedFiles.filter((_, i) => i !== index);
+      } else {
+        console.error('this.selectedFiles no es un arreglo:', this.selectedFiles);
+      }
+      this.selectFilesNames.splice(index, 1);
+
+      if (index < this.previewUrls.length) {
+        this.previewUrls.splice(index, 1);
+      }
+
+      if (this.selectedFiles.length === 0) {
+        this.isFileSelected = false;
+        this.messageForm.get('Attachments')?.setValue(null);
+      }
+    } else {
+      console.error('Índice no válido:', index);
+    }
+  }
+
+  nextFile() {
+    if (this.currentIndex < this.previewUrls.length - 1) {
+      this.currentIndex++;
+    } else {
+      // Si estamos en la última imagen, volver a la primera
+      this.currentIndex = 0;
+    }
+  }
+
+  // Función para retroceder a la imagen anterior en el carrusel
+  prevFile() {
+    if (this.currentIndex > 0) {
+      this.currentIndex--;
+    } else {
+      // Si estamos en la primera imagen, ir a la última
+      this.currentIndex = this.previewUrls.length - 1;
+    }
   }
 
 
@@ -111,9 +156,6 @@ export class HelpdeskComponent {
       duration: this.durationInSeconds * 1000,
     });
   }
-
-  previewUrls: Array<string | ArrayBuffer | null> = new Array();
-  isFileSelected: boolean = false;
 
   /**
   * Envía un mensaje a la incidencia seleccionada.
@@ -195,7 +237,7 @@ export class HelpdeskComponent {
     this.selectedFiles = [];
     this.previewUrls = new Array();
     this.isFileSelected = false;
-    return this.messagesService.createMessage(formData);
+    return this.msgService.createMessage(formData);
   }
 
   /**

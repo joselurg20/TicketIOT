@@ -1,10 +1,7 @@
 <app-lenguage class="d-flex justify-content-end"></app-lenguage>
 <div class="container mt-lg-5">
-
     <div class="row justify-content-center">
-
         <div class="col-md-6">
-
             <h2>{{'recovered.title' | translate}}</h2>
             <form [formGroup]="recoveryForm" (ngSubmit)="resetPassword()">
                 <div class="mb-3">
@@ -21,20 +18,16 @@
                         placeholder="{{'recovered.passwordplaceholder2' | translate}}" formControlName="RepeatPassword">
                 </div>
 
-               
-
                 <div class="d-grid mb-3">
-                    <button type="submit" id="liveToastBtn" (click)="openSnackBar()" [disabled] class="iot-log-btn">{{'recovered.send' | translate}}</button>
+                    <button type="submit" id="liveToastBtn" (click)="openSnackBar()" [disabled]
+                        class="iot-log-btn">{{'recovered.send' | translate}}</button>
                 </div>
             </form>
-
 
         </div>
 
         <div class="logotipe">
             <img src="assets/images/logo/IoTlogo.png" alt="">
         </div>
-
     </div>
-
 </div>

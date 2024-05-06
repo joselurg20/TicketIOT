@@ -1,6 +1,6 @@
 export interface NavbarData {
     icon: string;
     label: string;
-   click: Function;
+    click: Function;
     route: string;
 }

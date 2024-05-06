@@ -5,15 +5,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import * as CryptoJS from 'crypto-js';
+import { Observable } from 'rxjs';
 import { LoadingService } from 'src/app/services/loading.service';
+import { UsersService } from 'src/app/services/users/users.service';
+import { Roles } from 'src/app/utilities/literals';
 import { LoginService } from '../../../services/users/login.service';
 import { LenguageComponent } from "../../lenguage/lenguage.component";
-import { SidebarComponent } from "../../sidebar/sidebar.component";
 import { LoadingComponent } from '../../shared/loading.component';
-import { Observable } from 'rxjs';
-import { LocalStorageKeys, Roles } from 'src/app/utilities/literals';
-import { iUser } from 'src/app/models/users/iUser';
-import { UsersService } from 'src/app/services/users/users.service';
+import { SidebarComponent } from "../../sidebar/sidebar.component";
 
 
 function passwordValidator(control: FormControl): { [key: string]: any } | null {

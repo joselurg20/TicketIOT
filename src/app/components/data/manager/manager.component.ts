@@ -28,8 +28,8 @@ export class ManagerComponent implements OnInit {
   status: Status[] = Object.values(Status).filter(value => typeof value === 'number') as Status[];
 
   constructor(private ticketDataService: TicketDataService, private ticketUpdateService: TicketUpdateService,
-              private loadingService: LoadingService, private translate: TranslateService,
-              private ticketsService: TicketsService) {
+    private loadingService: LoadingService, private translate: TranslateService,
+    private ticketsService: TicketsService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -118,7 +118,7 @@ export class ManagerComponent implements OnInit {
    * @returns la cadena de texto a representar.
    */
   getPriorityString(priority: number): string {
-    if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
+    if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
       switch (priority) {
         case 1:
           return 'LOWEST';
@@ -158,7 +158,7 @@ export class ManagerComponent implements OnInit {
    * @returns la cadena de texto a representar.
    */
   getStatusString(status: number): string {
-    if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
+    if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
       switch (status) {
         case 1:
           return 'OPENED';

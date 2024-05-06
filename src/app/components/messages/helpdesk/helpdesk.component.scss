@@ -1,3 +1,5 @@
+
+
 @import '../../../../styles/imports.scss';
 
 h1 {
@@ -54,23 +56,23 @@ label {
     border-color: $color-light;
   }
 
-  .btn-danger{
+  .btn-danger {
     color: $color-light;
     background-color: $bg-color-danger;
     border-color: $color-light;
   }
 }
 
-.btn-2 {
-  border-color:$color-danger;
+.btnTrahs {
+  border-color: $color-danger;
   color: $color-danger;
   background-color: transparent;
-  border:1px solid $bg-color-danger;
-  width: 100px;
+  border: 1px solid $bg-color-danger;
+  width: 40px;
   border-radius: 5px;
 
   &:hover {
-    border-color:$color-danger;
+    border-color: $color-danger;
     color: $color-light;
     background-color: $bg-color-danger;
   }
@@ -95,19 +97,25 @@ label {
 
 .logotipe {
   text-align: center;
+}
 
-  img {
-    width: 350px;
-    height: auto;
-    border-radius: 10px;
-  }
+.logo {
+  width: 350px;
+  height: auto;
+  border-radius: 10px;
+}
 
-  .preview-image {
-    width: 150px;
-    height: auto;
-    border-radius: 10px;
+.preview-image {
+  width: 250px;
 
-  }
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.preview-file {
+  width: 150px;
+  height: auto;
+  border-radius: 10px;
 }
 
 .preview {
@@ -115,7 +123,6 @@ label {
   flex-wrap: wrap;
   justify-content: center;
   column-gap: 1vw;
-
 }
 
 
@@ -130,7 +137,7 @@ label {
     width: 100%;
   }
 
-  .btn-2 {
+  .btn2 {
     width: 100%;
   }
 
@@ -150,7 +157,7 @@ label {
     width: 100%;
   }
 
-  .btn-2 {
+  .btn2 {
     width: 100%;
   }
 

@@ -1,8 +1,8 @@
 <form>
     <div>
-        <label for="tecnico" class="form-label"><i class="fa-solid fa-user-group"></i> {{"data.technic" |
+        <label for="technical" class="form-label"><i class="fa-solid fa-user-group"></i> {{"data.technic" |
             translate}}</label>
-        <select class="form-select form-select-lg" id="tecnico" required [(ngModel)]="selectedUserId" name="tecnico">
+        <select class="form-select form-select-lg" id="technical" required [(ngModel)]="selectedUserId" name="technical">
             <option value="-1">{{"data.option1" | translate}}</option>
             <option *ngFor="let user of users" [value]="user.id">{{user.userName}}</option>
         </select>
@@ -13,10 +13,10 @@
     </div>
     <div class="prio-status-container">
         <div class="mb-3 prio-container">
-            <label for="prioridad" class="form-label"><i class="fa-solid fa-bell"></i> {{"data.priority" |
+            <label for="priority" class="form-label"><i class="fa-solid fa-bell"></i> {{"data.priority" |
                 translate}}</label>
-            <select class="form-select form-select-lg" id="prioridad" required [(ngModel)]="selectedPriorityValue"
-                name="prioridad">
+            <select class="form-select form-select-lg" id="priority" required [(ngModel)]="selectedPriorityValue"
+                name="priority">
                 <option value="-1">{{"data.option2" | translate}}</option>
                 <option *ngFor="let p of priorities" value="p">{{getPriorityString(p)}}</option>
             </select>
@@ -27,9 +27,9 @@
         </div>
 
         <div class="mb-3 status-container">
-            <label for="estado" class="form-label"><i class="fa-solid fa-traffic-light"></i> {{"data.status" |
+            <label for="status" class="form-label"><i class="fa-solid fa-traffic-light"></i> {{"data.status" |
                 translate}}</label>
-            <select class="form-select form-select-lg" id="estado" required [(ngModel)]="selectedStatusValue" name="estado">
+            <select class="form-select form-select-lg" id="status" required [(ngModel)]="selectedStatusValue" name="status">
                 <option value="-1">{{"data.option3" | translate}}</option>
                 <option *ngFor="let s of status" value="s">{{getStatusString(s)}}</option>
             </select>

@@ -26,12 +26,12 @@ const routes: Routes = [
   //accesibles por los trabajadores
   { path: "", component: LoginComponent },
   { path: "login", component: LoginComponent },
-  { path: "recuperar", component: RecoveredComponent },
-  { path: "recuperar/:hash/:username/:domain/:tld", component: Recovery2Component },
+  { path: "recover", component: RecoveredComponent },
+  { path: "recover/:hash/:username/:domain/:tld", component: Recovery2Component },
   { path: "support-manager", component: SupportManagerComponent },
   { path: "support-technician", component: SupportTechnicalComponent },
-  { path: "revisar-manager", component: ManagerIncidenceComponent },
-  { path: "revisar-tecnico", component: TechnicialIncidenceComponent },
+  { path: "review-manager", component: ManagerIncidenceComponent },
+  { path: "review-tecnico", component: TechnicialIncidenceComponent },
 
   //Pruebas 
   { path: "prueba", component: IncidenceTableComponent },
@@ -49,9 +49,9 @@ const routes: Routes = [
 
 
   //accedibles el usuario
-  { path: "incidencia", component: IncidenceIndexComponent }, 
+  { path: "incidence", component: IncidenceIndexComponent }, 
   { path: "cls", component: CloseComponent },
-  { path: "enlace/:hashedId/:ticketId", component: IncidenceUserComponent },
+  { path: "link/:hashedId/:ticketId", component: IncidenceUserComponent },
   { path: "404", component: Error404Component },
   { path: "**", redirectTo: "/404" },
 

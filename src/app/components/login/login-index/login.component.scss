@@ -54,6 +54,18 @@ input::placeholder {
   border-color: $color-warning;
 
 }
+.btn{
+  background-color: $bg-color-warning;
+  font-size: larger;
+  border-radius: 6px;
+  border-style: none;
+  color: $color-dark;
+  padding: 10px;
+
+  &:hover {
+    color: $color-light;
+  }
+}
 
 .link {
   color: $color-light;

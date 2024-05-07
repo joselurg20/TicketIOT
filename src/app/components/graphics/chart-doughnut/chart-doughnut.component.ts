@@ -37,11 +37,13 @@ export class ChartDoughnutComponent {
    }
 
   ngOnInit() {
+    setTimeout(() => {
+    
     if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en'){
       this.title = this.titleEn;
     }else if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es'){
       this.title = this.titleEs;
-    }
+    }  
     if(this.usersService.currentUser?.role === Roles.managerRole) {
       this.ticketsService.users$.subscribe(users => {
         this.users = users;
@@ -76,6 +78,7 @@ export class ChartDoughnutComponent {
         this.switchLanguage();
       });
     }
+  }, 10)
   }
 
   /**

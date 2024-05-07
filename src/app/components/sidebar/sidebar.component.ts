@@ -132,6 +132,8 @@ export class SidebarComponent implements OnInit {
 
 
   ngOnInit(): void {
+    setTimeout(() => {
+    
     this.screenWidth = window.innerWidth;
     const selectedLanguage = localStorage.getItem(LocalStorageKeys.selectedLanguage);
     if (selectedLanguage) {
@@ -144,7 +146,8 @@ export class SidebarComponent implements OnInit {
     }
     if (this.usersService.currentUser?.role === Roles.managerRole) {
       this.isSupportManager = true;
-    }
+    }  
+    }, 10)
   }
 
   /**

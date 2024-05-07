@@ -112,6 +112,8 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
 
   ngOnInit(): void {
     this.loadingService.showLoading();
+    setTimeout(() => {
+      
     this.range = new FormGroup({
       start: new FormControl(),
       end: new FormControl()
@@ -149,6 +151,8 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
       this.displayedColumns = ['status', 'id', 'title', 'name', 'email', 'priority', 'timestamp', 'technician', 'newMessages', 'show'];
       this.isSupportManager = false;
     }
+    
+    }, 10)
     this.ticketDataService.tickets$.subscribe(tickets => {
       this.dataSource.data = tickets;
       this.loadingService.hideLoading();

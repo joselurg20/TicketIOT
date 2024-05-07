@@ -14,6 +14,7 @@ import { MessageComponent } from "../../components/messages/message/message.comp
 import { LoadingComponent } from "../../components/shared/loading.component";
 import { SidebarComponent } from "../../components/sidebar/sidebar.component";
 import { TechnicalTableComponent } from "../../components/technical-table/technical-table.component";
+import { UsersService } from 'src/app/services/users/users.service';
 
 interface Tile {
     cols: number;
@@ -33,13 +34,17 @@ interface Tile {
 export class SupportManagerComponent implements OnInit {
     loading$: Observable<boolean>;
 
-    constructor(private ticketsService: TicketDataService, private loadingService: LoadingService) {
+    constructor(private ticketsService: TicketDataService, private loadingService: LoadingService, private usersService: UsersService) {
         this.loading$ = this.loadingService.loading$;
     }
 
     ngOnInit(): void {
+        setTimeout(() => {
+        
+        console.log('user', this.usersService.currentUser);
         this.ticketsService.getTickets(true);
-        this.ticketsService.getTechnicians();
+        this.ticketsService.getTechnicians();    
+        }, 10)
     }
 
     tiles: Tile[] = [

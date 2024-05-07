@@ -40,6 +40,8 @@ export class ChartBarComponent implements OnInit {
 
   ngOnInit() {
     this.loadingService.showLoading();
+    setTimeout(() => {
+    
     if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
       this.title = this.titleEn;
       if(this.usersService.currentUser?.role === Roles.managerRole) {
@@ -54,7 +56,8 @@ export class ChartBarComponent implements OnInit {
       }else{
         this.labels = ['ABIERTA', 'PAUSADA'];
       }
-    }
+    }  
+    }, 10)
     this.ticketsService.ticketGraphs$.subscribe(tickets => {
       this.loadingService.showLoading();
       this.tickets = tickets;
@@ -66,6 +69,7 @@ export class ChartBarComponent implements OnInit {
       this.switchLanguage();
       this.loadingService.hideLoading();
     });
+    
   }
 
   /**

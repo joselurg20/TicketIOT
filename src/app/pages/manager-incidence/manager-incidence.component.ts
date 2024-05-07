@@ -5,14 +5,14 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { SidebarComponent } from 'src/app/components/sidebar/sidebar.component';
 import { LoadingService } from 'src/app/services/loading.service';
+import { UsersService } from 'src/app/services/users/users.service';
+import { Roles } from 'src/app/utilities/literals';
+import { Routes } from 'src/app/utilities/routes';
 import { ButtonComponent } from "../../components/button/button.component";
 import { ManagerComponent } from "../../components/data/manager/manager.component";
 import { IncidenceDataComponent } from "../../components/incidences/incidence-data/incidence-data.component";
 import { ComunicationComponent } from "../../components/messages/comunication/comunication.component";
 import { LoadingComponent } from "../../components/shared/loading.component";
-import { LocalStorageKeys, Roles } from 'src/app/utilities/literals';
-import { UsersService } from 'src/app/services/users/users.service';
-import { iUser } from 'src/app/models/users/iUser';
 
 @Component({
     selector: 'app-support-incidence',
@@ -27,7 +27,7 @@ export class ManagerIncidenceComponent implements OnInit {
 
     loading$: Observable<boolean>;
 
-    constructor(private router: Router, private loadingService: LoadingService,
+    constructor(private router: Router, private routes: Routes, private loadingService: LoadingService,
                 private usersService: UsersService) {
         this.loading$ = this.loadingService.loading$;
     }
@@ -35,11 +35,13 @@ export class ManagerIncidenceComponent implements OnInit {
     ngOnInit(): void {
         this.loadingService.showLoading();
         window.onpopstate = (event) => {
-            this.router.navigate(['/support-manager']);
+            this.router.navigate([Routes.supportManager]);
+
         }
 
         if (this.usersService.currentUser?.role !== Roles.managerRole) {
-            this.router.navigate(['/login']);
+            this.router.navigate([Routes.login]);
+
         };
         this.loadingService.hideLoading();
     }

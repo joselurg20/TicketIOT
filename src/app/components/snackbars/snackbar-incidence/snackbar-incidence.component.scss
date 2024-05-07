@@ -1,6 +1,5 @@
 :host {
   display: flex;
-  background-color: #28a745;
   border-radius: 10px;
 }
 
@@ -22,3 +21,20 @@
 
 }
 
+
+.example-pizza-party i {
+  margin-right: 8px;
+  /* Añade un margen a la derecha del ícono */
+}
+
+.mat-icon-button {
+  margin-left: auto;
+  /* Mueve el botón de cierre al extremo derecho */
+}
+
+::ng-deep .mat-mdc-snack-bar-container {
+  --mdc-snackbar-container-color: # !important;
+  --mdc-snackbar-supporting-text-color: white !important;
+  --mat-snack-bar-button-color: green !important;
+
+}

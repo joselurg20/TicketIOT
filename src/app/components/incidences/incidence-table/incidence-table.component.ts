@@ -26,6 +26,7 @@ import { iUserGraph } from 'src/app/models/users/iUserGraph';
 import { iUser } from 'src/app/models/users/iUser';
 import { UsersService } from 'src/app/services/users/users.service';
 import { LocalStorageKeys, Roles } from 'src/app/utilities/literals';
+import { Routes } from 'src/app/utilities/routes';
 
 @Component({
   selector: 'app-incidence-table',
@@ -78,7 +79,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   }
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private usersService: UsersService,
-              private router: Router, private translate: TranslateService, private cdr: ChangeDetectorRef,
+              private router: Router, private routes:Routes, private translate: TranslateService, private cdr: ChangeDetectorRef,
               private ticketDataService: TicketDataService, private loadingService: LoadingService,
               private readonly dateAdapter: DateAdapter<Date>, private langUpdateService: LanguageUpdateService) {
     this.translate.addLangs(['en', 'es']);
@@ -279,9 +280,9 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     if (localStorage.getItem(LocalStorageKeys.selectedTicket) != null) {
       if (this.usersService.currentUser?.role === Roles.managerRole) {
         
-          this.router.navigate(['/revisar-manager']);
+          this.router.navigate([Routes.supportManager]);
       } else {
-          this.router.navigate(['/revisar-tecnico']);
+          this.router.navigate([Routes.supportTechnician]);
       }
     }
 

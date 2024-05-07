@@ -11,6 +11,7 @@ import { ComunicationComponent } from "../../components/messages/comunication/co
 import { HistoryComponent } from "../../components/messages/history/history.component";
 import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
 import * as CryptoJS from 'crypto-js';
+import { Routes } from 'src/app/utilities/routes';
 import { LenguageComponent } from "../../components/lenguage/lenguage.component";
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LoadingComponent } from 'src/app/components/shared/loading.component';
@@ -39,7 +40,7 @@ export class IncidenceUserComponent {
   ticketStatus: string = '';
 
   
-    constructor(private route: ActivatedRoute, private ticketsService: TicketsService, private router: Router ,
+    constructor(private route: ActivatedRoute, private routes: Routes, private ticketsService: TicketsService, private router: Router ,
                 private translate: TranslateService, private loadingService: LoadingService,
                 private languageUpdateService: LanguageUpdateService) {
       this.translate.addLangs(['en', 'es']);
@@ -58,7 +59,7 @@ export class IncidenceUserComponent {
         this.hashedId = params['hashedId'];
         const hashedId = CryptoJS.SHA256(this.ticketId.toString()).toString();
         if(this.hashedId !== hashedId) {
-          this.router.navigate(['/404']);
+          this.router.navigate([Routes.notFound]);
         }
       });
       this.ticketsService.getTicketById(this.ticketId).subscribe({

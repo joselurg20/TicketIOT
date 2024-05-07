@@ -8,6 +8,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SnackbarMenssageComponent } from '../../snackbars/snackbar-menssage/snackbar-menssage.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UsersService } from 'src/app/services/users/users.service';
+import { Routes } from 'src/app/utilities/routes';
 
 @Component({
     selector: 'app-recovered',
@@ -22,7 +23,7 @@ export class RecoveredComponent implements OnInit {
     email: string = '';
     durationInSeconds = 5;
 
-    constructor(private router: Router, private _snackBar: MatSnackBar, private usersService: UsersService,
+    constructor(private router: Router, private routes: Routes, private _snackBar: MatSnackBar, private usersService: UsersService,
                 private translate: TranslateService) {
         this.translate.addLangs(['en', 'es']);
         const lang = this.translate.getBrowserLang();
@@ -50,7 +51,7 @@ export class RecoveredComponent implements OnInit {
      * Vuelve a la pantalla de inicio de sesión.
      */
     goBack() {
-        this.router.navigate(['/login']);
+        this.router.navigate([Routes.login]);
     }
 
     /**
@@ -67,7 +68,7 @@ export class RecoveredComponent implements OnInit {
 
             this.usersService.checkEmail(username, domain, tld).subscribe({
                 next: (response) => {
-                    this.router.navigate(['/login']);
+                    this.router.navigate([Routes.login]);
                 },
                 error: (error) => {
                     console.error('Error al enviar el email:', error);

@@ -1,7 +1,18 @@
-<span class="example-pizza-party" matSnackBarLabel>
+<span class="snackabr-content-send" matSnackBarLabel *ngIf="send">
     <i class="fa-solid fa-check fa-xl"></i>
     {{'snackbars.incidence' | translate}}
 </span>
-<span matSnackBarActions>
-    <button class="btn" matSnackBarAction (click)="snackBarRef.dismissWithAction()"><i class="fa-solid fa-xmark fa-lg" style="color: #ffffff;"></i></button>
+<span matSnackBarActions *ngIf="send">
+    <button class="btn" matSnackBarAction (click)="snackBarRef.dismissWithAction()"><i class="fa-solid fa-xmark fa-lg"
+            style="color: #ffffff;"></i></button>
+</span>
+
+
+<span class="snackabr-content-error" matSnackBarLabel *ngIf="!send">
+    <i class="fa-solid fa-xmark fa-lg"></i>
+    Error
+</span>
+<span matSnackBarActions *ngIf="!send">
+    <button class="btn" matSnackBarAction (click)="snackBarRef.dismissWithAction()"><i class="fa-solid fa-xmark fa-lg"
+            style="color: #ffffff;"></i></button>
 </span>

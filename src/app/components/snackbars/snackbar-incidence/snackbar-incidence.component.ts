@@ -14,6 +14,8 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 })
 export class SnackbarIncidenceComponent {
   snackBarRef = inject(MatSnackBarRef<SnackbarIncidenceComponent>);
+  send: boolean = false;
+
 
   constructor(private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);
@@ -22,7 +24,12 @@ export class SnackbarIncidenceComponent {
       this.translate.setDefaultLang('en');
     } else {
       this.translate.use('es');
-
     }
   }
+
+
+
+
+
+
 }

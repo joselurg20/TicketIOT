@@ -11,7 +11,7 @@ import { RecoveredComponent } from './components/login/recovered/recovered.compo
 import { Recovery2Component } from './components/login/recovery2/recovery2.component';
 import { HelpdeskComponent } from './components/messages/helpdesk/helpdesk.component';
 import { HistoryComponent } from './components/messages/history/history.component';
-import { MessageComponent } from './components/messages/menssage/message.component';
+import { MessageComponent } from './components/messages/message/message.component';
 import { LoadingComponent } from './components/shared/loading.component';
 import { TechnicalTableComponent } from './components/technical-table/technical-table.component';
 import { IncidenceUserComponent } from './pages/incidence-user/incidence-user.component';
@@ -19,6 +19,8 @@ import { ManagerIncidenceComponent } from './pages/manager-incidence/manager-inc
 import { SupportManagerComponent } from './pages/support-manager/support-manager.component';
 import { SupportTechnicalComponent } from './pages/support-technical/support-technical.component';
 import { TechnicialIncidenceComponent } from './pages/technicial-incidence/technicial-incidence.component';
+import { managerGuard } from './guards/manager.guard';
+import { technicianGuard } from './guards/technician.guard';
 
 
 const routes: Routes = [
@@ -28,10 +30,10 @@ const routes: Routes = [
   { path: "login", component: LoginComponent },
   { path: "recover", component: RecoveredComponent },
   { path: "recover/:hash/:username/:domain/:tld", component: Recovery2Component },
-  { path: "support-manager", component: SupportManagerComponent },
-  { path: "support-technician", component: SupportTechnicalComponent },
-  { path: "review-manager", component: ManagerIncidenceComponent },
-  { path: "review-technician", component: TechnicialIncidenceComponent },
+  { path: "support-manager", component: SupportManagerComponent, canActivate: [managerGuard] },
+  { path: "support-technician", component: SupportTechnicalComponent, canActivate: [technicianGuard] },
+  { path: "review-manager", component: ManagerIncidenceComponent, canActivate: [managerGuard] },
+  { path: "review-technician", component: TechnicialIncidenceComponent, canActivate: [technicianGuard] },
 
   //Pruebas 
   { path: "prueba", component: IncidenceTableComponent },
@@ -48,7 +50,7 @@ const routes: Routes = [
 
 
 
-  //accedibles el usuario
+  //accesibles por el usuario
   { path: "incidence", component: IncidenceIndexComponent }, 
   { path: "cls", component: CloseComponent },
   { path: "link/:hashedId/:ticketId", component: IncidenceUserComponent },

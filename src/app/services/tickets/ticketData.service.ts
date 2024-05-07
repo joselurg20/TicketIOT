@@ -91,7 +91,7 @@ export class TicketDataService {
         }
       })
     } else {
-        this.ticketsService.getTicketsByUserWithNames(this.usersService.currentUser?.id!).subscribe({
+        this.ticketsService.getTicketsByUserWithNames(+localStorage.getItem(LocalStorageKeys.loggedUser)!).subscribe({
             next: (response: iTicketUserDto[]) => {
               const tickets: iTicketTableSM[] = response.map((value: iTicketUserDto) => {
                 return {

@@ -9,14 +9,15 @@ import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarModule, MatSnack
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { ButtonComponent } from "../../button/button.component";
-import { ChartBarComponent } from '../../grafics/chart-bar/chart-bar.component';
-import { ChartDoughnutComponent } from '../../grafics/chart-doughnut/chart-doughnut.component';
-import { ChartPieComponent } from '../../grafics/chart-pie/chart-pie.component';
 import { LenguageComponent } from "../../lenguage/lenguage.component";
 import { SidebarComponent } from '../../sidebar/sidebar.component';
 import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/snackbar-incidence.component';
 import { TicketsService } from 'src/app/services/tickets/tickets.service';
 import { LocalStorageKeys } from 'src/app/utilities/literals';
+import { UsersService } from 'src/app/services/users/users.service';
+import { iUser } from 'src/app/models/users/iUser';
+import { Router } from '@angular/router';
+import { Routes } from 'src/app/utilities/routes';
 
 
 @Component({
@@ -24,8 +25,7 @@ import { LocalStorageKeys } from 'src/app/utilities/literals';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatFormFieldModule,
     MatSelectModule, MatButtonModule, MatSnackBarModule, MatInputModule, MatButtonModule,
-    MatSnackBarModule, ChartBarComponent, ChartPieComponent,
-    ChartDoughnutComponent, ButtonComponent, SidebarComponent, LenguageComponent, TranslateModule],
+    MatSnackBarModule, ButtonComponent, SidebarComponent, LenguageComponent, TranslateModule],
   templateUrl: './incidence-index.component.html',
   styleUrls: ['./incidence-index.component.scss']
 
@@ -47,7 +47,8 @@ export class IncidenceIndexComponent implements OnInit {
   isSupportManager: boolean = true;
 
 
-  constructor(private _snackBar: MatSnackBar, private ticketsService: TicketsService, private translate: TranslateService) {
+  constructor(private _snackBar: MatSnackBar, private ticketsService: TicketsService, private translate: TranslateService,
+              private usersService: UsersService, private router: Router) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -79,11 +80,13 @@ export class IncidenceIndexComponent implements OnInit {
       Email: new FormControl('', [Validators.required, Validators.email])
     });
 
-    if (localStorage.getItem(LocalStorageKeys.tokenKey) != null) {
+    if (this.usersService.currentUser?.id) {
       this.isLogged = true;
     } else {
       this.isLogged = false;
     }
+    console.log('currentUser', this.usersService.currentUser);
+    console.log('isLogged', this.isLogged);
   }
 
 
@@ -104,7 +107,9 @@ export class IncidenceIndexComponent implements OnInit {
             setTimeout(() => {
               this.clearAttachments(); // Limpiar campos del formulario
             }, 1000);
-            window.location.href = '/support-manager';
+            if(this.isSupportManager) {
+              this.router.navigate([Routes.supportManager]);
+            }
           },
           error: (error) => {
             console.error('Error en la solicitud', error);

@@ -164,7 +164,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     if (this.usersService.currentUser?.role === Roles.managerRole) {
-      this.dataSource.sort.active = 'timestamp';
+      this.dataSource.sort.active = 'id';
       this.dataSource.sort.direction = 'desc';
     } else {
       this.dataSource.sort.active = 'newMessages';
@@ -280,12 +280,19 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     if (localStorage.getItem(LocalStorageKeys.selectedTicket) != null) {
       if (this.usersService.currentUser?.role === Roles.managerRole) {
         
-          this.router.navigate([Routes.supportManager]);
+          this.router.navigate([Routes.reviewManager]);
       } else {
-          this.router.navigate([Routes.supportTechnician]);
+          this.router.navigate([Routes.reviewTechnician]);
       }
     }
 
+  }
+
+  /**
+   * Redirige a la vista correspondiente a la creación de nuevo ticket.
+   */
+  goToNewTicket() {
+    this.router.navigate([Routes.incidence]);
   }
 
   /**

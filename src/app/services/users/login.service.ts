@@ -8,6 +8,7 @@ import { UsersService } from './users.service';
 import { iUser } from 'src/app/models/users/iUser';
 import { environment } from 'src/environments/environment';
 import { Authenticate } from 'src/app/utilities/enum-http-routes';
+import { Routes } from 'src/app/utilities/routes';
 
 @Injectable({
     providedIn: 'root'
@@ -22,6 +23,34 @@ export class LoginService {
         if (storedToken) {
             this.authTokenSubject.next(storedToken);
         }
+    }
+
+    /**
+     * Comprueba si el usuario esta logeado.
+     * @returns 
+     */
+    isLogged(): boolean {
+        console.log('1', localStorage.getItem(LocalStorageKeys.tokenKey) !== null);
+        if(localStorage.getItem(LocalStorageKeys.tokenKey)) {
+            console.log('2', localStorage.getItem(LocalStorageKeys.loggedUser) !== null);
+            if(localStorage.getItem(LocalStorageKeys.loggedUser)) {
+                console.log('3', !this.usersService.currentUser?.id);
+                if(!this.usersService.currentUser?.id){
+                    this.usersService.getUserById(parseInt(localStorage.getItem(LocalStorageKeys.loggedUser)!)).subscribe({
+                        next: (user) => {
+                            console.log('4', user);
+                            this.usersService.currentUser = user;
+                            console.log('5', this.usersService.currentUser);
+                        },
+                        error: (error) => {
+                            console.log('error', error);
+                        }
+                    });
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -47,6 +76,11 @@ export class LoginService {
                      }
 
                     this.usersService.currentUser = loggedUser;
+                    console.log('loggedUser', this.usersService.currentUser);
+
+                    if(response.userId) {
+                        localStorage.setItem(LocalStorageKeys.loggedUser, response.userId);
+                    }
                     
                     if(response.languageId) {
                         localStorage.setItem(LocalStorageKeys.userLanguageKey, response.languageId);
@@ -74,12 +108,13 @@ export class LoginService {
     logout(): void {
         localStorage.removeItem(LocalStorageKeys.tokenKey);
         localStorage.removeItem(LocalStorageKeys.userLanguageKey);
+        localStorage.removeItem(LocalStorageKeys.loggedUser);
         if(localStorage.getItem(LocalStorageKeys.selectedTicket)) {
             localStorage.removeItem(LocalStorageKeys.selectedTicket);
         }
         this.usersService.currentUser = null;
         this.authTokenSubject.next(null);
-        this.router.navigate(['/login']);
+        this.router.navigate([Routes.login]);
     }
 
 

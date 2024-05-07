@@ -41,7 +41,7 @@ export class Recovery2Component implements OnInit {
   durationInSeconds = 5;
 
   constructor(private route: ActivatedRoute,private fb:FormBuilder, private _snackBar: MatSnackBar,
-              private router: Router, private routes: Routes, private usersService: UsersService, private translate: TranslateService) {
+              private router: Router, private usersService: UsersService, private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {

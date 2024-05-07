@@ -40,7 +40,7 @@ export class IncidenceUserComponent {
   ticketStatus: string = '';
 
   
-    constructor(private route: ActivatedRoute, private routes: Routes, private ticketsService: TicketsService, private router: Router ,
+    constructor(private route: ActivatedRoute, private ticketsService: TicketsService, private router: Router ,
                 private translate: TranslateService, private loadingService: LoadingService,
                 private languageUpdateService: LanguageUpdateService) {
       this.translate.addLangs(['en', 'es']);

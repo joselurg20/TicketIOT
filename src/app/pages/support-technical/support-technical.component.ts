@@ -35,7 +35,7 @@ export class SupportTechnicalComponent implements OnInit {
     tickets: iTicketTable[] = [];
     loading$: Observable<boolean>;
 
-    constructor(private loginService: LoginService, private router: Router, private routes: Routes, private ticketsService: TicketDataService,
+    constructor(private loginService: LoginService, private router: Router, private ticketsService: TicketDataService,
                 private loadingService: LoadingService, private usersService: UsersService) {
         this.loading$ = this.loadingService.loading$;
     }

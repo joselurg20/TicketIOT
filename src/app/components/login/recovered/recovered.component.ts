@@ -23,7 +23,7 @@ export class RecoveredComponent implements OnInit {
     email: string = '';
     durationInSeconds = 5;
 
-    constructor(private router: Router, private routes: Routes, private _snackBar: MatSnackBar, private usersService: UsersService,
+    constructor(private router: Router, private _snackBar: MatSnackBar, private usersService: UsersService,
                 private translate: TranslateService) {
         this.translate.addLangs(['en', 'es']);
         const lang = this.translate.getBrowserLang();

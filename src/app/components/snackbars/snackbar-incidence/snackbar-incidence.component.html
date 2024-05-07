@@ -9,8 +9,8 @@
 
 
 <span class="snackabr-content-error" matSnackBarLabel *ngIf="!send">
-    <i class="fa-solid fa-xmark fa-lg"></i>
-    Error
+    <i class="fa-solid fa-xmark fa-xl"></i>
+    {{'snackbars.incidenceError' | translate}}
 </span>
 <span matSnackBarActions *ngIf="!send">
     <button class="btn" matSnackBarAction (click)="snackBarRef.dismissWithAction()"><i class="fa-solid fa-xmark fa-lg"

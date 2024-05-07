@@ -25,11 +25,14 @@ export class SnackbarIncidenceComponent {
     } else {
       this.translate.use('es');
     }
+
+    if (this.snackBarRef) {
+      this.send = true;
+    } else {
+      this.send = false;
+    }
+
   }
-
-
-
-
 
 
 }

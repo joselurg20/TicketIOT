@@ -3,7 +3,7 @@ import { CommonModule, NgFor } from '@angular/common';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { IncidenceTableComponent } from "../../components/incidences/incidence-table/incidence-table.component";
 import { IncidenceDataComponent } from "../../components/incidences/incidence-data/incidence-data.component";
-import { MessageComponent } from "../../components/messages/menssage/message.component";
+import { MessageComponent } from "../../components/messages/message/message.component";
 import { ActivatedRoute, Router } from '@angular/router';
 import { iMessage } from 'src/app/models/tickets/iMessage';
 import { HelpdeskComponent } from "../../components/messages/helpdesk/helpdesk.component";

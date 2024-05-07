@@ -2,7 +2,8 @@ export enum LocalStorageKeys {
     tokenKey = 'authToken',
     userLanguageKey = 'userLanguage',
     selectedLanguage = 'selectedLanguage',
-    selectedTicket = 'selectedTicket'
+    selectedTicket = 'selectedTicket',
+    loggedUser = 'loggedUser'
 }
 
 export enum Roles {

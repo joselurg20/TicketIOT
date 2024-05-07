@@ -9,9 +9,9 @@ import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarModule, MatSnack
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { ButtonComponent } from "../../button/button.component";
-import { ChartBarComponent } from '../../grafics/chart-bar/chart-bar.component';
-import { ChartDoughnutComponent } from '../../grafics/chart-doughnut/chart-doughnut.component';
-import { ChartPieComponent } from '../../grafics/chart-pie/chart-pie.component';
+import { ChartBarComponent } from '../../graphics/chart-bar/chart-bar.component';
+import { ChartDoughnutComponent } from '../../graphics/chart-doughnut/chart-doughnut.component';
+import { ChartPieComponent } from '../../graphics/chart-pie/chart-pie.component';
 import { LenguageComponent } from "../../lenguage/lenguage.component";
 import { SidebarComponent } from '../../sidebar/sidebar.component';
 import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/snackbar-incidence.component';

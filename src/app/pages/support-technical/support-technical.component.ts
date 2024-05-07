@@ -3,9 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { ChartBarComponent } from 'src/app/components/grafics/chart-bar/chart-bar.component';
-import { ChartDoughnutComponent } from 'src/app/components/grafics/chart-doughnut/chart-doughnut.component';
-import { ChartPieComponent } from 'src/app/components/grafics/chart-pie/chart-pie.component';
+import { ChartBarComponent } from 'src/app/components/graphics/chart-bar/chart-bar.component';
+import { ChartDoughnutComponent } from 'src/app/components/graphics/chart-doughnut/chart-doughnut.component';
+import { ChartPieComponent } from 'src/app/components/graphics/chart-pie/chart-pie.component';
 import { IncidenceIndexComponent } from 'src/app/components/incidences/incidence-index/incidence-index.component';
 import { IncidenceTableComponent } from 'src/app/components/incidences/incidence-table/incidence-table.component';
 import { SidebarComponent } from 'src/app/components/sidebar/sidebar.component';
@@ -41,18 +41,6 @@ export class SupportTechnicalComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        window.onpopstate = (event) => {
-            this.loadingService.showLoading();
-            this.loginService.logout();
-            this.router.navigate([Routes.login]);
-
-        }
-
-        if (this.usersService.currentUser?.role !== Roles.technicianRole) {
-            this.loadingService.showLoading();
-            this.router.navigate([Routes.login]);
-
-        }
 
         this.ticketsService.getTickets(false);
         this.ticketsService.tickets$.subscribe(tickets => {

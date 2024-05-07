@@ -138,9 +138,9 @@ export class SidebarComponent implements OnInit {
       this.translate.use(selectedLanguage);
       this.setLanguageImage(selectedLanguage);
     }
-    const userNameFromLocalStorage = this.usersService.currentUser?.userName;
-    if (userNameFromLocalStorage) {
-      this.loggedUserName = userNameFromLocalStorage;
+    const userName = this.usersService.currentUser?.userName;
+    if (userName) {
+      this.loggedUserName = userName;
     }
     if (this.usersService.currentUser?.role === Roles.managerRole) {
       this.isSupportManager = true;
@@ -182,19 +182,6 @@ export class SidebarComponent implements OnInit {
   */
   logout() {
     this.loginService.logout();
-  }
-
-
-  /**
-  * Obtiene la ruta al dashboard.
-  * @returns la ruta al dashboard.
-  */
-  getDashboardRoute(): string {
-    if (this.usersService.currentUser?.role === Roles.managerRole) {
-      return '/support-manager';
-    } else {
-      return '/support-technician';
-    }
   }
 
   /**

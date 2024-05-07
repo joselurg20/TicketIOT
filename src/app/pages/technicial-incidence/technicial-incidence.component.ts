@@ -33,14 +33,5 @@ export class TechnicialIncidenceComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.loadingService.showLoading();
-        window.onpopstate = (event) => {
-            this.router.navigate([Routes.supportTechnician]);
-        }
-
-        if(this.usersService.currentUser?.role !== Roles.technicianRole) {
-            this.router.navigate([Routes.login]);
-        }
-        this.loadingService.hideLoading();
     }
 }

@@ -8,7 +8,7 @@ import { TicketDto } from 'src/app/models/tickets/TicketDTO';
 import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
 import { MessagesUpdateService } from 'src/app/services/tickets/messagesUpdate.service';
 import { SnackbarMenssageComponent } from '../../snackbars/snackbar-menssage/snackbar-menssage.component';
-import { MessageComponent } from "../menssage/message.component";
+import { MessageComponent } from "../message/message.component";
 import { iUserGraph } from 'src/app/models/users/iUserGraph';
 import { iTicket } from 'src/app/models/tickets/iTicket';
 import { MessagesService } from 'src/app/services/tickets/messages.service';

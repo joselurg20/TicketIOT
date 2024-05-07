@@ -26,3 +26,7 @@ export enum Messages {
     downloadAttachment = '/messages/download/',
     createMessage = '/messages/create'
 }
+
+export enum Authenticate {
+    login = '/users/authenticate'
+}

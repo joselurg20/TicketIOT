@@ -74,6 +74,9 @@ export class LoginService {
     logout(): void {
         localStorage.removeItem(LocalStorageKeys.tokenKey);
         localStorage.removeItem(LocalStorageKeys.userLanguageKey);
+        if(localStorage.getItem(LocalStorageKeys.selectedTicket)) {
+            localStorage.removeItem(LocalStorageKeys.selectedTicket);
+        }
         this.usersService.currentUser = null;
         this.authTokenSubject.next(null);
         this.router.navigate(['/login']);

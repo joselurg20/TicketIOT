@@ -4,12 +4,12 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { iUser } from 'src/app/models/users/iUser';
 import { Users } from 'src/app/utilities/enum-http-routes';
 import { LocalStorageKeys } from 'src/app/utilities/literals';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
-  private apiUrl = 'https://localhost:7131/gateway';
 
   currentUser: iUser | null = {} as iUser;
   
@@ -27,7 +27,7 @@ export class UsersService {
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.get<iUser[]>(`${this.apiUrl}` + Users.getUsers, { headers });
+    return this.http.get<iUser[]>(`${environment.apiUrl}` + Users.getUsers, { headers });
   }
 
   /**
@@ -36,7 +36,7 @@ export class UsersService {
    * @returns Observable<iuser> con el usuario obtenido.
    */
   getUserById(userId: number): Observable<iUser> {
-    return this.http.get<iUser>(`${this.apiUrl}` + Users.getUserById + `${userId}`);
+    return this.http.get<iUser>(`${environment.apiUrl}` + Users.getUserById + `${userId}`);
   }
 
   /**
@@ -49,7 +49,7 @@ export class UsersService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<iUser[]>(`${this.apiUrl}` + Users.getTechnicians, { headers });
+    return this.http.get<iUser[]>(`${environment.apiUrl}` + Users.getTechnicians, { headers });
   }
 
   /**
@@ -61,7 +61,7 @@ export class UsersService {
    * @returns 
    */
   checkEmail(username: string, domain: string, tld: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.apiUrl}` + Users.checkEmail + `${username}/${domain}/${tld}`);
+    return this.http.get<boolean>(`${environment.apiUrl}` + Users.checkEmail + `${username}/${domain}/${tld}`);
   }
 
   /**
@@ -70,6 +70,6 @@ export class UsersService {
    * @returns 
    */
   resetPassword(formData: FormData): Observable<boolean> {
-    return this.http.post<boolean>(`${this.apiUrl}` + Users.resetPassword, formData);
+    return this.http.post<boolean>(`${environment.apiUrl}` + Users.resetPassword, formData);
   }
 }

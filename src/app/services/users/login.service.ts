@@ -6,12 +6,13 @@ import { tap } from 'rxjs/operators';
 import { LocalStorageKeys } from 'src/app/utilities/literals';
 import { UsersService } from './users.service';
 import { iUser } from 'src/app/models/users/iUser';
+import { environment } from 'src/environments/environment';
+import { Authenticate } from 'src/app/utilities/enum-http-routes';
 
 @Injectable({
     providedIn: 'root'
 })
 export class LoginService {
-    private readonly apiUrl = 'https://localhost:7131/gateway/users/authenticate';
 
     private authTokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
 
@@ -32,7 +33,7 @@ export class LoginService {
      */
     login(email: string, password: string): Observable<any> {
         const loginData = { email, password };
-        return this.http.post<any>(this.apiUrl, loginData).pipe(
+        return this.http.post<any>(environment.apiUrl + Authenticate.login, loginData).pipe(
             tap(response => {
                 if (response && response.token) {
                     localStorage.setItem(LocalStorageKeys.tokenKey, response.token);

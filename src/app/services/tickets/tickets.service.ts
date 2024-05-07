@@ -8,12 +8,12 @@ import { iTicketFilterDto } from 'src/app/models/tickets/iTicketFilterDto';
 import { iTicketUserDto } from 'src/app/models/tickets/iTicketUserDto';
 import { Tickets } from 'src/app/utilities/enum-http-routes';
 import { LocalStorageKeys } from 'src/app/utilities/literals';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TicketsService {
-  private apiUrl = 'https://localhost:7131/gateway';
   
 
   constructor(private http: HttpClient) { }
@@ -30,7 +30,7 @@ export class TicketsService {
       'Authorization': `Bearer ${token}`
     });
   
-    return this.http.get<iTicket[]>(`${this.apiUrl}` + Tickets.getTickets, { headers });
+    return this.http.get<iTicket[]>(`${environment.apiUrl}` + Tickets.getTickets, { headers });
   }
 
   /**
@@ -44,7 +44,7 @@ export class TicketsService {
       'Authorization': `Bearer ${token}`
     });
   
-    return this.http.get<iTicketUserDto[]>(`${this.apiUrl}` + Tickets.getTicketsWithNames, { headers });
+    return this.http.get<iTicketUserDto[]>(`${environment.apiUrl}` + Tickets.getTicketsWithNames, { headers });
   }
 
   /**
@@ -59,7 +59,7 @@ export class TicketsService {
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.get<iTicketFilterDto>(`${this.apiUrl}` + Tickets.filterTickets, {
+    return this.http.get<iTicketFilterDto>(`${environment.apiUrl}` + Tickets.filterTickets, {
       headers: headers,
       params: new HttpParams()
         .set("Status", filter.status)
@@ -77,7 +77,7 @@ export class TicketsService {
    * @returns 
    */
   createTicket(formData: FormData): Observable<boolean> {
-    return this.http.post<boolean>(`${this.apiUrl}` + Tickets.createTicket, formData);
+    return this.http.post<boolean>(`${environment.apiUrl}` + Tickets.createTicket, formData);
   }
 
   /**
@@ -92,7 +92,7 @@ export class TicketsService {
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.get<iTicket[]>(`${this.apiUrl}` +  Tickets.getTicketsByUser + `${userId}`, { headers });
+    return this.http.get<iTicket[]>(`${environment.apiUrl}` +  Tickets.getTicketsByUser + `${userId}`, { headers });
   }
 
   /**
@@ -107,7 +107,7 @@ export class TicketsService {
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.get<iTicketUserDto[]>(`${this.apiUrl}` + Tickets.getTicketsByUserWithNames + `${userId}`, { headers });
+    return this.http.get<iTicketUserDto[]>(`${environment.apiUrl}` + Tickets.getTicketsByUserWithNames + `${userId}`, { headers });
   }
 
   /**
@@ -116,7 +116,7 @@ export class TicketsService {
    * @returns Observable<iTicket> con la incidencia.
    */
   getTicketById(ticketId: number): Observable<iTicket> {
-    return this.http.get<iTicket>(`${this.apiUrl}` + Tickets.getTicketById + `${ticketId}`);
+    return this.http.get<iTicket>(`${environment.apiUrl}` + Tickets.getTicketById + `${ticketId}`);
   }
 
    /**
@@ -125,7 +125,7 @@ export class TicketsService {
    * @returns Observable<iTicket> con la incidencia.
    */
    getTicketByIdWithName(ticketId: number): Observable<iTicketUserDto> {
-    return this.http.get<iTicketUserDto>(`${this.apiUrl}` + Tickets.getTicketByIdWithName + `${ticketId}`);
+    return this.http.get<iTicketUserDto>(`${environment.apiUrl}` + Tickets.getTicketByIdWithName + `${ticketId}`);
   }
   
   /**
@@ -141,7 +141,7 @@ export class TicketsService {
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.put<boolean>(`${this.apiUrl}` + Tickets.assignTechnician + `${ticketId}/${userId}`, null, {headers});
+    return this.http.put<boolean>(`${environment.apiUrl}` + Tickets.assignTechnician + `${ticketId}/${userId}`, null, {headers});
   }
 
   /**
@@ -151,7 +151,7 @@ export class TicketsService {
    * @returns 
    */
   updateTicket(ticketId: number, newTicket: TicketDto): Observable<boolean> {
-    return this.http.put<boolean>(`${this.apiUrl}` + Tickets.updateTicket + `${ticketId}`, newTicket);
+    return this.http.put<boolean>(`${environment.apiUrl}` + Tickets.updateTicket + `${ticketId}`, newTicket);
   }
 
   /**
@@ -167,7 +167,7 @@ export class TicketsService {
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.put<boolean>(`${this.apiUrl}` + Tickets.changeTicketPriority + `${ticketId}/${priority}`, null, {headers});
+    return this.http.put<boolean>(`${environment.apiUrl}` + Tickets.changeTicketPriority + `${ticketId}/${priority}`, null, {headers});
   }
 
   /**
@@ -183,6 +183,6 @@ export class TicketsService {
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.put<boolean>(`${this.apiUrl}` + Tickets.changeTicketStatus + `${ticketId}/${status}`, null, {headers});
+    return this.http.put<boolean>(`${environment.apiUrl}` + Tickets.changeTicketStatus + `${ticketId}/${status}`, null, {headers});
   }
 }

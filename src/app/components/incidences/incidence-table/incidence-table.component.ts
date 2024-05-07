@@ -79,7 +79,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   }
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private usersService: UsersService,
-              private router: Router, private routes:Routes, private translate: TranslateService, private cdr: ChangeDetectorRef,
+              private router: Router, private translate: TranslateService, private cdr: ChangeDetectorRef,
               private ticketDataService: TicketDataService, private loadingService: LoadingService,
               private readonly dateAdapter: DateAdapter<Date>, private langUpdateService: LanguageUpdateService) {
     this.translate.addLangs(['en', 'es']);

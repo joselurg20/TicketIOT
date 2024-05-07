@@ -27,7 +27,7 @@ export class ManagerIncidenceComponent implements OnInit {
 
     loading$: Observable<boolean>;
 
-    constructor(private router: Router, private routes: Routes, private loadingService: LoadingService,
+    constructor(private router: Router, private loadingService: LoadingService,
                 private usersService: UsersService) {
         this.loading$ = this.loadingService.loading$;
     }

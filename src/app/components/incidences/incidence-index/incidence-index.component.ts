@@ -59,9 +59,15 @@ export class IncidenceIndexComponent implements OnInit {
   }
 
   openSnackBar() {
-    this._snackBar.openFromComponent(SnackbarIncidenceComponent, {
-      duration: this.durationInSeconds * 1000,
-    });
+    if (this.ticketForm.valid) {
+      this._snackBar.openFromComponent(SnackbarIncidenceComponent, {
+        duration: this.durationInSeconds * 1000,
+      });
+    } else {
+      this._snackBar.openFromComponent(SnackbarIncidenceComponent, {
+        duration: this.durationInSeconds * 1000,
+      });
+    }
   }
 
   ngOnInit() {

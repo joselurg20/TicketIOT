@@ -1,8 +1,12 @@
 {
   "snackbars": {
-    "incidence": "Ticket sent.",
+    "incidence": "Incidence sent.",
+    "incidenceerro": "Incidence not sent.",
     "menssage": "Message sent.",
+    "menssageerro": "Message not sent.",
     "recovered": "Email sent successfully.",
-    "recovered2": "Password reset."
+    "recoverederro": "Email not sent.",
+    "recovered2": "Password reset successfully.",
+    "recoverederror2": "Password not reset."
   }
 }

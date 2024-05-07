@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
-import { Routes } from 'src/app/utilities/routes';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import * as CryptoJS from 'crypto-js';
 import { Observable } from 'rxjs';
@@ -14,6 +13,7 @@ import { LoginService } from '../../../services/users/login.service';
 import { LenguageComponent } from "../../lenguage/lenguage.component";
 import { LoadingComponent } from '../../shared/loading.component';
 import { SidebarComponent } from "../../sidebar/sidebar.component";
+import { Routes } from 'src/app/utilities/routes';
 
 
 function passwordValidator(control: FormControl): { [key: string]: any } | null {
@@ -40,8 +40,7 @@ export class LoginComponent implements OnInit {
   public errorMsg: string = "";
   loading$: Observable<boolean>;
 
-  constructor(private loginService: LoginService, private loadingService: LoadingService, private router: Router,
-              private routes: Routes , private translate: TranslateService, private usersService: UsersService) {
+  constructor(private loginService: LoginService, private loadingService: LoadingService, private router: Router,  private translate: TranslateService, private usersService: UsersService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {

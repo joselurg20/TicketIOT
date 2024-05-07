@@ -9,6 +9,7 @@ import * as CryptoJS from 'crypto-js';
 import { LenguageComponent } from "../../lenguage/lenguage.component";
 import { SnackbarPasswordComponent } from '../../snackbars/snackbar-password/snackbar-password.component';
 import { UsersService } from 'src/app/services/users/users.service';
+import { Routes } from 'src/app/utilities/routes';
 
 function passwordValidator(control: FormControl): { [key: string]: any } | null {
   const hasUppercase = /[A-Z]/.test(control.value); // Verifica si hay al menos una letra mayúscula
@@ -40,7 +41,7 @@ export class Recovery2Component implements OnInit {
   durationInSeconds = 5;
 
   constructor(private route: ActivatedRoute,private fb:FormBuilder, private _snackBar: MatSnackBar,
-              private router: Router, private usersService: UsersService, private translate: TranslateService) {
+              private router: Router, private routes: Routes, private usersService: UsersService, private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -64,7 +65,7 @@ export class Recovery2Component implements OnInit {
       const hashedEmail = CryptoJS.SHA256(this.email).toString();
       this.hash = params['hash'];
       if (hashedEmail !== this.hash) {
-        this.router.navigate(['/404']);
+        this.router.navigate([Routes.notFound]);
       }
     });
   }
@@ -98,7 +99,7 @@ export class Recovery2Component implements OnInit {
 
     this.usersService.resetPassword(formData).subscribe({
       next: (response) => {
-        this.router.navigate(['/cls']);
+        this.router.navigate([Routes.cls]);
       },
       error: (error) => {
         console.error('Error al restablecer la contraseña:', error);

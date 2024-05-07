@@ -12,13 +12,13 @@ import { SidebarComponent } from 'src/app/components/sidebar/sidebar.component';
 import { TechnicalTableComponent } from 'src/app/components/technical-table/technical-table.component';
 import { iTicketTable } from 'src/app/models/tickets/iTicketTable';
 import { LoadingService } from 'src/app/services/loading.service';
-import { LoginService } from 'src/app/services/users/login.service';
 import { TicketDataService } from 'src/app/services/tickets/ticketData.service';
+import { LoginService } from 'src/app/services/users/login.service';
+import { UsersService } from 'src/app/services/users/users.service';
+import { Roles } from 'src/app/utilities/literals';
+import { Routes } from 'src/app/utilities/routes';
 import { IncidenceDataComponent } from "../../components/incidences/incidence-data/incidence-data.component";
 import { LoadingComponent } from "../../components/shared/loading.component";
-import { LocalStorageKeys, Roles } from 'src/app/utilities/literals';
-import { UsersService } from 'src/app/services/users/users.service';
-import { iUser } from 'src/app/models/users/iUser';
 
 @Component({
     selector: 'app-support-technical',
@@ -35,7 +35,7 @@ export class SupportTechnicalComponent implements OnInit {
     tickets: iTicketTable[] = [];
     loading$: Observable<boolean>;
 
-    constructor(private loginService: LoginService, private router: Router, private ticketsService: TicketDataService,
+    constructor(private loginService: LoginService, private router: Router, private routes: Routes, private ticketsService: TicketDataService,
                 private loadingService: LoadingService, private usersService: UsersService) {
         this.loading$ = this.loadingService.loading$;
     }
@@ -44,12 +44,14 @@ export class SupportTechnicalComponent implements OnInit {
         window.onpopstate = (event) => {
             this.loadingService.showLoading();
             this.loginService.logout();
-            this.router.navigate(['/login']);
+            this.router.navigate([Routes.login]);
+
         }
 
         if (this.usersService.currentUser?.role !== Roles.technicianRole) {
             this.loadingService.showLoading();
-            this.router.navigate(['/login']);
+            this.router.navigate([Routes.login]);
+
         }
 
         this.ticketsService.getTickets(false);

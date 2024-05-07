@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { Routes } from 'src/app/utilities/routes';  
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { iUser } from 'src/app/models/users/iUser';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { LoginService } from 'src/app/services/users/login.service';
 import { UsersService } from 'src/app/services/users/users.service';
@@ -71,7 +71,7 @@ export class SidebarComponent implements OnInit {
   }
 
 
-  constructor(private loginService: LoginService, private router: Router, private translate: TranslateService,
+  constructor(private loginService: LoginService, private router: Router, private routes: Routes, private translate: TranslateService,
               private langUpdateService: LanguageUpdateService, private usersService: UsersService) {
     this.translate.addLangs(['en', 'es']);
     var lang = '';
@@ -170,9 +170,9 @@ export class SidebarComponent implements OnInit {
   */
   goToDashboard() {
     if (this.usersService.currentUser?.role === Roles.managerRole) {
-      this.router.navigate(['/support-manager']);
+      this.router.navigate([Routes.supportManager]);
     } else {
-      this.router.navigate(['/support-technician']);
+      this.router.navigate([Routes.supportTechnician]); 
     }
 
   }

@@ -31,7 +31,7 @@ const routes: Routes = [
   { path: "support-manager", component: SupportManagerComponent },
   { path: "support-technician", component: SupportTechnicalComponent },
   { path: "review-manager", component: ManagerIncidenceComponent },
-  { path: "review-tecnico", component: TechnicialIncidenceComponent },
+  { path: "review-technician", component: TechnicialIncidenceComponent },
 
   //Pruebas 
   { path: "prueba", component: IncidenceTableComponent },

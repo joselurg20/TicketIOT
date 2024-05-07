@@ -30,17 +30,12 @@ export class LoginService {
      * @returns 
      */
     isLogged(): boolean {
-        console.log('1', localStorage.getItem(LocalStorageKeys.tokenKey) !== null);
         if(localStorage.getItem(LocalStorageKeys.tokenKey)) {
-            console.log('2', localStorage.getItem(LocalStorageKeys.loggedUser) !== null);
             if(localStorage.getItem(LocalStorageKeys.loggedUser)) {
-                console.log('3', !this.usersService.currentUser?.id);
                 if(!this.usersService.currentUser?.id){
                     this.usersService.getUserById(parseInt(localStorage.getItem(LocalStorageKeys.loggedUser)!)).subscribe({
                         next: (user) => {
-                            console.log('4', user);
                             this.usersService.currentUser = user;
-                            console.log('5', this.usersService.currentUser);
                         },
                         error: (error) => {
                             console.log('error', error);

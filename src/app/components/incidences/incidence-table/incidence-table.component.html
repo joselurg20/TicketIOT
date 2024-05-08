@@ -35,7 +35,7 @@
                     <select class="form-select form-select-lg" id="technician" required  name="technician" [(ngModel)]="selectedTechnicianFilter">
                         <option value="-1">{{"incidence-table.filterTechnicianDefaultValue" | translate}}</option>
                         <option value="0">{{"incidence-table.filterTechnicianValueAll" | translate}}</option>
-                        <option *ngFor="let user of users" [value]="user.id">{{user.userName}}</option>
+                        <option *ngFor="let user of users" [value]="user.id">{{user.fullName}}</option>
                     </select>
                     <div class="datepicker-2">
                         <mat-form-field class="custom-mat-field">

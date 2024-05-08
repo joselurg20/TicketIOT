@@ -9,7 +9,8 @@ import { iMessageDto } from 'src/app/models/tickets/iMessageDto';
 import { MessagesService } from 'src/app/services/tickets/messages.service';
 import { MessagesUpdateService } from 'src/app/services/tickets/messagesUpdate.service';
 import { TicketsService } from 'src/app/services/tickets/tickets.service';
-import { LocalStorageKeys } from 'src/app/utilities/literals';
+import { UsersService } from 'src/app/services/users/users.service';
+import { LocalStorageKeys, Roles } from 'src/app/utilities/literals';
 
 @Component({
   selector: 'app-message',
@@ -26,7 +27,8 @@ export class MessageComponent implements OnInit {
   private messagesUpdateSubscription: Subscription = {} as Subscription;
 
   constructor(private messagesService: MessagesService, private translate: TranslateService,
-              private messagesUpdateService: MessagesUpdateService, private ticketsService: TicketsService) {
+              private messagesUpdateService: MessagesUpdateService, private ticketsService: TicketsService,
+              private usersService: UsersService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -90,13 +92,16 @@ export class MessageComponent implements OnInit {
           newMessagesCount: 0
         }
         this.ticket = ticket;
-        this.ticketsService.updateTicket(this.ticketId, this.ticket).subscribe({
-          next: (response: any) => {
-          },
-          error: (error: any) => {
-            console.error('Error al actualizar el ticket', error);
-          }
-        })
+        if(this.usersService.currentUser?.role === Roles.technicianRole){
+          
+          this.ticketsService.updateTicket(this.ticketId, this.ticket).subscribe({
+            next: (response: any) => {
+            },
+            error: (error: any) => {
+              console.error('Error al actualizar el ticket', error);
+            }
+          });
+        }
       },
       error: (error: any) => {
         console.error('Error al obtener el ticket', error);

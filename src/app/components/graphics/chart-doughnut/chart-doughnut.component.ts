@@ -105,7 +105,12 @@ export class ChartDoughnutComponent {
    * Crea el gráfico.
    */
   createChart(): void {
-    this.myChart?.destroy();
+    var chartExist = Chart.getChart("technicianChart2");
+    if(chartExist != undefined)
+      chartExist.destroy();
+    if(this.myChart)
+      this.myChart.destroy();
+
     var status: Status[] = [];
     if(this.usersService.currentUser?.role === Roles.managerRole) {
       status = [1, 2, 0];

@@ -50,6 +50,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   isSupportManager: boolean = false;
   loading$: Observable<boolean>;
   showFilter: boolean = false;
+  isFirstLoad: boolean = true;
 
   //Listas de datos a representar en la tabla
   tickets: iTicketTableSM[] = [];
@@ -129,7 +130,6 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
         this.setLocale('es');
         break;
     }
-    console.log('priostatus', this.priorities, this.status);
     if (this.usersService.currentUser?.role === Roles.managerRole) {
       this.isSupportManager = true;
       this.usersService.getTechnicians().subscribe({
@@ -178,22 +178,26 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
       }
       this.dataSource.sortingDataAccessor = (data: iTicketTableSM, sortHeaderId: string) => {
         switch (sortHeaderId) {
+          case 'newMessages':
+            return this.getHasNewMessagesValue(data.hasNewMessages);
           case 'priority':
             return data.priority;
           case 'timestamp':
             return data.timestamp;
           case 'technician':
             return data.techName;
-          case 'newMessages':
-            return this.getHasNewMessagesValue(data.hasNewMessages);
           default:
             const value = data[sortHeaderId as keyof iTicketTableSM];
             return typeof value === 'string' ? value.toLowerCase() : (typeof value === 'number' ? value : 0);
         }
       };
-    },1)
     // Detectar manualmente los cambios
     this.cdr.detectChanges();
+    },1)
+    if(this.usersService.currentUser?.role === Roles.technicianRole && this.isFirstLoad){
+      this.isFirstLoad = false;
+      this.ngAfterViewInit();
+    }
   }
 
   /**

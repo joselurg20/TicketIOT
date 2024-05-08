@@ -14,13 +14,6 @@ import { MessageComponent } from "../../components/messages/message/message.comp
 import { LoadingComponent } from "../../components/shared/loading.component";
 import { SidebarComponent } from "../../components/sidebar/sidebar.component";
 import { TechnicalTableComponent } from "../../components/technical-table/technical-table.component";
-import { UsersService } from 'src/app/services/users/users.service';
-
-interface Tile {
-    cols: number;
-    rows: number;
-    component: any;
-}
 
 @Component({
     selector: 'app-support-manager',
@@ -34,24 +27,14 @@ interface Tile {
 export class SupportManagerComponent implements OnInit {
     loading$: Observable<boolean>;
 
-    constructor(private ticketsService: TicketDataService, private loadingService: LoadingService, private usersService: UsersService) {
+    constructor(private ticketsService: TicketDataService, private loadingService: LoadingService) {
         this.loading$ = this.loadingService.loading$;
     }
 
     ngOnInit(): void {
         setTimeout(() => {
-        
-        console.log('user', this.usersService.currentUser);
-        this.ticketsService.getTickets(true);
-        this.ticketsService.getTechnicians();    
+            this.ticketsService.getTickets(true);
+            this.ticketsService.getTechnicians();    
         }, 1)
     }
-
-    tiles: Tile[] = [
-        { component: IncidenceTableComponent, cols: 4, rows: 4 },
-        { component: ChartPieComponent, cols: 2, rows: 1.5 },
-        { component: ChartDoughnutComponent, cols: 2, rows: 1.5 },
-        { component: ChartBarComponent, cols: 4, rows: 2 },
-    ];
-
 }

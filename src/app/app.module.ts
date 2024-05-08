@@ -14,9 +14,6 @@ import { enGB, es } from 'date-fns/locale';
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 import { SidebarComponent } from "./components/sidebar/sidebar.component";
 import { SnackbarIncidenceComponent } from './components/snackbars/snackbar-incidence/snackbar-incidence.component';
-import { SnackbarMenssageComponent } from './components/snackbars/snackbar-menssage/snackbar-menssage.component';
-import { SnackbarPasswordComponent } from './components/snackbars/snackbar-password/snackbar-password.component';
-import { SnackbarRecoveredComponent } from './components/snackbars/snackbar-recovered/snackbar-recovered.component';
 
 registerLocaleData(es, 'es');
 registerLocaleData(enGB, 'en');
@@ -37,10 +34,7 @@ registerLocaleData(enGB, 'en');
     ],
     bootstrap: [AppComponent],
     imports: [
-        SnackbarIncidenceComponent, 
-        SnackbarMenssageComponent, 
-        SnackbarPasswordComponent, 
-        SnackbarRecoveredComponent,
+        SnackbarIncidenceComponent,
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,

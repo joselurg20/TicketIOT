@@ -5,17 +5,17 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { TicketDto } from 'src/app/models/tickets/TicketDTO';
-import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
-import { MessagesUpdateService } from 'src/app/services/tickets/messagesUpdate.service';
-import { SnackbarMenssageComponent } from '../../snackbars/snackbar-menssage/snackbar-menssage.component';
-import { MessageComponent } from "../message/message.component";
-import { iUserGraph } from 'src/app/models/users/iUserGraph';
 import { iTicket } from 'src/app/models/tickets/iTicket';
+import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
+import { iUserGraph } from 'src/app/models/users/iUserGraph';
 import { MessagesService } from 'src/app/services/tickets/messages.service';
+import { MessagesUpdateService } from 'src/app/services/tickets/messagesUpdate.service';
 import { TicketsService } from 'src/app/services/tickets/tickets.service';
 import { UsersService } from 'src/app/services/users/users.service';
 import { LocalStorageKeys } from 'src/app/utilities/literals';
-import { iUser } from 'src/app/models/users/iUser';
+import { AlertComponent } from '../../snackbars/alert/alert.component';
+import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/snackbar-incidence.component';
+import { MessageComponent } from "../message/message.component";
 
 @Component({
   selector: 'app-comunication',
@@ -91,9 +91,15 @@ export class ComunicationComponent implements OnInit {
   }
 
   openSnackBar() {
-    this._snackBar.openFromComponent(SnackbarMenssageComponent, {
-      duration: this.durationInSeconds * 1000,
-    });
+    if(this.messageForm.valid){
+      this._snackBar.openFromComponent(SnackbarIncidenceComponent, {
+        duration: this.durationInSeconds * 1000,
+      });
+    }else{
+      this._snackBar.openFromComponent(AlertComponent, {
+        duration: this.durationInSeconds * 1000,
+      });
+    } 
   }
 
   previewUrls: Array<string | ArrayBuffer | null> = new Array();

@@ -3,7 +3,9 @@ import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule, MatSnackBarRef } from '@angular/material/snack-bar';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+import { Routes } from 'src/app/utilities/routes';
 
 @Component({
   selector: 'app-snackbar-incidence',
@@ -14,25 +16,29 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 })
 export class SnackbarIncidenceComponent {
   snackBarRef = inject(MatSnackBarRef<SnackbarIncidenceComponent>);
-  send: boolean = false;
+  isIncidencePage: boolean = false;
+  isMessagePage: boolean = false;
+  isRecoveredPage: boolean = false;
+  isRecovered2Page: boolean = false;
 
+  constructor( private routes: Routes) {
+    const currentPage = this.obtenerPaginaActual(); 
 
-  constructor(private translate: TranslateService) {
-    this.translate.addLangs(['en', 'es']);
-    const lang = this.translate.getBrowserLang();
-    if (lang !== 'en' && lang !== 'es') {
-      this.translate.setDefaultLang('en');
-    } else {
-      this.translate.use('es');
+    if (currentPage === Routes.incidence) {
+      this.isIncidencePage = true;
+    } else if ( currentPage === Routes.reviewManager || currentPage === Routes.reviewTechnician ) {
+      this.isMessagePage = true;
+    } else if (currentPage === Routes.recover) {
+      this.isRecoveredPage = true;
+    } else if (currentPage === Routes.recover2) {
+      this.isRecovered2Page = true;
     }
-
-    if (this.snackBarRef) {
-      this.send = true;
-    } else {
-      this.send = false;
-    }
-
   }
 
+  obtenerPaginaActual(): string {
+    const router = inject(Router);
+    const currentRoute = router.url;
+    return currentRoute.split('/').pop() || '';
+  }
 
 }

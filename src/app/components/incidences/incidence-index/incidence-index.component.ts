@@ -6,18 +6,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarModule, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
+import { TicketsService } from 'src/app/services/tickets/tickets.service';
+import { UsersService } from 'src/app/services/users/users.service';
+import { Routes } from 'src/app/utilities/routes';
 import { ButtonComponent } from "../../button/button.component";
 import { LenguageComponent } from "../../lenguage/lenguage.component";
 import { SidebarComponent } from '../../sidebar/sidebar.component';
 import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/snackbar-incidence.component';
-import { TicketsService } from 'src/app/services/tickets/tickets.service';
-import { LocalStorageKeys } from 'src/app/utilities/literals';
-import { UsersService } from 'src/app/services/users/users.service';
-import { iUser } from 'src/app/models/users/iUser';
-import { Router } from '@angular/router';
-import { Routes } from 'src/app/utilities/routes';
+import { AlertComponent } from '../../snackbars/alert/alert.component';
 
 
 @Component({
@@ -47,28 +46,26 @@ export class IncidenceIndexComponent implements OnInit {
   isSupportManager: boolean = true;
 
 
-  constructor(private _snackBar: MatSnackBar, private ticketsService: TicketsService, private translate: TranslateService,
-              private usersService: UsersService, private router: Router) {
+  constructor(private _snackBar: MatSnackBar, private ticketsService: TicketsService, private translate: TranslateService, private usersService: UsersService, private router: Router) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
       this.translate.setDefaultLang('en');
     } else {
       this.translate.use('es');
-
     }
   }
 
   openSnackBar() {
-    if (this.ticketForm.valid) {
+    if(this.ticketForm.valid){ 
       this._snackBar.openFromComponent(SnackbarIncidenceComponent, {
         duration: this.durationInSeconds * 1000,
       });
-    } else {
-      this._snackBar.openFromComponent(SnackbarIncidenceComponent, {
+    }else{
+      this._snackBar.openFromComponent(AlertComponent, {
         duration: this.durationInSeconds * 1000,
       });
-    }
+    } 
   }
 
   ngOnInit() {
@@ -107,7 +104,7 @@ export class IncidenceIndexComponent implements OnInit {
             setTimeout(() => {
               this.clearAttachments(); // Limpiar campos del formulario
             }, 1000);
-            if(this.isSupportManager) {
+            if (this.isSupportManager) {
               this.router.navigate([Routes.supportManager]);
             }
           },

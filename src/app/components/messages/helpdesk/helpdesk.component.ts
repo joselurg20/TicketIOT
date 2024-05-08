@@ -10,11 +10,12 @@ import { TicketDto } from 'src/app/models/tickets/TicketDTO';
 import { iTicket } from 'src/app/models/tickets/iTicket';
 import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
 import { iUserGraph } from 'src/app/models/users/iUserGraph';
+import { MessagesService } from 'src/app/services/tickets/messages.service';
 import { MessagesUpdateService } from 'src/app/services/tickets/messagesUpdate.service';
-import { SnackbarMenssageComponent } from '../../snackbars/snackbar-menssage/snackbar-menssage.component';
 import { TicketsService } from 'src/app/services/tickets/tickets.service';
 import { UsersService } from 'src/app/services/users/users.service';
-import { MessagesService } from 'src/app/services/tickets/messages.service';
+import { AlertComponent } from '../../snackbars/alert/alert.component';
+import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/snackbar-incidence.component';
 
 
 @Component({
@@ -152,10 +153,17 @@ export class HelpdeskComponent {
   }
 
   openSnackBar() {
-    this._snackBar.openFromComponent(SnackbarMenssageComponent, {
-      duration: this.durationInSeconds * 1000,
-    });
+    if(this.messageForm.valid){
+      this._snackBar.openFromComponent(SnackbarIncidenceComponent, {
+        duration: this.durationInSeconds * 1000,
+      });
+    }else{
+      this._snackBar.openFromComponent(AlertComponent, {
+        duration: this.durationInSeconds * 1000,
+      });
+    } 
   }
+
 
   /**
   * Envía un mensaje a la incidencia seleccionada.

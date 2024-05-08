@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ButtonComponent } from "../../button/button.component";
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { LenguageComponent } from "../../lenguage/lenguage.component";
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { SnackbarMenssageComponent } from '../../snackbars/snackbar-menssage/snackbar-menssage.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { UsersService } from 'src/app/services/users/users.service';
 import { Routes } from 'src/app/utilities/routes';
+import { ButtonComponent } from "../../button/button.component";
+import { LenguageComponent } from "../../lenguage/lenguage.component";
+import { AlertComponent } from '../../snackbars/alert/alert.component';
+import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/snackbar-incidence.component';
 
 @Component({
     selector: 'app-recovered',
@@ -16,7 +17,7 @@ import { Routes } from 'src/app/utilities/routes';
     imports: [CommonModule, ButtonComponent, ReactiveFormsModule, FormsModule, LenguageComponent, TranslateModule],
     templateUrl: './recovered.component.html',
     styleUrls: ['./recovered.component.scss']
-    })
+})
 export class RecoveredComponent implements OnInit {
 
     recoveryForm!: FormGroup;
@@ -24,7 +25,7 @@ export class RecoveredComponent implements OnInit {
     durationInSeconds = 5;
 
     constructor(private router: Router, private _snackBar: MatSnackBar, private usersService: UsersService,
-                private translate: TranslateService) {
+        private translate: TranslateService) {
         this.translate.addLangs(['en', 'es']);
         const lang = this.translate.getBrowserLang();
         if (lang !== 'en' && lang !== 'es') {
@@ -36,11 +37,17 @@ export class RecoveredComponent implements OnInit {
     }
 
     openSnackBar() {
-        this._snackBar.openFromComponent(SnackbarMenssageComponent, {
-            duration: this.durationInSeconds * 1000,
-        });
+        if (this.recoveryForm.valid) {
+            this._snackBar.openFromComponent(SnackbarIncidenceComponent, {
+                duration: this.durationInSeconds * 1000,
+            });
+        } else {
+            this._snackBar.openFromComponent(AlertComponent, {
+                duration: this.durationInSeconds * 1000,
+            });
+        }
     }
-    
+
     ngOnInit(): void {
         this.recoveryForm = new FormGroup({
             Email: new FormControl('', [Validators.required, Validators.email])

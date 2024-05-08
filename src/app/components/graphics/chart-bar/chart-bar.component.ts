@@ -94,9 +94,11 @@ export class ChartBarComponent implements OnInit {
    * @returns Crea el gráfico.
    */
   createChart(): void {
-    if(this.myChart) {
+    var chartExist = Chart.getChart("myChart");
+    if(chartExist != undefined)
+      chartExist.destroy();
+    if(this.myChart)
       this.myChart.destroy();
-    }
 
     const technicianNames = this.users.map(user => user.userName); // Obtener nombres de los técnicos
     const technicianIds = this.users.map(user => user.id);
@@ -128,9 +130,21 @@ export class ChartBarComponent implements OnInit {
             'rgba(253, 183, 63, 1)',
             'rgba(59, 235, 151, 1)',
             'rgba(59, 214, 235, 1)',
-            'rgba(255, 255, 255, 1)'
+            'rgba(255, 255, 255, 1)',
+            '#c82337',
+            '#e06236',
+            '#fdb83f',
+            'rgba(59, 235, 151, 1)',
+            'rgba(59, 214, 235, 1)',
+            'grey'
           ],
           borderColor: [
+            'black',
+            'black',
+            'black',
+            'black',
+            'black',
+            'black',
             'black',
             'black',
             'black',

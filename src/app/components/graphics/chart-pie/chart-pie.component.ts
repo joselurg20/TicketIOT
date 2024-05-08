@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
 import { iTicketGraph } from 'src/app/models/tickets/iTicketsGraph';
@@ -21,7 +21,7 @@ import { LocalStorageKeys } from 'src/app/utilities/literals';
 export class ChartPieComponent implements OnInit {
 
   tickets: iTicketGraph[] = [];
-  myChart: any;
+  myChart: any = null;
   titleEs: string = 'Incidencias por prioridad';
   titleEn: string = 'Tickets by priority';
   title: string = this.titleEs;
@@ -81,15 +81,15 @@ export class ChartPieComponent implements OnInit {
   * Crea el gráfico.
   */
   createChart(): void {
-
-    if (this.myChart != null) {
+    var chartExist = Chart.getChart("technicianChart");
+    if(chartExist != undefined)
+      chartExist.destroy();
+    if(this.myChart)
       this.myChart.destroy();
-    }
 
     const priorities: Priorities[] = [5, 4, 3, 2, 1, 0];
 
     const incidentCounts = priorities.map(prio => {
-      // Calcular el número de incidentes para cada técnico
       return this.tickets.filter((ticket: { priority: Priorities; }) => ticket.priority === prio).length;
     });
 

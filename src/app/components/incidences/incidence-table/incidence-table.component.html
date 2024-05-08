@@ -26,11 +26,11 @@
                 <div class="selects">
                     <select class="form-select form-select-lg" id="status" required  name="status" [(ngModel)]="selectedStatusFilter">
                         <option value="-1">{{"incidence-table.filterStateDefaultValue" | translate}}</option>
-                        <option *ngFor="let s of status" value="s">{{getStatusString(s)}}</option>
+                        <option *ngFor="let s of status" [value]="s">{{getStatusString(s)}}</option>
                     </select>
                     <select class="form-select form-select-lg" id="priority" required  name="priority" [(ngModel)]="selectedPriorityFilter">
                         <option value="-1">{{"incidence-table.filterPriorityDefaultValue" | translate}}</option>
-                        <option *ngFor="let p of priorities" value="p">{{getPriorityString(p)}}</option>
+                        <option *ngFor="let p of priorities" [value]="p">{{getPriorityString(p)}}</option>
                     </select>
                     <select class="form-select form-select-lg" id="technician" required  name="technician" [(ngModel)]="selectedTechnicianFilter">
                         <option value="-1">{{"incidence-table.filterTechnicianDefaultValue" | translate}}</option>

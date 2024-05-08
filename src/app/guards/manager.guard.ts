@@ -20,7 +20,7 @@ export const managerGuard: CanActivateFn = (route, state) => {
       response = false;
       router.navigate([Routes.login]);
     } 
-    },10)
+    },1)
     
   }else{
     response = false;

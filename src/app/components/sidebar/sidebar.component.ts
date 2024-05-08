@@ -147,7 +147,7 @@ export class SidebarComponent implements OnInit {
     if (this.usersService.currentUser?.role === Roles.managerRole) {
       this.isSupportManager = true;
     }  
-    }, 10)
+    }, 1)
   }
 
   /**

@@ -11,6 +11,7 @@ import { LoadingService } from 'src/app/services/loading.service';
 import { LocalStorageKeys , Roles } from 'src/app/utilities/literals';
 import { iUser } from 'src/app/models/users/iUser';
 import { UsersService } from 'src/app/services/users/users.service';
+import { Status } from 'src/app/utilities/enum';
 
 @Component({
     selector: 'app-chart-doughnut',
@@ -21,14 +22,19 @@ import { UsersService } from 'src/app/services/users/users.service';
 })
 export class ChartDoughnutComponent {
 
-  users: iUserGraph[] = [];
   tickets: iTicketGraph[] = [];
   myChart: any;
-  titleEs: string = 'Incidencias por técnico';
-  titleEn: string = 'Tickets by technician';
+  titleEs: string = 'Incidencias por estado';
+  titleEn: string = 'Tickets by status';
   title: string = this.titleEs;
-  private langUpdateSubscription: Subscription = {} as Subscription;
+  labelsEs: string[] = ['ABIERTA', 'PAUSADA', 'PENDIENTE'];
+  labelsEn: string[] = ['OPENED', 'PAUSED', 'PENDING'];
+  labels: string[] = this.labelsEs;
+  labelEs: string = 'Incidencias';
+  labelEn: string = 'Tickets';
+  label: string = this.labelEs;
   loading$: Observable<boolean>;
+  private langUpdateSubscription: Subscription = {} as Subscription;
   isFirstLoad: boolean = true;
 
   constructor(private langUpdateService: LanguageUpdateService, private ticketsService: TicketDataService,
@@ -37,58 +43,60 @@ export class ChartDoughnutComponent {
    }
 
   ngOnInit() {
+    this.loadingService.showLoading();
     setTimeout(() => {
     
-    if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en'){
+    if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
       this.title = this.titleEn;
+      this.label = this.labelEn;
+      if(this.usersService.currentUser?.role === Roles.managerRole) {
+        this.labels = this.labelsEn;
+        this.label = this.labelEs;
+      }else{
+        this.labels = ['OPENED', 'PAUSED'];
+      }
     }else if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es'){
       this.title = this.titleEs;
-    }  
-    if(this.usersService.currentUser?.role === Roles.managerRole) {
-      this.ticketsService.users$.subscribe(users => {
-        this.users = users;
-        if(!this.isFirstLoad){
-          this.createChart();
-          this.loadingService.hideLoading();
-        }
-        this.isFirstLoad = false
-      });
-      this.ticketsService.usersGraph$.subscribe(usersGraph => {
-        this.tickets = usersGraph;
-        if(!this.isFirstLoad){
-          this.createChart();
-          this.loadingService.hideLoading();
-        }
-        this.isFirstLoad = false
-      });
-    }else{
-      if(this.usersService.currentUser !== null) {
-        var user: iUserGraph | null = {id: this.usersService.currentUser.id,
-                                userName: this.usersService.currentUser.userName,
-                                fullName: this.usersService.currentUser.fullName};
-        console.log('ticketGraph', user)
-        this.users[0] = user;
-        this.ticketsService.ticketGraphs$.subscribe(ticketGraphs => {
-          this.tickets = ticketGraphs;
-          this.createChart();
-          this.loadingService.hideLoading();
-        })
+      if(this.usersService.currentUser?.role === Roles.managerRole) {
+        this.labels = this.labelsEs;
+      }else{
+        this.labels = ['ABIERTA', 'PAUSADA'];
       }
-      this.langUpdateSubscription = this.langUpdateService.langUpdated$.subscribe(() => {
-        this.switchLanguage();
-      });
-    }
-  }, 10)
+    }  
+    }, 1)
+    this.ticketsService.ticketGraphs$.subscribe(tickets => {
+      this.loadingService.showLoading();
+      this.tickets = tickets;
+      this.createChart();
+      this.loadingService.hideLoading();
+    });
+    this.langUpdateSubscription = this.langUpdateService.langUpdated$.subscribe(() => {
+      this.loadingService.showLoading();
+      this.switchLanguage();
+      this.loadingService.hideLoading();
+    });
   }
 
   /**
    * Cambia el idioma del título
    */
   switchLanguage() {
-    if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en'){
+    if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
       this.title = this.titleEn;
+      this.label = this.labelEn;
+      if(this.usersService.currentUser?.role === Roles.managerRole) {
+        this.labels = this.labelsEn;
+        this.label = this.labelEs;
+      }else{
+        this.labels = ['OPENED', 'PAUSED'];
+      }
     }else if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es'){
       this.title = this.titleEs;
+      if(this.usersService.currentUser?.role === Roles.managerRole) {
+        this.labels = this.labelsEs;
+      }else{
+        this.labels = ['ABIERTA', 'PAUSADA'];
+      }
     }
     this.createChart();
   }
@@ -97,15 +105,16 @@ export class ChartDoughnutComponent {
    * Crea el gráfico.
    */
   createChart(): void {
-    if(this.myChart) {
-      this.myChart.destroy();
+    this.myChart?.destroy();
+    var status: Status[] = [];
+    if(this.usersService.currentUser?.role === Roles.managerRole) {
+      status = [1, 2, 0];
+    }else{
+      status = [1, 2];
     }
 
-    const technicianNames = this.users.map(user => user.userName); // Obtener nombres de los técnicos
-    const technicianIds = this.users.map(user => user.id);
-    const incidentCounts = technicianIds.map(id => {
-      // Calcular el número de incidentes para cada técnico
-      return this.tickets.filter(ticket => ticket.userId === id).length;
+    const incidentCounts = status.map(status => {
+      return this.tickets.filter((ticket: { status: Status; }) => ticket.status === status).length;
     });
 
     Chart.register(...registerables);
@@ -114,22 +123,16 @@ export class ChartDoughnutComponent {
     this.myChart = new Chart(ctx, {
       type: 'doughnut',
       data: {
-        labels: technicianNames,
+        labels: this.labels,
         datasets: [{
-          label: 'Cantidad de incidencias',
+          label: this.label,
           data: incidentCounts,
           backgroundColor: [
-            'rgba(232, 19, 87, 1)',
-            'rgba(116, 92, 216, 1)',
-            'rgba(253, 183, 63, 1)',
             'rgba(59, 235, 151, 1)',
-            'rgba(59, 214, 235, 1)',
-            'rgba(255, 255, 255, 1)'
+            '#e06236',
+            'grey'
           ],
           borderColor: [
-            'black',
-            'black',
-            'black',
             'black',
             'black',
             'black'

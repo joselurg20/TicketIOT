@@ -28,6 +28,9 @@ export class ChartPieComponent implements OnInit {
   labelsEs: string[] = ['MUY ALTA', 'ALTA', 'MEDIA', 'BAJA', 'MUY BAJA', 'INDEFINIDA'];
   labelsEn: string[] = ['HIGHEST', 'HIGH', 'MEDIUM', 'LOW', 'LOWEST', 'NOT SURE'];
   labels: string[] = this.labelsEs;
+  labelEs: string = 'Incidencias';
+  labelEn: string = 'Tickets';
+  label: string = this.labelEs;
   private langUpdateSubscription: Subscription = {} as Subscription;
   loading$: Observable<boolean>;
 
@@ -41,9 +44,11 @@ export class ChartPieComponent implements OnInit {
     if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
       this.title = this.titleEn;
       this.labels = this.labelsEn;
+      this.label = this.labelEn;
     }else if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es'){
       this.title = this.titleEs;
       this.labels = this.labelsEs;
+      this.label = this.labelEs;
     }
     this.ticketsService.ticketGraphs$.subscribe(tickets => {
       this.tickets = tickets;
@@ -63,9 +68,11 @@ export class ChartPieComponent implements OnInit {
     if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
       this.title = this.titleEn;
       this.labels = this.labelsEn;
+      this.label = this.labelEn;
     }else if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es'){
       this.title = this.titleEs;
       this.labels = this.labelsEs;
+      this.label = this.labelEs;
     }
     this.createChart();
   }
@@ -94,7 +101,7 @@ export class ChartPieComponent implements OnInit {
       data: {
         labels: this.labels,
         datasets: [{
-          label: 'Cantidad de incidencias',
+          label: this.label,
           data: incidentCounts,
           backgroundColor: [
             '#c82337',

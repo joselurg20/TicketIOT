@@ -23,11 +23,11 @@ import { TicketsService } from 'src/app/services/tickets/tickets.service';
 import { LocalStorageKeys } from 'src/app/utilities/literals';
 
 @Component({
-    selector: 'app-incidence-user',
-    standalone: true,
-    imports: [CommonModule, MatGridListModule, NgFor, IncidenceTableComponent, IncidenceDataComponent, MessageComponent, HelpdeskComponent, ComunicationComponent, HistoryComponent, LenguageComponent, TranslateModule, LoadingComponent],
-    templateUrl: './incidence-user.component.html',
-    styleUrls: ['./incidence-user.component.scss']
+  selector: 'app-incidence-user',
+  standalone: true,
+  imports: [CommonModule, MatGridListModule, NgFor, IncidenceTableComponent, IncidenceDataComponent, MessageComponent, HelpdeskComponent, ComunicationComponent, HistoryComponent, LenguageComponent, TranslateModule, LoadingComponent],
+  templateUrl: './incidence-user.component.html',
+  styleUrls: ['./incidence-user.component.scss']
 })
 export class IncidenceUserComponent {
   public messages: iMessage[] = [];
@@ -39,55 +39,55 @@ export class IncidenceUserComponent {
   loading$: Observable<boolean>;
   ticketStatus: string = '';
 
-  
-    constructor(private route: ActivatedRoute, private ticketsService: TicketsService, private router: Router ,
-                private translate: TranslateService, private loadingService: LoadingService,
-                private languageUpdateService: LanguageUpdateService) {
-      this.translate.addLangs(['en', 'es']);
-      const lang = this.translate.getBrowserLang();
-      if (lang !== 'en' && lang !== 'es') {
-        this.translate.setDefaultLang('en');
-      } else {
-        this.translate.use('es');
-      }
-      this.loading$ = this.loadingService.loading$;
+
+  constructor(private route: ActivatedRoute, private ticketsService: TicketsService, private router: Router,
+    private translate: TranslateService, private loadingService: LoadingService,
+    private languageUpdateService: LanguageUpdateService) {
+    this.translate.addLangs(['en', 'es']);
+    const lang = this.translate.getBrowserLang();
+    if (lang !== 'en' && lang !== 'es') {
+      this.translate.setDefaultLang('en');
+    } else {
+      this.translate.use('es');
     }
-    ngOnInit(): void {
-      this.loadingService.showLoading();
-      this.route.params.subscribe(params => {
-        this.ticketId = params['ticketId'];
-        this.hashedId = params['hashedId'];
-        const hashedId = CryptoJS.SHA256(this.ticketId.toString()).toString();
-        if(this.hashedId !== hashedId) {
-          this.router.navigate([Routes.notFound]);
+    this.loading$ = this.loadingService.loading$;
+  }
+  ngOnInit(): void {
+    this.loadingService.showLoading();
+    this.route.params.subscribe(params => {
+      this.ticketId = params['ticketId'];
+      this.hashedId = params['hashedId'];
+      const hashedId = CryptoJS.SHA256(this.ticketId.toString()).toString();
+      if (this.hashedId !== hashedId) {
+        this.router.navigate([Routes.notFound]);
+      }
+    });
+    this.ticketsService.getTicketById(this.ticketId).subscribe({
+      next: (response: iTicket) => {
+        this.ticket = {
+          id: response.id,
+          title: response.title,
+          name: response.name,
+          email: response.email,
+          timestamp: response.timestamp,
+          priority: response.priority,
+          status: response.status,
+          userId: response.userId.toString(),
+          userName: ""
         }
-      });
-      this.ticketsService.getTicketById(this.ticketId).subscribe({
-        next: (response: iTicket) => {
-          this.ticket = {
-            id: response.id,
-            title: response.title,
-            name: response.name,
-            email: response.email,
-            timestamp: response.timestamp,
-            priority: response.priority,
-            status: response.status,
-            userId: response.userId.toString(),
-            userName: ""
-          }
-          this.userName = this.ticket.name;
-          this.loadingService.hideLoading();
-        },
-        error: (error: any) => {
-          console.error('Error al obtener el usuario', error);
-        }
-      });
-      this.languageUpdateService.langUpdated$.subscribe(() => {
+        this.userName = this.ticket.name;
+        this.loadingService.hideLoading();
+      },
+      error: (error: any) => {
+        console.error('Error al obtener el usuario', error);
+      }
+    });
+    this.languageUpdateService.langUpdated$.subscribe(() => {
       this.ticketStatus = this.getStatusString(this.ticket.status);
     });
-    }
-  
-   getStatusString(status: number): string {
+  }
+
+  getStatusString(status: number): string {
     if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
       switch (status) {
         case 1:

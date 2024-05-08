@@ -6,10 +6,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import * as CryptoJS from 'crypto-js';
-import { LenguageComponent } from "../../lenguage/lenguage.component";
-import { SnackbarPasswordComponent } from '../../snackbars/snackbar-password/snackbar-password.component';
 import { UsersService } from 'src/app/services/users/users.service';
 import { Routes } from 'src/app/utilities/routes';
+import { LenguageComponent } from "../../lenguage/lenguage.component";
+import { AlertComponent } from '../../snackbars/alert/alert.component';
+import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/snackbar-incidence.component';
 
 function passwordValidator(control: FormControl): { [key: string]: any } | null {
   const hasUppercase = /[A-Z]/.test(control.value); // Verifica si hay al menos una letra mayúscula
@@ -40,8 +41,8 @@ export class Recovery2Component implements OnInit {
   hash: string = '';
   durationInSeconds = 5;
 
-  constructor(private route: ActivatedRoute,private fb:FormBuilder, private _snackBar: MatSnackBar,
-              private router: Router, private usersService: UsersService, private translate: TranslateService) {
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private _snackBar: MatSnackBar,
+    private router: Router, private usersService: UsersService, private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -108,10 +109,15 @@ export class Recovery2Component implements OnInit {
   }
 
   openSnackBar() {
-    if (passwordValidator===null) {
-      this._snackBar.openFromComponent(SnackbarPasswordComponent, {
-      duration: this.durationInSeconds * 1000,
-    });
+    if (this.recoveryForm.valid) {
+      this._snackBar.openFromComponent(SnackbarIncidenceComponent, {
+        duration: this.durationInSeconds * 1000,
+      });
+    } else {
+      this._snackBar.openFromComponent(AlertComponent, {
+        duration: this.durationInSeconds * 1000,
+      });
     }
   }
+  
 }

@@ -1,0 +1,24 @@
+:host {
+    border-radius: 10px;
+  }
+
+  .snackbar-content-send {
+    text-align: center;
+  }
+  
+  .snackbar-content-send i {
+    margin-right: 8px;
+    text-align: center;
+  }
+  
+  .mat-icon-button {
+    margin-left: auto;
+  }
+  
+  ::ng-deep .mat-mdc-snack-bar-container {
+    --mdc-snackbar-container-color: #D25454 !important;
+    --mdc-snackbar-supporting-text-color: white !important;
+    --mat-snack-bar-button-color: #cb001c !important;
+  
+  }
+  

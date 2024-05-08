@@ -1,18 +1,19 @@
-<span class="snackabr-content-send" matSnackBarLabel *ngIf="send">
+<span class="snackbar-content-send" matSnackBarLabel>
     <i class="fa-solid fa-check fa-xl"></i>
-    {{'snackbars.incidence' | translate}}
+    <ng-container *ngIf="isIncidencePage">
+        {{'snackbars.incidence' | translate}}
+    </ng-container>
+    <ng-container *ngIf="isMessagePage">
+        {{ 'snackbars.menssage' | translate }}
+    </ng-container>
+    <ng-container *ngIf="isRecoveredPage">
+        {{'snackbars.recovered' | translate}}
+    </ng-container>
+    <ng-container *ngIf="isRecovered2Page">
+        {{'snackbars.recovered2' | translate}}
+    </ng-container>
 </span>
-<span matSnackBarActions *ngIf="send">
-    <button class="btn" matSnackBarAction (click)="snackBarRef.dismissWithAction()"><i class="fa-solid fa-xmark fa-lg"
-            style="color: #ffffff;"></i></button>
-</span>
-
-
-<span class="snackabr-content-error" matSnackBarLabel *ngIf="!send">
-    <i class="fa-solid fa-xmark fa-xl"></i>
-    {{'snackbars.incidenceError' | translate}}
-</span>
-<span matSnackBarActions *ngIf="!send">
+<span matSnackBarActions>
     <button class="btn" matSnackBarAction (click)="snackBarRef.dismissWithAction()"><i class="fa-solid fa-xmark fa-lg"
             style="color: #ffffff;"></i></button>
 </span>

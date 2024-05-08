@@ -53,13 +53,13 @@ mat-grid-tile {
 .grid-container {
   padding: 10px;
   border-radius: 25px;
-  margin-top: 2vw;
+  margin-top: 3px;
   margin-left: 1.5vw;
   margin-right: 1.5vw;
-  margin-bottom: 2vw;
+  margin-bottom: 30px;
   display: grid;
   grid-template-areas:
-    'pie douhth bar bar bar';
+    'pie douhth';
   grid-gap: 10px;
 }
 

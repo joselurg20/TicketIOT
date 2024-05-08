@@ -11,6 +11,7 @@ import { LoadingService } from 'src/app/services/loading.service';
 import { LocalStorageKeys , Roles } from 'src/app/utilities/literals';
 import { UsersService } from 'src/app/services/users/users.service';
 import { iUser } from 'src/app/models/users/iUser';
+import { iUserGraph } from 'src/app/models/users/iUserGraph';
 
 @Component({
   selector: 'app-chart-bar',
@@ -21,16 +22,16 @@ import { iUser } from 'src/app/models/users/iUser';
 })
 export class ChartBarComponent implements OnInit {
 
+  
+
+  users: iUserGraph[] = [];
   tickets: iTicketGraph[] = [];
   myChart: any;
-  titleEs: string = 'Incidencias por estado';
-  titleEn: string = 'Tickets by status';
+  titleEs: string = 'Incidencias por técnico';
+  titleEn: string = 'Tickets by technician';
   title: string = this.titleEs;
-  labelsEs: string[] = ['ABIERTA', 'PAUSADA', 'PENDIENTE'];
-  labelsEn: string[] = ['OPENED', 'PAUSED', 'PENDING'];
-  labels: string[] = this.labelsEs;
-  loading$: Observable<boolean>;
   private langUpdateSubscription: Subscription = {} as Subscription;
+  loading$: Observable<boolean>;
   isFirstLoad: boolean = true;
 
   constructor(private ticketsService: TicketDataService, private langUpdateService: LanguageUpdateService,
@@ -39,59 +40,47 @@ export class ChartBarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadingService.showLoading();
     setTimeout(() => {
     
-    if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
-      this.title = this.titleEn;
-      if(this.usersService.currentUser?.role === Roles.managerRole) {
-        this.labels = this.labelsEn;
-      }else{
-        this.labels = ['OPENED', 'PAUSED'];
-      }
-    }else if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es'){
-      this.title = this.titleEs;
-      if(this.usersService.currentUser?.role === Roles.managerRole) {
-        this.labels = this.labelsEs;
-      }else{
-        this.labels = ['ABIERTA', 'PAUSADA'];
-      }
-    }  
-    }, 10)
-    this.ticketsService.ticketGraphs$.subscribe(tickets => {
-      this.loadingService.showLoading();
-      this.tickets = tickets;
-      this.createChart();
-      this.loadingService.hideLoading();
-    });
-    this.langUpdateSubscription = this.langUpdateService.langUpdated$.subscribe(() => {
-      this.loadingService.showLoading();
-      this.switchLanguage();
-      this.loadingService.hideLoading();
-    });
-    
+      if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en'){
+        this.title = this.titleEn;
+      }else if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es'){
+        this.title = this.titleEs;
+      }  
+        this.ticketsService.usersFN$.subscribe(users => {
+          this.users = users;
+          if(!this.isFirstLoad){
+            this.createChart();
+            this.loadingService.hideLoading();
+          }
+          this.isFirstLoad = false
+        });
+        this.ticketsService.usersGraph$.subscribe(usersGraph => {
+          this.tickets = usersGraph;
+          if(!this.isFirstLoad){
+            this.createChart();
+            this.loadingService.hideLoading();
+          }
+          this.isFirstLoad = false
+        });
+        this.langUpdateSubscription = this.langUpdateService.langUpdated$.subscribe(() => {
+          this.switchLanguage();
+        });
+    }, 1)
   }
 
   /**
    * Cambia el idioma del gráfico
    */
   switchLanguage() {
-    if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
+    if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en'){
       this.title = this.titleEn;
-      if(this.usersService.currentUser?.role === Roles.managerRole) {
-        this.labels = this.labelsEn;
-      }else{
-        this.labels = ['OPENED', 'PAUSED'];
-      }
     }else if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es'){
       this.title = this.titleEs;
-      if(this.usersService.currentUser?.role === Roles.managerRole) {
-        this.labels = this.labelsEs;
-      }else{
-        this.labels = ['ABIERTA', 'PAUSADA'];
-      }
     }
     this.createChart();
+
+    
   }
 
   ngAfterViewInit(): void {
@@ -105,17 +94,19 @@ export class ChartBarComponent implements OnInit {
    * @returns Crea el gráfico.
    */
   createChart(): void {
-    this.myChart?.destroy();
-    var status: Status[] = [];
-    if(this.usersService.currentUser?.role === Roles.managerRole) {
-      status = [1, 2, 0];
-    }else{
-      status = [1, 2];
+    if(this.myChart) {
+      this.myChart.destroy();
     }
 
-    const incidentCounts = status.map(status => {
-      return this.tickets.filter((ticket: { status: Status; }) => ticket.status === status).length;
+    const technicianNames = this.users.map(user => user.userName); // Obtener nombres de los técnicos
+    const technicianIds = this.users.map(user => user.id);
+    const incidentCounts = technicianIds.map(id => {
+      // Calcular el número de incidentes para cada técnico
+      return this.tickets.filter(ticket => ticket.userId === id).length;
     });
+
+
+    
 
     Chart.register(...registerables);
 
@@ -127,16 +118,22 @@ export class ChartBarComponent implements OnInit {
     this.myChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: this.labels,
+        labels: technicianNames,
         datasets: [{
           label: '',
           data: incidentCounts,
           backgroundColor: [
+            'rgba(232, 19, 87, 1)',
+            'rgba(116, 92, 216, 1)',
+            'rgba(253, 183, 63, 1)',
             'rgba(59, 235, 151, 1)',
-            '#e06236',
-            'grey'
+            'rgba(59, 214, 235, 1)',
+            'rgba(255, 255, 255, 1)'
           ],
           borderColor: [
+            'black',
+            'black',
+            'black',
             'black',
             'black',
             'black'

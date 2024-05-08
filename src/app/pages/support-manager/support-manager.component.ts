@@ -44,7 +44,7 @@ export class SupportManagerComponent implements OnInit {
         console.log('user', this.usersService.currentUser);
         this.ticketsService.getTickets(true);
         this.ticketsService.getTechnicians();    
-        }, 10)
+        }, 1)
     }
 
     tiles: Tile[] = [

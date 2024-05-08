@@ -165,30 +165,33 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    if (this.usersService.currentUser?.role === Roles.managerRole) {
-      this.dataSource.sort.active = 'id';
-      this.dataSource.sort.direction = 'desc';
-    } else {
-      this.dataSource.sort.active = 'newMessages';
-      this.dataSource.sort.direction = 'desc';
-    }
-    this.dataSource.sortingDataAccessor = (data: iTicketTableSM, sortHeaderId: string) => {
-      switch (sortHeaderId) {
-        case 'priority':
-          return data.priority;
-        case 'timestamp':
-          return data.timestamp;
-        case 'technician':
-          return data.techName;
-        case 'newMessages':
-          return this.getHasNewMessagesValue(data.hasNewMessages);
-        default:
-          const value = data[sortHeaderId as keyof iTicketTableSM];
-          return typeof value === 'string' ? value.toLowerCase() : (typeof value === 'number' ? value : 0);
+    setTimeout(() => {
+      
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      if (this.usersService.currentUser?.role === Roles.managerRole) {
+        this.dataSource.sort.active = 'id';
+        this.dataSource.sort.direction = 'desc';
+      } else {
+        this.dataSource.sort.active = 'newMessages';
+        this.dataSource.sort.direction = 'desc';
       }
-    };
+      this.dataSource.sortingDataAccessor = (data: iTicketTableSM, sortHeaderId: string) => {
+        switch (sortHeaderId) {
+          case 'priority':
+            return data.priority;
+          case 'timestamp':
+            return data.timestamp;
+          case 'technician':
+            return data.techName;
+          case 'newMessages':
+            return this.getHasNewMessagesValue(data.hasNewMessages);
+          default:
+            const value = data[sortHeaderId as keyof iTicketTableSM];
+            return typeof value === 'string' ? value.toLowerCase() : (typeof value === 'number' ? value : 0);
+        }
+      };
+    },1)
     // Detectar manualmente los cambios
     this.cdr.detectChanges();
   }

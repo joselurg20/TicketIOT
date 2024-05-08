@@ -9,6 +9,8 @@ import { TicketDataService } from 'src/app/services/tickets/ticketData.service';
 import { TicketsService } from 'src/app/services/tickets/tickets.service';
 import { LocalStorageKeys } from 'src/app/utilities/literals';
 import { Priorities, Status } from 'src/app/utilities/enum';
+import { Router } from '@angular/router';
+import { Routes } from 'src/app/utilities/routes';
 
 @Component({
   selector: 'app-manager',
@@ -28,8 +30,8 @@ export class ManagerComponent implements OnInit {
   status: Status[] = Object.values(Status).filter(value => typeof value === 'number') as Status[];
 
   constructor(private ticketDataService: TicketDataService, private ticketUpdateService: TicketUpdateService,
-    private loadingService: LoadingService, private translate: TranslateService,
-    private ticketsService: TicketsService) {
+              private loadingService: LoadingService, private translate: TranslateService,
+              private ticketsService: TicketsService, private router: Router) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -68,6 +70,7 @@ export class ManagerComponent implements OnInit {
         next: () => {
           this.ticketUpdateService.triggerTicketUpdate();
           this.loadingService.hideLoading();
+          this.router.navigate([Routes.supportManager]);
         },
         error: (error: any) => {
           console.error('Error al asignar técnico', error);

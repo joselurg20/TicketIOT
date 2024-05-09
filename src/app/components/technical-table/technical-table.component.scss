@@ -15,7 +15,7 @@ section {
 }
 
 #main {
-  padding: 40px;
+  padding: 10px;
   border-radius: 25px;
 }
 
@@ -44,7 +44,7 @@ table {
 th {
   color: $color-dark;
   background-color: $bg-color-warning;
-  padding: 10px;
+  padding: 5px;
   margin: 0px 10px 0px 10px;
   font-size: 20px;
 }
@@ -54,6 +54,12 @@ tr {
   background-color: $bg-color-warning;
   padding: 10px;
   margin: 0px 10px 0px 10px;
+}
+
+tbody td {
+  border: $bg-color-dark 1px solid;
+  border-left: none;
+  border-right: none;
 }
 
 .id {

@@ -75,6 +75,7 @@ export class IncidenceUserComponent {
           userId: response.userId.toString(),
           userName: ""
         }
+        this.ticketStatus = this.getStatusString(this.ticket.status);
         this.userName = this.ticket.name;
         this.loadingService.hideLoading();
       },

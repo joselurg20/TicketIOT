@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { LocalStorageKeys } from 'src/app/utilities/literals';
+import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 
 @Component({
   selector: 'app-language',
@@ -15,7 +16,7 @@ export class LanguageComponent implements OnInit {
   esButtonPressed: boolean = true;
   enButtonPressed: boolean = false;
 
-  constructor(private translate: TranslateService) {
+  constructor(private translate: TranslateService, private languageUpdateService: LanguageUpdateService) {
     this.translate.addLangs(['en', 'es']);
     const lang = localStorage.getItem(LocalStorageKeys.selectedLanguage) || this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -51,6 +52,9 @@ export class LanguageComponent implements OnInit {
    */
   switchLanguage(language: string) {
     this.translate.use(language);
+    setTimeout(() => {
+      this.languageUpdateService.triggerGraphUpdate();
+    },100)
   }
 
   /**

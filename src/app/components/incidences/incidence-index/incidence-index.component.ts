@@ -43,7 +43,6 @@ export class IncidenceIndexComponent implements OnInit {
   selectedFiles: File[] = [];
   durationInSeconds = 5;
   selectFilesNames: string[] = [];
-  isSupportManager: boolean = true;
 
 
   constructor(private _snackBar: MatSnackBar, private ticketsService: TicketsService, private translate: TranslateService, private usersService: UsersService, private router: Router) {
@@ -104,7 +103,7 @@ export class IncidenceIndexComponent implements OnInit {
             setTimeout(() => {
               this.clearAttachments(); // Limpiar campos del formulario
             }, 1000);
-            if (this.isSupportManager) {
+            if (this.isLogged) {
               this.router.navigate([Routes.supportManager]);
             }
           },

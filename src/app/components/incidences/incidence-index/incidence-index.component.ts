@@ -13,7 +13,7 @@ import { TicketsService } from 'src/app/services/tickets/tickets.service';
 import { UsersService } from 'src/app/services/users/users.service';
 import { Routes } from 'src/app/utilities/routes';
 import { ButtonComponent } from "../../button/button.component";
-import { LenguageComponent } from "../../lenguage/lenguage.component";
+import { LanguageComponent } from "../../language/language.component";
 import { SidebarComponent } from '../../sidebar/sidebar.component';
 import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/snackbar-incidence.component';
 import { AlertComponent } from '../../snackbars/alert/alert.component';
@@ -24,7 +24,7 @@ import { AlertComponent } from '../../snackbars/alert/alert.component';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatFormFieldModule,
     MatSelectModule, MatButtonModule, MatSnackBarModule, MatInputModule, MatButtonModule,
-    MatSnackBarModule, ButtonComponent, SidebarComponent, LenguageComponent, TranslateModule],
+    MatSnackBarModule, ButtonComponent, SidebarComponent, LanguageComponent, TranslateModule],
   templateUrl: './incidence-index.component.html',
   styleUrls: ['./incidence-index.component.scss']
 

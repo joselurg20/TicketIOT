@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule, MatSnackBarRef } from '@angular/material/snack-bar';
@@ -15,13 +15,14 @@ import { Routes } from 'src/app/utilities/routes';
   styleUrls: ['./snackbar-incidence.component.scss']
 })
 export class SnackbarIncidenceComponent {
-  snackBarRef = inject(MatSnackBarRef<SnackbarIncidenceComponent>);
+  snackBarRef: MatSnackBarRef<SnackbarIncidenceComponent>;
   isIncidencePage: boolean = false;
   isMessagePage: boolean = false;
   isRecoveredPage: boolean = false;
   isRecovered2Page: boolean = false;
 
-  constructor( private routes: Routes) {
+  constructor(private router: Router , private inject: MatSnackBarRef<SnackbarIncidenceComponent>) {
+    this.snackBarRef = inject;
     const currentPage = this.obtenerPaginaActual(); 
 
     if (currentPage === Routes.incidence) {
@@ -36,8 +37,7 @@ export class SnackbarIncidenceComponent {
   }
 
   obtenerPaginaActual(): string {
-    const router = inject(Router);
-    const currentRoute = router.url;
+    const currentRoute = this.router.url;
     return currentRoute.split('/').pop() || '';
   }
 

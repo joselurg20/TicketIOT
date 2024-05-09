@@ -4,13 +4,13 @@ import { TranslateService } from '@ngx-translate/core';
 import { LocalStorageKeys } from 'src/app/utilities/literals';
 
 @Component({
-  selector: 'app-lenguage',
+  selector: 'app-language',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './lenguage.component.html',
-  styleUrls: ['./lenguage.component.scss']
+  templateUrl: './language.component.html',
+  styleUrls: ['./language.component.scss']
 })
-export class LenguageComponent implements OnInit {
+export class LanguageComponent implements OnInit {
 
   esButtonPressed: boolean = true;
   enButtonPressed: boolean = false;

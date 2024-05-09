@@ -10,7 +10,7 @@ import { LoadingService } from 'src/app/services/loading.service';
 import { UsersService } from 'src/app/services/users/users.service';
 import { Roles } from 'src/app/utilities/literals';
 import { LoginService } from '../../../services/users/login.service';
-import { LenguageComponent } from "../../lenguage/lenguage.component";
+import { LanguageComponent } from "../../language/language.component";
 import { LoadingComponent } from '../../shared/loading.component';
 import { SidebarComponent } from "../../sidebar/sidebar.component";
 import { Routes } from 'src/app/utilities/routes';
@@ -34,7 +34,7 @@ function passwordValidator(control: FormControl): { [key: string]: any } | null 
   standalone: true,
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, LenguageComponent, TranslateModule, SidebarComponent, MatProgressSpinnerModule, LoadingComponent]
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, LanguageComponent, TranslateModule, SidebarComponent, MatProgressSpinnerModule, LoadingComponent]
 })
 export class LoginComponent implements OnInit {
   public loginForm!: FormGroup; // Define loginForm como un FormGroup

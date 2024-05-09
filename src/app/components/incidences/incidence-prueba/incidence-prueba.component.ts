@@ -12,7 +12,7 @@ import { ButtonComponent } from "../../button/button.component";
 import { ChartBarComponent } from '../../graphics/chart-bar/chart-bar.component';
 import { ChartDoughnutComponent } from '../../graphics/chart-doughnut/chart-doughnut.component';
 import { ChartPieComponent } from '../../graphics/chart-pie/chart-pie.component';
-import { LenguageComponent } from "../../lenguage/lenguage.component";
+import { LanguageComponent } from "../../language/language.component";
 import { SidebarComponent } from '../../sidebar/sidebar.component';
 import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/snackbar-incidence.component';
 import { TicketsService } from 'src/app/services/tickets/tickets.service';
@@ -24,7 +24,7 @@ import { TicketsService } from 'src/app/services/tickets/tickets.service';
   imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatFormFieldModule,
     MatSelectModule, MatButtonModule, MatSnackBarModule, MatInputModule, MatButtonModule,
     MatSnackBarModule, ChartBarComponent, ChartPieComponent,
-    ChartDoughnutComponent, ButtonComponent, SidebarComponent, LenguageComponent, TranslateModule],
+    ChartDoughnutComponent, ButtonComponent, SidebarComponent, LanguageComponent, TranslateModule],
   templateUrl: './incidence-prueba.component.html',
   styleUrls: ['./incidence-prueba.component.scss']
   

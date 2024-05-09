@@ -3,11 +3,10 @@
     <app-loading></app-loading>
   </div>
   <div class="logo"><img src="../../../assets/images/logo/IoTlogo.png" alt=""></div>
+  <h1 class="title">{{ticket.title}}</h1>
   <div class="language"><app-language class="d-flex justify-content-end"></app-language></div>
   <div class="history"><app-history></app-history></div>
   <div class="status">
-    <h1 class="my-4">{{"incidence-data.title" | translate}}</h1>
-    <form>
       <div class="row gy-1">
         <div class="status col-12">
           <div class="p-3">
@@ -16,7 +15,6 @@
           </div>
         </div>
       </div>
-    </form>
   </div>
   <div class="message-form"><app-helpdesk></app-helpdesk></div>
 </div>

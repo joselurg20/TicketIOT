@@ -97,7 +97,7 @@ export class HistoryComponent {
             for (const attachmentPath of message.attachmentPaths) {
               var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/' + this.ticketId + '/';
               const fileName = attachmentPath.substring(pathPrefix.length);
-              this.messagesService.downloadAttachment(fileName, +localStorage.getItem(LocalStorageKeys.selectedTicket)!).subscribe({
+              this.messagesService.downloadAttachment(fileName, this.ticketId).subscribe({
                 next: (response: BlobPart) => {
                   var attachment: iAttachment = {} as iAttachment;
                   attachment.path = attachmentPath;

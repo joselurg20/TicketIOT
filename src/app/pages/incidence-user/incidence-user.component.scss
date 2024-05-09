@@ -31,7 +31,7 @@ h1 {
 .logo {
   grid-area: iso;
   background-color: $bg-color-dark  !important;
-  height: 10rem;
+  height: 90px;
 }
 
 .language {
@@ -46,6 +46,7 @@ h1 {
 
 .status {
   grid-area: status;
+  height: fit-content;
 }
 
 .message-form {
@@ -55,15 +56,15 @@ h1 {
 .grid-container {
   display: grid;
   grid-template-areas:
-    'iso iso  iso iso . leng  '
-    'hist hist  hist hist hist status '
-    'hist hist  hist hist hist status '
-    'hist hist  hist hist  hist msg '
-    'hist hist  hist hist hist msg';
+    'iso iso title title title leng'
+    'hist hist hist hist hist status'
+    'hist hist hist hist hist msg'
+    'hist hist hist hist hist msg'
+    'hist hist hist hist hist msg';
   grid-gap: 10px;
   border-radius: 20px;
   padding: 10px;
-  height: 58rem;
+  height: 100%;
 }
 
 .grid-container>div {
@@ -74,7 +75,13 @@ h1 {
 }
 
 img {
-  height: 10rem;
+  height: 90px;
+}
+
+.title {
+  grid-area: title;
+  margin-top: 35px;
+  text-align: start;
 }
 
 @media screen and (max-width: 600px) {
@@ -82,18 +89,18 @@ img {
   .grid-container {
     display: grid;
     grid-template-areas:
-      'iso . leng  '
-      'hist hist  hist '
+      'iso title leng  '
       'status status status'
+      'hist hist  hist '
       'msg msg msg'; 
     grid-gap: 10px;
     border-radius: 20px;
     padding: 10px;
-    height: 58rem;
+    height: auto;
   }
 
   img{
-    height: 7rem;
+    height: 90px;
   }
   
 }

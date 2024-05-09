@@ -215,6 +215,8 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     if (this.range.value['start'] && this.range.value['end']) {
       this.filter.start = this.range.value['start'];
       this.filter.end = this.range.value['end'];
+      this.filter.end.setDate(this.filter.end.getDate() + 1);
+      console.log(this.filter);
     } else {
       this.filter.start = new Date(1900, 1, 1);
       this.filter.end = new Date(3000, 1, 1);

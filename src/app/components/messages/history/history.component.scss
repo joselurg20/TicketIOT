@@ -9,6 +9,10 @@
   overflow-y: scroll;
 }
 
+.modal-content ::-webkit-scrollbar-track, .modal-content ::-webkit-scrollbar-corner {
+  background-color: $bg-color-mid-2;
+}
+
 h1 {
   color: #EFB810;
 }

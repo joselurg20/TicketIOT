@@ -10,54 +10,60 @@
             </div>
         </div>
         <div *ngIf="showFilter" class="filters">
-            <div class="labels">
-                <label for="status" class="form-label"><i class="fa-solid fa-chart-pie"></i> {{"incidence-table.filterState" |
-                    translate}}</label>
-                <label for="priority" class="form-label"><i class="fa-solid fa-chart-simple"></i> {{"incidence-table.filterPriority" |
-                    translate}}</label>
-                <label for="technician" class="form-label"><i class="fa-solid fa-user-group"></i> {{"incidence-table.filterTechnician" |
-                    translate}}</label>
-                <div class="datepicker">
-                        <label for="date" class="form-label"><i class="fa-solid fa-calendar-days"></i> {{"incidence-table.filterDate" |
-                            translate}}</label>
+            <form class="filter-form">
+                <div class="status-label">
+                    <label for="status" class="form-label"><i class="fa-solid fa-chart-pie"></i> {{"incidence-table.filterState" |
+                        translate}}</label>
                 </div>
-            </div>
-            <form>
-                <div class="selects">
+                <div class="prio-label">
+                    <label for="priority" class="form-label"><i class="fa-solid fa-chart-simple"></i> {{"incidence-table.filterPriority" |
+                        translate}}</label>
+                </div>
+                <div class="tech-label">
+                    <label for="technician" class="form-label"><i class="fa-solid fa-user-group"></i> {{"incidence-table.filterTechnician" |
+                        translate}}</label>
+                </div>
+                <div class="date-label">
+                    <label for="date" class="form-label"><i class="fa-solid fa-calendar-days"></i> {{"incidence-table.filterDate" |
+                        translate}}</label>
+                </div>
+                <div class="status-select">
                     <select class="form-select form-select-lg" id="status" required  name="status" [(ngModel)]="selectedStatusFilter">
                         <option value="-1">{{"incidence-table.filterStateDefaultValue" | translate}}</option>
                         <option *ngFor="let s of status" [value]="s">{{getStatusString(s)}}</option>
                     </select>
+                </div>
+                <div class="prio-select">
                     <select class="form-select form-select-lg" id="priority" required  name="priority" [(ngModel)]="selectedPriorityFilter">
                         <option value="-1">{{"incidence-table.filterPriorityDefaultValue" | translate}}</option>
                         <option *ngFor="let p of priorities" [value]="p">{{getPriorityString(p)}}</option>
                     </select>
+                </div>
+                <div class="tech-select">
                     <select class="form-select form-select-lg" id="technician" required  name="technician" [(ngModel)]="selectedTechnicianFilter">
                         <option value="-1">{{"incidence-table.filterTechnicianDefaultValue" | translate}}</option>
                         <option value="0">{{"incidence-table.filterTechnicianValueAll" | translate}}</option>
                         <option *ngFor="let user of users" [value]="user.id">{{user.fullName}}</option>
                     </select>
-                    <div class="datepicker-2">
-                        <mat-form-field class="custom-mat-field">
-                            <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
-                            <input matStartDate formControlName="start" placeholder="{{'incidence-table.startDate' | translate}}">
-                            <input matEndDate formControlName="end" placeholder="{{'incidence-table.endDate' | translate}}">
-                            </mat-date-range-input>
-                            <mat-datepicker-toggle matIconSuffix [for]="picker" panelClass="calendarIcon"></mat-datepicker-toggle>
-                            <mat-date-range-picker #picker panelClass="calendar"></mat-date-range-picker>
-                        
-                            <mat-error *ngIf="range.controls['start'].hasError('matStartDateInvalid')">{{"incidence-table.invalidStartDate | translate"}}</mat-error>
-                            <mat-error *ngIf="range.controls['end'].hasError('matEndDateInvalid')">{{"incidence-table.invalidEndDate | translate"}}</mat-error>
-                        </mat-form-field>
-                        <a class="btn-l" type="submit" (click)="filterTickets();">{{"incidence-table.filterButton" | translate}}</a>
-                    </div>
                 </div>
-                <div>
-                    <div class="mb-3">
-                        <input type="text" name="search" class="form-control" id="search" [(ngModel)]="searchString" placeholder="{{'incidence-table.search' | translate}}">
-                      </div>
+                <div class="datepicker-2 date-select">
+                    <mat-form-field class="custom-mat-field">
+                        <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+                        <input matStartDate formControlName="start" placeholder="{{'incidence-table.startDate' | translate}}">
+                        <input matEndDate formControlName="end" placeholder="{{'incidence-table.endDate' | translate}}">
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker" panelClass="calendarIcon"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker panelClass="calendar"></mat-date-range-picker>    
+                        <mat-error *ngIf="range.controls['start'].hasError('matStartDateInvalid')">{{"incidence-table.invalidStartDate | translate"}}</mat-error>
+                        <mat-error *ngIf="range.controls['end'].hasError('matEndDateInvalid')">{{"incidence-table.invalidEndDate | translate"}}</mat-error>
+                    </mat-form-field>
                 </div>
-                    
+                <div class="mb-3 search-bar">
+                    <input type="text" name="search" class="form-control" id="search" [(ngModel)]="searchString" placeholder="{{'incidence-table.search' | translate}}">
+                </div>   
+                <div class="filter-button">
+                    <a class="btn-l" type="submit" (click)="filterTickets();">{{"incidence-table.filterButton" | translate}}</a>
+                </div>  
             </form>
         </div>
 

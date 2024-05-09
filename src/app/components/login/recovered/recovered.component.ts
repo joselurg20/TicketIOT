@@ -7,14 +7,14 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { UsersService } from 'src/app/services/users/users.service';
 import { Routes } from 'src/app/utilities/routes';
 import { ButtonComponent } from "../../button/button.component";
-import { LenguageComponent } from "../../lenguage/lenguage.component";
+import { LanguageComponent } from "../../language/language.component";
 import { AlertComponent } from '../../snackbars/alert/alert.component';
 import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/snackbar-incidence.component';
 
 @Component({
     selector: 'app-recovered',
     standalone: true,
-    imports: [CommonModule, ButtonComponent, ReactiveFormsModule, FormsModule, LenguageComponent, TranslateModule],
+    imports: [CommonModule, ButtonComponent, ReactiveFormsModule, FormsModule, LanguageComponent, TranslateModule],
     templateUrl: './recovered.component.html',
     styleUrls: ['./recovered.component.scss']
 })

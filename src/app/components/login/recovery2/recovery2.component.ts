@@ -8,7 +8,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import * as CryptoJS from 'crypto-js';
 import { UsersService } from 'src/app/services/users/users.service';
 import { Routes } from 'src/app/utilities/routes';
-import { LenguageComponent } from "../../lenguage/lenguage.component";
+import { LanguageComponent } from "../../language/language.component";
 import { AlertComponent } from '../../snackbars/alert/alert.component';
 import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/snackbar-incidence.component';
 
@@ -27,7 +27,7 @@ function passwordValidator(control: FormControl): { [key: string]: any } | null 
 @Component({
   selector: 'app-recovery2',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, TranslateModule, LenguageComponent, MatProgressSpinnerModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, TranslateModule, LanguageComponent, MatProgressSpinnerModule],
   templateUrl: './recovery2.component.html',
   styleUrls: ['./recovery2.component.scss']
 })

@@ -12,7 +12,7 @@ import { HistoryComponent } from "../../components/messages/history/history.comp
 import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
 import * as CryptoJS from 'crypto-js';
 import { Routes } from 'src/app/utilities/routes';
-import { LenguageComponent } from "../../components/lenguage/lenguage.component";
+import { LanguageComponent } from "../../components/language/language.component";
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LoadingComponent } from 'src/app/components/shared/loading.component';
 import { LoadingService } from 'src/app/services/loading.service';
@@ -25,7 +25,7 @@ import { LocalStorageKeys } from 'src/app/utilities/literals';
 @Component({
   selector: 'app-incidence-user',
   standalone: true,
-  imports: [CommonModule, MatGridListModule, NgFor, IncidenceTableComponent, IncidenceDataComponent, MessageComponent, HelpdeskComponent, ComunicationComponent, HistoryComponent, LenguageComponent, TranslateModule, LoadingComponent],
+  imports: [CommonModule, MatGridListModule, NgFor, IncidenceTableComponent, IncidenceDataComponent, MessageComponent, HelpdeskComponent, ComunicationComponent, HistoryComponent, LanguageComponent, TranslateModule, LoadingComponent],
   templateUrl: './incidence-user.component.html',
   styleUrls: ['./incidence-user.component.scss']
 })

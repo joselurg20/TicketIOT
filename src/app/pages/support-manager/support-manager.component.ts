@@ -14,6 +14,7 @@ import { MessageComponent } from "../../components/messages/message/message.comp
 import { LoadingComponent } from "../../components/shared/loading.component";
 import { SidebarComponent } from "../../components/sidebar/sidebar.component";
 import { TechnicalTableComponent } from "../../components/technical-table/technical-table.component";
+import { UserDataService } from 'src/app/services/users/userData.service';
 
 @Component({
     selector: 'app-support-manager',
@@ -27,14 +28,15 @@ import { TechnicalTableComponent } from "../../components/technical-table/techni
 export class SupportManagerComponent implements OnInit {
     loading$: Observable<boolean>;
 
-    constructor(private ticketsService: TicketDataService, private loadingService: LoadingService) {
+    constructor(private ticketsService: TicketDataService, private loadingService: LoadingService,
+                private usersService: UserDataService) {
         this.loading$ = this.loadingService.loading$;
     }
 
     ngOnInit(): void {
         setTimeout(() => {
             this.ticketsService.getTickets(true);
-            this.ticketsService.getTechnicians();    
+            this.usersService.getTechnicians();    
         }, 1)
     }
 }

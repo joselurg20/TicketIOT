@@ -5,13 +5,12 @@ import { Observable, Subscription } from 'rxjs';
 import { iTicketGraph } from 'src/app/models/tickets/iTicketsGraph';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { TicketDataService } from 'src/app/services/tickets/ticketData.service';
-import { Status } from 'src/app/utilities/enum';
 import { LoadingComponent } from "../../shared/loading.component";
 import { LoadingService } from 'src/app/services/loading.service';
 import { LocalStorageKeys , Roles } from 'src/app/utilities/literals';
-import { UsersService } from 'src/app/services/users/users.service';
 import { iUser } from 'src/app/models/users/iUser';
 import { iUserGraph } from 'src/app/models/users/iUserGraph';
+import { UserDataService } from 'src/app/services/users/userData.service';
 
 @Component({
   selector: 'app-chart-bar',
@@ -35,7 +34,7 @@ export class ChartBarComponent implements OnInit {
   isFirstLoad: boolean = true;
 
   constructor(private ticketsService: TicketDataService, private langUpdateService: LanguageUpdateService,
-              private loadingService: LoadingService, private usersService: UsersService) {
+              private loadingService: LoadingService, private userDataService: UserDataService) {
     this.loading$ = this.loadingService.loading$;
   }
 
@@ -47,7 +46,7 @@ export class ChartBarComponent implements OnInit {
       }else if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es'){
         this.title = this.titleEs;
       }  
-        this.ticketsService.usersFN$.subscribe(users => {
+        this.userDataService.usersFN$.subscribe(users => {
           this.users = users;
           if(!this.isFirstLoad){
             this.createChart();

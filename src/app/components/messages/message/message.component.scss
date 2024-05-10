@@ -1,7 +1,7 @@
 @import '../../../../styles/imports.scss';
 
 .modal-content {
-  background-color: #202124;
+  background-color: $bg-color-mid-2;
 }
 
 .modal-title {
@@ -23,7 +23,7 @@ hr {
 
 .modal-mensage {
   color: white !important;
-  background-color: $bg-color-mid-2;
+  background-color: $bg-color-dark;
   padding: 10px;
   margin: 10px;
   border-radius: 10px;

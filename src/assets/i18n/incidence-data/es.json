@@ -7,6 +7,7 @@
     "email": "Correo del Usuario",
     "priority": "Prioridad",
     "status": "Estado",
-    "technic": "Técnico Asignado"
+    "technic": "Técnico Asignado",
+    "reviewTitle": "Revisión de Incidencia"
   }
 }

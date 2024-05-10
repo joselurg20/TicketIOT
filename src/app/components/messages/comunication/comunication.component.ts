@@ -12,10 +12,11 @@ import { MessagesService } from 'src/app/services/tickets/messages.service';
 import { MessagesUpdateService } from 'src/app/services/tickets/messagesUpdate.service';
 import { TicketsService } from 'src/app/services/tickets/tickets.service';
 import { UsersService } from 'src/app/services/users/users.service';
-import { LocalStorageKeys } from 'src/app/utilities/literals';
+import { LocalStorageKeys, Roles } from 'src/app/utilities/literals';
 import { AlertComponent } from '../../snackbars/alert/alert.component';
 import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/snackbar-incidence.component';
 import { MessageComponent } from "../message/message.component";
+import { Utils } from 'src/app/utilities/utils';
 
 @Component({
   selector: 'app-comunication',
@@ -67,7 +68,7 @@ export class ComunicationComponent implements OnInit {
             title: response.title,
             name: response.name,
             email: response.email,
-            timestamp: this.formatDate(response.timestamp),
+            timestamp: Utils.formatDate(response.timestamp),
             priority: response.priority,
             status: response.status,
             userId: response.userId.toString(),
@@ -148,26 +149,11 @@ export class ComunicationComponent implements OnInit {
     formData.append('Content', Content);
     formData.append('TicketId', TicketId.toString());
 
-    this.ticketsService.getTicketById(TicketId).subscribe({
-      next: (response: TicketDto) => {
-        var ticket: TicketDto = {
-          title: response.title,
-          name: response.name,
-          email: response.email,
-          hasNewMessages: true,
-          newMessagesCount: response.newMessagesCount
-        };
-        ticket.newMessagesCount++;
-        this.ticketsService.updateTicket(TicketId, ticket).subscribe({
-          error: (error: any) => {
-            console.error('Error al actualizar el ticket', error);
-          }
-        })
-      },
-      error: (error: any) => {
-        console.error('Error al obtener el ticket', error);
-      }
-    })
+    if(this.usersService.currentUser?.id && this.usersService.currentUser.role === Roles.technicianRole){
+      formData.append('IsTechnician', 'true');
+    } else {
+      formData.append('IsTechnician', 'false');
+    }
 
     var attachments = this.selectedFiles;
 
@@ -188,23 +174,6 @@ export class ComunicationComponent implements OnInit {
     this.previewUrls = new Array();
     this.isFileSelected = false;
     return this.messagesService.createMessage(formData);
-  }
-
-  /**
-  * Da formato a la fecha.
-  * @param fecha la fecha a formatear.
-  * @returns la fecha con formato 'DD/MM/AAAA - HH:mm:ss'
-  */
-  formatDate(fecha: string): string {
-    const fechaObj = new Date(fecha);
-    const dia = fechaObj.getDate().toString().padStart(2, '0');
-    const mes = (fechaObj.getMonth() + 1).toString().padStart(2, '0'); // Se suma 1 porque los meses van de 0 a 11
-    const año = fechaObj.getFullYear();
-    const horas = fechaObj.getHours().toString().padStart(2, '0');
-    const minutos = fechaObj.getMinutes().toString().padStart(2, '0');
-    const segundos = fechaObj.getSeconds().toString().padStart(2, '0');
-
-    return `${dia}/${mes}/${año} - ${horas}:${minutos}:${segundos}`;
   }
 
   isImage(previewUrl: string | ArrayBuffer | null): boolean {

@@ -17,11 +17,12 @@ import { AlertComponent } from '../../snackbars/alert/alert.component';
 import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/snackbar-incidence.component';
 import { MessageComponent } from "../message/message.component";
 import { Utils } from 'src/app/utilities/utils';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-comunication',
   standalone: true,
-  imports: [CommonModule, MessageComponent, FormsModule, ReactiveFormsModule, TranslateModule],
+  imports: [CommonModule, MessageComponent, FormsModule, ReactiveFormsModule, TranslateModule , MatTooltipModule],
   templateUrl: './comunication.component.html',
   styleUrls: ['./comunication.component.scss']
 })
@@ -35,6 +36,8 @@ export class ComunicationComponent implements OnInit {
   selectedFiles: File[] = [];
   durationInSeconds = 3;
   public selectFilesNames: string[] = [];
+  currentIndex: number = 0;
+
 
 
   constructor(private messagesService: MessagesService, private _snackBar: MatSnackBar,
@@ -149,7 +152,7 @@ export class ComunicationComponent implements OnInit {
     formData.append('Content', Content);
     formData.append('TicketId', TicketId.toString());
 
-    if(this.usersService.currentUser?.id && this.usersService.currentUser.role === Roles.technicianRole){
+    if (this.usersService.currentUser?.id && this.usersService.currentUser.role === Roles.technicianRole) {
       formData.append('IsTechnician', 'true');
     } else {
       formData.append('IsTechnician', 'false');
@@ -252,5 +255,37 @@ export class ComunicationComponent implements OnInit {
         reader.readAsDataURL(file);
       }
     }
+  }
+
+  deleteFile(index: number) {
+    this.previewUrls.splice(index, 1);
+    this.selectFilesNames.splice(index, 1);
+    if (this.previewUrls.length == 0) {
+      this.isFileSelected = false;
+    }
+  }
+
+  nextFile() {
+    if (this.currentIndex < this.previewUrls.length - 1) {
+      this.currentIndex++;
+    } else {
+      this.currentIndex = 0;
+    }
+  }
+
+  prevFile() {
+    if (this.currentIndex > 0) {
+      this.currentIndex--;
+    } else {
+      this.currentIndex = this.previewUrls.length - 1;
+    }
+  }
+
+
+  truncateFileName(fileName: string, maxLength: number): string {
+    if (fileName.length > maxLength) {
+      return fileName.substr(0, maxLength) + '...';
+    }
+    return fileName;
   }
 }

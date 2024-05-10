@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarModule, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
@@ -15,15 +15,15 @@ import { Routes } from 'src/app/utilities/routes';
 import { ButtonComponent } from "../../button/button.component";
 import { LanguageComponent } from "../../language/language.component";
 import { SidebarComponent } from '../../sidebar/sidebar.component';
-import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/snackbar-incidence.component';
 import { AlertComponent } from '../../snackbars/alert/alert.component';
+import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/snackbar-incidence.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @Component({
   selector: 'app-incidence-index',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatFormFieldModule,
-    MatSelectModule, MatButtonModule, MatInputModule, MatButtonModule, MatSnackBarModule, ButtonComponent, SidebarComponent, LanguageComponent, TranslateModule],
+  imports: [CommonModule, MatButtonModule, MatFormFieldModule, MatTooltipModule ,SidebarComponent, MatSelectModule, MatInputModule, ReactiveFormsModule, LanguageComponent, ButtonComponent, TranslateModule, MatSnackBarModule, SnackbarIncidenceComponent, AlertComponent],
   templateUrl: './incidence-index.component.html',
   styleUrls: ['./incidence-index.component.scss']
 
@@ -36,12 +36,11 @@ export class IncidenceIndexComponent implements OnInit {
   previewUrls: Array<string | ArrayBuffer | null> = new Array();
   isFileSelected: boolean = false;
   isImageSelected: boolean = false;
-  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
-  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   isLogged: boolean = false;
   selectedFiles: File[] = [];
   durationInSeconds = 5;
   selectFilesNames: string[] = [];
+  currentIndex: number = 0;
 
 
   constructor(private _snackBar: MatSnackBar, private ticketsService: TicketsService, private translate: TranslateService, private usersService: UsersService, private router: Router) {
@@ -227,6 +226,41 @@ export class IncidenceIndexComponent implements OnInit {
         reader.readAsDataURL(file);
       }
     }
+  }
+
+  deleteFile(index: number) {
+    this.previewUrls.splice(index, 1);
+    this.selectFilesNames.splice(index, 1);
+    if (this.previewUrls.length == 0) {
+      this.isFileSelected = false;
+    }else{
+      this.isFileSelected = true;
+      console.log(this.isFileSelected);
+    }
+  }
+
+  nextFile() {
+    if (this.currentIndex < this.previewUrls.length - 1) {
+      this.currentIndex++;
+    } else {
+      this.currentIndex = 0;
+    }
+  }
+
+  prevFile() {
+    if (this.currentIndex > 0) {
+      this.currentIndex--;
+    } else {
+      this.currentIndex = this.previewUrls.length - 1;
+    }
+  }
+
+
+  truncateFileName(fileName: string, maxLength: number): string {
+    if (fileName.length > maxLength) {
+      return fileName.substr(0, maxLength) + '...';
+    }
+    return fileName;
   }
 
   /**

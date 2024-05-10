@@ -10,3 +10,7 @@ export enum Roles {
     managerRole = 'SupportManager',
     technicianRole = 'SupportTechnician'
 }
+
+export enum StorageRoutes {
+    attachmentStorage = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/'
+}

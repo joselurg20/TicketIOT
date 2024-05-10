@@ -14,6 +14,7 @@ import { TicketsService } from 'src/app/services/tickets/tickets.service';
 import { UsersService } from 'src/app/services/users/users.service';
 import { LocalStorageKeys } from 'src/app/utilities/literals';
 import { iTicketUserDto } from 'src/app/models/tickets/iTicketUserDto';
+import { Utils } from 'src/app/utilities/utils';
 
 @Component({
   selector: 'app-incidence-data',
@@ -64,7 +65,7 @@ export class IncidenceDataComponent implements OnInit {
           title: response.title,
           name: response.name,
           email: response.email,
-          timestamp: this.formatDate(response.timestamp),
+          timestamp: Utils.formatDate(response.timestamp),
           priority: response.priority,
           status: response.status,
           userId: response.userId.toString(),
@@ -86,23 +87,6 @@ export class IncidenceDataComponent implements OnInit {
       this.ticketPrio = this.getPriorityString(this.ticket.priority);
       this.ticketStatus = this.getStatusString(this.ticket.status);
     })
-  }
-
-  /**
-   * Da formato a la fecha.
-   * @param fecha la fecha a formatear.
-   * @returns la fecha con formato 'DD/MM/AAAA - HH:mm:ss'
-   */
-  formatDate(fecha: string): string {
-    const fechaObj = new Date(fecha);
-    const dia = fechaObj.getDate().toString().padStart(2, '0');
-    const mes = (fechaObj.getMonth() + 1).toString().padStart(2, '0'); // Se suma 1 porque los meses van de 0 a 11
-    const año = fechaObj.getFullYear();
-    const horas = fechaObj.getHours().toString().padStart(2, '0');
-    const minutos = fechaObj.getMinutes().toString().padStart(2, '0');
-    const segundos = fechaObj.getSeconds().toString().padStart(2, '0');
-
-    return `${dia}/${mes}/${año} - ${horas}:${minutos}:${segundos}`;
   }
 
   ngOnDestroy(): void {
@@ -166,38 +150,7 @@ export class IncidenceDataComponent implements OnInit {
    * @returns la cadena de texto a representar.
    */
   getPriorityString(priority: number): string {
-    if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
-      switch (priority) {
-        case 1:
-          return 'LOWEST';
-        case 2:
-          return 'LOW';
-        case 3:
-          return 'MEDIUM';
-        case 4:
-          return 'HIGH';
-        case 5:
-          return 'HIGHEST';
-        default:
-          return 'NOT SURE';
-      }
-    } else if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es') {
-      switch (priority) {
-        case 1:
-          return 'MUY BAJA';
-        case 2:
-          return 'BAJA';
-        case 3:
-          return 'MEDIA';
-        case 4:
-          return 'ALTA';
-        case 5:
-          return 'MUY ALTA';
-        default:
-          return 'INDEFINIDA';
-      }
-    }
-    return '';
+    return Utils.getPriorityString(priority);
   }
 
   /**
@@ -206,29 +159,6 @@ export class IncidenceDataComponent implements OnInit {
    * @returns la cadena de texto a representar.
    */
   getStatusString(status: number): string {
-    if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
-      switch (status) {
-        case 1:
-          return 'OPENED';
-        case 2:
-          return 'PAUSED';
-        case 3:
-          return 'FINISHED';
-        default:
-          return 'PENDING';
-      }
-    } else if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es') {
-      switch (status) {
-        case 1:
-          return 'ABIERTA';
-        case 2:
-          return 'PAUSADA';
-        case 3:
-          return 'TERMINADA';
-        default:
-          return 'PENDIENTE';
-      }
-    }
-    return '';
+    return Utils.getStatusString(status);
   }
 }

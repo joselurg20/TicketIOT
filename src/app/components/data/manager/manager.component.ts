@@ -12,6 +12,7 @@ import { Priorities, Status } from 'src/app/utilities/enum';
 import { Router } from '@angular/router';
 import { Routes } from 'src/app/utilities/routes';
 import { Utils } from 'src/app/utilities/utils';
+import { UserDataService } from 'src/app/services/users/userData.service';
 
 @Component({
   selector: 'app-manager',
@@ -32,7 +33,8 @@ export class ManagerComponent implements OnInit {
 
   constructor(private ticketDataService: TicketDataService, private ticketUpdateService: TicketUpdateService,
               private loadingService: LoadingService, private translate: TranslateService,
-              private ticketsService: TicketsService, private router: Router) {
+              private ticketsService: TicketsService, private router: Router,
+              private userDataService: UserDataService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -44,7 +46,7 @@ export class ManagerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.ticketDataService.usersFN$.subscribe({
+    this.userDataService.usersFN$.subscribe({
       next: (response: iUserGraph[]) => {
         const users = response.map((value: iUserGraph) => {
           return {
@@ -122,38 +124,7 @@ export class ManagerComponent implements OnInit {
    * @returns la cadena de texto a representar.
    */
   getPriorityString(priority: number): string {
-    if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
-      switch (priority) {
-        case 1:
-          return 'LOWEST';
-        case 2:
-          return 'LOW';
-        case 3:
-          return 'MEDIUM';
-        case 4:
-          return 'HIGH';
-        case 5:
-          return 'HIGHEST';
-        default:
-          return 'NOT SURE';
-      }
-    } else if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es') {
-      switch (priority) {
-        case 1:
-          return 'MUY BAJA';
-        case 2:
-          return 'BAJA';
-        case 3:
-          return 'MEDIA';
-        case 4:
-          return 'ALTA';
-        case 5:
-          return 'MUY ALTA';
-        default:
-          return 'INDEFINIDA';
-      }
-    }
-    return '';
+    return Utils.getPriorityString(priority);
   }
 
   /**

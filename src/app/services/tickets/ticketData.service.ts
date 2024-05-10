@@ -1,16 +1,10 @@
-import { Injectable, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { TicketFilterRequestDto } from '../../models/tickets/TicketFilterRequestDto';
 import { iTicketTableSM } from '../../models/tickets/iTicketTableSM';
 import { iTicketGraph } from '../../models/tickets/iTicketsGraph';
-import { iUserGraph } from '../../models/users/iUserGraph';
-import { LanguageUpdateService } from '../languageUpdateService';
-import { iUserTable } from '../../models/users/iUserTable';
-import { LoginService } from '../users/login.service';
 import { iTicket } from '../../models/tickets/iTicket';
-import { iUser } from '../../models/users/iUser';
 import { TicketsService } from './tickets.service';
-import { UsersService } from '../users/users.service';
 import { iTicketFilterDto } from 'src/app/models/tickets/iTicketFilterDto';
 import { iTicketUserDto } from 'src/app/models/tickets/iTicketUserDto';
 import { LocalStorageKeys } from 'src/app/utilities/literals';
@@ -25,15 +19,11 @@ export class TicketDataService {
   tickets$: Observable<iTicketTableSM[]> = this.ticketsSubject.asObservable();
   private ticketGraphsSubject: BehaviorSubject<iTicketGraph[]> = new BehaviorSubject<iTicketGraph[]>([]);
   ticketGraphs$: Observable<iTicketGraph[]> = this.ticketGraphsSubject.asObservable();
-  private usersSubject: BehaviorSubject<iUserGraph[]> = new BehaviorSubject<iUserGraph[]>([]);
-  users$: Observable<iUserGraph[]> = this.usersSubject.asObservable();
   private usersGraphSubject: BehaviorSubject<iTicketGraph[]> = new BehaviorSubject<iTicketGraph[]>([]);
   usersGraph$: Observable<iTicketGraph[]> = this.usersGraphSubject.asObservable();
-  private usersFNSubject: BehaviorSubject<iUserGraph[]> = new BehaviorSubject<iUserGraph[]>([]);
-  usersFN$: Observable<iUserGraph[]> = this.usersFNSubject.asObservable();
+  
 
-  constructor(private ticketsService: TicketsService, private langUpdateService: LanguageUpdateService,
-              private loginService: LoginService, private usersService: UsersService) { }
+  constructor(private ticketsService: TicketsService) { }
 
 
   /**
@@ -134,32 +124,6 @@ export class TicketDataService {
             }
           });
     }
-  }
-
-  getTechnicians() {
-    this.usersService.getTechnicians().subscribe({
-      next: (response: iUser[]) => {
-        const users: iUserGraph[] = response.map((value: iUser) => {
-          return {
-            id: value.id,
-            userName: value.userName,
-            fullName: value.fullName
-          }
-        })
-        const usersFN: iUserGraph[] = response.map((value: iUser) => {
-          return {
-            id: value.id,
-            userName: value.fullName,
-            fullName: value.fullName
-          }
-        })
-        this.usersFNSubject.next(usersFN);
-        this.usersSubject.next(users);
-      },
-      error: (error: any) => {
-        console.error('Error al obtener los usuarios:', error);
-      }
-    });
   }
 
   filterTickets(filter: TicketFilterRequestDto) {

@@ -121,6 +121,35 @@ h2 {
   color: white; // Color del texto
 }
 
+.btn-trahs {
+  border-color: $color-danger;
+  color: $color-danger;
+  background-color: transparent;
+  border: 1px solid $bg-color-danger;
+  width: 40px;
+  border-radius: 5px;
+
+  &:hover {
+    border-color: $color-danger;
+    color: $color-light;
+    background-color: $bg-color-danger;
+  }
+}
+
+
+.preview-image {
+  width: 250px;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.preview-file {
+  width: 250px;
+  height: 250px;
+  border-radius: 10px;
+  margin: 55px;
+}
+
 
 @media screen and (max-width: 992px) {
   .custom-container {

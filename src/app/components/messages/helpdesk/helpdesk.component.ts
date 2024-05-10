@@ -88,24 +88,10 @@ export class HelpdeskComponent {
   */
 
   deleteFile(index: number) {
-    if (index >= 0 && index < this.selectedFiles.length) {
-      if (Array.isArray(this.selectedFiles)) {
-        this.selectedFiles = this.selectedFiles.filter((_, i) => i !== index);
-      } else {
-        console.error('this.selectedFiles no es un arreglo:', this.selectedFiles);
-      }
-      this.selectFilesNames.splice(index, 1);
-
-      if (index < this.previewUrls.length) {
-        this.previewUrls.splice(index, 1);
-      }
-
-      if (this.selectedFiles.length === 0) {
-        this.isFileSelected = false;
-        this.messageForm.get('Attachments')?.setValue(null);
-      }
-    } else {
-      console.error('Índice no válido:', index);
+    this.previewUrls.splice(index, 1);
+    this.selectFilesNames.splice(index, 1);
+    if (this.previewUrls.length == 0) {
+      this.isFileSelected = false;
     }
   }
 

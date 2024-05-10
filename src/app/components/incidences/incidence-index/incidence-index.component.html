@@ -34,22 +34,40 @@
             </div>
 
             <div class="form-group">
-                <label for="Attachments"><i class="fa-solid fa-folder"></i> {{"comunication.upload" |
-                    translate}}</label> <br>
-                <input type="file" id="Attachments" formControlName="Attachments" (change)="onFileChange($event)"
-                    style="display: none;" multiple>
+                <label for="Attachments"><i class="fa-solid fa-folder"></i> {{"comunication.upload" | translate}}</label> <br>
+                <input type="file" id="Attachments" formControlName="Attachments" multiple (change)="onFileChange($event)"
+                    style="display: none;">
                 <button type="button" onclick="document.getElementById('Attachments').click()"
-                    class="custom-file-button btn btn-lg">
-                    <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                    class="custom-file-button btn btn-lg"><i class="fa-solid fa-arrow-up-from-bracket"></i>
                     {{"comunication.select" | translate}}</button>
-                <div *ngIf="isFileSelected" class="logotipe preview">
-                    <div *ngFor="let previewUrl of previewUrls; let i = index">
-                        <img *ngIf="isImage(previewUrl)" [src]="previewUrl" class="preview-image"
-                            alt="Vista previa del archivo">
-                        <div *ngIf="!isImage(previewUrl)">
-                            <img [src]="previewUrl" class="preview-image" alt="Vista previa del archivo">
-                            <p>{{ selectFilesNames[i] }}</p>
+                <div class="carousel-container">
+
+                    <div *ngIf="isFileSelected" class="carousel slide logotipe preview" id="carouselExampleIndicators"
+                        data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div *ngFor="let previewUrl of previewUrls; let i = index" class="carousel-item "
+                                [class.active]="i === currentIndex">
+                                <img *ngIf="isImage(previewUrl)" [src]="previewUrl" class="preview-image">
+                                <button class="btn-trahs" (click)="deleteFile(i)" *ngIf="isImage(previewUrl)"><i
+                                        class="fa-solid fa-x"></i></button>
+                                <div *ngIf="!isImage(previewUrl)" class="d-block justify-content-center">
+                                    <img [src]="previewUrl" class="preview-file" alt="..." matTooltip="{{selectFilesNames}}">
+                                    <div class="carousel-caption d-none d-md-block">
+                                        <h5>{{truncateFileName(selectFilesNames[i], 20)}}</h5>
+                                        <button class="btn-trahs" *ngIf="!isImage(previewUrl)" (click)="deleteFile(i)">
+                                            <i class="fa-solid fa-trash"></i></button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        <button *ngIf="previewUrls.length > 1" class="carousel-control-prev" type="button" (click)="prevFile()">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden"></span>
+                        </button>
+                        <button *ngIf="previewUrls.length > 1" class="carousel-control-next" type="button" (click)="nextFile()">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden"></span>
+                        </button>
                     </div>
                 </div>
             </div>

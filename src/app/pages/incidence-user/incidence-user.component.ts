@@ -21,6 +21,7 @@ import { iTicket } from 'src/app/models/tickets/iTicket';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { TicketsService } from 'src/app/services/tickets/tickets.service';
 import { LocalStorageKeys } from 'src/app/utilities/literals';
+import { Utils } from 'src/app/utilities/utils';
 
 @Component({
   selector: 'app-incidence-user',
@@ -89,29 +90,6 @@ export class IncidenceUserComponent {
   }
 
   getStatusString(status: number): string {
-    if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
-      switch (status) {
-        case 1:
-          return 'OPENED';
-        case 2:
-          return 'PAUSED';
-        case 3:
-          return 'FINISHED';
-        default:
-          return 'PENDING';
-      }
-    } else if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es') {
-      switch (status) {
-        case 1:
-          return 'ABIERTA';
-        case 2:
-          return 'PAUSADA';
-        case 3:
-          return 'TERMINADA';
-        default:
-          return 'PENDIENTE';
-      }
-    }
-    return '';
+    return Utils.getStatusString(status);
   }
 }

@@ -7,6 +7,7 @@ import { LoadingService } from 'src/app/services/loading.service';
 import { TicketsService } from 'src/app/services/tickets/tickets.service';
 import { LocalStorageKeys } from 'src/app/utilities/literals';
 import { Status } from 'src/app/utilities/enum';
+import { Utils } from 'src/app/utilities/utils';
 
 @Component({
   selector: 'app-technicial',
@@ -56,38 +57,7 @@ export class TechnicialComponent {
    * @returns la cadena de texto a representar.
    */
   getPriorityString(priority: number): string {
-    if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
-      switch (priority) {
-        case 1:
-          return 'LOWEST';
-        case 2:
-          return 'LOW';
-        case 3:
-          return 'MEDIUM';
-        case 4:
-          return 'HIGH';
-        case 5:
-          return 'HIGHEST';
-        default:
-          return 'NOT SURE';
-      }
-    } else if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es') {
-      switch (priority) {
-        case 1:
-          return 'MUY BAJA';
-        case 2:
-          return 'BAJA';
-        case 3:
-          return 'MEDIA';
-        case 4:
-          return 'ALTA';
-        case 5:
-          return 'MUY ALTA';
-        default:
-          return 'INDEFINIDA';
-      }
-    }
-    return '';
+    return Utils.getPriorityString(priority);
   }
 
   /**
@@ -96,30 +66,7 @@ export class TechnicialComponent {
    * @returns la cadena de texto a representar.
    */
   getStatusString(status: number): string {
-    if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
-      switch (status) {
-        case 1:
-          return 'OPENED';
-        case 2:
-          return 'PAUSED';
-        case 3:
-          return 'FINISHED';
-        default:
-          return 'PENDING';
-      }
-    } else if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es') {
-      switch (status) {
-        case 1:
-          return 'ABIERTA';
-        case 2:
-          return 'PAUSADA';
-        case 3:
-          return 'TERMINADA';
-        default:
-          return 'PENDIENTE';
-      }
-    }
-    return '';
+    return Utils.getStatusString(status);
   }
 
 }

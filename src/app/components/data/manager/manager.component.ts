@@ -11,6 +11,7 @@ import { LocalStorageKeys } from 'src/app/utilities/literals';
 import { Priorities, Status } from 'src/app/utilities/enum';
 import { Router } from '@angular/router';
 import { Routes } from 'src/app/utilities/routes';
+import { Utils } from 'src/app/utilities/utils';
 
 @Component({
   selector: 'app-manager',
@@ -161,29 +162,6 @@ export class ManagerComponent implements OnInit {
    * @returns la cadena de texto a representar.
    */
   getStatusString(status: number): string {
-    if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
-      switch (status) {
-        case 1:
-          return 'OPENED';
-        case 2:
-          return 'PAUSED';
-        case 3:
-          return 'FINISHED';
-        default:
-          return 'PENDING';
-      }
-    } else if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es') {
-      switch (status) {
-        case 1:
-          return 'ABIERTA';
-        case 2:
-          return 'PAUSADA';
-        case 3:
-          return 'TERMINADA';
-        default:
-          return 'PENDIENTE';
-      }
-    }
-    return '';
+    return Utils.getStatusString(status);
   }
 }

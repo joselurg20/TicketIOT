@@ -11,7 +11,8 @@ import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
 import { MessagesService } from 'src/app/services/tickets/messages.service';
 import { MessagesUpdateService } from 'src/app/services/tickets/messagesUpdate.service';
 import { TicketsService } from 'src/app/services/tickets/tickets.service';
-import { LocalStorageKeys } from 'src/app/utilities/literals';
+import { LocalStorageKeys, StorageRoutes } from 'src/app/utilities/literals';
+import { Utils } from 'src/app/utilities/utils';
 
 
 
@@ -87,7 +88,7 @@ export class HistoryComponent {
             attachmentPaths: message.attachmentPaths.map((attachmentPath: iAttachment) => attachmentPath.path),
             attachments: [],
             ticketID: message.ticketID,
-            timestamp: this.formatDate(message.timestamp)
+            timestamp: Utils.formatDate(message.timestamp)
           }
         });
 
@@ -159,7 +160,7 @@ export class HistoryComponent {
    * @param attachmentPath la ruta del archivo.
    */
   downloadAttachment(attachmentPath: string) {
-    var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/' + this.ticketId + '/';
+    var pathPrefix = StorageRoutes.attachmentStorage + this.ticketId + '/';
     const fileName = attachmentPath.substring(pathPrefix.length);
     this.messagesService.downloadAttachment(fileName, +localStorage.getItem(LocalStorageKeys.selectedTicket)!).subscribe({
       next: (response: BlobPart) => {
@@ -172,22 +173,5 @@ export class HistoryComponent {
         window.URL.revokeObjectURL(url);
       }
     })
-  }
-
-  /**
-   * Da formato a la fecha.
-   * @param fecha la fecha a formatear.
-   * @returns la fecha con formato 'DD/MM/AAAA - HH:mm:ss'
-   */
-  formatDate(fecha: string): string {
-    const fechaObj = new Date(fecha);
-    const dia = fechaObj.getDate().toString().padStart(2, '0');
-    const mes = (fechaObj.getMonth() + 1).toString().padStart(2, '0'); // Se suma 1 porque los meses van de 0 a 11
-    const año = fechaObj.getFullYear();
-    const horas = fechaObj.getHours().toString().padStart(2, '0');
-    const minutos = fechaObj.getMinutes().toString().padStart(2, '0');
-    const segundos = fechaObj.getSeconds().toString().padStart(2, '0');
-
-    return `${dia}/${mes}/${año} - ${horas}:${minutos}:${segundos}`;
   }
 }

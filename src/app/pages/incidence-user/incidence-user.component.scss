@@ -57,17 +57,16 @@ h1 {
   grid-area: title;
   margin-top: 15px;
   text-align: start;
-  width: 41vw;
 }
 
 .grid-container {
   display: grid;
   grid-template-areas:
     'iso iso title title title leng'
-    'hist hist hist hist hist status'
-    'hist hist hist hist hist msg'
-    'hist hist hist hist hist msg'
-    'hist hist hist hist hist msg';
+    'hist hist hist hist status status'
+    'hist hist hist hist msg msg'
+    'hist hist hist hist msg msg'
+    'hist hist hist hist msg msg';
   grid-gap: 10px;
   border-radius: 20px;
   padding: 10px;

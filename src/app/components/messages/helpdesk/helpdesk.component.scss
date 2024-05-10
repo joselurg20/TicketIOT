@@ -10,7 +10,6 @@ label {
 
 .container {
   color: $text-color-mid;
-  width: 750px;
   height: 28rem;
   overflow: auto;
 
@@ -77,8 +76,8 @@ label {
   }
 }
 
-::-webkit-scrollbar {
-  background-color: white;
+::-webkit-scrollbar-track, ::-webkit-scrollbar-corner {
+  background-color: $bg-color-mid-2;
 }
 
 .custom-file-button {

@@ -32,7 +32,6 @@ export class HelpdeskComponent {
   public ticket: iTicketDescriptor = {} as iTicketDescriptor;
   public success: boolean = true;
   successMsg: string = '';
-  public userName: string | null = '';
   selectedFiles: File[] = [];
   durationInSeconds = 3;
   public selectFilesNames: string[] = [];
@@ -55,7 +54,7 @@ export class HelpdeskComponent {
       Attachments: new FormControl('', null),
       Content: new FormControl('', Validators.required)
     });
-    const selectedTicket = localStorage.getItem('selectedTicket');
+    const selectedTicket = window.location.href.split('/').pop();
     if (selectedTicket != null) {
       this.ticketsService.getTicketById(+selectedTicket).subscribe({
         next: (response: iTicket) => {
@@ -76,15 +75,6 @@ export class HelpdeskComponent {
         }
       });
     }
-
-    this.userService.getUserById(parseInt(localStorage.getItem('userId')!)).subscribe({
-      next: (response: iUserGraph) => {
-        this.userName = response.fullName;
-      },
-      error: (error: any) => {
-        console.error('Error al obtener el usuario', error);
-      }
-    })
   }
 
   /*
@@ -178,9 +168,9 @@ export class HelpdeskComponent {
   * @param TicketId el id de la incidencia.
   * @returns 
   */
-  createMessage(Content: string, TicketId: number): Observable<any> {
+  createMessage(Content: string, TicketId: number): Observable<boolean> {
     const formData = new FormData();
-    formData.append('Author', this.userName!);
+    formData.append('Author', this.ticket.name);
     formData.append('Content', Content);
     formData.append('TicketId', TicketId.toString());
     formData.append('IsTechnician', 'false');

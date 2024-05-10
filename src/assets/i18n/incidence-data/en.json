@@ -7,6 +7,7 @@
     "email": "User Email",
     "priority": "Priority",
     "status": "Status",
-    "technic": "Assigned Technician"
+    "technic": "Assigned Technician",
+    "reviewTitle": "Ticket Review"
   }
 }

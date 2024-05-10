@@ -53,6 +53,13 @@ h1 {
   grid-area: msg;
 }
 
+.title {
+  grid-area: title;
+  margin-top: 15px;
+  text-align: start;
+  width: 41vw;
+}
+
 .grid-container {
   display: grid;
   grid-template-areas:
@@ -76,12 +83,6 @@ h1 {
 
 img {
   height: 90px;
-}
-
-.title {
-  grid-area: title;
-  margin-top: 35px;
-  text-align: start;
 }
 
 @media screen and (max-width: 600px) {

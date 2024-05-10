@@ -1,13 +1,6 @@
 {
   "snackbars": {
-    "incidence": "Incidencia enviada.",
-    "incidenceError": "Incidencia no se ha enviado.",
-    "menssage": "Mensaje enviado.",
-    "menssageError": "Mensaje no enviado.",
-    "recovered": "Correo enviado correctamente.",
-    "recoveredError": "Correo no enviado.",
-    "recovered2": "Contraseña restablecida.",
-    "recoveredError2": "Contraseña no restablecida.",
+    "incidence": "Enviado correctamente.",
     "notFound": "No se ha podido completar la accion."
   }
 }

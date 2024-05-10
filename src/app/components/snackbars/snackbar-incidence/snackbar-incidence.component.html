@@ -1,16 +1,7 @@
 <span class="snackbar-content-send" matSnackBarLabel>
     <i class="fa-solid fa-check fa-xl"></i>
-    <ng-container *ngIf="isIncidencePage">
+    <ng-container>
         {{'snackbars.incidence' | translate}}
-    </ng-container>
-    <ng-container *ngIf="isMessagePage">
-        {{ 'snackbars.menssage' | translate }}
-    </ng-container>
-    <ng-container *ngIf="isRecoveredPage">
-        {{'snackbars.recovered' | translate}}
-    </ng-container>
-    <ng-container *ngIf="isRecovered2Page">
-        {{'snackbars.recovered2' | translate}}
     </ng-container>
 </span>
 <span matSnackBarActions>

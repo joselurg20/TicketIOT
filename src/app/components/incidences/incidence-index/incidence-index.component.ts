@@ -23,8 +23,7 @@ import { AlertComponent } from '../../snackbars/alert/alert.component';
   selector: 'app-incidence-index',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatFormFieldModule,
-    MatSelectModule, MatButtonModule, MatSnackBarModule, MatInputModule, MatButtonModule,
-    MatSnackBarModule, ButtonComponent, SidebarComponent, LanguageComponent, TranslateModule],
+    MatSelectModule, MatButtonModule, MatInputModule, MatButtonModule, MatSnackBarModule, ButtonComponent, SidebarComponent, LanguageComponent, TranslateModule],
   templateUrl: './incidence-index.component.html',
   styleUrls: ['./incidence-index.component.scss']
 
@@ -56,15 +55,13 @@ export class IncidenceIndexComponent implements OnInit {
   }
 
   openSnackBar() {
-    if(this.ticketForm.valid){ 
-      this._snackBar.openFromComponent(SnackbarIncidenceComponent, {
-        duration: this.durationInSeconds * 1000,
-      });
-    }else{
+    if (this.ticketForm.valid) {
+      this._snackBar.openFromComponent(SnackbarIncidenceComponent);
+    } else {
       this._snackBar.openFromComponent(AlertComponent, {
         duration: this.durationInSeconds * 1000,
       });
-    } 
+    }
   }
 
   ngOnInit() {
@@ -102,6 +99,7 @@ export class IncidenceIndexComponent implements OnInit {
             this.ticketForm.reset();
             setTimeout(() => {
               this.clearAttachments(); // Limpiar campos del formulario
+              this.openSnackBar();
             }, 1000);
             if (this.isLogged) {
               this.router.navigate([Routes.supportManager]);

@@ -56,13 +56,12 @@ h1 {
 .title {
   grid-area: title;
   margin-top: 15px;
-  text-align: start;
 }
 
 .grid-container {
   display: grid;
   grid-template-areas:
-    'iso iso title title title leng'
+    'iso title title title title leng'
     'hist hist hist hist status status'
     'hist hist hist hist msg msg'
     'hist hist hist hist msg msg'

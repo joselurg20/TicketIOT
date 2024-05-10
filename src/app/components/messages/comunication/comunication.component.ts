@@ -37,9 +37,9 @@ export class ComunicationComponent implements OnInit {
 
 
   constructor(private messagesService: MessagesService, private _snackBar: MatSnackBar,
-              private translate: TranslateService, private formBuilder: FormBuilder,
-              private messagesUpdateService: MessagesUpdateService, private ticketsService: TicketsService,
-              private usersService: UsersService) {
+    private translate: TranslateService, private formBuilder: FormBuilder,
+    private messagesUpdateService: MessagesUpdateService, private ticketsService: TicketsService,
+    private usersService: UsersService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -91,15 +91,15 @@ export class ComunicationComponent implements OnInit {
   }
 
   openSnackBar() {
-    if(this.messageForm.valid){
+    if (this.messageForm.valid) {
       this._snackBar.openFromComponent(SnackbarIncidenceComponent, {
         duration: this.durationInSeconds * 1000,
       });
-    }else{
+    } else {
       this._snackBar.openFromComponent(AlertComponent, {
         duration: this.durationInSeconds * 1000,
       });
-    } 
+    }
   }
 
   previewUrls: Array<string | ArrayBuffer | null> = new Array();
@@ -118,13 +118,15 @@ export class ComunicationComponent implements OnInit {
               this.success = true;
               this.messagesUpdateService.triggerMessagesUpdate();
               this.messageForm.reset();
-              this.openSnackBar();
+              this._snackBar.openFromComponent(SnackbarIncidenceComponent, {
+                duration: this.durationInSeconds * 1000,
+              });
 
             },
             error: (error) => {
-              console.error('Error en la solicitud', error);
-              this.success = false;
-              this.successMsg = "Error al crear el mensaje.";
+              this._snackBar.openFromComponent(SnackbarIncidenceComponent, {
+                duration: this.durationInSeconds * 1000,
+              });
             }
           });
 

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
@@ -14,16 +14,16 @@ import { MessagesService } from 'src/app/services/tickets/messages.service';
 import { MessagesUpdateService } from 'src/app/services/tickets/messagesUpdate.service';
 import { TicketsService } from 'src/app/services/tickets/tickets.service';
 import { UsersService } from 'src/app/services/users/users.service';
-import { AlertComponent } from '../../snackbars/alert/alert.component';
 import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/snackbar-incidence.component';
+import { AlertComponent } from '../../snackbars/alert/alert.component';
 
 
 @Component({
-  selector: 'app-helpdesk',
-  standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule, MatButtonModule, MatTooltipModule],
-  templateUrl: './helpdesk.component.html',
-  styleUrls: ['./helpdesk.component.scss']
+    selector: 'app-helpdesk',
+    standalone: true,
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, MatSnackBarModule, TranslateModule, MatButtonModule, MatTooltipModule, SnackbarIncidenceComponent],
+    templateUrl: './helpdesk.component.html',
+    styleUrls: ['./helpdesk.component.scss']
 })
 export class HelpdeskComponent {
 
@@ -41,13 +41,6 @@ export class HelpdeskComponent {
 
 
   constructor(private msgService: MessagesService, private ticketsService: TicketsService, private userService: UsersService, private _snackBar: MatSnackBar, private translate: TranslateService, private formBuilder: FormBuilder, private messagesUpdateService: MessagesUpdateService) {
-    this.translate.addLangs(['en', 'es']);
-    const lang = this.translate.getBrowserLang();
-    if (lang !== 'en' && lang !== 'es') {
-      this.translate.setDefaultLang('en');
-    } else {
-      this.translate.use('es');
-    }
     this.messageForm = this.formBuilder.group({
       Attachments: [null, Validators.required],
       Content: [null, Validators.required]
@@ -94,13 +87,13 @@ export class HelpdeskComponent {
   }
 
   /*
-    deleteProduct(index: number) {
-      this.selectFilesNames = [];
-      this.previewUrls = [];
-      this.selectedFiles = [];
-      this.isFileSelected = false;
-      this.messageForm.get('Attachments')?.setValue(null);
-    }
+  deleteProduct(index: number) {
+  this.selectFilesNames = [];
+  this.previewUrls = [];
+  this.selectedFiles = [];
+  this.isFileSelected = false;
+  this.messageForm.get('Attachments')?.setValue(null);
+  }
   */
 
   deleteFile(index: number) {
@@ -129,17 +122,14 @@ export class HelpdeskComponent {
     if (this.currentIndex < this.previewUrls.length - 1) {
       this.currentIndex++;
     } else {
-      // Si estamos en la última imagen, volver a la primera
       this.currentIndex = 0;
     }
   }
 
-  // Función para retroceder a la imagen anterior en el carrusel
   prevFile() {
     if (this.currentIndex > 0) {
       this.currentIndex--;
     } else {
-      // Si estamos en la primera imagen, ir a la última
       this.currentIndex = this.previewUrls.length - 1;
     }
   }
@@ -152,47 +142,34 @@ export class HelpdeskComponent {
     return fileName;
   }
 
-  openSnackBar() {
-    if(this.messageForm.valid){
-      this._snackBar.openFromComponent(SnackbarIncidenceComponent, {
-        duration: this.durationInSeconds * 1000,
-      });
-    }else{
-      this._snackBar.openFromComponent(AlertComponent, {
-        duration: this.durationInSeconds * 1000,
-      });
-    } 
-  }
-
 
   /**
   * Envía un mensaje a la incidencia seleccionada.
   */
   onSubmit() {
-    if (this.ticket.status !== 3) {
-      if (this.messageForm.valid) {
-        const Content = this.messageForm.value.Content;
-        this.createMessage(Content, this.ticket.id)
-          .subscribe({
-            next: (response) => {
-              this.success = true;
-              this.messagesUpdateService.triggerMessagesUpdate();
-              this.messageForm.reset();
-              this.openSnackBar();
-
-            },
-            error: (error) => {
-              console.error('Error en la solicitud', error);
-              this.success = false;
-              this.successMsg = "Error al crear el mensaje.";
-            }
+    if (this.messageForm.valid) {
+      const Content = this.messageForm.value.Content;
+      this.createMessage(Content, this.ticket.id).subscribe({
+        next: (response) => {
+          this.messagesUpdateService.triggerMessagesUpdate();
+          this.messageForm.reset();
+          this._snackBar.openFromComponent(SnackbarIncidenceComponent , {
+            duration: this.durationInSeconds * 1000,
           });
-
-      }
+        },
+        error: (error) => {
+          this._snackBar.openFromComponent(AlertComponent , {
+            duration: this.durationInSeconds * 1000,
+          })
+          console.error('Error en la solicitud', error);
+          this.successMsg = "Error al crear el mensaje.";
+        }
+      });
     } else {
       this.successMsg = "El ticket ya ha sido cerrado.";
     }
   }
+
 
   /**
   * Crea un mensaje nuevo para la incidencia cuyo id se pasa como parámetro.

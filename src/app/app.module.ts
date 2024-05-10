@@ -14,6 +14,7 @@ import { enGB, es } from 'date-fns/locale';
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 import { SidebarComponent } from "./components/sidebar/sidebar.component";
 import { SnackbarIncidenceComponent } from './components/snackbars/snackbar-incidence/snackbar-incidence.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 registerLocaleData(es, 'es');
 registerLocaleData(enGB, 'en');
@@ -34,6 +35,7 @@ registerLocaleData(enGB, 'en');
     ],
     bootstrap: [AppComponent],
     imports: [
+        MatSnackBarModule,
         SnackbarIncidenceComponent,
         BrowserModule,
         AppRoutingModule,

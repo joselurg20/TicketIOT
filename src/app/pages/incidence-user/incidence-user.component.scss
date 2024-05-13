@@ -14,34 +14,34 @@ h1 {
   border-radius: 15px;
   margin-left: 1rem;
   margin-right: 1rem;
+  background-color: $bg-color-mid-2;
 }
 
 .ticket-data {
-  color: #EFB810;
-  font-size: 30px;
+  color: $color-warning;
   text-align: center;
 }
 
 .font {
   font-size: 20px;
-  color: white;
+  color: $text-color-mid;
   text-align: center;
 }
 
 .logo {
   grid-area: iso;
-  background-color: $bg-color-dark  !important;
+  background-color: $bg-color-dark !important;
   height: 90px;
 }
 
 .language {
   grid-area: leng;
-  background-color: $bg-color-dark  !important;
+  background-color: $bg-color-dark !important;
 }
 
 .history {
   grid-area: hist;
-  width:100%;
+  width: 100%;
 }
 
 .status {
@@ -91,15 +91,15 @@ img {
       'iso title leng  '
       'status status status'
       'hist hist  hist '
-      'msg msg msg'; 
+      'msg msg msg';
     grid-gap: 10px;
     border-radius: 20px;
     padding: 10px;
     height: auto;
   }
 
-  img{
+  img {
     height: 90px;
   }
-  
+
 }

@@ -1,5 +1,9 @@
 @import '../../../../styles/imports.scss';
 
+* {
+  padding: 2px;
+}
+
 h1 {
   color: $text-color-dark;
 }

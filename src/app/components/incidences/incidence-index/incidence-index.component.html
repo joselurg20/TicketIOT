@@ -45,7 +45,7 @@
                     <div *ngIf="isFileSelected" class="carousel slide logotipe preview" id="carouselExampleIndicators"
                         data-bs-ride="carousel">
                         <div class="carousel-inner">
-                            <div *ngFor="let previewUrl of previewUrls; let i = index" class="carousel-item "
+                            <div *ngFor="let previewUrl of previewUrls; let i = index" class="carousel-item"
                                 [class.active]="i === currentIndex">
                                 <img *ngIf="isImage(previewUrl)" [src]="previewUrl" class="preview-image">
                                 <button class="btn-trahs" (click)="deleteFile(i)" *ngIf="isImage(previewUrl)"><i

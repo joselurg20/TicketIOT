@@ -16,17 +16,16 @@ h1 {
   border-radius: 25px;
   align-items: center;
 
-}
+  input {
+    border-color: $text-color-warning;
+    background-color: $bg-color-mid;
+    color: $text-color-mid;
+  }
 
-.container input {
-  border-color: $text-color-warning;
-  background-color: $bg-color-mid;
-  color: $text-color-warning;
-}
-
-input::placeholder {
-  color: $text-color-warning;
-  font-style: italic;
+  input::placeholder {
+    color: $text-color-warning;
+    font-style: italic;
+  }
 }
 
 #myInput::placeholder {
@@ -54,7 +53,8 @@ input::placeholder {
   border-color: $color-warning;
 
 }
-.btn{
+
+.btn {
   background-color: $bg-color-warning;
   font-size: larger;
   border-radius: 6px;

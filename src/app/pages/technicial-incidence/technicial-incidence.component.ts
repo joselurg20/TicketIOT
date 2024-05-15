@@ -3,13 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { DataComponent } from 'src/app/components/data/data.component';
 import { SidebarComponent } from 'src/app/components/sidebar/sidebar.component';
 import { LoadingService } from 'src/app/services/loading.service';
 import { UsersService } from 'src/app/services/users/users.service';
-import { Roles } from 'src/app/utilities/literals';
-import { Routes } from 'src/app/utilities/routes';
 import { ButtonComponent } from "../../components/button/button.component";
-import { TechnicialComponent } from "../../components/data/technicial/technicial.component";
 import { IncidenceDataComponent } from "../../components/incidences/incidence-data/incidence-data.component";
 import { ComunicationComponent } from "../../components/messages/comunication/comunication.component";
 import { LoadingComponent } from "../../components/shared/loading.component";
@@ -17,8 +15,7 @@ import { LoadingComponent } from "../../components/shared/loading.component";
 @Component({
     selector: 'app-technicial-incidence',
     standalone: true,
-    imports: [CommonModule, IncidenceDataComponent, ComunicationComponent,
-        TechnicialComponent, ButtonComponent, SidebarComponent, MatProgressSpinnerModule, LoadingComponent],
+    imports: [CommonModule, IncidenceDataComponent, ComunicationComponent, ButtonComponent, SidebarComponent, MatProgressSpinnerModule, LoadingComponent, DataComponent],
     templateUrl: './technicial-incidence.component.html',
     styleUrls: ['./technicial-incidence.component.scss']
     

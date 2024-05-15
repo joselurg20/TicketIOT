@@ -1,27 +1,28 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { iUserGraph } from 'src/app/models/users/iUserGraph';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TicketUpdateService } from 'src/app/services/tickets/ticketUpdate.service';
+import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { iUserGraph } from 'src/app/models/users/iUserGraph';
 import { LoadingService } from 'src/app/services/loading.service';
 import { TicketDataService } from 'src/app/services/tickets/ticketData.service';
+import { TicketUpdateService } from 'src/app/services/tickets/ticketUpdate.service';
 import { TicketsService } from 'src/app/services/tickets/tickets.service';
-import { LocalStorageKeys } from 'src/app/utilities/literals';
+import { UserDataService } from 'src/app/services/users/userData.service';
+import { UsersService } from 'src/app/services/users/users.service';
 import { Priorities, Status } from 'src/app/utilities/enum';
-import { Router } from '@angular/router';
+import { LocalStorageKeys, Roles } from 'src/app/utilities/literals';
 import { Routes } from 'src/app/utilities/routes';
 import { Utils } from 'src/app/utilities/utils';
-import { UserDataService } from 'src/app/services/users/userData.service';
 
 @Component({
-  selector: 'app-manager',
+  selector: 'app-data',
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule],
-  templateUrl: './manager.component.html',
-  styleUrls: ['./manager.component.scss']
+  templateUrl: './data.component.html',
+  styleUrls: ['./data.component.scss']
 })
-export class ManagerComponent implements OnInit {
+export class DataComponent implements OnInit {
 
   users: iUserGraph[] = [];
   selectedUserId: number = -1;
@@ -30,8 +31,9 @@ export class ManagerComponent implements OnInit {
   isWorking: boolean = false;
   priorities: Priorities[] = Object.values(Priorities).filter(value => typeof value === 'number') as Priorities[];
   status: Status[] = Object.values(Status).filter(value => typeof value === 'number') as Status[];
+  isSupportManager: boolean = false;
 
-  constructor(private ticketDataService: TicketDataService, private ticketUpdateService: TicketUpdateService,
+  constructor(private ticketDataService: TicketDataService, private usersService: UsersService, private ticketUpdateService: TicketUpdateService,
               private loadingService: LoadingService, private translate: TranslateService,
               private ticketsService: TicketsService, private router: Router,
               private userDataService: UserDataService) {
@@ -46,6 +48,8 @@ export class ManagerComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.usersService.currentUser?.role === Roles.managerRole) {
+      this.isSupportManager = false;
     this.userDataService.usersFN$.subscribe({
       next: (response: iUserGraph[]) => {
         const users = response.map((value: iUserGraph) => {
@@ -60,7 +64,10 @@ export class ManagerComponent implements OnInit {
       error: (error: any) => {
         console.error('Error al obtener los usuarios', error);
       }
-    })
+    });
+    }   else {
+      this.isSupportManager = true;
+    }
   }
 
   /**

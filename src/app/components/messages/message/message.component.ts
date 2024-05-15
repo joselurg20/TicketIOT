@@ -2,9 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
-import { iAttachment } from 'src/app/models/attachments/iAttachment';
 import { TicketDto } from 'src/app/models/tickets/TicketDTO';
-import { iMessage } from 'src/app/models/tickets/iMessage';
 import { iMessageDto } from 'src/app/models/tickets/iMessageDto';
 import { MessageDataService } from 'src/app/services/tickets/messageData.service';
 import { MessagesService } from 'src/app/services/tickets/messages.service';
@@ -12,7 +10,6 @@ import { MessagesUpdateService } from 'src/app/services/tickets/messagesUpdate.s
 import { TicketsService } from 'src/app/services/tickets/tickets.service';
 import { UsersService } from 'src/app/services/users/users.service';
 import { LocalStorageKeys, Roles, StorageRoutes } from 'src/app/utilities/literals';
-import { Utils } from 'src/app/utilities/utils';
 
 @Component({
   selector: 'app-message',

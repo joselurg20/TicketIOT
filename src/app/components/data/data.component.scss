@@ -1,4 +1,4 @@
-@import './../../../../styles/variables.scss';
+@import './../../../../styles/imports.scss';
 
 * {
   padding: 5px;
@@ -79,3 +79,12 @@ label {
   width: 21.3vw;
   height: 40px;
 }
+
+.full-width {
+  width: 100%;
+}
+
+.full-width button {
+  width: 43vw;
+}
+

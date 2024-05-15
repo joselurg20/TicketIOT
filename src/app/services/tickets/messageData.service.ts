@@ -5,6 +5,7 @@ import { MessagesService } from "./messages.service";
 import { Utils } from "src/app/utilities/utils";
 import { iAttachment } from "src/app/models/attachments/iAttachment";
 import { iMessageDto } from "src/app/models/tickets/iMessageDto";
+import { StorageRoutes } from "src/app/utilities/literals";
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +39,7 @@ export class MessageDataService {
         for (const message of this.messages) {
           if (message.attachmentPaths.length > 0) {
             for (const attachmentPath of message.attachmentPaths) {
-              var pathPrefix = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/' + ticketId + '/';
+              var pathPrefix = StorageRoutes.attachmentStorage + ticketId + '/';
               const fileName = attachmentPath.substring(pathPrefix.length);
               this.messagesService.downloadAttachment(fileName, ticketId).subscribe({
                 next: (response: BlobPart) => {

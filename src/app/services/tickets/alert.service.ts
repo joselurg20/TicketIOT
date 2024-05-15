@@ -24,17 +24,17 @@ export class AlertService {
   }
 
   error(message: string, options?: any) {
-    options.color = "red";
+    options.color = "#fd6262";
     this.alert(new AlertsDto({ ...options, type: AlertType.Error, message }));
   }
 
   info(message: string, options?: any) {
-    options.color = "blue";
+    options.color = "#185b8e";
     this.alert(new AlertsDto({ ...options, type: AlertType.Info, message }));
   }
 
   warn(message: string, options?: any) {
-    options.color = "red";
+    options.color = "#fdb83f";
     this.alert(new AlertsDto({ ...options, type: AlertType.Warning, message }));
   }
 

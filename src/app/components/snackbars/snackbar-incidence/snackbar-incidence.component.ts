@@ -3,9 +3,7 @@ import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule, MatSnackBarRef } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { Routes } from 'src/app/utilities/routes';
 
 @Component({
   selector: 'app-snackbar-incidence',

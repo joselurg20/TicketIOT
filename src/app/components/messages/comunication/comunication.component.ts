@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { TicketDto } from 'src/app/models/tickets/TicketDTO';
 import { iTicket } from 'src/app/models/tickets/iTicket';
 import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
 import { iUserGraph } from 'src/app/models/users/iUserGraph';
@@ -13,11 +13,10 @@ import { MessagesUpdateService } from 'src/app/services/tickets/messagesUpdate.s
 import { TicketsService } from 'src/app/services/tickets/tickets.service';
 import { UsersService } from 'src/app/services/users/users.service';
 import { LocalStorageKeys, Roles } from 'src/app/utilities/literals';
+import { Utils } from 'src/app/utilities/utils';
 import { AlertComponent } from '../../snackbars/alert/alert.component';
 import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/snackbar-incidence.component';
 import { MessageComponent } from "../message/message.component";
-import { Utils } from 'src/app/utilities/utils';
-import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-comunication',

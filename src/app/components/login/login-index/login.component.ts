@@ -6,15 +6,15 @@ import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import * as CryptoJS from 'crypto-js';
 import { Observable } from 'rxjs';
+import { iUser } from 'src/app/models/users/iUser';
 import { LoadingService } from 'src/app/services/loading.service';
 import { UsersService } from 'src/app/services/users/users.service';
 import { Roles } from 'src/app/utilities/literals';
+import { Routes } from 'src/app/utilities/routes';
 import { LoginService } from '../../../services/users/login.service';
 import { LanguageComponent } from "../../language/language.component";
 import { LoadingComponent } from '../../shared/loading.component';
 import { SidebarComponent } from "../../sidebar/sidebar.component";
-import { Routes } from 'src/app/utilities/routes';
-import { iUser } from 'src/app/models/users/iUser';
 
 
 function passwordValidator(control: FormControl): { [key: string]: any } | null {
@@ -32,14 +32,16 @@ function passwordValidator(control: FormControl): { [key: string]: any } | null 
 @Component({
   selector: 'app-login',
   standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, LanguageComponent, TranslateModule, SidebarComponent, MatProgressSpinnerModule, LoadingComponent],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, LanguageComponent, TranslateModule, SidebarComponent, MatProgressSpinnerModule, LoadingComponent]
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+
   public loginForm!: FormGroup; // Define loginForm como un FormGroup
   public errorMsg: string = "";
   loading$: Observable<boolean>;
+  passwordVisible = false;
 
   constructor(private loginService: LoginService, private loadingService: LoadingService,
               private router: Router,  private translate: TranslateService, private usersService: UsersService) {
@@ -99,6 +101,20 @@ export class LoginComponent implements OnInit {
       });
     }
   }
+
+/**
+ * Cambia la visibilidad de la contraseña.
+ */
+  togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible;
+    const passwordInput = document.getElementById('password') as HTMLInputElement;
+    passwordInput.type = this.passwordVisible ? 'text' : 'password';
+  }
+
+
+/**
+ * Comprueba si el usuario es un administrador, tecnico o usuario normal y redirige a la vista correspondiente.
+ */
 
   checkNavigateUser(user: iUser | null) {
     if(user?.role === Roles.managerRole) {

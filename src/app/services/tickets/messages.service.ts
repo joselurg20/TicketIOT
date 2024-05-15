@@ -12,12 +12,12 @@ export class MessagesService {
 
   constructor(private http: HttpClient) { }
 
-  
-    /**
-   * Obtiene los mensajes de una incidencia por su ID.
-   * @param ticketId el id de la incidencia.
-   * @returns Observable<iMessage[]> con los mensajes.
-   */
+
+  /**
+ * Obtiene los mensajes de una incidencia por su ID.
+ * @param ticketId el id de la incidencia.
+ * @returns Observable<iMessage[]> con los mensajes.
+ */
   getMessagesByTicket(ticketId: number): Observable<iMessage[]> {
     return this.http.get<iMessage[]>(`${environment.apiUrl}` + Messages.getByTicket + `${ticketId}`);
   }

@@ -6,17 +6,21 @@
             <form [formGroup]="loginForm" (submit)="onSubmit()">
                 <h1 class="mb-3">{{'login.title' | translate}}</h1>
                 <div class="mb-3">
-                    <label for="email" class="form-label"><i class="fa-solid fa-at"></i> {{'login.email' |
-                        translate}}</label>
+                    <label for="email" class="form-label"><i class="fa-solid fa-at"></i> {{'login.email' | translate}}</label>
                     <input type="text" class="form-control form-control-lg" id="email"
-                        placeholder="{{'login.emailplaceholder' | translate}}" autocomplete="on" formControlName="email">
+                        placeholder="{{'login.emailplaceholder' | translate}}" formControlName="email">
                 </div>
 
                 <div class="mb-3">
-                    <label for="password" class="form-label"><i class="fa-solid fa-lock"></i> {{'login.password' |
-                        translate}}</label>
-                    <input type="password" class="form-control form-control-lg" id="password"
-                        placeholder="{{'login.passwordplaceholder' | translate}}" formControlName="password">
+                    <label for="password" class="form-label"><i class="fa-solid fa-lock"></i> {{'login.password' | translate}}</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control form-control-lg" id="password" autocomplete="off"
+                            placeholder="{{'login.passwordplaceholder' | translate}} " formControlName="password">
+                        <span class="input-group-text eye" (click)="togglePasswordVisibility()">
+                            <i class="fas fa-eye"
+                                [ngClass]="{'fa-eye': passwordVisible, 'fa-eye-slash': !passwordVisible}"></i>
+                        </span>
+                    </div>
                 </div>
 
                 <div class="mb-3">

@@ -1,5 +1,3 @@
-import { iTicket } from "../tickets/iTicket";
-
 export interface iUser {
     id: number,
     fullName: string,

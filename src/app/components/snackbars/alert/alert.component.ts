@@ -1,11 +1,7 @@
-import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AlertService } from 'src/app/services/tickets/alert.service';
-import { NavigationStart, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { AlertType, AlertsDto } from 'src/app/models/shared/AlertDto';
-import { TranslateModule } from '@ngx-translate/core';
+import { Component, inject } from '@angular/core';
 import { MatSnackBarRef } from '@angular/material/snack-bar';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-alert',

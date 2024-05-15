@@ -1,12 +1,5 @@
 @import '../../../../styles/imports.scss';
 
-h1 {
-  color: $text-color-dark;
-  text-align: center;
-  padding: 10px;
-  margin-bottom: 30px;
-}
-
 .container {
   background-color: $bg-color-mid;
   color: $text-color-mid;
@@ -26,66 +19,85 @@ h1 {
     color: $text-color-warning;
     font-style: italic;
   }
-}
-
-#myInput::placeholder {
-  font-weight: bold;
-}
-
-
-.mat-mdc-progress-spinner.mat-warn {
-  --mdc-circular-progress-active-indicator-color: #074b4d !important;
-}
-
-.progress-spinner {
-  margin: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.container input:focus,
-.container textarea:focus,
-.container select:focus {
-  outline: none !important;
-  box-shadow: none !important;
-  border-color: $color-warning;
-
-}
-
-.btn {
-  background-color: $bg-color-warning;
-  font-size: larger;
-  border-radius: 6px;
-  border-style: none;
-  color: $color-dark;
-  padding: 10px;
-
-  &:hover {
-    color: $color-light;
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: $color-warning;
   }
+
+  .row {
+    h1 {
+      color: $text-color-dark;
+      text-align: center;
+      padding: 10px;
+      margin-bottom: 30px;
+    }
+
+    
+
+    .eye{
+      background-color: transparent;
+      color: $color-light;
+      border-color: $color-secondary;
+      border-style: solid solid solid none;
+    
+      :active{
+        color: $color-warning;
+      }
+    }
+
+    i {
+      color: $text-color-mid;
+    }
+
+    .error-msg {
+      color: $color-danger;
+      text-align: center;
+    }
+
+
+    .btn {
+      background-color: $bg-color-warning;
+      font-size: larger;
+      border-radius: 6px;
+      border-style: none;
+      color: $color-dark;
+      padding: 10px;
+
+      &:hover {
+        color: $color-light;
+      }
+    }
+
+
+    .link {
+      color: $color-light;
+      text-align: center;
+      align-items: center;
+
+      .link-warning {
+        color: $color-warning !important;
+
+        :hover {
+          color: $color-warning-2 !important;
+        }
+      }
+    }
+
+    .logotipe {
+      text-align: center;
+
+      img {
+        width: 350px;
+        height: auto;
+      }
+    }
+  }
+
 }
 
-.link {
-  color: $color-light;
-  text-align: center;
-  align-items: center;
-}
-
-img {
-  width: 350px;
-  height: auto;
-}
-
-.logotipe {
-  text-align: center;
-}
-
-.error-msg {
-  color: $color-danger;
-  text-align: center;
-}
 
 @media screen and (max-width: 992px) {
   .container {

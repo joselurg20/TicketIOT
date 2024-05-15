@@ -6,8 +6,6 @@ import { Observable } from 'rxjs';
 import { SidebarComponent } from 'src/app/components/sidebar/sidebar.component';
 import { LoadingService } from 'src/app/services/loading.service';
 import { UsersService } from 'src/app/services/users/users.service';
-import { Roles } from 'src/app/utilities/literals';
-import { Routes } from 'src/app/utilities/routes';
 import { ButtonComponent } from "../../components/button/button.component";
 import { ManagerComponent } from "../../components/data/manager/manager.component";
 import { IncidenceDataComponent } from "../../components/incidences/incidence-data/incidence-data.component";

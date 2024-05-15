@@ -17,17 +17,17 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
 import { TicketFilterRequestDto } from 'src/app/models/tickets/TicketFilterRequestDto';
 import { iTicketTableSM } from 'src/app/models/tickets/iTicketTableSM';
+import { iUser } from 'src/app/models/users/iUser';
+import { iUserGraph } from 'src/app/models/users/iUserGraph';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { LoadingService } from 'src/app/services/loading.service';
 import { TicketDataService } from 'src/app/services/tickets/ticketData.service';
-import { Priorities, Status } from 'src/app/utilities/enum';
-import { LoadingComponent } from '../../shared/loading.component';
-import { iUserGraph } from 'src/app/models/users/iUserGraph';
-import { iUser } from 'src/app/models/users/iUser';
 import { UsersService } from 'src/app/services/users/users.service';
+import { Priorities, Status } from 'src/app/utilities/enum';
 import { LocalStorageKeys, Roles } from 'src/app/utilities/literals';
 import { Routes } from 'src/app/utilities/routes';
 import { Utils } from 'src/app/utilities/utils';
+import { LoadingComponent } from '../../shared/loading.component';
 
 @Component({
   selector: 'app-incidence-table',
@@ -81,9 +81,9 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   }
 
   constructor(private _liveAnnouncer: LiveAnnouncer, private usersService: UsersService,
-              private router: Router, private translate: TranslateService, private cdr: ChangeDetectorRef,
-              private ticketDataService: TicketDataService, private loadingService: LoadingService,
-              private readonly dateAdapter: DateAdapter<Date>, private langUpdateService: LanguageUpdateService) {
+    private router: Router, private translate: TranslateService, private cdr: ChangeDetectorRef,
+    private ticketDataService: TicketDataService, private loadingService: LoadingService,
+    private readonly dateAdapter: DateAdapter<Date>, private langUpdateService: LanguageUpdateService) {
     this.translate.addLangs(['en', 'es']);
     var lang = '';
     switch (localStorage.getItem(LocalStorageKeys.userLanguageKey)) {
@@ -115,44 +115,44 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   ngOnInit(): void {
     this.loadingService.showLoading();
     setTimeout(() => {
-      
-    this.range = new FormGroup({
-      start: new FormControl(),
-      end: new FormControl()
-    })
-    switch (localStorage.getItem(LocalStorageKeys.selectedLanguage)) {
-      case 'en':
-        this.setLocale('en');
-        break;
-      case 'es':
-        this.setLocale('es');
-        break;
-      default:
-        this.setLocale('es');
-        break;
-    }
-    if (this.usersService.currentUser?.role === Roles.managerRole) {
-      this.isSupportManager = true;
-      this.usersService.getTechnicians().subscribe({
-        next: (response: iUser[]) => {
-          this.users = response.map((value: iUser) => {
-            return {
-              id: value.id,
-              userName: value.userName,
-              fullName: value.fullName
-            };
-          });
-        },
-        error: (error: any) => {
-          console.error('Error al obtener los tickets del usuario:', error);
-        }
-      });
 
-    } else {
-      this.displayedColumns = ['status', 'id', 'title', 'name', 'email', 'priority', 'timestamp', 'technician', 'newMessages', 'show'];
-      this.isSupportManager = false;
-    }
-    
+      this.range = new FormGroup({
+        start: new FormControl(),
+        end: new FormControl()
+      })
+      switch (localStorage.getItem(LocalStorageKeys.selectedLanguage)) {
+        case 'en':
+          this.setLocale('en');
+          break;
+        case 'es':
+          this.setLocale('es');
+          break;
+        default:
+          this.setLocale('es');
+          break;
+      }
+      if (this.usersService.currentUser?.role === Roles.managerRole) {
+        this.isSupportManager = true;
+        this.usersService.getTechnicians().subscribe({
+          next: (response: iUser[]) => {
+            this.users = response.map((value: iUser) => {
+              return {
+                id: value.id,
+                userName: value.userName,
+                fullName: value.fullName
+              };
+            });
+          },
+          error: (error: any) => {
+            console.error('Error al obtener los tickets del usuario:', error);
+          }
+        });
+
+      } else {
+        this.displayedColumns = ['status', 'id', 'title', 'name', 'email', 'priority', 'timestamp', 'technician', 'newMessages', 'show'];
+        this.isSupportManager = false;
+      }
+
     }, 10)
     this.ticketDataService.tickets$.subscribe(tickets => {
       this.dataSource.data = tickets;
@@ -167,7 +167,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      
+
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       if (this.usersService.currentUser?.role === Roles.managerRole) {
@@ -192,10 +192,10 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
             return typeof value === 'string' ? value.toLowerCase() : (typeof value === 'number' ? value : 0);
         }
       };
-    // Detectar manualmente los cambios
-    this.cdr.detectChanges();
-    },1)
-    if(this.usersService.currentUser?.role === Roles.technicianRole && this.isFirstLoad){
+      // Detectar manualmente los cambios
+      this.cdr.detectChanges();
+    }, 1)
+    if (this.usersService.currentUser?.role === Roles.technicianRole && this.isFirstLoad) {
       this.isFirstLoad = false;
       this.ngAfterViewInit();
     }
@@ -292,10 +292,10 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   goToTickets() {
     if (localStorage.getItem(LocalStorageKeys.selectedTicket) != null) {
       if (this.usersService.currentUser?.role === Roles.managerRole) {
-        
-          this.router.navigate([Routes.reviewManager]);
+
+        this.router.navigate([Routes.reviewManager]);
       } else {
-          this.router.navigate([Routes.reviewTechnician]);
+        this.router.navigate([Routes.reviewTechnician]);
       }
     }
 

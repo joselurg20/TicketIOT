@@ -1,27 +1,26 @@
-import { Component } from '@angular/core';
 import { CommonModule, NgFor } from '@angular/common';
+import { Component } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { IncidenceTableComponent } from "../../components/incidences/incidence-table/incidence-table.component";
-import { IncidenceDataComponent } from "../../components/incidences/incidence-data/incidence-data.component";
-import { MessageComponent } from "../../components/messages/message/message.component";
 import { ActivatedRoute, Router } from '@angular/router';
-import { iMessage } from 'src/app/models/tickets/iMessage';
-import { HelpdeskComponent } from "../../components/messages/helpdesk/helpdesk.component";
-import { ComunicationComponent } from "../../components/messages/comunication/comunication.component";
-import { HistoryComponent } from "../../components/messages/history/history.component";
-import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
-import * as CryptoJS from 'crypto-js';
-import { Routes } from 'src/app/utilities/routes';
-import { LanguageComponent } from "../../components/language/language.component";
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { LoadingComponent } from 'src/app/components/shared/loading.component';
-import { LoadingService } from 'src/app/services/loading.service';
+import * as CryptoJS from 'crypto-js';
 import { Observable } from 'rxjs';
+import { LoadingComponent } from 'src/app/components/shared/loading.component';
+import { iMessage } from 'src/app/models/tickets/iMessage';
 import { iTicket } from 'src/app/models/tickets/iTicket';
+import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
+import { LoadingService } from 'src/app/services/loading.service';
 import { TicketsService } from 'src/app/services/tickets/tickets.service';
-import { LocalStorageKeys } from 'src/app/utilities/literals';
+import { Routes } from 'src/app/utilities/routes';
 import { Utils } from 'src/app/utilities/utils';
+import { IncidenceDataComponent } from "../../components/incidences/incidence-data/incidence-data.component";
+import { IncidenceTableComponent } from "../../components/incidences/incidence-table/incidence-table.component";
+import { LanguageComponent } from "../../components/language/language.component";
+import { ComunicationComponent } from "../../components/messages/comunication/comunication.component";
+import { HelpdeskComponent } from "../../components/messages/helpdesk/helpdesk.component";
+import { HistoryComponent } from "../../components/messages/history/history.component";
+import { MessageComponent } from "../../components/messages/message/message.component";
 
 @Component({
   selector: 'app-incidence-user',

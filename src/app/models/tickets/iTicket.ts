@@ -1,5 +1,3 @@
-import { iMessage } from "./iMessage";
-import { iUser } from "../users/iUser";
 import { Priorities, Status } from "src/app/utilities/enum";
 
 export interface iTicket {

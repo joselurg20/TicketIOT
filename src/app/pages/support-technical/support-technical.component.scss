@@ -16,6 +16,7 @@ app-sidebar {
 
 .main-content {
   grid-column: 2 / 3;
+  overflow-x: hidden;
 }
 
 
@@ -44,12 +45,6 @@ mat-grid-tile {
   border-radius: 25px;
 }
 
-.chart-bar {
-  grid-area: bar;
-  background-color: $bg-color-mid-2;
-  border-radius: 25px;
-}
-
 .grid-container {
   padding: 10px;
   border-radius: 25px;
@@ -63,7 +58,15 @@ mat-grid-tile {
   grid-gap: 10px;
 }
 
-.progress-spinner {
-  margin-left: 48vw;
-  margin-top: 45vh;
+
+
+@media screen and (max-width: 900px) {
+
+  .grid-container {
+    
+    grid-template-areas:
+    'pie'
+    'douhth';
+  }
+
 }

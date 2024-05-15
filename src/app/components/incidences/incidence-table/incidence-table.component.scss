@@ -72,7 +72,7 @@ label {
 
 .filter-button {
   grid-area: filter-button;
-  margin-left: -8vw;
+  margin-top: -50px;
 }
 
 .search-bar {
@@ -80,7 +80,7 @@ label {
 }
 
 #search {
-  width: 73.65vw;
+  width: 60vw;
   height: 50px;
   margin-top: -50px;
   margin-left: 1vw;
@@ -98,8 +98,8 @@ label {
   display: grid;
   grid-template-areas: 
     "status-label prio-label tech-label date-label ."
-    "status-select prio-select tech-select date-select filter-button"
-    "search-bar search-bar search-bar search-bar .";
+    "status-select prio-select tech-select date-select ."
+    "search-bar search-bar search-bar filter-button .";
 }
 
 mat-form-field {
@@ -203,8 +203,7 @@ mat-form-field {
   color: $color-dark;
   background-color: $bg-color-primary;
   padding: 10px;
-  margin-left: 4vw;
-  margin-top: 35px;
+  
   width: 10vw;
   height: 50px;
   text-decoration: none;
@@ -227,6 +226,8 @@ mat-form-field {
   overflow: hidden;
   height: min-content;
   text-align: center;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 table {
@@ -334,6 +335,18 @@ tr {
   height: 100vh;
 }
 
+@media screen and (max-width: 1300px) {
+  .filter-form {
+    display: grid;
+    grid-template-areas: 
+      "status-label prio-label . . ."
+      "status-select prio-select . . ."
+      "tech-label date-label . . ."
+      "tech-select date-select . . ."
+      "search-bar search-bar search-bar filter-button .";
+  }
+}
+
 
 @media screen and (max-width: 992px) {
   #main {
@@ -345,6 +358,27 @@ tr {
   }
 }
 
+@media screen and (max-width: 615px) {
+  .filter-form {
+    display: grid;
+    grid-template-areas: 
+      "status-label ."
+      "status-select ."
+      "prio-label ."
+      "prio-select ."
+      "tech-label ."
+      "tech-select ."
+      "date-label ."
+      "date-select ."
+      "search-bar ."
+      "filter-button .";
+  }
+
+  .btn-l {
+    width: 100px;
+    margin-top: 50px;
+  }
+}
 
 @media screen and (max-width: 600px) {
   #main {

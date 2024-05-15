@@ -291,12 +291,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
    */
   goToTickets() {
     if (localStorage.getItem(LocalStorageKeys.selectedTicket) != null) {
-      if (this.usersService.currentUser?.role === Roles.managerRole) {
-
         this.router.navigate([Routes.reviewManager]);
-      } else {
-        this.router.navigate([Routes.reviewTechnician]);
-      }
     }
 
   }

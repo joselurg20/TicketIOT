@@ -31,7 +31,7 @@ export class DataComponent implements OnInit {
   isWorking: boolean = false;
   priorities: Priorities[] = Object.values(Priorities).filter(value => typeof value === 'number') as Priorities[];
   status: Status[] = Object.values(Status).filter(value => typeof value === 'number') as Status[];
-  isSupportManager: boolean = false;
+  isSupportTechnician: boolean = false;
 
   constructor(private ticketDataService: TicketDataService, private usersService: UsersService, private ticketUpdateService: TicketUpdateService,
               private loadingService: LoadingService, private translate: TranslateService,
@@ -49,7 +49,7 @@ export class DataComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.usersService.currentUser?.role === Roles.managerRole) {
-      this.isSupportManager = false;
+      this.isSupportTechnician = false;
     this.userDataService.usersFN$.subscribe({
       next: (response: iUserGraph[]) => {
         const users = response.map((value: iUserGraph) => {
@@ -66,7 +66,7 @@ export class DataComponent implements OnInit {
       }
     });
     }   else {
-      this.isSupportManager = true;
+      this.isSupportTechnician = true;
     }
   }
 

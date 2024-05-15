@@ -19,6 +19,7 @@ import { IncidenceUserComponent } from './pages/incidence-user/incidence-user.co
 import { ManagerIncidenceComponent } from './pages/manager-incidence/manager-incidence.component';
 import { SupportManagerComponent } from './pages/support-manager/support-manager.component';
 import { SupportTechnicalComponent } from './pages/support-technical/support-technical.component';
+import { reviewGuard } from './guards/review.guard';
 
 
 const routes: Routes = [
@@ -30,7 +31,7 @@ const routes: Routes = [
   { path: "recover/:hash/:username/:domain/:tld", component: Recovery2Component },
   { path: "support-manager", component: SupportManagerComponent, canActivate: [managerGuard] },
   { path: "support-technician", component: SupportTechnicalComponent, canActivate: [technicianGuard] },
-  { path: "review", component: ManagerIncidenceComponent, canActivate: [managerGuard] },
+  { path: "review", component: ManagerIncidenceComponent, canActivate: [reviewGuard] },
 
   //Pruebas 
   { path: "prueba", component: IncidenceTableComponent },

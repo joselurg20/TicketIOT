@@ -36,6 +36,7 @@ export class UsersService {
    * @returns Observable<iuser> con el usuario obtenido.
    */
   getUserById(userId: number): Observable<iUser> {
+    console.log('url peticion', `${environment.apiUrl}` + Users.getUserById + `${userId}`)
     return this.http.get<iUser>(`${environment.apiUrl}` + Users.getUserById + `${userId}`);
   }
 

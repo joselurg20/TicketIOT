@@ -49,8 +49,7 @@ export class LoginService {
     }
 
     /**
-     * Realiza el inicio de sesión de un usuario. Guarda en localStorage el token de autenticación
-     * y los datos del usuario.
+     * Realiza el inicio de sesión de un usuario. Guarda en localStorage el token de autenticación.
      * @param email el email del usuario.
      * @param password la contraseña del usuario.
      * @returns 

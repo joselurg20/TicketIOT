@@ -1,7 +1,7 @@
 @import "../../../styles/variables.scss";
 
-.lenguage{
-  margin: 2vh;
+.language{
+  margin: 1rem;
 }
 
 .btn {
@@ -29,6 +29,57 @@
   &.btnEN {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+  }
+
+}
+
+@media screen and (max-width: 992px) {
+
+  .language {
+    margin: 2vw;
+  }
+
+  .btn {
+    height: 6vw;
+    width: 6vw;
+  }
+
+  img {
+    height: 3vw;
+  }
+
+}
+
+@media screen and (max-width: 700px) {
+
+  .language {
+    margin: 2vw;
+  }
+
+  .btn {
+    height: 8vw;
+    width: 8vw;
+  }
+
+  img {
+    height: 4vw;
+  }
+
+}
+
+@media screen and (max-width: 530px) {
+
+  .language {
+    margin: 2vw;
+  }
+
+  .btn {
+    height: 9vw;
+    width: 9vw;
+  }
+
+  img {
+    height: 4.5vw;
   }
 
 }

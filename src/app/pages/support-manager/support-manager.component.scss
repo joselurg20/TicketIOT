@@ -16,6 +16,7 @@ app-sidebar {
 
 .main-content {
   grid-column: 2 / 3;
+  overflow-x: hidden;
 }
 
 
@@ -68,6 +69,15 @@ mat-grid-tile {
   margin-top: 45vh;
 }
 
+@media screen and (max-width: 1750px) {
+
+  .grid-container {
+    grid-template-areas:
+      'pie douhth'
+      'bar bar';
+  }
+}
+
 @media screen and (max-width: 900px) {
 
   .grid-container {
@@ -76,22 +86,4 @@ mat-grid-tile {
       'douhth'
       'bar';
   }
-
-  .dashboard {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .grid-container {
-    grid-template-areas:
-      'pie'
-      'douhth'
-      'bar';
-  }
-
-  .dashboard {
-    grid-template-columns: 1fr;
-  }
-
 }

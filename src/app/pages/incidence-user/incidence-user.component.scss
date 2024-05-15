@@ -83,7 +83,7 @@ img {
   height: 90px;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 992px) {
 
   .grid-container {
     display: grid;
@@ -100,6 +100,14 @@ img {
 
   img {
     height: 90px;
+  }
+
+  .title {
+    font-size: 3vw;
+  }
+
+  .logo img {
+    height: 9vw;
   }
 
 }

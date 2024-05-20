@@ -35,6 +35,7 @@ registerLocaleData(enGB, 'en');
     ],
     bootstrap: [AppComponent],
     imports: [
+        
         MatSnackBarModule,
         SnackbarIncidenceComponent,
         BrowserModule,

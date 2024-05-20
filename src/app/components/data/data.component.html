@@ -4,8 +4,8 @@
             translate}}</label>
         <select class="form-select form-select-lg" id="technical" required [(ngModel)]="selectedUserId"
             name="technical">
-            <option value="-1">{{"data.option1" | translate}}</option>
-            <option *ngFor="let user of users" [value]="user.id">{{user.userName}}</option>
+            <option class="option-item" value="-1">{{"data.option1" | translate}}</option>
+            <option class="option-item" *ngFor="let user of users" [value]="user.id">{{user.userName}}</option>
         </select>
     </div>
     <div *ngIf="!isSupportTechnician" class="d-grid gap-2">
@@ -18,8 +18,8 @@
                 translate}}</label>
             <select class="form-select form-select-lg" id="priority" required [(ngModel)]="selectedPriorityValue"
                 name="priority">
-                <option value="-1">{{"data.option2" | translate}}</option>
-                <option *ngFor="let p of priorities" [value]="p">{{getPriorityString(p)}}</option>
+                <option class="option-item" value="-1">{{"data.option2" | translate}}</option>
+                <option class="option-item" *ngFor="let p of priorities" [value]="p">{{getPriorityString(p)}}</option>
             </select>
             <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-lg" (click)="updatePrio()"><i class="fa-solid fa-floppy-disk"></i>
@@ -31,8 +31,8 @@
             <label for="status" class="form-label"><i class="fa-solid fa-traffic-light"></i> {{"data.status" |
                 translate}}</label>
             <select class="form-select form-select-lg" id="status" required [(ngModel)]="selectedStatusValue" name="status">
-                <option value="-1">{{"data.option3" | translate}}</option>
-                <option *ngFor="let s of status" [value]="s">{{getStatusString(s)}}</option>
+                <option class="option-item" value="-1">{{"data.option3" | translate}}</option>
+                <option class="option-item" *ngFor="let s of status" [value]="s">{{getStatusString(s)}}</option>
             </select>
             <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-lg" (click)="updateStatus()"><i class="fa-solid fa-floppy-disk"></i>

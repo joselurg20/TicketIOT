@@ -1,19 +1,19 @@
 <h1>{{"comunication.title" | translate}}</h1>
 <form [formGroup]="messageForm" (submit)="onSubmit()" enctype="multipart/form-data">
     <div class="form-group">
-        
+
         <label for="Attachments"><i class="fa-solid fa-folder"></i> {{"comunication.upload" | translate}}</label> <br>
         <input type="file" id="Attachments" formControlName="Attachments" multiple (change)="onFileChange($event)"
             style="display: none;">
         <button type="button" onclick="document.getElementById('Attachments').click()"
             class="custom-file-button btn btn-lg"><i class="fa-solid fa-arrow-up-from-bracket"></i>
             {{"comunication.select" | translate}}</button>
-        <div class="carousel-container">
 
+        <div class="carousel-container">
             <div *ngIf="isFileSelected" class="carousel slide logotipe preview" id="carouselExampleIndicators"
                 data-bs-ride="carousel">
                 <div class="carousel-inner">
-                    <div *ngFor="let previewUrl of previewUrls; let i = index" class="carousel-item "
+                    <div *ngFor="let previewUrl of previewUrls; let i = index" class="carousel-item"
                         [class.active]="i === currentIndex">
                         <img *ngIf="isImage(previewUrl)" [src]="previewUrl" class="preview-image">
                         <button class="btn-trahs" (click)="deleteFile(i)" *ngIf="isImage(previewUrl)"><i
@@ -39,12 +39,12 @@
             </div>
 
         </div>
-       
+
     </div>
     <div class="mb-3 form-group">
         <label for="Content" class="form-label"><i class="fa-solid fa-message"></i> {{"comunication.name" |
             translate}}</label>
-        <textarea class="form-control  form-control-lg" id="Content" rows="3"
+        <textarea class="form-control form-control-lg" id="Content" rows="3"
             placeholder="{{'comunication.nameplaceholder' | translate}}" formControlName="Content"></textarea>
     </div>
     <p *ngIf="successMsg" class="success">{{ successMsg }}</p>

@@ -64,7 +64,7 @@ label {
 .logotipe {
   text-align: center;
 
-  img{
+  img {
     width: 350px;
     height: auto;
     border-radius: 10px;
@@ -113,8 +113,8 @@ label {
 #Content {
   resize: none;
   border-radius: 10px;
-  background-color: $bg-color-light;
-  color: $text-color-primary !important;
+  background-color:transparent;
+  color: $text-color-mid !important;
 
   &:focus {
     outline: none !important;
@@ -123,7 +123,7 @@ label {
   }
 
   &::placeholder {
-    color: $text-color-primary;
+    color: $color-secondary;
   }
 
 }

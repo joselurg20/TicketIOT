@@ -46,6 +46,10 @@ label {
   justify-content: center;
 }
 
+.option-item:hover{
+  background-color: $bg-color-dark;
+}
+
 .prio-container {
   display: flex;
   flex-direction: column;

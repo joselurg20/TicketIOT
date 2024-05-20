@@ -1,4 +1,4 @@
-@import "../../../../styles/variables.scss";
+@import "../../../../styles/imports.scss";
 
 * {
   padding: 4px;
@@ -92,12 +92,12 @@ label {
   background-color: $bg-color-dark;
   border-radius: 25px;
   border: $bg-color-primary 2px solid;
-  
+
 }
 
 .filter-form {
   display: grid;
-  grid-template-areas: 
+  grid-template-areas:
     "status-label prio-label tech-label date-label ."
     "status-select prio-select tech-select date-select ."
     "search-bar search-bar search-bar filter-button .";
@@ -130,8 +130,7 @@ mat-form-field {
   border-color: $color-primary;
 }
 
-::ng-deep .calendar .cdk-keyboard-focused 
-.mat-calendar-body-active>.mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical),
+::ng-deep .calendar .cdk-keyboard-focused .mat-calendar-body-active>.mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical),
 ::ng-deep .calendar .cdk-program-focused .mat-calendar-body-active>.mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
   background-color: transparent;
 }
@@ -139,7 +138,7 @@ mat-form-field {
 ::ng-deep .calendar .mat-calendar-body-cell-content,
 ::ng-deep .calendar .mat-calendar-body-label,
 ::ng-deep .calendar .ng-star-inserted {
-  color: $text-color-mid; 
+  color: $text-color-mid;
 }
 
 ::ng-deep .calendar .mat-calendar-body-cell:hover {
@@ -169,7 +168,7 @@ mat-form-field {
   margin-left: 1vw;
   width: 15vw;
   height: 50px;
-  
+
 
   &:focus {
     outline: none !important;
@@ -199,12 +198,12 @@ mat-form-field {
 }
 
 .btn-l {
-  border-radius: 5px;
-  border: $bg-color-light 3px solid;
-  color: $color-dark;
-  background-color: $bg-color-primary;
+  border-color: $color-primary;
+  color: $color-primary;
+  background-color: transparent;
+  border: 1px solid $bg-color-primary;
   padding: 10px;
-  
+  border-radius: 5px;
   width: 10vw;
   height: 50px;
   text-decoration: none;
@@ -213,8 +212,9 @@ mat-form-field {
   text-align: center;
 
   &:hover {
-    background-color: $bg-color-light;
-    border-color: $color-primary;
+    border-color: $color-warning;
+    color: $color-mid;
+    background-color: $bg-color-warning;
   }
 }
 
@@ -339,7 +339,7 @@ tr {
 @media screen and (max-width: 1300px) {
   .filter-form {
     display: grid;
-    grid-template-areas: 
+    grid-template-areas:
       "status-label prio-label . . ."
       "status-select prio-select . . ."
       "tech-label date-label . . ."
@@ -362,7 +362,7 @@ tr {
 @media screen and (max-width: 615px) {
   .filter-form {
     display: grid;
-    grid-template-areas: 
+    grid-template-areas:
       "status-label ."
       "status-select ."
       "prio-label ."

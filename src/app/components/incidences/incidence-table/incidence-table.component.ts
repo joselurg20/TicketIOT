@@ -27,7 +27,7 @@ import { Priorities, Status } from 'src/app/utilities/enum';
 import { LocalStorageKeys, Roles } from 'src/app/utilities/literals';
 import { Routes } from 'src/app/utilities/routes';
 import { Utils } from 'src/app/utilities/utils';
-import { LoadingComponent } from '../../shared/loading.component';
+import { LoadingComponent } from '../../shared/loading/loading.component';
 
 @Component({
   selector: 'app-incidence-table',

@@ -19,22 +19,33 @@
             <span class="justify-content-end">{{message.timestamp}}</span>
           </div>
           <p>{{message.content}}</p>
-          <div>
-            <div>
-              <div *ngIf="message.attachmentPaths && message.attachmentPaths.length > 0"
-                class="d-flex justify-content-center preview">
-                <div *ngFor="let attachment of message.attachments">
-                  <img [src]="attachment.previewUrl" alt="">
-                  <button class="custom-file-button btn-lg" (click)="downloadAttachment(attachment.path)"><i
-                      class="fa-solid fa-download"></i> {{"message.download" | translate}}</button>
+          <div *ngIf="message.attachmentPaths && message.attachmentPaths.length > 0">
+            <div id="carouselExample{{message.id}}" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div *ngFor="let attachment of message.attachments; let i = index" class="carousel-item" [ngClass]="{'active': i === 0}">
+                        <div class="d-flex flex-column align-items-center">
+                            <img [src]="attachment.previewUrl" class="d-block w-100 img-fluid" alt="Image preview">
+                            <button class="custom-file-button btn-lg mt-3" (click)="downloadAttachment(attachment.path)">
+                                <i class="fa-solid fa-download"></i> {{ 'message.download' | translate }}
+                            </button>
+                        </div>
+                    </div>
                 </div>
-              </div>
+                <button class="carousel-control-prev" *ngIf="message.attachmentPaths.length > 1" type="button" attr.data-bs-target="#carouselExample{{message.id}}" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" *ngIf="message.attachmentPaths.length > 1" type="button" attr.data-bs-target="#carouselExample{{message.id}}" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
-          </div>
+        </div>
         </div>
         <hr>
       </div>
       <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

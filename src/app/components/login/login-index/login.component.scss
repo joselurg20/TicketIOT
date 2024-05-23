@@ -19,12 +19,29 @@
     color: $text-color-warning;
     font-style: italic;
   }
+
   input:focus,
   textarea:focus,
   select:focus {
     outline: none !important;
     box-shadow: none !important;
     border-color: $color-warning;
+  }
+
+  input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px $bg-color-mid inset !important;
+    box-shadow: 0 0 0 30px $bg-color-mid inset !important;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: #fff;
+
+    &:hover,
+    &:focus,
+    &:active {
+      -webkit-box-shadow: 0 0 0 30px $bg-color-mid inset !important;
+      box-shadow: 0 0 0 30px $bg-color-mid inset !important;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: #fff;
+    }
   }
 
   .row {
@@ -35,15 +52,15 @@
       margin-bottom: 30px;
     }
 
-    
 
-    .eye{
+
+    .eye {
       background-color: transparent;
       color: $color-light;
       border-color: $color-secondary;
       border-style: solid solid solid none;
-    
-      :active{
+
+      :active {
         color: $color-warning;
       }
     }

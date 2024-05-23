@@ -6,7 +6,7 @@ import { TicketDataService } from 'src/app/services/tickets/ticketData.service';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { Observable, Subscription } from 'rxjs';
 import { Priorities } from 'src/app/utilities/enum';
-import { LoadingComponent } from "../../shared/loading.component";
+import { LoadingComponent } from "../../shared/loading/loading.component";
 import { LoadingService } from 'src/app/services/loading.service';
 import { LocalStorageKeys } from 'src/app/utilities/literals';
 

@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { Routes } from 'src/app/utilities/routes';  
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { LoginService } from 'src/app/services/users/login.service';
 import { UsersService } from 'src/app/services/users/users.service';
 import { LocalStorageKeys, Roles } from 'src/app/utilities/literals';
+import { Routes } from 'src/app/utilities/routes';
 
 interface SideNavToggle {
   screenWidth: number;

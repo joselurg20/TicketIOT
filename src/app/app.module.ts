@@ -9,12 +9,12 @@ import { AppComponent } from './app.component';
 import { registerLocaleData } from '@angular/common';
 import { HttpBackend, HttpClientModule } from '@angular/common/http';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { enGB, es } from 'date-fns/locale';
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 import { SidebarComponent } from "./components/sidebar/sidebar.component";
 import { SnackbarIncidenceComponent } from './components/snackbars/snackbar-incidence/snackbar-incidence.component';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 registerLocaleData(es, 'es');
 registerLocaleData(enGB, 'en');
@@ -26,16 +26,15 @@ registerLocaleData(enGB, 'en');
     providers: [
         {
             provide: MAT_DATE_LOCALE,
-            useValue: [es , enGB]
+            useValue: [es, enGB]
         },
         {
             provide: MAT_DATE_FORMATS,
-            useValue: [es , enGB]
+            useValue: [es, enGB]
         }
     ],
     bootstrap: [AppComponent],
     imports: [
-        
         MatSnackBarModule,
         SnackbarIncidenceComponent,
         BrowserModule,

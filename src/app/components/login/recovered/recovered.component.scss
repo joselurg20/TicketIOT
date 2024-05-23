@@ -31,11 +31,28 @@ input::placeholder {
   font-style: italic;
 }
 
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px $bg-color-mid inset !important;
+  box-shadow: 0 0 0 30px $bg-color-mid inset !important;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #fff;
+
+  &:hover,
+  &:focus,
+  &:active {
+    -webkit-box-shadow: 0 0 0 30px $bg-color-mid inset !important;
+    box-shadow: 0 0 0 30px $bg-color-mid inset !important;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: #fff;
+  }
+}
+
+
 #myInput::placeholder {
   font-weight: bold;
 }
 
-.btn{
+.btn {
   background-color: $bg-color-warning;
   font-size: larger;
   border-radius: 6px;

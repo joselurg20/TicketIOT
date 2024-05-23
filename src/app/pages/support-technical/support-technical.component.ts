@@ -15,10 +15,8 @@ import { LoadingService } from 'src/app/services/loading.service';
 import { TicketDataService } from 'src/app/services/tickets/ticketData.service';
 import { LoginService } from 'src/app/services/users/login.service';
 import { UsersService } from 'src/app/services/users/users.service';
-import { Roles } from 'src/app/utilities/literals';
-import { Routes } from 'src/app/utilities/routes';
 import { IncidenceDataComponent } from "../../components/incidences/incidence-data/incidence-data.component";
-import { LoadingComponent } from "../../components/shared/loading.component";
+import { LoadingComponent } from "../../components/shared/loading/loading.component";
 
 @Component({
     selector: 'app-support-technical',

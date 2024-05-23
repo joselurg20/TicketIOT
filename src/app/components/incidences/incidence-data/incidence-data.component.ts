@@ -9,7 +9,7 @@ import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { LoadingService } from 'src/app/services/loading.service';
 import { TicketUpdateService } from 'src/app/services/tickets/ticketUpdate.service';
 import { ButtonComponent } from "../../button/button.component";
-import { LoadingComponent } from "../../shared/loading.component";
+import { LoadingComponent } from "../../shared/loading/loading.component";
 import { TicketsService } from 'src/app/services/tickets/tickets.service';
 import { UsersService } from 'src/app/services/users/users.service';
 import { LocalStorageKeys } from 'src/app/utilities/literals';

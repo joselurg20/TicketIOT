@@ -10,7 +10,7 @@ import { UsersService } from 'src/app/services/users/users.service';
 import { ButtonComponent } from "../../components/button/button.component";
 import { IncidenceDataComponent } from "../../components/incidences/incidence-data/incidence-data.component";
 import { ComunicationComponent } from "../../components/messages/comunication/comunication.component";
-import { LoadingComponent } from "../../components/shared/loading.component";
+import { LoadingComponent } from "../../components/shared/loading/loading.component";
 
 @Component({
     selector: 'app-support-incidence',

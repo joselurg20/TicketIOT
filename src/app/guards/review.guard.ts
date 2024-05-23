@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { Routes } from '../utilities/routes';
 import { LoginService } from '../services/users/login.service';
+import { Routes } from '../utilities/routes';
 
 export const reviewGuard: CanActivateFn = (route, state) => {
   const loginService = inject(LoginService)

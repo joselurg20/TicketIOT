@@ -93,9 +93,7 @@ hr {
 }
 
 img {
-  margin-top: 20px;
-  padding: 10px;
-  width: 200px;
-  height: 150px;
-  border-radius: 25px;
+  width: 150px !important;
+  max-height: 150px;
+  border-radius: 10px;
 }

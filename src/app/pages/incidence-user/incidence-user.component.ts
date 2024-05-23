@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import * as CryptoJS from 'crypto-js';
 import { Observable } from 'rxjs';
-import { LoadingComponent } from 'src/app/components/shared/loading.component';
+import { LoadingComponent } from 'src/app/components/shared/loading/loading.component';
 import { iMessage } from 'src/app/models/tickets/iMessage';
 import { iTicket } from 'src/app/models/tickets/iTicket';
 import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';

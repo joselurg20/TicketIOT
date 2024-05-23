@@ -13,7 +13,7 @@ import { Roles } from 'src/app/utilities/literals';
 import { Routes } from 'src/app/utilities/routes';
 import { LoginService } from '../../../services/users/login.service';
 import { LanguageComponent } from "../../language/language.component";
-import { LoadingComponent } from '../../shared/loading.component';
+import { LoadingComponent } from '../../shared/loading/loading.component';
 import { SidebarComponent } from "../../sidebar/sidebar.component";
 
 

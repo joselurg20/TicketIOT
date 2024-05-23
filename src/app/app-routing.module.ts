@@ -11,7 +11,7 @@ import { Recovery2Component } from './components/login/recovery2/recovery2.compo
 import { HelpdeskComponent } from './components/messages/helpdesk/helpdesk.component';
 import { HistoryComponent } from './components/messages/history/history.component';
 import { MessageComponent } from './components/messages/message/message.component';
-import { LoadingComponent } from './components/shared/loading.component';
+import { LoadingComponent } from './components/shared/loading/loading.component';
 import { TechnicalTableComponent } from './components/technical-table/technical-table.component';
 import { managerGuard } from './guards/manager.guard';
 import { technicianGuard } from './guards/technician.guard';
@@ -20,9 +20,44 @@ import { ManagerIncidenceComponent } from './pages/manager-incidence/manager-inc
 import { SupportManagerComponent } from './pages/support-manager/support-manager.component';
 import { SupportTechnicalComponent } from './pages/support-technical/support-technical.component';
 import { reviewGuard } from './guards/review.guard';
+import { BaseLayoutComponent } from './components/shared/base-layout/base-layout.component';
+import { SiteLayoutComponent } from './components/shared/site-layout/site-layout.component';
 
 
 const routes: Routes = [
+
+  /*
+  
+  {
+    path: "", component: BaseLayoutComponent, children: [ //Rutas sin sidenav
+      { path: "", component: LoginComponent },
+      { path: "login", component: LoginComponent },
+      { path: "recover", component: RecoveredComponent },
+      { path: "incidence", component: IncidenceIndexComponent },
+      { path: "link/:hashedId/:ticketId", component: IncidenceUserComponent },
+      { path: "cls", component: CloseComponent },
+    ]
+  },
+
+  {
+    path: "manager", component: SiteLayoutComponent, canActivate: [managerGuard, reviewGuard, technicianGuard], canActivateChild: [managerGuard, reviewGuard, technicianGuard], 
+    children: [ //Rutas con sidenav      
+      { path: "review", component: ManagerIncidenceComponent },
+      { path: "support-manager", component: SupportManagerComponent },
+      { path: "support-technician", component: SupportTechnicalComponent },
+      { path: "incidence", component: IncidenceIndexComponent },
+    ]
+  },
+
+  //preguntar a ciscu
+  { path: "recover/:hash/:username/:domain/:tld", component: Recovery2Component },
+
+  //Pagina de 404/Not Found
+
+  { path: "404", component: Error404Component },
+  { path: "**", redirectTo: "/404" },
+
+*/
 
   //accesibles por los trabajadores
   { path: "", component: LoginComponent },

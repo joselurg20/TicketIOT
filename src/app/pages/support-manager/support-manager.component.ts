@@ -11,7 +11,7 @@ import { ChartPieComponent } from "../../components/graphics/chart-pie/chart-pie
 import { IncidenceIndexComponent } from "../../components/incidences/incidence-index/incidence-index.component";
 import { IncidenceTableComponent } from "../../components/incidences/incidence-table/incidence-table.component";
 import { MessageComponent } from "../../components/messages/message/message.component";
-import { LoadingComponent } from "../../components/shared/loading.component";
+import { LoadingComponent } from "../../components/shared/loading/loading.component";
 import { SidebarComponent } from "../../components/sidebar/sidebar.component";
 import { TechnicalTableComponent } from "../../components/technical-table/technical-table.component";
 import { UserDataService } from 'src/app/services/users/userData.service';

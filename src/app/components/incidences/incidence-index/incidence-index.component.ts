@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
@@ -17,7 +18,6 @@ import { LanguageComponent } from "../../language/language.component";
 import { SidebarComponent } from '../../sidebar/sidebar.component';
 import { AlertComponent } from '../../snackbars/alert/alert.component';
 import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/snackbar-incidence.component';
-import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @Component({

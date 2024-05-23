@@ -3,8 +3,12 @@ export enum LocalStorageKeys {
     userLanguageKey = 'userLanguage',
     selectedLanguage = 'selectedLanguage',
     selectedTicket = 'selectedTicket',
-    loggedUser = 'loggedUser'
+    loggedUser = 'loggedUser',
+    selectedUserId = 'selectedUserId',         // Nueva clave
+    selectedPriorityValue = 'selectedPriorityValue', // Nueva clave
+    selectedStatusValue = 'selectedStatusValue'   // Nueva clave
 }
+
 
 export enum Roles {
     managerRole = 'SupportManager',

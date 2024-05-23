@@ -5,7 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { iTicketGraph } from 'src/app/models/tickets/iTicketsGraph';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { TicketDataService } from 'src/app/services/tickets/ticketData.service';
-import { LoadingComponent } from "../../shared/loading.component";
+import { LoadingComponent } from "../../shared/loading/loading.component";
 import { LoadingService } from 'src/app/services/loading.service';
 import { LocalStorageKeys , Roles } from 'src/app/utilities/literals';
 import { iUser } from 'src/app/models/users/iUser';

@@ -30,8 +30,8 @@ export class HistoryComponent {
   private messagesUpdateSubscription: Subscription = {} as Subscription;
 
   constructor(private messagesService: MessagesService, private route: ActivatedRoute,
-              private translate: TranslateService, private messagesUpdateService: MessagesUpdateService,
-              private ticketsService: TicketsService, private messageDataService: MessageDataService) {
+    private translate: TranslateService, private messagesUpdateService: MessagesUpdateService,
+    private ticketsService: TicketsService, private messageDataService: MessageDataService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -67,7 +67,7 @@ export class HistoryComponent {
       }
     });
     this.messagesUpdateSubscription = this.messagesUpdateService.messagesUpdated$.subscribe(() => {
-      
+
       this.messageDataService.getMessages(this.ticketId);
     });
     this.messageDataService.messages$.subscribe((messages: iMessageDto[]) => {

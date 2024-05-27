@@ -76,6 +76,13 @@ export class HistoryComponent {
   }
 
   /**
+   * Recarga los mensajes mostrados en el historial.
+   */
+  reloadMessages() {
+    this.messageDataService.getMessages(this.ticketId);
+  }
+
+  /**
    * Descarga un archivo del servidor.
    * @param attachmentPath la ruta del archivo.
    */

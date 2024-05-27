@@ -16,5 +16,5 @@ export enum Roles {
 }
 
 export enum StorageRoutes {
-    attachmentStorage = 'C:/Users/josel/Documents/Segundo grado DAM/ACD/SegundoTrimestre/Tickets/'
+    attachmentStorage = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/'
 }

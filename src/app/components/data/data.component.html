@@ -1,5 +1,5 @@
 <form>
-    <div *ngIf="!isSupportManager">
+    <div *ngIf="isSupportManager">
         <label for="technical" class="form-label"><i class="fa-solid fa-user-group"></i> {{"data.technic" |
             translate}}</label>
         <select class="form-select form-select-lg" id="technical" required [(ngModel)]="selectedUserId"
@@ -8,12 +8,12 @@
             <option class="option-item" *ngFor="let user of users" [value]="user.id">{{user.userName}}</option>
         </select>
     </div>
-    <div *ngIf="!isSupportManager" class="d-grid gap-2">
+    <div *ngIf="isSupportManager" class="d-grid gap-2">
         <button type="submit" class="btn btn-lg" (click)="assignTicket()"><i class="fa-solid fa-floppy-disk"></i>
             {{"data.saveTech" | translate}}</button>
     </div>
     <div class="prio-status-container">
-        <div *ngIf="!isSupportManager" class="mb-3 prio-container">
+        <div *ngIf="isSupportManager" class="mb-3 prio-container">
             <label for="priority" class="form-label"><i class="fa-solid fa-bell"></i> {{"data.priority" |
                 translate}}</label>
             <select class="form-select form-select-lg" id="priority" required [(ngModel)]="selectedPriorityValue"
@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <div class="mb-3 status-container" [ngClass]="{'full-width': isSupportManager}">
+        <div class="mb-3 status-container" [ngClass]="{'full-width': !isSupportManager}">
             <label for="status" class="form-label"><i class="fa-solid fa-traffic-light"></i> {{"data.status" | translate}}</label>
             <select class="form-select form-select-lg" id="status" required [(ngModel)]="selectedStatusValue" name="status">
                 <option class="option-item" value="-1">{{"data.option3" | translate}}</option>

@@ -1,4 +1,9 @@
-<h1>{{ 'history.title' | translate }}</h1>
+<div class="d-flex justify-content-between align-items-center">
+    <h1>{{ 'history.title' | translate }}</h1>
+    <button class="custom-file-button btn-lg mt-3" (click)="reloadMessages()">
+        <i class="fa-solid fa-arrows-rotate"></i>
+    </button>
+</div>
 <hr>
 <div class="modal-content">
     <div class="modal-body">

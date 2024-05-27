@@ -83,7 +83,7 @@ export class ComunicationComponent implements OnInit {
       });
     }
 
-    this.usersService.getUserById(this.usersService.currentUser?.id!).subscribe({
+    this.usersService.getUserById(+localStorage.getItem("loggedUser")!).subscribe({
       next: (response: iUserGraph) => {
         this.userName = response.fullName;
       },

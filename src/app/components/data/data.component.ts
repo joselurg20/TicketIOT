@@ -46,38 +46,41 @@ export class DataComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.usersService.currentUser?.role === Roles.managerRole) {
-      this.isSupportManager = true;
-      this.userDataService.usersFN$.subscribe({
-        next: (response: iUserGraph[]) => {
-          const users = response.map((value: iUserGraph) => ({
-            id: value.id,
-            userName: value.userName,
-            fullName: value.fullName
-          }));
-          this.users = users;
+    setTimeout(() => {
+      if (this.usersService.currentUser?.role === Roles.managerRole) {
+        this.isSupportManager = true;
+        this.userDataService.usersFN$.subscribe({
+          next: (response: iUserGraph[]) => {
+            const users = response.map((value: iUserGraph) => ({
+              id: value.id,
+              userName: value.userName,
+              fullName: value.fullName
+            }));
+            this.users = users;
 
-          // Cargar valores desde localStorage
-          const storedUserId = localStorage.getItem(LocalStorageKeys.selectedUserId);
-          if (storedUserId) {
-            this.selectedUserId = parseInt(storedUserId);
+            // Cargar valores desde localStorage
+            const storedUserId = localStorage.getItem(LocalStorageKeys.selectedUserId);
+            if (storedUserId) {
+              this.selectedUserId = parseInt(storedUserId);
+            }
+            const storedPriorityValue = localStorage.getItem(LocalStorageKeys.selectedPriorityValue);
+            if (storedPriorityValue) {
+              this.selectedPriorityValue = parseInt(storedPriorityValue);
+            }
+            const storedStatusValue = localStorage.getItem(LocalStorageKeys.selectedStatusValue);
+            if (storedStatusValue) {
+              this.selectedStatusValue = parseInt(storedStatusValue);
+            }
+          },
+          error: (error: any) => {
+            console.error('Error al obtener los usuarios', error);
           }
-          const storedPriorityValue = localStorage.getItem(LocalStorageKeys.selectedPriorityValue);
-          if (storedPriorityValue) {
-            this.selectedPriorityValue = parseInt(storedPriorityValue);
-          }
-          const storedStatusValue = localStorage.getItem(LocalStorageKeys.selectedStatusValue);
-          if (storedStatusValue) {
-            this.selectedStatusValue = parseInt(storedStatusValue);
-          }
-        },
-        error: (error: any) => {
-          console.error('Error al obtener los usuarios', error);
-        }
-      });
-    } else {
-      this.isSupportManager = false;
-    }
+        });
+      } else {
+        this.isSupportManager = false;
+      }
+      
+    },100);
   }
 
   /**

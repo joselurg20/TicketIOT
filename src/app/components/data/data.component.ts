@@ -47,7 +47,7 @@ export class DataComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.usersService.currentUser?.role === Roles.managerRole) {
-      this.isSupportManager = false;
+      this.isSupportManager = true;
       this.userDataService.usersFN$.subscribe({
         next: (response: iUserGraph[]) => {
           const users = response.map((value: iUserGraph) => ({
@@ -76,7 +76,7 @@ export class DataComponent implements OnInit {
         }
       });
     } else {
-      this.isSupportManager = true;
+      this.isSupportManager = false;
     }
   }
 

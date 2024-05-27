@@ -55,16 +55,21 @@ label {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 22vw;
+  width: 100%;
 }
 
 .prio-container label {
   align-self: start;
+  width: 25rem;
+}
+
+.prio-container select {
+  width: 25rem;
 }
 
 .prio-container button {
-  width: 21.3vw;
   height: 40px;
+  width: 25rem;
 }
 
 .status-container {
@@ -72,15 +77,20 @@ label {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 22vw;
+  width: 100%;
 }
 
 .status-container label {
   align-self: start;
+  width: 25rem;
+}
+
+.status-container select {
+  width: 25rem;
 }
 
 .status-container button {
-  width: 21.3vw;
+  width: 25rem;
   height: 40px;
 }
 
@@ -88,7 +98,64 @@ label {
   width: 40vw;
 }
 
+.full-width select {
+  width: 39.3vw;
+}
+
 .full-width button {
   width: 39.3vw;
 }
 
+@media screen and (max-width: 990px) {
+
+  .prio-container label {
+    width: 20rem;
+  }
+  
+  .prio-container select {
+    width: 20rem;
+  }
+  
+  .prio-container button {
+    width: 20rem;
+  }
+  
+  .status-container label {
+    width: 20rem;
+  }
+  
+  .status-container select {
+    width: 20rem;
+  }
+  
+  .status-container button {
+    width: 20rem;
+  }
+}
+
+@media screen and (max-width: 767px) {
+
+  .prio-container label {
+    width: 15rem;
+  }
+  
+  .prio-container select {
+    width: 15rem;
+  }
+  
+  .prio-container button {
+    width: 15rem;
+  }
+  
+  .status-container label {
+    width: 15rem;
+  }
+  
+  .status-container select {
+    width: 15rem;
+  }
+  
+  .status-container button {
+    width: 15rem;
+  }
+}

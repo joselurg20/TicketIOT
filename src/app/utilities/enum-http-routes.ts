@@ -18,7 +18,8 @@ export enum Tickets {
     assignTechnician = '/tickets/asign/',
     updateTicket = '/tickets/update/',
     changeTicketPriority = '/tickets/changepriority/',
-    changeTicketStatus = '/tickets/changestatus/'
+    changeTicketStatus = '/tickets/changestatus/',
+    getNoFInished = '/tickets/getnofinished'
 }
 
 export enum Messages {

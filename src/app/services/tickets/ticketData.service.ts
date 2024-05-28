@@ -51,22 +51,14 @@ export class TicketDataService {
               newMessagesCount: value.newMessagesCount
             };
           });
-          const ticketGraphs: iTicketGraph[] = response.map((value: iTicketGraph) => {
-            return {
-              priority: value.priority,
-              status: value.status,
-              userId: value.userId
-            };
-          });
           this.ticketsSubject.next(tickets);
-          this.ticketGraphsSubject.next(ticketGraphs);
         },
         error: (error: any) => {
           console.error('Error al obtener los tickets:', error);
         }
       });
 
-      this.ticketsService.getTickets().subscribe({
+      this.ticketsService.getNoFinished().subscribe({
         next: (response: iTicket[]) => {
           const tickets: iTicketGraph[] = response.map((value: iTicketGraph) => {
             return {
@@ -74,8 +66,16 @@ export class TicketDataService {
               status: value.status,
               userId: value.userId
             };
-          })
+          });
+          const ticketGraphs: iTicketGraph[] = response.map((value: iTicketGraph) => {
+            return {
+              priority: value.priority,
+              status: value.status,
+              userId: value.userId
+            };
+          });
           this.usersGraphSubject.next(tickets);
+          this.ticketGraphsSubject.next(ticketGraphs);
         },
         error: (error: any) => {
           console.error('Error al obtener los tickets:', error);
@@ -101,6 +101,14 @@ export class TicketDataService {
               techName: value.fullName
             };
           });
+          this.ticketsSubject.next(tickets);
+        },
+        error: (error: any) => {
+          console.error('Error al obtener los tickets del usuario:', error);
+        }
+      });
+      this.ticketsService.getNoFinished().subscribe({
+        next: (response: iTicket[]) => {
           const ticketGraphs: iTicketGraph[] = response.map((value: iTicketGraph) => {
             return {
               priority: value.priority,
@@ -108,21 +116,12 @@ export class TicketDataService {
               userId: value.userId
             };
           });
-          for (let ticket of tickets) {
-            if (ticket.status == 3) {
-              tickets.splice(tickets.indexOf(ticket), 1);
-              ticketGraphs.splice(tickets.indexOf(ticket), 1);
-            }
-          }
-          console.log('Lanzando trigger de Tickets');
-          this.ticketsSubject.next(tickets);
-          console.log('Lanzando trigger de TicketGraphs');
           this.ticketGraphsSubject.next(ticketGraphs);
         },
         error: (error: any) => {
-          console.error('Error al obtener los tickets del usuario:', error);
+          console.error('Error al obtener los tickets:', error);
         }
-      });
+      })
     }
   }
 
@@ -160,6 +159,11 @@ export class TicketDataService {
             userId: value.userId
           };
         });
+        for(let ticket of ticketGraphs){
+          if(ticket.status === 3){
+            ticketGraphs.splice(ticketGraphs.indexOf(ticket), 1);
+          }
+        }
         this.ticketsSubject.next(tickets);
         this.ticketGraphsSubject.next(ticketGraphs);
       },

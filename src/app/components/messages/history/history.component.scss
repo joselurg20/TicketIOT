@@ -2,7 +2,8 @@
 
 .modal-content {
   background-color: $bg-color-mid-2;
-  height: 37rem;
+  height: 37rem; // Cambiado a min-height para permitir que crezca según el contenido
+  padding: 1rem; // Añadido padding para mejorar el espacio interior
 }
 
 .modal-body {
@@ -16,6 +17,8 @@
 
 h1 {
   color: $color-warning;
+  font-size: 2rem; // Ajustado el tamaño de la fuente para dispositivos móviles
+  margin-bottom: 1rem; // Espacio inferior añadido para separar el título
 }
 
 span {
@@ -23,15 +26,16 @@ span {
 }
 
 hr {
-  color: $text-color-warning;
+  border-color: $text-color-warning;
 }
 
-.modal-mensage {
+.modal-message {
   color: white !important;
   background-color: $bg-color-mid;
-  padding: 10px;
-  margin: 10px;
+  padding: 1rem;
+  margin: 1rem 0;
   border-radius: 10px;
+  text-align: left;
 }
 
 .btn-close {
@@ -45,12 +49,12 @@ hr {
 .btn {
   color: $color-dark;
   background-color: $bg-color-warning;
-  width: 150px;
-  height: 53.5px;
+  width: 100%; // Ancho ajustado para llenar el contenedor
+  max-width: 200px; // Añadido un máximo para no ocupar todo el ancho en pantallas grandes
+  height: 3rem; // Ajuste de altura para botones más pequeños en dispositivos móviles
   border-radius: 5px;
-  border-color: $bg-color-warning;
-  border-style: solid;
-  font-size: larger;
+  border: 1px solid $bg-color-warning;
+  font-size: 1rem; // Ajustado el tamaño de la fuente para dispositivos móviles
 
   &:hover {
     color: $color-light;
@@ -64,8 +68,9 @@ hr {
   background-color: $bg-color-warning;
   border: 1px solid $color-warning;
   border-radius: 5px;
-  padding: 5px 10px;
+  padding: 0.5rem 1rem; // Ajustado el relleno para dispositivos móviles
   cursor: pointer;
+  font-size: 1rem; // Ajustado el tamaño de la fuente para dispositivos móviles
 
   &:hover {
     color: $color-warning;
@@ -75,12 +80,21 @@ hr {
   }
 }
 
-.carousel-item {
+.attachments {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; // Permite que los elementos se envuelvan en pantallas más pequeñas
+  gap: 1rem; // Ajuste del espacio entre elementos
+}
+
+.attachment-item {
   text-align: center;
+  width: 100%; // Ancho ajustado para llenar el contenedor en dispositivos móviles
+  max-width: 150px; // Ancho máximo para mantener la consistencia visual
 }
 
 img {
-  width: 150px !important;
-  max-height: 150px;
+  max-width: 100%;
+  height: auto;
   border-radius: 10px;
 }

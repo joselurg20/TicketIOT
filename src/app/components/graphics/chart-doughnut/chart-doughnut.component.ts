@@ -51,12 +51,12 @@ export class ChartDoughnutComponent {
       this.label = this.labelEn;
       if(this.usersService.currentUser?.role === Roles.managerRole) {
         this.labels = this.labelsEn;
-        this.label = this.labelEs;
       }else{
         this.labels = ['OPENED', 'PAUSED'];
       }
     }else if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es'){
       this.title = this.titleEs;
+      this.label = this.labelEs;
       if(this.usersService.currentUser?.role === Roles.managerRole) {
         this.labels = this.labelsEs;
       }else{
@@ -86,7 +86,7 @@ export class ChartDoughnutComponent {
       this.label = this.labelEn;
       if(this.usersService.currentUser?.role === Roles.managerRole) {
         this.labels = this.labelsEn;
-        this.label = this.labelEs;
+        this.label = this.labelEn;
       }else{
         this.labels = ['OPENED', 'PAUSED'];
       }

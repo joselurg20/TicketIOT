@@ -162,7 +162,6 @@ export class TicketDataService {
             ticketGraphs.splice(ticketGraphs.indexOf(ticket), 1);
           }
         }
-        console.log(tickets);
         this.ticketsSubject.next(tickets);
         this.ticketGraphsSubject.next(ticketGraphs);
       },

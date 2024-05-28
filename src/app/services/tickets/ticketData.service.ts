@@ -101,14 +101,6 @@ export class TicketDataService {
               techName: value.fullName
             };
           });
-          this.ticketsSubject.next(tickets);
-        },
-        error: (error: any) => {
-          console.error('Error al obtener los tickets del usuario:', error);
-        }
-      });
-      this.ticketsService.getNoFinished().subscribe({
-        next: (response: iTicket[]) => {
           const ticketGraphs: iTicketGraph[] = response.map((value: iTicketGraph) => {
             return {
               priority: value.priority,
@@ -116,12 +108,18 @@ export class TicketDataService {
               userId: value.userId
             };
           });
+          for(let ticket of ticketGraphs){
+            if(ticket.status === 3){
+              ticketGraphs.splice(ticketGraphs.indexOf(ticket), 1);
+            }
+          }
           this.ticketGraphsSubject.next(ticketGraphs);
+          this.ticketsSubject.next(tickets);
         },
         error: (error: any) => {
-          console.error('Error al obtener los tickets:', error);
+          console.error('Error al obtener los tickets del usuario:', error);
         }
-      })
+      });
     }
   }
 

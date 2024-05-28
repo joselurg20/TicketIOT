@@ -80,8 +80,16 @@ label {
   grid-area: search-bar;
 }
 
-#search {
+.search {
   width: 58.45vw;
+  height: 50px;
+  margin-top: -50px;
+  margin-left: 1vw;
+  font-size: 18px;
+}
+
+.search-tech {
+  width: 59vw;
   height: 50px;
   margin-top: -50px;
   margin-left: 1vw;
@@ -100,6 +108,14 @@ label {
   grid-template-areas:
     "status-label prio-label tech-label date-label ."
     "status-select prio-select tech-select date-select ."
+    "search-bar search-bar search-bar filter-button .";
+}
+
+.filter-form-tech {
+  display: grid;
+  grid-template-areas:
+    "status-label prio-label date-label . ."
+    "status-select prio-select date-select . ."
     "search-bar search-bar search-bar filter-button .";
 }
 

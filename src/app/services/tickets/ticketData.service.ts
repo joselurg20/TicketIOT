@@ -125,7 +125,7 @@ export class TicketDataService {
 
    /**
    * Filtra las incidencias de la api
-   * @param {TicketFilterRequestDto} filter Filtro de incidencias a filtrar en la api
+   * @param {TicketFilterRequestDto} filter Datos de incidencias a filtrar en la api
    */
   filterTickets(filter: TicketFilterRequestDto) {
     filter.status = +filter.status;
@@ -162,6 +162,7 @@ export class TicketDataService {
             ticketGraphs.splice(ticketGraphs.indexOf(ticket), 1);
           }
         }
+        console.log(tickets);
         this.ticketsSubject.next(tickets);
         this.ticketGraphsSubject.next(ticketGraphs);
       },

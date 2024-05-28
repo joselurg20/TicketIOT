@@ -5,12 +5,12 @@
             <div class="ml-auto">
                 <a class="btn" (click)="goToNewTicket()" type="button" *ngIf="isSupportManager"><i
                         class="fa-solid fa-plus"></i></a>
-                <a class="btn btn" type="button" (click)="toggleFilter();" *ngIf="isSupportManager"><i 
+                <a class="btn btn" type="button" (click)="toggleFilter();"><i 
                         class="fa-solid fa-filter"></i></a>
             </div>
         </div>
         <div *ngIf="showFilter" class="filters">
-            <form class="filter-form">
+            <form class="filter-form" [ngClass]="{'filter-form-tech': !isSupportManager}">
                 <div class="status-label">
                     <label for="status" class="form-label"><i class="fa-solid fa-chart-pie"></i> {{"incidence-table.filterState" |
                         translate}}</label>
@@ -19,7 +19,7 @@
                     <label for="priority" class="form-label"><i class="fa-solid fa-chart-simple"></i> {{"incidence-table.filterPriority" |
                         translate}}</label>
                 </div>
-                <div class="tech-label">
+                <div class="tech-label" *ngIf="isSupportManager">
                     <label for="technician" class="form-label"><i class="fa-solid fa-user-group"></i> {{"incidence-table.filterTechnician" |
                         translate}}</label>
                 </div>
@@ -39,7 +39,7 @@
                         <option *ngFor="let p of priorities" [value]="p">{{getPriorityString(p)}}</option>
                     </select>
                 </div>
-                <div class="tech-select">
+                <div class="tech-select" *ngIf="isSupportManager">
                     <select class="form-select form-select-lg" id="technician" required  name="technician" [(ngModel)]="selectedTechnicianFilter">
                         <option value="-1">{{"incidence-table.filterTechnicianDefaultValue" | translate}}</option>
                         <option value="0">{{"incidence-table.filterTechnicianValueAll" | translate}}</option>
@@ -59,7 +59,8 @@
                     </mat-form-field>
                 </div>
                 <div class="mb-3 search-bar">
-                    <input type="text" name="search" class="form-control" id="search" [(ngModel)]="searchString" placeholder="{{'incidence-table.search' | translate}}">
+                    <input type="text" name="search" class="form-control" class="search"
+                        [(ngModel)]="searchString" placeholder="{{'incidence-table.search' | translate}}" [ngClass]="{'search-tech': !isSupportManager}">
                 </div>   
                 <div class="filter-button">
                     <a class="btn-l" type="submit" (click)="filterTickets();">{{"incidence-table.filterButton" | translate}}</a>

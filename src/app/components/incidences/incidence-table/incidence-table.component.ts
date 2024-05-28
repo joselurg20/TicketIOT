@@ -223,7 +223,11 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
     }
     this.filter.status = this.selectedStatusFilter;
     this.filter.priority = this.selectedPriorityFilter;
-    this.filter.userId = this.selectedTechnicianFilter;
+    if(this.isSupportManager) {
+      this.filter.userId = this.selectedTechnicianFilter;
+    } else {
+      this.filter.userId = this.usersService.currentUser?.id!;
+    }
     this.filter.searchString = this.searchString;
     this.ticketDataService.filterTickets(this.filter);
 

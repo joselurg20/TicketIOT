@@ -48,6 +48,20 @@ export class TicketsService {
   }
 
   /**
+   * Obtiene todas las incidencias sin terminar de la base de datos.
+   * @returns Observable<iTicket[]> con todas las incidencias sin terminar.
+   */
+  getNoFinished(): Observable<iTicket[]> {
+    const token = localStorage.getItem(LocalStorageKeys.tokenKey);
+  
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+  
+    return this.http.get<iTicket[]>(`${environment.apiUrl}` + Tickets.getNoFInished, { headers });
+  }
+
+  /**
    * Filtra las incidencias según los datos pasados como parámetro.
    * @param filter los datos de filtrado
    * @returns Observable<iTicket[]> con las incidencias.

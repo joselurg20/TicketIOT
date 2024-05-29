@@ -190,77 +190,82 @@ export class ComunicationComponent implements OnInit {
   * Actualiza la previsualización de un archivo adjunto.
   * @param event el evento que lanza la función.
   */
-
-
   onFileChange(event: any) {
-    this.selectedFiles = event.target.files;
-    const files = this.selectedFiles;
-    this.isFileSelected = true;
+    const files: File[] = Array.from(event.target.files);
+    this.selectedFiles = files;
+    this.isFileSelected = files.length > 0;
+    this.previewUrls = [];
+    this.selectFilesNames = [];
+  
     for (let file of files) {
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          // Verificar el tipo de archivo
-          if (file.type) {
-
-            switch (file.type) {
-              case 'image/jpeg':
-              case 'image/png':
-              case 'image/gif':
-                this.previewUrls.push(reader.result);
-                break;
-              case 'application/pdf':
-                // Asignar una imagen para PDF
-                this.previewUrls.push('assets/images/file-previews/pdf_file.png');
-                break;
-              case 'application/msword':
-              case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-                // Asignar una imagen para Word
-                this.previewUrls.push('assets/images/file-previews/doc_file.png');
-                break;
-              case 'application/vnd.ms-excel':
-              case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-                // Asignar una imagen para Excel
-                this.previewUrls.push('assets/images/file-previews/xls_file.png');
-                break;
-              case 'text/plain':
-                // Asignar una imagen para archivos de texto
-                this.previewUrls.push('assets/images/file-previews/txt_file.png');
-                break;
-              case 'application/x-compressed':
-              case 'application/x-zip-compressed':
-              case 'application/x-7z-compressed':
-                // Asignar una imagen para archivos comprimidos
-                this.previewUrls.push('assets/images/file-previews/rar_file.png');
-                break;
-              case 'audio/mpeg':
-              case 'audio/wav':
-                // Asignar una imagen para archivos de audio
-                this.previewUrls.push('assets/images/file-previews/audio_file.png');
-                break;
-              case 'video/mp4':
-              case 'video/avi':
-              case 'video/x-matroska':
-                // Asignar una imagen para archivos de video
-                this.previewUrls.push('assets/images/file-previews/video_file.png');
-                break;
-              default:
-                // Asignar una imagen por defecto para otros tipos de archivo
-                this.previewUrls.push('assets/images/file-previews/unknown_file.png');
-            }
-          }
-          this.selectFilesNames.push(file.name);
-        };
-        reader.readAsDataURL(file);
-      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        let previewUrl: string | ArrayBuffer | null = reader.result;
+  
+        switch (file.type) {
+          case 'image/jpeg':
+          case 'image/png':
+          case 'image/gif':
+            // Imágenes: mantener el reader.result como previewUrl
+            break;
+          case 'application/pdf':
+            // PDF: Asignar una imagen específica
+            previewUrl = 'assets/images/file-previews/pdf_file.png';
+            break;
+          case 'application/msword':
+          case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+            // Documentos de Word: Asignar una imagen específica
+            previewUrl = 'assets/images/file-previews/doc_file.png';
+            break;
+          case 'application/vnd.ms-excel':
+          case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+            // Documentos de Excel: Asignar una imagen específica
+            previewUrl = 'assets/images/file-previews/xls_file.png';
+            break;
+          case 'text/plain':
+            // Archivos de texto: Asignar una imagen específica
+            previewUrl = 'assets/images/file-previews/txt_file.png';
+            break;
+          case 'application/x-compressed':
+          case 'application/x-zip-compressed':
+          case 'application/x-7z-compressed':
+            // Archivos comprimidos: Asignar una imagen específica
+            previewUrl = 'assets/images/file-previews/rar_file.png';
+            break;
+          case 'audio/mpeg':
+          case 'audio/wav':
+            // Archivos de audio: Asignar una imagen específica
+            previewUrl = 'assets/images/file-previews/audio_file.png';
+            break;
+          case 'video/mp4':
+          case 'video/avi':
+          case 'video/x-matroska':
+            // Archivos de video: Asignar una imagen específica
+            previewUrl = 'assets/images/file-previews/video_file.png';
+            break;
+          default:
+            // Otros tipos de archivo: Asignar una imagen por defecto
+            previewUrl = 'assets/images/file-previews/unknown_file.png';
+            break;
+        }
+  
+        this.previewUrls.push(previewUrl);
+        this.selectFilesNames.push(file.name);
+      };
+  
+      reader.readAsDataURL(file);
     }
   }
 
   deleteFile(index: number) {
     this.previewUrls.splice(index, 1);
     this.selectFilesNames.splice(index, 1);
-    if (this.previewUrls.length == 0) {
-      this.isFileSelected = false;
+    this.selectedFiles.splice(index, 1);
+    this.isFileSelected = this.previewUrls.length > 0;
+
+    const fileInput = <HTMLInputElement>document.getElementById('Attachments');
+    if (fileInput) {
+      fileInput.value = '';
     }
   }
 
@@ -279,7 +284,6 @@ export class ComunicationComponent implements OnInit {
       this.currentIndex = this.previewUrls.length - 1;
     }
   }
-
 
   truncateFileName(fileName: string, maxLength: number): string {
     if (fileName.length > maxLength) {

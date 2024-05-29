@@ -21,7 +21,7 @@
     </li>
     <li class="sidenav-nav-item">
       <a class="sidenav-nav-link" routerLinkActive="active" data-bs-toggle="tooltip" data-bs-placement="top"
-        title="{{'sidenav.dashboard' | translate}}" *ngIf="isSupportManager" routerLink="/support-manager"
+        title="{{'sidenav.dashboard' | translate}}" *ngIf="isSupportManager" routerLink="/manager/support-manager"
         (click)="goToDashboard()">
         <i class="sidenav-link-icon fa-solid fa-house"></i>
         <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">{{"sidenav.dashboard" | translate}}</span>
@@ -29,7 +29,7 @@
     </li>
     <li class="sidenav-nav-item">
       <a class="sidenav-nav-link" routerLinkActive="active" data-bs-toggle="tooltip" data-bs-placement="top"
-        title="{{'sidenav.dashboard' | translate}}" *ngIf="!isSupportManager" routerLink="/support-technician"
+        title="{{'sidenav.dashboard' | translate}}" *ngIf="!isSupportManager" routerLink="/manager/support-technician"
         (click)="goToDashboard()">
         <i class="sidenav-link-icon fa-solid fa-house"></i>
         <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">{{"sidenav.dashboard" | translate}}</span>

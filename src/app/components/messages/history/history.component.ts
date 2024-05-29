@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
@@ -12,16 +13,14 @@ import { MessagesUpdateService } from 'src/app/services/tickets/messagesUpdate.s
 import { TicketsService } from 'src/app/services/tickets/tickets.service';
 import { LocalStorageKeys, StorageRoutes } from 'src/app/utilities/literals';
 
-
-
 @Component({
   selector: 'app-history',
   standalone: true,
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, MatTooltipModule],
   templateUrl: './history.component.html',
   styleUrls: ['./history.component.scss']
 })
-export class HistoryComponent {
+export class HistoryComponent implements OnInit, OnDestroy {
 
   ticketId: number = 0;
   messages: iMessageDto[] = [];
@@ -38,15 +37,36 @@ export class HistoryComponent {
       this.translate.setDefaultLang('en');
     } else {
       this.translate.use('es');
-
     }
   }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.ticketId = params['ticketId'];
-      this.messageDataService.getMessages(this.ticketId);
+      this.ticketId = +params['ticketId'];
+      this.loadMessages();
     });
+    this.loadTicket();
+
+    this.messagesUpdateSubscription = this.messagesUpdateService.messagesUpdated$.subscribe(() => {
+      this.loadMessages();
+    });
+
+    this.messageDataService.messages$.subscribe((messages: iMessageDto[]) => {
+      this.messages = messages;
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.messagesUpdateSubscription) {
+      this.messagesUpdateSubscription.unsubscribe();
+    }
+  }
+
+  private loadMessages() {
+    this.messageDataService.getMessages(this.ticketId);
+  }
+
+  private loadTicket() {
     this.ticketsService.getTicketById(this.ticketId).subscribe({
       next: (response: iTicket) => {
         this.ticket = {
@@ -59,35 +79,21 @@ export class HistoryComponent {
           status: response.status,
           userId: response.userId.toString(),
           userName: ""
-        }
+        };
         this.userName = this.ticket.name;
       },
       error: (error: any) => {
-        console.error('Error al obtener el usuario', error);
+        console.error('Error al obtener el ticket', error);
       }
     });
-    this.messagesUpdateSubscription = this.messagesUpdateService.messagesUpdated$.subscribe(() => {
-
-      this.messageDataService.getMessages(this.ticketId);
-    });
-    this.messageDataService.messages$.subscribe((messages: iMessageDto[]) => {
-      this.messages = messages;
-    })
   }
 
-  /**
-   * Recarga los mensajes mostrados en el historial.
-   */
   reloadMessages() {
-    this.messageDataService.getMessages(this.ticketId);
+    this.loadMessages();
   }
 
-  /**
-   * Descarga un archivo del servidor.
-   * @param attachmentPath la ruta del archivo.
-   */
   downloadAttachment(attachmentPath: string) {
-    var pathPrefix = StorageRoutes.attachmentStorage + this.ticketId + '/';
+    const pathPrefix = StorageRoutes.attachmentStorage + this.ticketId + '/';
     const fileName = attachmentPath.substring(pathPrefix.length);
     this.messagesService.downloadAttachment(fileName, +localStorage.getItem(LocalStorageKeys.selectedTicket)!).subscribe({
       next: (response: BlobPart) => {

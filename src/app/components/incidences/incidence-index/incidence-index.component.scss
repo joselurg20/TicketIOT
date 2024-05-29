@@ -15,13 +15,13 @@ h2 {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  flex-wrap: wrap;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-column-gap: 1vw;
-     -moz-column-gap: 1vw;
-          column-gap: 1vw;
+  -moz-column-gap: 1vw;
+  column-gap: 1vw;
 
 }
 
@@ -34,7 +34,7 @@ h2 {
   color: $color-light;
   outline: none;
   -webkit-box-shadow: none;
-          box-shadow: none;
+  box-shadow: none;
   font-weight: 700;
   font-size: large;
 
@@ -43,7 +43,7 @@ h2 {
   & select:focus {
     outline: none !important;
     -webkit-box-shadow: none !important;
-            box-shadow: none !important;
+    box-shadow: none !important;
     border-color: $color-warning;
     background-color: $bg-color-mid-2;
   }
@@ -61,19 +61,27 @@ h2 {
     color: $text-color-mid !important;
   }
 
-  input::-webkit-input-placeholder, textarea::-webkit-input-placeholder, select::-webkit-input-placeholder {
+  input::-webkit-input-placeholder,
+  textarea::-webkit-input-placeholder,
+  select::-webkit-input-placeholder {
     color: $color-secondary;
   }
 
-  input::-moz-placeholder, textarea::-moz-placeholder, select::-moz-placeholder {
+  input::-moz-placeholder,
+  textarea::-moz-placeholder,
+  select::-moz-placeholder {
     color: $color-secondary;
   }
 
-  input:-ms-input-placeholder, textarea:-ms-input-placeholder, select:-ms-input-placeholder {
+  input:-ms-input-placeholder,
+  textarea:-ms-input-placeholder,
+  select:-ms-input-placeholder {
     color: $color-secondary;
   }
 
-  input::-ms-input-placeholder, textarea::-ms-input-placeholder, select::-ms-input-placeholder {
+  input::-ms-input-placeholder,
+  textarea::-ms-input-placeholder,
+  select::-ms-input-placeholder {
     color: $color-secondary;
   }
 
@@ -150,7 +158,7 @@ h2 {
 
 .green-snackbar {
   background-color: $color-success !important;
-  color: #fff; 
+  color: #fff;
 }
 
 .btn-trahs {
@@ -171,15 +179,16 @@ h2 {
 
 //quitar color autocompletado de chrome y safari en el input text
 input:-webkit-autofill {
--webkit-box-shadow: 0 0 0 30px $bg-color-mid inset !important;
-        box-shadow: 0 0 0 30px $bg-color-mid inset !important;
--webkit-background-clip: text;
--webkit-text-fill-color: #fff;
+  -webkit-box-shadow: 0 0 0 30px $bg-color-mid inset !important;
+  box-shadow: 0 0 0 30px $bg-color-mid inset !important;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #fff;
+
   &:hover,
   &:focus,
   &:active {
     -webkit-box-shadow: 0 0 0 30px $bg-color-mid inset !important;
-            box-shadow: 0 0 0 30px $bg-color-mid inset !important;
+    box-shadow: 0 0 0 30px $bg-color-mid inset !important;
     -webkit-background-clip: text;
     -webkit-text-fill-color: #fff;
   }

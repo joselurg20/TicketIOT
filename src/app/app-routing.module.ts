@@ -13,6 +13,8 @@ import { IncidenceUserComponent } from './pages/incidence-user/incidence-user.co
 import { ManagerIncidenceComponent } from './pages/manager-incidence/manager-incidence.component';
 import { SupportManagerComponent } from './pages/support-manager/support-manager.component';
 import { SupportTechnicalComponent } from './pages/support-technical/support-technical.component';
+import { technicianGuard } from './guards/technician.guard';
+import { managerGuard } from './guards/manager.guard';
 
 
 const routes: Routes = [
@@ -31,8 +33,8 @@ const routes: Routes = [
   {
     path: "manager", component: SiteLayoutComponent, canActivate: [reviewGuard], children: [ //Rutas con sidenav   
       { path: "review", component: ManagerIncidenceComponent },
-      { path: "support-manager", component: SupportManagerComponent },
-      { path: "support-technician", component: SupportTechnicalComponent },
+      { path: "support-manager", component: SupportManagerComponent, canActivate: [managerGuard] },
+      { path: "support-technician", component: SupportTechnicalComponent, canActivate: [technicianGuard] },
       { path: "incidence", component: IncidenceIndexComponent },
     ]
   },

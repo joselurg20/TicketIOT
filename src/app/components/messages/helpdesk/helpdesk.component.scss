@@ -21,6 +21,7 @@ label {
   & textarea:focus,
   & select:focus {
     outline: none !important;
+    -webkit-box-shadow: none !important;
     box-shadow: none !important;
     border-color: $color-warning;
   }
@@ -36,6 +37,26 @@ label {
     border-radius: 10px;
     background-color: $bg-color-mid-2;
     color: $color-light;
+  }
+
+  input::-webkit-input-placeholder,
+  textarea::-webkit-input-placeholder {
+    color: $text-color-warning;
+  }
+
+  input::-moz-placeholder,
+  textarea::-moz-placeholder {
+    color: $text-color-warning;
+  }
+
+  input:-ms-input-placeholder,
+  textarea:-ms-input-placeholder {
+    color: $text-color-warning;
+  }
+
+  input::-ms-input-placeholder,
+  textarea::-ms-input-placeholder {
+    color: $text-color-warning;
   }
 
   input::placeholder,
@@ -81,7 +102,8 @@ label {
   }
 }
 
-::-webkit-scrollbar-track, ::-webkit-scrollbar-corner {
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
   background-color: $bg-color-mid-2;
 }
 
@@ -126,9 +148,16 @@ label {
 }
 
 .preview {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-column-gap: 1vw;
+  -moz-column-gap: 1vw;
   column-gap: 1vw;
 }
 

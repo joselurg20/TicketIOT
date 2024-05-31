@@ -7,12 +7,34 @@
   height: auto;
   padding: 70px;
   border-radius: 25px;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
 
   input {
     border-color: $text-color-warning;
     background-color: $bg-color-mid;
     color: $text-color-mid;
+  }
+
+  input::-webkit-input-placeholder {
+    color: $text-color-warning;
+    font-style: italic;
+  }
+
+  input::-moz-placeholder {
+    color: $text-color-warning;
+    font-style: italic;
+  }
+
+  input:-ms-input-placeholder {
+    color: $text-color-warning;
+    font-style: italic;
+  }
+
+  input::-ms-input-placeholder {
+    color: $text-color-warning;
+    font-style: italic;
   }
 
   input::placeholder {
@@ -24,6 +46,7 @@
   textarea:focus,
   select:focus {
     outline: none !important;
+    -webkit-box-shadow: none !important;
     box-shadow: none !important;
     border-color: $color-warning;
   }
@@ -92,6 +115,8 @@
     .link {
       color: $color-light;
       text-align: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
       align-items: center;
 
       .link-warning {
@@ -136,8 +161,15 @@
     margin: 0;
     margin-top: 50px;
     margin-bottom: 50px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
   }
 
@@ -146,7 +178,11 @@
     margin-bottom: 50px;
     text-align: center;
     width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
   }
 
@@ -155,8 +191,14 @@
     height: auto;
     margin-bottom: 50px;
     margin-top: 50px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
     margin: 0;
   }

@@ -1,4 +1,6 @@
 :host {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   border-radius: 10px;
 }
@@ -15,5 +17,4 @@
   --mdc-snackbar-container-color: #28a745 !important;
   --mdc-snackbar-supporting-text-color: white !important;
   --mat-snack-bar-button-color: green !important;
-
 }

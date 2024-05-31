@@ -3,10 +3,7 @@ export enum LocalStorageKeys {
     userLanguageKey = 'userLanguage',
     selectedLanguage = 'selectedLanguage',
     selectedTicket = 'selectedTicket',
-    loggedUser = 'loggedUser',
-    selectedUserId = 'selectedUserId',         // Nueva clave
-    selectedPriorityValue = 'selectedPriorityValue', // Nueva clave
-    selectedStatusValue = 'selectedStatusValue'   // Nueva clave
+    loggedUser = 'loggedUser'
 }
 
 
@@ -16,5 +13,5 @@ export enum Roles {
 }
 
 export enum StorageRoutes {
-    attachmentStorage = 'C:/Users/josel/Documents/Segundo grado DAM/ACD/SegundoTrimestre/Tickets/'
+    attachmentStorage = 'C:/ProyectoIoT/Back/ApiTest/AttachmentStorage/'
 }

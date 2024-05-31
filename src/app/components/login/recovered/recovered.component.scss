@@ -7,6 +7,8 @@
 h2 {
   color: $text-color-dark;
   text-align: center;
+  -ms-flex-item-align: center;
+  -ms-grid-row-align: center;
   align-self: center;
 }
 
@@ -17,6 +19,8 @@ h2 {
   height: auto;
   padding: 70px;
   border-radius: 25px;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
 }
 
@@ -24,6 +28,26 @@ h2 {
   border-color: $text-color-warning;
   background-color: $bg-color-mid;
   color: $text-color-warning;
+}
+
+input::-webkit-input-placeholder {
+  color: $text-color-warning;
+  font-style: italic;
+}
+
+input::-moz-placeholder {
+  color: $text-color-warning;
+  font-style: italic;
+}
+
+input:-ms-input-placeholder {
+  color: $text-color-warning;
+  font-style: italic;
+}
+
+input::-ms-input-placeholder {
+  color: $text-color-warning;
+  font-style: italic;
 }
 
 input::placeholder {
@@ -48,6 +72,26 @@ input:-webkit-autofill {
 }
 
 
+#myInput::-webkit-input-placeholder {
+  font-weight: bold;
+}
+
+
+#myInput::-moz-placeholder {
+  font-weight: bold;
+}
+
+
+#myInput:-ms-input-placeholder {
+  font-weight: bold;
+}
+
+
+#myInput::-ms-input-placeholder {
+  font-weight: bold;
+}
+
+
 #myInput::placeholder {
   font-weight: bold;
 }
@@ -69,6 +113,7 @@ input:-webkit-autofill {
 .container textarea:focus,
 .container select:focus {
   outline: none !important;
+  -webkit-box-shadow: none !important;
   box-shadow: none !important;
   border-color: $color-warning;
 }
@@ -76,6 +121,8 @@ input:-webkit-autofill {
 .link {
   color: $color-light;
   text-align: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
 }
 
@@ -113,8 +160,15 @@ img {
     margin: 0;
     margin-top: 50px;
     margin-bottom: 50px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
   }
 
@@ -123,7 +177,11 @@ img {
     margin-bottom: 50px;
     text-align: center;
     width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
   }
 
@@ -132,8 +190,14 @@ img {
     height: auto;
     margin-bottom: 50px;
     margin-top: 50px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
     margin: 0;
   }

@@ -1,8 +1,9 @@
 @import "../../../styles/variables.scss";
 
-.language{
+.language {
   margin: 1rem;
 }
+
 img {
   height: 2vw;
   width: auto;
@@ -13,8 +14,14 @@ img {
   background-color: $bg-color-mid;
   border-color: #202124;
   border-radius: 0.625rem;
+  -webkit-transition: all .3s ease;
+  -o-transition: all .3s ease;
   transition: all .3s ease;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
   border-style: none;
 

@@ -5,7 +5,12 @@
 }
 
 section {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
   background-color: $bg-color-mid-2;
   border-radius: 25px;
@@ -28,6 +33,8 @@ h2 {
   padding: 0;
   overflow: hidden;
   overflow-x: auto;
+  height: -webkit-min-content;
+  height: -moz-min-content;
   height: min-content;
 }
 
@@ -72,7 +79,7 @@ tbody td {
 .row-highlight {
   background-color: $bg-color-mid;
   color: $text-color-mid;
-  font-size: 18px ;
+  font-size: 18px;
 
   &:hover {
     background-color: $bg-color-secondary;
@@ -85,6 +92,8 @@ tbody td {
     height: auto;
     padding: 20px;
     border-radius: 0;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
     cursor: pointer;
   }
@@ -96,6 +105,8 @@ tbody td {
     height: auto;
     padding: 20px;
     border-radius: 0;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
     cursor: pointer;
   }

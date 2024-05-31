@@ -21,8 +21,25 @@ label {
 
   &:focus {
     outline: none !important;
+    -webkit-box-shadow: none !important;
     box-shadow: none !important;
     border-color: $color-warning;
+  }
+
+  &::-webkit-input-placeholder {
+    color: $text-color-warning;
+  }
+
+  &::-moz-placeholder {
+    color: $text-color-warning;
+  }
+
+  &:-ms-input-placeholder {
+    color: $text-color-warning;
+  }
+
+  &::-ms-input-placeholder {
+    color: $text-color-warning;
   }
 
   &::placeholder {
@@ -103,9 +120,16 @@ label {
 
 
 .preview {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-column-gap: 1vw;
+  -moz-column-gap: 1vw;
   column-gap: 1vw;
 
 }
@@ -113,13 +137,30 @@ label {
 #Content {
   resize: none;
   border-radius: 10px;
-  background-color:transparent;
+  background-color: transparent;
   color: $text-color-mid !important;
 
   &:focus {
     outline: none !important;
+    -webkit-box-shadow: none !important;
     box-shadow: none !important;
     border-color: $color-warning;
+  }
+
+  &::-webkit-input-placeholder {
+    color: $color-secondary;
+  }
+
+  &::-moz-placeholder {
+    color: $color-secondary;
+  }
+
+  &:-ms-input-placeholder {
+    color: $color-secondary;
+  }
+
+  &::-ms-input-placeholder {
+    color: $color-secondary;
   }
 
   &::placeholder {

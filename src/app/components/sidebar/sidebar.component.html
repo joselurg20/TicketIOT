@@ -12,32 +12,27 @@
   <ul class="sidenav-nav">
     <li class="username-item">
       <a class="username-link">
-        <i *ngIf="!isSupportManager" data-bs-toggle="tooltip" data-bs-placement="top" title="{{loggedUserName}}"
-          class="username-icon fa-solid fa-user"></i>
-        <i *ngIf="isSupportManager" data-bs-toggle="tooltip" data-bs-placement="top" title="{{loggedUserName}}"
-          class="username-icon fa-solid fa-user-tie"></i>
+        <i *ngIf="!isSupportManager" matTooltip="{{loggedUserName}}" class="username-icon fa-solid fa-user"></i>
+        <i *ngIf="isSupportManager" matTooltip="{{loggedUserName}}" class="username-icon fa-solid fa-user-tie"></i>
         <span class="username-link-text" @fadeInOut *ngIf="collapsed">{{loggedUserName}}</span>
       </a>
     </li>
     <li class="sidenav-nav-item">
-      <a class="sidenav-nav-link" routerLinkActive="active" data-bs-toggle="tooltip" data-bs-placement="top"
-        title="{{'sidenav.dashboard' | translate}}" *ngIf="isSupportManager" routerLink="/manager/support-manager"
-        (click)="goToDashboard()">
+      <a class="sidenav-nav-link" routerLinkActive="active" matTooltip="{{'sidenav.dashboard' | translate}}"
+        *ngIf="isSupportManager" routerLink="/manager/support-manager" (click)="goToDashboard()">
         <i class="sidenav-link-icon fa-solid fa-house"></i>
         <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">{{"sidenav.dashboard" | translate}}</span>
       </a>
     </li>
     <li class="sidenav-nav-item">
-      <a class="sidenav-nav-link" routerLinkActive="active" data-bs-toggle="tooltip" data-bs-placement="top"
-        title="{{'sidenav.dashboard' | translate}}" *ngIf="!isSupportManager" routerLink="/manager/support-technician"
-        (click)="goToDashboard()">
+      <a class="sidenav-nav-link" routerLinkActive="active" matTooltip="{{'sidenav.dashboard' | translate}}"
+        *ngIf="!isSupportManager" routerLink="/manager/support-technician" (click)="goToDashboard()">
         <i class="sidenav-link-icon fa-solid fa-house"></i>
         <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">{{"sidenav.dashboard" | translate}}</span>
       </a>
     </li>
     <li class="sidenav-nav-item">
-      <a class="sidenav-nav-link" data-bs-toggle="tooltip" data-bs-placement="top"
-        title="{{'sidenav.logout' | translate}}" (click)="logout()">
+      <a class="sidenav-nav-link" matTooltip="{{'sidenav.logout' | translate}}" (click)="logout()">
         <i class="sidenav-link-icon fa-solid fa-right-from-bracket fa-rotate-180"></i>
         <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">{{"sidenav.logout" | translate}}</span>
       </a>

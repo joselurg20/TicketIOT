@@ -83,6 +83,7 @@ hr {
 .attachments {
   display: flex;
   justify-content: center;
+  align-items: flex-end;
   flex-wrap: wrap; // Permite que los elementos se envuelvan en pantallas más pequeñas
   gap: 1rem; // Ajuste del espacio entre elementos
 }

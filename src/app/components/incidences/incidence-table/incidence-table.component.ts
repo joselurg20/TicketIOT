@@ -163,6 +163,12 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
       this.setLocale(localStorage.getItem(LocalStorageKeys.selectedLanguage)!);
       this.ticketDataService.getTickets(this.isSupportManager);
     });
+    if (!localStorage.getItem('Reloaded')) {
+      localStorage.setItem('Reloaded', 'true');
+      window.location.reload();
+    } else {
+      localStorage.removeItem('Reloaded');
+    }
   }
 
   ngAfterViewInit() {

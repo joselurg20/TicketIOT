@@ -3,7 +3,8 @@ export enum LocalStorageKeys {
     userLanguageKey = 'userLanguage',
     selectedLanguage = 'selectedLanguage',
     selectedTicket = 'selectedTicket',
-    loggedUser = 'loggedUser'
+    loggedUser = 'loggedUser',
+    reloaded = 'reloaded'
 }
 
 

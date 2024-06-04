@@ -106,6 +106,7 @@ export class LoginService {
         if(localStorage.getItem(LocalStorageKeys.selectedTicket)) {
             localStorage.removeItem(LocalStorageKeys.selectedTicket);
         }
+        localStorage.removeItem(LocalStorageKeys.reloaded);
         this.usersService.currentUser = null;
         this.authTokenSubject.next(null);
         this.router.navigate([Routes.login]);

@@ -43,7 +43,6 @@ export class HistoryComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.ticketId = +params['ticketId'];
-      console.log("Ticket ID", this.ticketId);
       this.loadMessages();
     });
     this.loadTicket();

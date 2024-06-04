@@ -43,6 +43,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.ticketId = +params['ticketId'];
+      console.log("Ticket ID", this.ticketId);
       this.loadMessages();
     });
     this.loadTicket();
@@ -95,7 +96,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
   downloadAttachment(attachmentPath: string) {
     const pathPrefix = StorageRoutes.attachmentStorage + this.ticketId + '/';
     const fileName = attachmentPath.substring(pathPrefix.length);
-    this.messagesService.downloadAttachment(fileName, +localStorage.getItem(LocalStorageKeys.selectedTicket)!).subscribe({
+    this.messagesService.downloadAttachment(fileName, this.ticketId).subscribe({
       next: (response: BlobPart) => {
         const blob = new Blob([response], { type: 'application/octet-stream' });
         const url = window.URL.createObjectURL(blob);

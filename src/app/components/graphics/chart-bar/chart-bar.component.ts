@@ -12,6 +12,8 @@ import { iUser } from 'src/app/models/users/iUser';
 import { iUserGraph } from 'src/app/models/users/iUserGraph';
 import { UserDataService } from 'src/app/services/users/userData.service';
 import { ComponentLoadService } from 'src/app/services/componentLoad.service';
+import { Router } from '@angular/router';
+import { Routes } from 'src/app/utilities/routes';
 
 @Component({
   selector: 'app-chart-bar',
@@ -36,39 +38,42 @@ export class ChartBarComponent implements OnInit {
 
   constructor(private ticketsService: TicketDataService, private langUpdateService: LanguageUpdateService,
               private loadingService: LoadingService, private userDataService: UserDataService,
-              private componentLoadService: ComponentLoadService) {
+              private componentLoadService: ComponentLoadService, private router: Router) {
     this.loading$ = this.loadingService.loading$;
   }
 
   ngOnInit() {
-      this.componentLoadService.loadComponent$.subscribe(() => {
+    this.componentLoadService.loadComponent$.subscribe(() => {
+        
+      if(this.router.url == '/' + Routes.supportManager) {
     
-      if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en'){
-        this.title = this.titleEn;
-      }else if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es'){
-        this.title = this.titleEs;
-      }  
-        this.userDataService.usersFN$.subscribe(users => {
-          this.users = users;
-          if(!this.isFirstLoad){
-            this.createChart();
-            this.loadingService.hideLoading();
-          }
-          this.isFirstLoad = false
-        });
-        this.ticketsService.usersGraph$.subscribe(usersGraph => {
-          this.tickets = usersGraph;
-          if(!this.isFirstLoad){
-            this.createChart();
-            this.loadingService.hideLoading();
-          }
-          this.isFirstLoad = false
-        });
-        this.langUpdateSubscription = this.langUpdateService.langUpdated$.subscribe(() => {
-          this.switchLanguage();
-        });
-      });
-    }
+        if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en'){
+          this.title = this.titleEn;
+        }else if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es'){
+          this.title = this.titleEs;
+        }  
+          this.userDataService.usersFN$.subscribe(users => {
+            this.users = users;
+            if(!this.isFirstLoad && this.router.url == '/' + Routes.supportManager){
+              this.createChart();
+              this.loadingService.hideLoading();
+            }
+            this.isFirstLoad = false
+          });
+          this.ticketsService.usersGraph$.subscribe(usersGraph => {
+            this.tickets = usersGraph;
+            if(!this.isFirstLoad && this.router.url == '/' + Routes.supportManager){
+              this.createChart();
+              this.loadingService.hideLoading();
+            }
+            this.isFirstLoad = false
+          });
+          this.langUpdateSubscription = this.langUpdateService.langUpdated$.subscribe(() => {
+            this.switchLanguage();
+          });
+      }
+    });
+  }
 
   /**
    * Cambia el idioma del gráfico

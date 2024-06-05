@@ -18,6 +18,8 @@ import { LanguageComponent } from "../../language/language.component";
 import { SidebarComponent } from '../../sidebar/sidebar.component';
 import { AlertComponent } from '../../snackbars/alert/alert.component';
 import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/snackbar-incidence.component';
+import { LoginService } from 'src/app/services/users/login.service';
+import { UserDataService } from 'src/app/services/users/userData.service';
 
 @Component({
   selector: 'app-incidence-index',
@@ -40,7 +42,9 @@ export class IncidenceIndexComponent implements OnInit {
   selectFilesNames: string[] = [];
   currentIndex: number = 0;
 
-  constructor(private _snackBar: MatSnackBar, private ticketsService: TicketsService, private translate: TranslateService, private usersService: UsersService, private router: Router) {
+  constructor(private _snackBar: MatSnackBar, private ticketsService: TicketsService,
+              private translate: TranslateService, private usersService: UsersService,
+              private router: Router, private loginService: LoginService, private usersDataService: UserDataService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -71,9 +75,9 @@ export class IncidenceIndexComponent implements OnInit {
       Name: new FormControl('', [Validators.required, Validators.maxLength(45)]),
       Email: new FormControl('', [Validators.required, Validators.email])
     });
-
-    if (this.usersService.currentUser?.id) {
+    if(this.loginService.isLogged()) {
       this.isLogged = true;
+      this.usersDataService.getTechnicians();
     } else {
       this.isLogged = false;
     }

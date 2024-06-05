@@ -77,8 +77,6 @@ export class IncidenceIndexComponent implements OnInit {
     } else {
       this.isLogged = false;
     }
-    console.log('currentUser', this.usersService.currentUser);
-    console.log('isLogged', this.isLogged);
   }
 
   onSubmit() {

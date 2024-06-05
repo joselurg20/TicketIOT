@@ -28,6 +28,7 @@ import { LocalStorageKeys, Roles } from 'src/app/utilities/literals';
 import { Routes } from 'src/app/utilities/routes';
 import { Utils } from 'src/app/utilities/utils';
 import { LoadingComponent } from '../../shared/loading/loading.component';
+import { ComponentLoadService } from 'src/app/services/componentLoad.service';
 
 @Component({
   selector: 'app-incidence-table',
@@ -83,7 +84,8 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   constructor(private _liveAnnouncer: LiveAnnouncer, private usersService: UsersService,
     private router: Router, private translate: TranslateService, private cdr: ChangeDetectorRef,
     private ticketDataService: TicketDataService, private loadingService: LoadingService,
-    private readonly dateAdapter: DateAdapter<Date>, private langUpdateService: LanguageUpdateService) {
+    private readonly dateAdapter: DateAdapter<Date>, private langUpdateService: LanguageUpdateService,
+    private componentLoadService: ComponentLoadService) {
     this.translate.addLangs(['en', 'es']);
     var lang = '';
     switch (localStorage.getItem(LocalStorageKeys.userLanguageKey)) {
@@ -114,8 +116,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
 
   ngOnInit(): void {
     this.loadingService.showLoading();
-    setTimeout(() => {
-
+    this.componentLoadService.loadComponent$.subscribe(() => {
       this.range = new FormGroup({
         start: new FormControl(),
         end: new FormControl()
@@ -152,8 +153,12 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
         this.displayedColumns = ['status', 'id', 'title', 'name', 'email', 'priority', 'timestamp', 'technician', 'newMessages', 'show'];
         this.isSupportManager = false;
       }
+      if (!localStorage.getItem(LocalStorageKeys.reloaded)) {
+        localStorage.setItem(LocalStorageKeys.reloaded, 'true');
+        window.location.reload();
+      }
 
-    }, 10)
+    });
     this.ticketDataService.tickets$.subscribe(tickets => {
       this.dataSource.data = tickets;
       this.loadingService.hideLoading();
@@ -163,12 +168,6 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
       this.setLocale(localStorage.getItem(LocalStorageKeys.selectedLanguage)!);
       this.ticketDataService.getTickets(this.isSupportManager);
     });
-    setTimeout(() => {
-      if (!localStorage.getItem(LocalStorageKeys.reloaded)) {
-        localStorage.setItem(LocalStorageKeys.reloaded, 'true');
-        window.location.reload();
-      }
-    },20);
   }
 
   ngAfterViewInit() {
@@ -178,7 +177,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
       this.dataSource.sort = this.sort;
       if (this.usersService.currentUser?.role === Roles.managerRole) {
         this.dataSource.sort.active = 'id';
-        this.dataSource.sort.direction = 'desc';
+        this.dataSource.sort.direction = 'asc';
       } else {
         this.dataSource.sort.active = 'newMessages';
         this.dataSource.sort.direction = 'desc';
@@ -200,7 +199,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
       };
       // Detectar manualmente los cambios
       this.cdr.detectChanges();
-    }, 1)
+    }, 0)
     if (this.usersService.currentUser?.role === Roles.technicianRole && this.isFirstLoad) {
       this.isFirstLoad = false;
       this.ngAfterViewInit();

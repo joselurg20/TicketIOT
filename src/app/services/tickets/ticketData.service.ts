@@ -9,6 +9,7 @@ import { iTicketFilterDto } from 'src/app/models/tickets/iTicketFilterDto';
 import { iTicketUserDto } from 'src/app/models/tickets/iTicketUserDto';
 import { LocalStorageKeys } from 'src/app/utilities/literals';
 import { Utils } from 'src/app/utilities/utils';
+import { ComponentLoadService } from '../componentLoad.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class TicketDataService {
   usersGraph$: Observable<iTicketGraph[]> = this.usersGraphSubject.asObservable();
 
 
-  constructor(private ticketsService: TicketsService) { }
+  constructor(private ticketsService: TicketsService, private loadComponentService: ComponentLoadService) { }
 
 
   /**
@@ -76,6 +77,7 @@ export class TicketDataService {
           });
           this.usersGraphSubject.next(tickets);
           this.ticketGraphsSubject.next(ticketGraphs);
+          this.loadComponentService.triggerComponentLoad();
         },
         error: (error: any) => {
           console.error('Error al obtener los tickets:', error);
@@ -115,6 +117,7 @@ export class TicketDataService {
           }
           this.ticketGraphsSubject.next(ticketGraphs);
           this.ticketsSubject.next(tickets);
+          this.loadComponentService.triggerComponentLoad();
         },
         error: (error: any) => {
           console.error('Error al obtener los tickets del usuario:', error);

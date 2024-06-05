@@ -34,9 +34,7 @@ export class SupportManagerComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        setTimeout(() => {
-            this.ticketsService.getTickets(true);
-            this.usersService.getTechnicians();    
-        }, 1)
+        this.ticketsService.getTickets(true);
+        this.usersService.getTechnicians();
     }
 }

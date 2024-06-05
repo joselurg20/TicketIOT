@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 import { iUserGraph } from "src/app/models/users/iUserGraph";
 import { UsersService } from "./users.service";
 import { iUser } from "src/app/models/users/iUser";
+import { ComponentLoadService } from "../componentLoad.service";
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +15,7 @@ import { iUser } from "src/app/models/users/iUser";
     private usersFNSubject: BehaviorSubject<iUserGraph[]> = new BehaviorSubject<iUserGraph[]>([]);
     usersFN$: Observable<iUserGraph[]> = this.usersFNSubject.asObservable();
     
-    constructor(private usersService: UsersService) { }
+    constructor(private usersService: UsersService, private componentLoadService: ComponentLoadService) { }
 
     getTechnicians() {
         this.usersService.getTechnicians().subscribe({
@@ -35,6 +36,7 @@ import { iUser } from "src/app/models/users/iUser";
             })
             this.usersFNSubject.next(usersFN);
             this.usersSubject.next(users);
+            this.componentLoadService.triggerComponentLoad();
         },
         error: (error: any) => {
             console.error('Error al obtener los usuarios:', error);

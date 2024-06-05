@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { ComponentLoadService } from 'src/app/services/componentLoad.service';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { LoginService } from 'src/app/services/users/login.service';
 import { UsersService } from 'src/app/services/users/users.service';
@@ -73,7 +74,8 @@ export class SidebarComponent implements OnInit {
 
 
   constructor(private loginService: LoginService, private router: Router, private translate: TranslateService,
-              private langUpdateService: LanguageUpdateService, private usersService: UsersService) {
+              private langUpdateService: LanguageUpdateService, private usersService: UsersService,
+              private componentLoadService: ComponentLoadService) {
     this.translate.addLangs(['en', 'es']);
     var lang = '';
     switch(localStorage.getItem(LocalStorageKeys.userLanguageKey)) {
@@ -133,22 +135,22 @@ export class SidebarComponent implements OnInit {
 
 
   ngOnInit(): void {
-    setTimeout(() => {
+    this.componentLoadService.loadComponent$.subscribe(() => {
     
-    this.screenWidth = window.innerWidth;
-    const selectedLanguage = localStorage.getItem(LocalStorageKeys.selectedLanguage);
-    if (selectedLanguage) {
-      this.translate.use(selectedLanguage);
-      this.setLanguageImage(selectedLanguage);
-    }
-    const userName = this.usersService.currentUser?.userName;
-    if (userName) {
-      this.loggedUserName = userName;
-    }
-    if (this.usersService.currentUser?.role === Roles.managerRole) {
-      this.isSupportManager = true;
-    }  
-    }, 1)
+      this.screenWidth = window.innerWidth;
+      const selectedLanguage = localStorage.getItem(LocalStorageKeys.selectedLanguage);
+      if (selectedLanguage) {
+        this.translate.use(selectedLanguage);
+        this.setLanguageImage(selectedLanguage);
+      }
+      const userName = this.usersService.currentUser?.userName;
+      if (userName) {
+        this.loggedUserName = userName;
+      }
+      if (this.usersService.currentUser?.role === Roles.managerRole) {
+        this.isSupportManager = true;
+      }  
+    });
   }
 
   /**

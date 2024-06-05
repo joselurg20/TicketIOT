@@ -46,6 +46,7 @@ export class ChartDoughnutComponent {
 
   ngOnInit() {
     this.loadingService.showLoading();
+    this.switchLanguage();
     this.componentLoadService.loadComponent$.subscribe(() => {
     
     if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {

@@ -4,23 +4,24 @@ import { LoginService } from '../services/users/login.service';
 import { UsersService } from '../services/users/users.service';
 import { Roles } from '../utilities/literals';
 import { Routes } from '../utilities/routes';
+import { ComponentLoadService } from '../services/componentLoad.service';
 
 export const managerGuard: CanActivateFn = (route, state) => {
   const loginService = inject(LoginService)
   const usersService = inject(UsersService);
   const router = inject(Router);
+  const trigger = inject(ComponentLoadService);
 
   let response = true;
 
   if(loginService.isLogged()){
 
-    setTimeout(() => {
-     
-    if (usersService.currentUser?.role !== Roles.managerRole) {
-      response = false;
-      router.navigate([Routes.login]);
-    } 
-    },1)
+    trigger.loadComponent$.subscribe(() => {
+      if (usersService.currentUser?.role !== Roles.managerRole) {
+        response = false;
+        router.navigate([Routes.login]);
+      }
+    });
     
   }else{
     response = false;

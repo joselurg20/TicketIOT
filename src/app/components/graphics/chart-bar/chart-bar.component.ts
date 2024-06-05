@@ -11,6 +11,7 @@ import { LocalStorageKeys , Roles } from 'src/app/utilities/literals';
 import { iUser } from 'src/app/models/users/iUser';
 import { iUserGraph } from 'src/app/models/users/iUserGraph';
 import { UserDataService } from 'src/app/services/users/userData.service';
+import { ComponentLoadService } from 'src/app/services/componentLoad.service';
 
 @Component({
   selector: 'app-chart-bar',
@@ -34,12 +35,13 @@ export class ChartBarComponent implements OnInit {
   isFirstLoad: boolean = true;
 
   constructor(private ticketsService: TicketDataService, private langUpdateService: LanguageUpdateService,
-              private loadingService: LoadingService, private userDataService: UserDataService) {
+              private loadingService: LoadingService, private userDataService: UserDataService,
+              private componentLoadService: ComponentLoadService) {
     this.loading$ = this.loadingService.loading$;
   }
 
   ngOnInit() {
-    setTimeout(() => {
+      this.componentLoadService.loadComponent$.subscribe(() => {
     
       if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en'){
         this.title = this.titleEn;
@@ -65,8 +67,8 @@ export class ChartBarComponent implements OnInit {
         this.langUpdateSubscription = this.langUpdateService.langUpdated$.subscribe(() => {
           this.switchLanguage();
         });
-    }, 1)
-  }
+      });
+    }
 
   /**
    * Cambia el idioma del gráfico

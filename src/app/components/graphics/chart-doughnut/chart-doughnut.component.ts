@@ -12,6 +12,7 @@ import { LocalStorageKeys , Roles } from 'src/app/utilities/literals';
 import { iUser } from 'src/app/models/users/iUser';
 import { UsersService } from 'src/app/services/users/users.service';
 import { Status } from 'src/app/utilities/enum';
+import { ComponentLoadService } from 'src/app/services/componentLoad.service';
 
 @Component({
     selector: 'app-chart-doughnut',
@@ -38,13 +39,14 @@ export class ChartDoughnutComponent {
   isFirstLoad: boolean = true;
 
   constructor(private langUpdateService: LanguageUpdateService, private ticketsService: TicketDataService,
-              private loadingService: LoadingService, private usersService: UsersService) {
+              private loadingService: LoadingService, private usersService: UsersService,
+              private componentLoadService: ComponentLoadService) {
     this.loading$ = this.loadingService.loading$;
    }
 
   ngOnInit() {
     this.loadingService.showLoading();
-    setTimeout(() => {
+    this.componentLoadService.loadComponent$.subscribe(() => {
     
     if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
       this.title = this.titleEn;
@@ -63,7 +65,7 @@ export class ChartDoughnutComponent {
         this.labels = ['ABIERTA', 'PAUSADA'];
       }
     }  
-    }, 1)
+    });
     this.ticketsService.ticketGraphs$.subscribe(tickets => {
       this.loadingService.showLoading();
       this.tickets = tickets;

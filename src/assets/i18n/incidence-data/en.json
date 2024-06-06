@@ -2,7 +2,7 @@
   "incidence-data": {
     "title": "Tickets",
     "name": "Title",
-    "date": "Date Created",
+    "date": "Creation Date",
     "username": "User Name",
     "email": "User Email",
     "priority": "Priority",

@@ -2,6 +2,7 @@
   "message": {
     "button": "Mensajes",
     "title": "Mensajes",
-    "download": "Descargar"
+    "download": "Descargar",
+    "close": "Cerrar"
   }
 }

@@ -155,7 +155,7 @@ export class TicketsService {
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.put<boolean>(`${environment.apiUrl}` + Tickets.assignTechnician + `${ticketId}/${userId}`, null, {headers});
+    return this.http.post<boolean>(`${environment.apiUrl}` + Tickets.assignTechnician + `${ticketId}/${userId}`, null, {headers});
   }
 
   /**
@@ -165,7 +165,7 @@ export class TicketsService {
    * @returns 
    */
   updateTicket(ticketId: number, newTicket: TicketDto): Observable<boolean> {
-    return this.http.put<boolean>(`${environment.apiUrl}` + Tickets.updateTicket + `${ticketId}`, newTicket);
+    return this.http.post<boolean>(`${environment.apiUrl}` + Tickets.updateTicket + `${ticketId}`, newTicket);
   }
 
   /**
@@ -181,7 +181,7 @@ export class TicketsService {
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.put<boolean>(`${environment.apiUrl}` + Tickets.changeTicketPriority + `${ticketId}/${priority}`, null, {headers});
+    return this.http.post<boolean>(`${environment.apiUrl}` + Tickets.changeTicketPriority + `${ticketId}/${priority}`, null, {headers});
   }
 
   /**
@@ -197,6 +197,6 @@ export class TicketsService {
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.put<boolean>(`${environment.apiUrl}` + Tickets.changeTicketStatus + `${ticketId}/${status}`, null, {headers});
+    return this.http.post<boolean>(`${environment.apiUrl}` + Tickets.changeTicketStatus + `${ticketId}/${status}`, null, {headers});
   }
 }

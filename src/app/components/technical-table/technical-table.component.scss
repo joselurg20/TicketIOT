@@ -1,7 +1,7 @@
 @import "../../../styles/imports.scss";
 
 * {
-  padding: 4px;
+  padding: 4px 10px;
 }
 
 section {
@@ -58,7 +58,7 @@ th {
 tr {
   color: $text-color-dark;
   background-color: $bg-color-warning;
-  padding: 10px;
+  padding: 4px 10px;
   margin: 0px 10px 0px 10px;
 }
 
@@ -68,12 +68,8 @@ tbody td {
   border-right: none;
 }
 
-.id {
-  text-align: right;
-}
-
 .phone {
-  text-align: right;
+  text-align: left;
 }
 
 .row-highlight {

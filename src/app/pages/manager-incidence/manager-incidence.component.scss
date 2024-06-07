@@ -1,21 +1,22 @@
 @import './../../../styles/imports.scss';
 
 .container {
-  margin: 2rem auto;
-  border-radius: 25px;
   background-color: $bg-color-mid;
-  width: 900px;
-  padding: 20px;
-  color: $color-light;
-  outline: none;
-  box-shadow: none;
+  color: $text-color-mid;
+  width: 600px;
+  height: 101rem;
+  margin: 30px auto;
+  border-radius: 25px;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .logotipe {
   text-align: center;
 
   img {
-    width: 350px;
+    width: 340px;
     height: auto;
     border-radius: 10px;
   }
@@ -24,7 +25,6 @@
     width: 150px;
     height: auto;
     border-radius: 10px;
-
   }
 }
 

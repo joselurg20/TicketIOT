@@ -6,7 +6,6 @@
                 <table class="user-table">
                     <thead>
                         <tr>
-                            <th class="id">{{'technical-table.title' | translate}}</th>
                             <th>{{'technical-table.name' | translate}}</th>
                             <th>{{'technical-table.email' | translate}}</th>
                             <th class="phone">{{'technical-table.phone' | translate}}</th>
@@ -14,7 +13,6 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let user of users" class="row-highlight">
-                            <td class="id">{{ user.id }}</td>
                             <td class="name">{{ user.fullName }}</td>
                             <td class="email">{{ user.email }}</td>
                             <td class="phone">{{ user.phoneNumber }}</td>

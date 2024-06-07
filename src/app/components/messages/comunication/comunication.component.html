@@ -1,5 +1,5 @@
 <h1>{{"comunication.title" | translate}}</h1>
-<form [formGroup]="messageForm" (submit)="onSubmit()" enctype="multipart/form-data">
+<form [formGroup]="messageForm" class="mb-2" (submit)="onSubmit()" enctype="multipart/form-data">
     <div class="form-group">
 
         <label for="Attachments"><i class="fa-solid fa-folder"></i> {{"comunication.upload" | translate}}</label> <br>
@@ -53,5 +53,9 @@
         <button [disabled]="!messageForm.valid" type="submit" class="m-1 btn btn-lg"><i class="fa-solid fa-paper-plane"
                 (click)="openSnackBar()" id="liveToastBtn"></i> {{"comunication.send" | translate}}</button>
         <app-message></app-message>
+    </div>
+
+    <div class="logotipe">
+        <img src="assets/images/logo/IoTlogo.png" alt="">
     </div>
 </form>

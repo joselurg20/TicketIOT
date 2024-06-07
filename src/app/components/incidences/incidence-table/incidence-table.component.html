@@ -1,7 +1,7 @@
 <section class="d-flex">
     <div class="col-12" id="main">
         <div class="d-flex justify-content-between align-items-center">
-            <h2>{{'incidence-table.header' | translate}}</h2>
+            <h3>{{'incidence-table.header' | translate}}</h3>
             <div class="ml-auto">
                 <a class="btn" (click)="goToNewTicket()" type="button" *ngIf="isSupportManager"><i
                         class="fa-solid fa-plus"></i></a>
@@ -63,7 +63,7 @@
                         [(ngModel)]="searchString" placeholder="{{'incidence-table.search' | translate}}" [ngClass]="{'search-tech': !isSupportManager}">
                 </div>   
                 <div class="filter-button">
-                    <a class="btn-l" type="submit" (click)="filterTickets();">{{"incidence-table.filterButton" | translate}}</a>
+                    <a class="btn-l" type="submit" (click)="filterTickets();" [ngClass]="{'filter-tech': !isSupportManager}">{{"incidence-table.filterButton" | translate}}</a>
                 </div>  
             </form>
         </div>
@@ -152,7 +152,7 @@
                     <td mat-cell *matCellDef="let element" class="new-row">
                         <i class="fa-solid fa-envelope fa-2x" *ngIf="!element.hasNewMessages"></i>
                         <i class="fa-solid fa-envelope-open-text fa-2x" *ngIf="element.hasNewMessages"
-                            [matBadge]="element.newMessagesCount" matBadgeColor="warn"></i>
+                            [matBadge]="element.newMessagesCount" matBadgeSize="small" matBadgeColor="warn"></i>
                     </td>
                 </ng-container>
 

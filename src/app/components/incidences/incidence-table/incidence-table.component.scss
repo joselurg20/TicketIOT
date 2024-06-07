@@ -21,16 +21,15 @@ section {
   align-items: center;
 }
 
-h2 {
+h3 {
   color: $text-color-dark;
   text-shadow: 0 0 15px $color-dark;
 }
 
 label {
-  font-size: 20px;
+  font-size: 16px;
   color: $text-color-mid;
-  margin-right: 3.5vw;
-  margin-left: 3.5vw;
+  margin-left: 1vw;
 }
 
 .status-label {
@@ -39,18 +38,18 @@ label {
 
 .prio-label {
   grid-area: prio-label;
-  margin-left: -0.4vw;
 }
 
 .tech-label {
   grid-area: tech-label;
-  width: 20vw;
-  margin-left: -0.5vw;
 }
 
 .date-label {
   grid-area: date-label;
-  margin-left: -1vw;
+}
+
+select {
+  font-size: 14px;
 }
 
 .status-select {
@@ -67,13 +66,12 @@ label {
 
 .date-select {
   grid-area: date-select;
-  width: 20vw;
 }
 
 .filter-button {
   grid-area: filter-button;
-  margin-top: -50px;
-  margin-left: 40px;
+  margin-top: -46px;
+  margin-left: 23px;
 }
 
 .search-bar {
@@ -82,20 +80,24 @@ label {
 }
 
 .search {
-  width: 59vw;
-  height: 50px;
+  height: 40px;
   margin-top: -50px;
   margin-left: 1vw;
-  font-size: 18px;
+  font-size: 16px;
   border-radius: 10px;
+  width: 100%;
 }
 
 .search-tech {
-  width: 59vw;
-  height: 50px;
+  height: 40px;
   margin-top: -50px;
   margin-left: 1vw;
-  font-size: 18px;
+  font-size: 16px;
+  width: 85.5%;
+}
+
+.filter-tech {
+  margin-left: -10vw;
 }
 
 .filters {
@@ -108,26 +110,27 @@ label {
 .filter-form {
   display: grid;
   grid-template-areas:
-    "status-label prio-label tech-label date-label ."
-    "status-select prio-select tech-select date-select ."
-    "search-bar search-bar search-bar filter-button .";
+    "status-label prio-label tech-label date-label"
+    "status-select prio-select tech-select date-select"
+    "search-bar search-bar search-bar filter-button";
 }
 
 .filter-form-tech {
   display: grid;
   grid-template-areas:
-    "status-label prio-label date-label . ."
-    "status-select prio-select date-select . ."
-    "search-bar search-bar search-bar filter-button .";
+    "status-label prio-label date-label ."
+    "status-select prio-select date-select ."
+    "search-bar search-bar search-bar filter-button";
 }
 
 mat-form-field {
   margin-top: -5px;
-  height: 78%;
+  height: 70%;
 }
 
 ::ng-deep .mat-mdc-form-field-has-icon-suffix .mat-mdc-text-field-wrapper {
   border-radius: 10px;
+  margin-left: 1vw;
 }
 
 ::ng-deep mat-form-field .mat-mdc-icon-button.mat-mdc-button-base {
@@ -188,8 +191,7 @@ mat-form-field {
   color: $text-color-primary !important;
   margin-right: 2vw;
   margin-left: 1vw;
-  width: 15vw;
-  height: 50px;
+  height: 40px;
 
 
   &:focus {
@@ -207,10 +209,11 @@ mat-form-field {
   border-radius: 5px;
   color: $color-dark;
   background-color: $bg-color-warning;
-  padding: 10px;
+  padding: 8px;
   margin-right: -7px;
   margin-left: 20px;
-  width: 50px;
+  width: 38px;
+  font-size: 12px;
 
   &:hover {
     color: $color-light;
@@ -224,12 +227,11 @@ mat-form-field {
   color: $color-primary;
   background-color: transparent;
   border: 1px solid $bg-color-primary;
-  padding: 10px;
-  border-radius: 5px;
-  width: 10vw;
-  height: 50px;
+  padding: 8px;
+  border-radius: 10px;
+  height: 40px;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
   text-align: center;
 
@@ -273,13 +275,13 @@ th {
   background-color: $bg-color-warning;
   padding: 10px;
   margin: 0px 10px 0px 10px;
-  height: 60px;
-  font-size: 20px;
+  height: 20px;
+  font-size: 15px;
 }
 
 td {
-  font-size: 18px;
-  height: 40px;
+  font-size: 14px;
+  height: 20px;
 }
 
 tr {
@@ -317,8 +319,8 @@ tr {
   margin-left: -4px;
   margin-right: -4px;
   border-top: $bg-color-dark 1px solid;
-  font-size: 20px;
-  height: 50px;
+  font-size: 14px;
+  height: 45px;
 }
 
 ::ng-deep .pages .mat-mdc-form-field-type-mat-select:not(.mat-form-field-disabled) .mat-mdc-text-field-wrapper {
@@ -338,15 +340,19 @@ tr {
   border-radius: 10px;
   color: $color-dark;
   background-color: $bg-color-warning;
-
 }
 
 .edit-icon {
   cursor: pointer;
+  font-size: 18px;
+}
+
+.new-row i {
+  font-size: 18px;
 }
 
 .mat-badge-content {
-  font-size: 15px;
+  font-size: 10px;
   margin-top: 5px;
 }
 
@@ -362,11 +368,11 @@ tr {
   .filter-form {
     display: grid;
     grid-template-areas:
-      "status-label prio-label . . ."
-      "status-select prio-select . . ."
-      "tech-label date-label . . ."
-      "tech-select date-select . . ."
-      "search-bar search-bar search-bar filter-button .";
+      "status-label prio-label . ."
+      "status-select prio-select . ."
+      "tech-label date-label . ."
+      "tech-select date-select . ."
+      "search-bar search-bar search-bar filter-button";
   }
 }
 
@@ -385,16 +391,16 @@ tr {
   .filter-form {
     display: grid;
     grid-template-areas:
-      "status-label ."
-      "status-select ."
-      "prio-label ."
-      "prio-select ."
-      "tech-label ."
-      "tech-select ."
-      "date-label ."
-      "date-select ."
-      "search-bar ."
-      "filter-button .";
+      "status-label"
+      "status-select"
+      "prio-label"
+      "prio-select"
+      "tech-label"
+      "tech-select"
+      "date-label"
+      "date-select"
+      "search-bar"
+      "filter-button";
   }
 
   .btn-l {

@@ -66,6 +66,7 @@ export class ChartDoughnutComponent {
         this.labels = ['ABIERTA', 'PAUSADA'];
       }
     }  
+    this.createChart();
     });
     this.ticketsService.ticketGraphs$.subscribe(tickets => {
       this.loadingService.showLoading();
@@ -153,7 +154,11 @@ export class ChartDoughnutComponent {
         plugins: {   
           legend: {
             labels: {
-              color: 'white'
+              color: 'white',
+              font: {
+                size: 10
+              },
+              boxWidth: 15
             }
           },
           title: {
@@ -161,7 +166,7 @@ export class ChartDoughnutComponent {
             text: this.title,
             color: '#EFB810',
             font: {
-              size: 28
+              size: 20
             }
           }
         },

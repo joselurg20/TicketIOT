@@ -127,7 +127,11 @@ export class ChartPieComponent implements OnInit {
         plugins: {
           legend: {
             labels: {
-              color: 'white'
+              color: 'white',
+              font: {
+                size: 10
+              },
+              boxWidth: 15
             }
           },
           title: {
@@ -135,7 +139,7 @@ export class ChartPieComponent implements OnInit {
             text: this.title,
             color: '#EFB810',
             font: {
-              size: 28
+              size: 20
             }
           }
         },

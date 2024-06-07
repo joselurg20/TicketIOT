@@ -171,7 +171,7 @@ export class ChartBarComponent implements OnInit {
             text: this.title,
             color: '#EFB810',
             font: {
-              size: 28
+              size: 20
             }
           }
         },

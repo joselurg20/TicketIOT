@@ -51,7 +51,7 @@ label {
   border-radius: 5px;
   color: $color-dark;
   background-color: $bg-color-warning;
-  height: 53.5px;
+  height: 45.5px;
 
 
   &:hover {
@@ -82,7 +82,7 @@ label {
   text-align: center;
 
   img {
-    width: 350px;
+    width: 250px !important;
     height: auto;
     border-radius: 10px;
   }

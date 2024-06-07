@@ -17,7 +17,7 @@ label {
   &:focus {
     outline: none !important;
     -webkit-box-shadow: none !important;
-            box-shadow: none !important;
+    box-shadow: none !important;
     border-color: $color-warning;
   }
 
@@ -62,17 +62,17 @@ label {
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 
-.option-item:hover{
+.option-item:hover {
   background-color: $bg-color-dark;
 }
 
@@ -82,31 +82,31 @@ label {
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   width: 100%;
 }
 
 .prio-container label {
   -ms-flex-item-align: start;
-      -ms-grid-row-align: start;
-      align-self: start;
-  width: 25rem;
+  -ms-grid-row-align: start;
+  align-self: start;
+  width: 17rem;
 }
 
 .prio-container select {
-  width: 25rem;
+  width: 17rem;
 }
 
 .prio-container button {
   height: 40px;
-  width: 25rem;
+  width: 17rem;
 }
 
 .status-container {
@@ -115,31 +115,31 @@ label {
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   width: 100%;
 }
 
 .status-container label {
   -ms-flex-item-align: start;
-      -ms-grid-row-align: start;
-      align-self: start;
-  width: 25rem;
+  -ms-grid-row-align: start;
+  align-self: start;
+  width: 17rem;
 }
 
 .status-container select {
-  width: 25rem;
+  width: 17rem;
 }
 
 .status-container button {
   width: 25rem;
-  height: 40px;
+  width: 17rem;
 }
 
 .full-width {
@@ -157,27 +157,27 @@ label {
 @media screen and (max-width: 990px) {
 
   .prio-container label {
-    width: 20rem;
+    width: 17rem;
   }
-  
+
   .prio-container select {
-    width: 20rem;
+    width: 17rem;
   }
-  
+
   .prio-container button {
-    width: 20rem;
+    width: 17rem;
   }
-  
+
   .status-container label {
-    width: 20rem;
+    width: 17rem;
   }
-  
+
   .status-container select {
-    width: 20rem;
+    width: 17rem;
   }
-  
+
   .status-container button {
-    width: 20rem;
+    width: 17rem;
   }
 }
 
@@ -186,23 +186,23 @@ label {
   .prio-container label {
     width: 15rem;
   }
-  
+
   .prio-container select {
     width: 15rem;
   }
-  
+
   .prio-container button {
     width: 15rem;
   }
-  
+
   .status-container label {
     width: 15rem;
   }
-  
+
   .status-container select {
     width: 15rem;
   }
-  
+
   .status-container button {
     width: 15rem;
   }

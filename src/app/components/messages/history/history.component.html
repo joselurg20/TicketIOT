@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-between align-items-center text-center">
-    <h1>{{ 'history.title' | translate }}</h1>
+    <h3>{{ 'history.title' | translate }}</h3>
     <button class="custom-file-button btn-lg mt-3" (click)="reloadMessages()">
         <i class="fa-solid fa-arrows-rotate"></i>
     </button>
@@ -9,7 +9,7 @@
     <div class="modal-body">
         <div class="modal-message" *ngFor="let message of messages">
             <div class="d-flex justify-content-between">
-                <h4>{{message.author}}</h4>
+                <h5>{{message.author}}</h5>
                 <span>{{message.timestamp}}</span>
             </div>
             <p>{{message.content}}</p>

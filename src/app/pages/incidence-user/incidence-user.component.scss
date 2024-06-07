@@ -6,7 +6,7 @@
   overflow: hidden;
 }
 
-h1 {
+h2 {
   color: $text-color-dark;
 }
 
@@ -23,7 +23,7 @@ h1 {
 }
 
 .font {
-  font-size: 20px;
+  font-size: 18px;
   color: $text-color-mid;
   text-align: center;
 }
@@ -80,7 +80,7 @@ h1 {
 }
 
 img {
-  height: 90px;
+  width: 250px;
 }
 
 @media screen and (max-width: 992px) {

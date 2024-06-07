@@ -4,18 +4,24 @@
   padding: 2px;
 }
 
-h1 {
+h3 {
   color: $text-color-dark;
 }
 
 label {
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .container {
   color: $text-color-mid;
-  height: 28rem;
+  height: 50vh;
   overflow: auto;
+
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
 
   & input:focus,
   & textarea:focus,
@@ -72,6 +78,7 @@ label {
   background-color: $bg-color-warning;
   padding: 10px;
   margin: 0px 10px 0px 10px;
+  font-size: 16px;
 
   &:hover {
     color: $color-light;
@@ -129,20 +136,19 @@ label {
 }
 
 .logo {
-  width: 350px;
+  width: 250px;
   height: auto;
   border-radius: 10px;
 }
 
 .preview-image {
-  width: 250px;
+  width: 150px;
   border-radius: 10px;
   margin: 10px;
 }
 
 .preview-file {
-  width: 250px;
-  height: 250px;
+  width: 150px;
   border-radius: 10px;
   margin: 55px;
 }

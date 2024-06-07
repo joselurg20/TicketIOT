@@ -4,11 +4,10 @@
   padding: 4px;
 }
 
-h2 {
+h4 {
   color: $text-color-dark;
   text-align: center;
 }
-
 
 .preview {
   display: -webkit-box;
@@ -26,17 +25,29 @@ h2 {
 }
 
 .custom-container {
-  margin: 2rem auto;
+  margin: auto;
   border-radius: 25px;
   background-color: $bg-color-mid;
-  width: 900px;
-  padding: 20px;
+  width: 720px;
+  padding: 10px 20px;
   color: $color-light;
   outline: none;
   -webkit-box-shadow: none;
   box-shadow: none;
   font-weight: 700;
-  font-size: large;
+  font-size: 14px;
+
+  input,
+  select {
+    height: 20px;
+    padding: 5px;
+    font-size: 15px;
+  }
+  
+  textarea{
+    padding: 5px;
+    font-size: 15px;
+  }
 
   & input:focus,
   & textarea:focus,
@@ -109,6 +120,7 @@ h2 {
   border-radius: 5px;
   color: $color-dark;
   background-color: $bg-color-warning;
+  font-size: 16px;
 
   &:hover {
     color: $color-light;
@@ -144,13 +156,13 @@ h2 {
   text-align: center;
 
   img {
-    width: 250px;
+    width: 200px;
     height: auto;
     border-radius: 10px;
   }
 
   .preview-image {
-    width: 250px;
+    width: 200px;
     height: auto;
     border-radius: 10px;
   }

@@ -18,7 +18,7 @@ import { LocalStorageKeys } from 'src/app/utilities/literals';
   styleUrls: ['./chart-pie.component.scss']
 })
 
-export class ChartPieComponent implements OnInit {
+export class ChartPieComponent implements OnInit, OnDestroy {
 
   tickets: iTicketGraph[] = [];
   myChart: any = null;
@@ -31,8 +31,10 @@ export class ChartPieComponent implements OnInit {
   labelEs: string = 'Incidencias';
   labelEn: string = 'Tickets';
   label: string = this.labelEs;
-  private langUpdateSubscription: Subscription = {} as Subscription;
+  private langUpdateSubscription: Subscription = Subscription.EMPTY;
   loading$: Observable<boolean>;
+
+  ticketsSubscription: Subscription = Subscription.EMPTY;
 
   constructor(private ticketsService: TicketDataService, private langUpdateService: LanguageUpdateService,
               private loadingService: LoadingService) {
@@ -50,7 +52,7 @@ export class ChartPieComponent implements OnInit {
       this.labels = this.labelsEs;
       this.label = this.labelEs;
     }
-    this.ticketsService.ticketGraphs$.subscribe(tickets => {
+    this.ticketsSubscription = this.ticketsService.ticketGraphs$.subscribe(tickets => {
       this.tickets = tickets;
       this.createChart();
       this.loadingService.hideLoading();
@@ -59,6 +61,11 @@ export class ChartPieComponent implements OnInit {
       this.switchLanguage();
     });
 
+  }
+
+  ngOnDestroy() {
+    this.ticketsSubscription.unsubscribe();
+    this.langUpdateSubscription.unsubscribe();
   }
 
   /**

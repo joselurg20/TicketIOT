@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { TicketDto } from 'src/app/models/tickets/TicketDTO';
@@ -18,12 +18,13 @@ import { LocalStorageKeys, Roles, StorageRoutes } from 'src/app/utilities/litera
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.scss']
 })
-export class MessageComponent implements OnInit {
+export class MessageComponent implements OnInit, OnDestroy {
 
   ticketId: number = 0;
   ticket: TicketDto = { name: '', email: '', title: '', hasNewMessages: false, newMessagesCount: 0 };
   messages: iMessageDto[] = [];
-  private messagesUpdateSubscription: Subscription = {} as Subscription;
+  private messagesUpdateSubscription: Subscription = Subscription.EMPTY;
+  messageSubscription: Subscription = Subscription.EMPTY;
 
   constructor(private messagesService: MessagesService, private translate: TranslateService,
               private messagesUpdateService: MessagesUpdateService, private ticketsService: TicketsService,
@@ -50,10 +51,15 @@ export class MessageComponent implements OnInit {
         
         this.messageDataService.getMessages(this.ticketId);
       });
-      this.messageDataService.messages$.subscribe((messages: iMessageDto[]) => {
+      this.messageSubscription = this.messageDataService.messages$.subscribe((messages: iMessageDto[]) => {
         this.messages = messages;
       });
     }
+  }
+
+  ngOnDestroy() {
+    this.messagesUpdateSubscription.unsubscribe();
+    this.messageSubscription.unsubscribe();
   }
 
   /**

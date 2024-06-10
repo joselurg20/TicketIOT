@@ -26,7 +26,10 @@ export class HistoryComponent implements OnInit, OnDestroy {
   messages: iMessageDto[] = [];
   ticket: iTicketDescriptor = {} as iTicketDescriptor;
   userName: string = '';
-  private messagesUpdateSubscription: Subscription = {} as Subscription;
+
+  private messagesUpdateSubscription: Subscription = Subscription.EMPTY;
+  routeParamsSubscription: Subscription = Subscription.EMPTY;
+  messageSubscription: Subscription = Subscription.EMPTY;
 
   constructor(private messagesService: MessagesService, private route: ActivatedRoute,
     private translate: TranslateService, private messagesUpdateService: MessagesUpdateService,
@@ -41,7 +44,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.routeParamsSubscription = this.route.params.subscribe(params => {
       this.ticketId = +params['ticketId'];
       this.loadMessages();
     });
@@ -51,7 +54,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
       this.loadMessages();
     });
 
-    this.messageDataService.messages$.subscribe((messages: iMessageDto[]) => {
+    this.messageSubscription = this.messageDataService.messages$.subscribe((messages: iMessageDto[]) => {
       this.messages = messages;
     });
   }
@@ -60,6 +63,8 @@ export class HistoryComponent implements OnInit, OnDestroy {
     if (this.messagesUpdateSubscription) {
       this.messagesUpdateSubscription.unsubscribe();
     }
+    this.messageSubscription.unsubscribe();
+    this.routeParamsSubscription.unsubscribe();
   }
 
   private loadMessages() {

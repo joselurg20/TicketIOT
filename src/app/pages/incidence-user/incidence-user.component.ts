@@ -1,10 +1,10 @@
 import { CommonModule, NgFor } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import * as CryptoJS from 'crypto-js';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { LoadingComponent } from 'src/app/components/shared/loading/loading.component';
 import { iMessage } from 'src/app/models/tickets/iMessage';
 import { iTicket } from 'src/app/models/tickets/iTicket';
@@ -29,7 +29,7 @@ import { MessageComponent } from "../../components/messages/message/message.comp
   templateUrl: './incidence-user.component.html',
   styleUrls: ['./incidence-user.component.scss']
 })
-export class IncidenceUserComponent {
+export class IncidenceUserComponent implements OnInit, OnDestroy {
   public messages: iMessage[] = [];
   successMsg: string = "";
   ticketId: number = 0;
@@ -38,6 +38,10 @@ export class IncidenceUserComponent {
   hashedId: string = '';
   loading$: Observable<boolean>;
   ticketStatus: string = '';
+
+  routeParamsSubscription: Subscription = Subscription.EMPTY;
+  ticketsSubscription: Subscription = Subscription.EMPTY;
+  langUpdateSubscription: Subscription = Subscription.EMPTY;
 
 
   constructor(private route: ActivatedRoute, private ticketsService: TicketsService, private router: Router,
@@ -54,7 +58,7 @@ export class IncidenceUserComponent {
   }
   ngOnInit(): void {
     this.loadingService.showLoading();
-    this.route.params.subscribe(params => {
+    this.routeParamsSubscription = this.route.params.subscribe(params => {
       this.ticketId = params['ticketId'];
       this.hashedId = params['hashedId'];
       const hashedId = CryptoJS.SHA256(this.ticketId.toString()).toString();
@@ -62,7 +66,7 @@ export class IncidenceUserComponent {
         this.router.navigate([Routes.notFound]);
       }
     });
-    this.ticketsService.getTicketById(this.ticketId).subscribe({
+    this.ticketsSubscription =this.ticketsService.getTicketById(this.ticketId).subscribe({
       next: (response: iTicket) => {
         this.ticket = {
           id: response.id,
@@ -83,9 +87,15 @@ export class IncidenceUserComponent {
         console.error('Error al obtener el usuario', error);
       }
     });
-    this.languageUpdateService.langUpdated$.subscribe(() => {
+    this.langUpdateSubscription = this.languageUpdateService.langUpdated$.subscribe(() => {
       this.ticketStatus = this.getStatusString(this.ticket.status);
     });
+  }
+
+  ngOnDestroy() {
+    this.routeParamsSubscription.unsubscribe();
+    this.ticketsSubscription.unsubscribe();
+    this.langUpdateSubscription.unsubscribe();
   }
 
   getStatusString(status: number): string {

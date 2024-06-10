@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
 import { iTicket } from 'src/app/models/tickets/iTicket';
@@ -24,7 +24,7 @@ import { Utils } from 'src/app/utilities/utils';
   styleUrls: ['./incidence-data.component.scss']
 
 })
-export class IncidenceDataComponent implements OnInit {
+export class IncidenceDataComponent implements OnInit, OnDestroy {
 
   ticket: iTicketDescriptor = {
     id: 0,
@@ -39,8 +39,11 @@ export class IncidenceDataComponent implements OnInit {
   };
   ticketPrio: string = '';
   ticketStatus: string = '';
-  private ticketUpdateSubscription: Subscription = {} as Subscription;
+  private ticketUpdateSubscription: Subscription = Subscription.EMPTY;
   loading$: Observable<boolean>;
+
+  languageUpdateSubscription: Subscription = Subscription.EMPTY;
+  ticketSubscription: Subscription = Subscription.EMPTY;
 
   constructor(private ticketsService: TicketsService, private ticketUpdateService: TicketUpdateService,
               private loadingService: LoadingService, private cdr: ChangeDetectorRef,
@@ -57,7 +60,7 @@ export class IncidenceDataComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.ticketsService.getTicketByIdWithName(parseInt(localStorage.getItem(LocalStorageKeys.selectedTicket)!)).subscribe({
+    this.ticketSubscription = this.ticketsService.getTicketByIdWithName(parseInt(localStorage.getItem(LocalStorageKeys.selectedTicket)!)).subscribe({
       next: (response: iTicketUserDto) => {
         // Mapear la respuesta de la API utilizando la interfaz iTicketTable
         const ticket: iTicketDescriptor = {
@@ -83,7 +86,7 @@ export class IncidenceDataComponent implements OnInit {
     this.ticketUpdateSubscription = this.ticketUpdateService.ticketUpdated$.subscribe(() => {
       this.refreshTicketData();
     });
-    this.languageUpdateService.langUpdated$.subscribe(() => {
+    this.languageUpdateSubscription =this.languageUpdateService.langUpdated$.subscribe(() => {
       this.ticketPrio = this.getPriorityString(this.ticket.priority);
       this.ticketStatus = this.getStatusString(this.ticket.status);
     })
@@ -91,6 +94,8 @@ export class IncidenceDataComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.ticketUpdateSubscription.unsubscribe();
+    this.languageUpdateSubscription.unsubscribe();
+    this.ticketSubscription.unsubscribe();
   }
 
   /**

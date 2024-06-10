@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { Observable, Subscription } from 'rxjs';
 import { iTicketGraph } from 'src/app/models/tickets/iTicketsGraph';
@@ -22,7 +22,7 @@ import { Routes } from 'src/app/utilities/routes';
   templateUrl: './chart-bar.component.html',
   styleUrls: ['./chart-bar.component.scss']
 })
-export class ChartBarComponent implements OnInit {
+export class ChartBarComponent implements OnInit, OnDestroy {
 
   
 
@@ -32,9 +32,13 @@ export class ChartBarComponent implements OnInit {
   titleEs: string = 'Incidencias por técnico';
   titleEn: string = 'Tickets by technician';
   title: string = this.titleEs;
-  private langUpdateSubscription: Subscription = {} as Subscription;
+  private langUpdateSubscription: Subscription = Subscription.EMPTY;
   loading$: Observable<boolean>;
   isFirstLoad: boolean = true;
+
+  componentLoadSubscription: Subscription = Subscription.EMPTY;
+  usersSubscription: Subscription = Subscription.EMPTY;
+  usersGraphSubscription: Subscription = Subscription.EMPTY;
 
   constructor(private ticketsService: TicketDataService, private langUpdateService: LanguageUpdateService,
               private loadingService: LoadingService, private userDataService: UserDataService,
@@ -43,7 +47,7 @@ export class ChartBarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.componentLoadService.loadComponent$.subscribe(() => {
+    this.componentLoadSubscription = this.componentLoadService.loadComponent$.subscribe(() => {
         
       if(this.router.url == '/' + Routes.supportManager) {
     
@@ -52,7 +56,7 @@ export class ChartBarComponent implements OnInit {
         }else if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es'){
           this.title = this.titleEs;
         }  
-          this.userDataService.usersFN$.subscribe(users => {
+          this.usersSubscription = this.userDataService.usersFN$.subscribe(users => {
             this.users = users;
             if(!this.isFirstLoad && this.router.url == '/' + Routes.supportManager){
               this.createChart();
@@ -60,7 +64,7 @@ export class ChartBarComponent implements OnInit {
             }
             this.isFirstLoad = false
           });
-          this.ticketsService.usersGraph$.subscribe(usersGraph => {
+          this.usersGraphSubscription =this.ticketsService.usersGraph$.subscribe(usersGraph => {
             this.tickets = usersGraph;
             if(!this.isFirstLoad && this.router.url == '/' + Routes.supportManager){
               this.createChart();
@@ -73,6 +77,13 @@ export class ChartBarComponent implements OnInit {
           });
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.componentLoadSubscription.unsubscribe();
+    this.usersSubscription.unsubscribe();
+    this.usersGraphSubscription.unsubscribe();
+    this.langUpdateSubscription.unsubscribe();
   }
 
   /**

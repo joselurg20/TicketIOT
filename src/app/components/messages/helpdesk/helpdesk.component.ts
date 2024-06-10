@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { iTicket } from 'src/app/models/tickets/iTicket';
 import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
 import { MessagesService } from 'src/app/services/tickets/messages.service';
@@ -24,7 +24,7 @@ import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/s
     templateUrl: './helpdesk.component.html',
     styleUrls: ['./helpdesk.component.scss']
 })
-export class HelpdeskComponent {
+export class HelpdeskComponent implements OnInit, OnDestroy {
 
   public messageForm!: FormGroup;
   public ticket: iTicketDescriptor = {} as iTicketDescriptor;
@@ -36,6 +36,8 @@ export class HelpdeskComponent {
   previewUrls: Array<string | ArrayBuffer | null> = new Array();
   isFileSelected: boolean = false;
   currentIndex: number = 0;
+
+  ticketsSubscription: Subscription = Subscription.EMPTY;
 
 
   constructor(private msgService: MessagesService, private ticketsService: TicketsService, private userService: UsersService, private _snackBar: MatSnackBar, private translate: TranslateService, private formBuilder: FormBuilder, private messagesUpdateService: MessagesUpdateService) {
@@ -54,7 +56,7 @@ export class HelpdeskComponent {
     });
     const selectedTicket = window.location.href.split('/').pop();
     if (selectedTicket != null) {
-      this.ticketsService.getTicketById(+selectedTicket).subscribe({
+      this.ticketsSubscription = this.ticketsService.getTicketById(+selectedTicket).subscribe({
         next: (response: iTicket) => {
           this.ticket = {
             id: response.id,
@@ -75,15 +77,9 @@ export class HelpdeskComponent {
     }
   }
 
-  /*
-  deleteProduct(index: number) {
-  this.selectFilesNames = [];
-  this.previewUrls = [];
-  this.selectedFiles = [];
-  this.isFileSelected = false;
-  this.messageForm.get('Attachments')?.setValue(null);
+  ngOnDestroy() {
+    this.ticketsSubscription.unsubscribe();
   }
-  */
 
   deleteFile(index: number) {
     this.previewUrls.splice(index, 1);

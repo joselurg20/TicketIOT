@@ -1,10 +1,11 @@
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { ComponentLoadService } from 'src/app/services/componentLoad.service';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { LoginService } from 'src/app/services/users/login.service';
@@ -51,10 +52,12 @@ interface SideNavToggle {
     ])
   ]
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnDestroy {
   esButtonPressed: boolean = true;
   enButtonPressed: boolean = false;
   isSupportManager: boolean = false;
+
+  componentLoadSubscription: Subscription = Subscription.EMPTY;
 
   @Output() onToggleSideNav: EventEmitter<SideNavToggle> = new EventEmitter();
   collapsed = false;
@@ -135,7 +138,7 @@ export class SidebarComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.componentLoadService.loadComponent$.subscribe(() => {
+    this.componentLoadSubscription = this.componentLoadService.loadComponent$.subscribe(() => {
     
       this.screenWidth = window.innerWidth;
       const selectedLanguage = localStorage.getItem(LocalStorageKeys.selectedLanguage);
@@ -151,6 +154,10 @@ export class SidebarComponent implements OnInit {
         this.isSupportManager = true;
       }  
     });
+  }
+
+  ngOnDestroy() {
+    this.componentLoadSubscription.unsubscribe();
   }
 
   /**

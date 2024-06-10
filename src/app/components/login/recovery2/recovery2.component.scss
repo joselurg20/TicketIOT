@@ -4,7 +4,7 @@
   page-break-inside: avoid;
 }
 
-h2 {
+h4 {
   color: $text-color-dark;
   text-align: center;
   -ms-flex-item-align: center;
@@ -15,19 +15,21 @@ h2 {
 .container {
   background-color: $bg-color-mid;
   color: $text-color-mid;
-  width: 800px;
+  width: 600px;
   height: auto;
-  padding: 70px;
+  padding: 30px;
   border-radius: 25px;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  font-size: 16px;
 }
 
 .container input {
   border-color: $text-color-warning;
   background-color: $bg-color-mid;
   color: $text-color-warning;
+  font-size: 16px;
 }
 
 input::-webkit-input-placeholder {
@@ -114,13 +116,13 @@ input:-webkit-autofill {
 }
 
 img {
-  width: 350px;
+  width: 250px;
   height: auto;
 }
 
 .btn {
   background-color: $bg-color-warning;
-  font-size: larger;
+  font-size: 16px;
   border-radius: 6px;
   border-style: none;
   color: $color-dark;

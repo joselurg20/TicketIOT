@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -29,14 +29,17 @@ import { Routes } from 'src/app/utilities/routes';
 import { Utils } from 'src/app/utilities/utils';
 import { LoadingComponent } from '../../shared/loading/loading.component';
 import { ComponentLoadService } from 'src/app/services/componentLoad.service';
+import { CustomMatPaginatorIntl } from 'src/app/services/paginator.service';
 
 @Component({
   selector: 'app-incidence-table',
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, MatNativeDateModule, MatDatepickerModule, MatInputModule, MatTableModule,
-    MatPaginatorModule, MatSortModule, MatTooltipModule, MatProgressSpinnerModule, MatBadgeModule, MatButtonModule, TranslateModule, LoadingComponent],
+    MatPaginatorModule, MatSortModule, MatTooltipModule, MatProgressSpinnerModule, MatBadgeModule, MatButtonModule, TranslateModule,
+    LoadingComponent],
   templateUrl: './incidence-table.component.html',
-  styleUrls: ['./incidence-table.component.scss']
+  styleUrls: ['./incidence-table.component.scss'],
+  providers:[{ provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl }]
 })
 export class IncidenceTableComponent implements AfterViewInit, OnInit, OnDestroy {
 
@@ -89,7 +92,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit, OnDestroy
     private router: Router, private translate: TranslateService, private cdr: ChangeDetectorRef,
     private ticketDataService: TicketDataService, private loadingService: LoadingService,
     private readonly dateAdapter: DateAdapter<Date>, private langUpdateService: LanguageUpdateService,
-    private componentLoadService: ComponentLoadService) {
+    private componentLoadService: ComponentLoadService, private paginatorService: CustomMatPaginatorIntl) {
     this.translate.addLangs(['en', 'es']);
     var lang = '';
     switch (localStorage.getItem(LocalStorageKeys.userLanguageKey)) {
@@ -136,6 +139,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit, OnDestroy
           this.setLocale('es');
           break;
       }
+      this.paginatorService.switchLanguage();
       if (this.usersService.currentUser?.role === Roles.managerRole) {
         this.isSupportManager = true;
         this.usersSubscription = this.usersService.getTechnicians().subscribe({
@@ -171,6 +175,8 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit, OnDestroy
     this.langUpdateSubscription = this.langUpdateService.langUpdated$.subscribe(() => {
       this.setLocale(localStorage.getItem(LocalStorageKeys.selectedLanguage)!);
       this.ticketDataService.getTickets(this.isSupportManager);
+      this.paginatorService.switchLanguage();
+      window.location.reload();
     });
   }
 

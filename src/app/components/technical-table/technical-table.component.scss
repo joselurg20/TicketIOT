@@ -5,21 +5,16 @@
 }
 
 section {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
   flex-direction: column;
   background-color: $bg-color-mid-2;
-  border-radius: 25px;
-  margin-bottom: 30px;
+  border-radius: 20px;  // Reducir el radio de borde
+  margin-bottom: 20px;  // Reducir el margen inferior
 }
 
 #main {
   padding: 10px;
-  border-radius: 25px;
+  border-radius: 20px;  // Reducir el radio de borde
 }
 
 h2 {
@@ -33,8 +28,6 @@ h2 {
   padding: 0;
   overflow: hidden;
   overflow-x: auto;
-  height: -webkit-min-content;
-  height: -moz-min-content;
   height: min-content;
 }
 
@@ -46,24 +39,23 @@ table {
   color: $text-color-mid;
 }
 
-
 th {
   color: $color-dark;
   background-color: $bg-color-warning;
-  padding: 5px;
-  margin: 0px 10px 0px 10px;
-  font-size: 20px;
+  padding: 4px;  // Reducir el padding
+  margin: 0 5px;  // Reducir los márgenes
+  font-size: 18px;  // Reducir el tamaño de fuente
 }
 
 tr {
   color: $text-color-dark;
   background-color: $bg-color-warning;
   padding: 4px 10px;
-  margin: 0px 10px 0px 10px;
+  margin: 0 5px;  // Reducir los márgenes
 }
 
 tbody td {
-  border: $bg-color-dark 1px solid;
+  border: 1px solid $bg-color-dark;
   border-left: none;
   border-right: none;
 }
@@ -75,7 +67,7 @@ tbody td {
 .row-highlight {
   background-color: $bg-color-mid;
   color: $text-color-mid;
-  font-size: 18px;
+  font-size: 16px;  // Reducir el tamaño de fuente
 
   &:hover {
     background-color: $bg-color-secondary;
@@ -86,10 +78,9 @@ tbody td {
   #main {
     width: 100%;
     height: auto;
-    padding: 20px;
-    border-radius: 0;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
+    padding: 15px;  // Reducir el padding
+    border-radius: 10px;  // Reducir el radio de borde
+    display: flex;
     align-items: center;
     cursor: pointer;
   }
@@ -99,11 +90,19 @@ tbody td {
   #main {
     width: 100%;
     height: auto;
-    padding: 20px;
-    border-radius: 0;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
+    padding: 10px;  // Reducir el padding
+    border-radius: 10px;  // Reducir el radio de borde
+    display: flex;
     align-items: center;
     cursor: pointer;
+  }
+
+  th, tr {
+    font-size: 14px;  // Reducir el tamaño de fuente
+    padding: 2px 5px;  // Reducir el padding
+  }
+
+  .row-highlight {
+    font-size: 14px;  // Reducir el tamaño de fuente
   }
 }

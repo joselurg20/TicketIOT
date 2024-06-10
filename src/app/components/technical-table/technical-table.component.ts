@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { iUser } from 'src/app/models/users/iUser';
 import { iUserTable } from 'src/app/models/users/iUserTable';
 import { UsersService } from 'src/app/services/users/users.service';
@@ -14,8 +15,10 @@ import { UsersService } from 'src/app/services/users/users.service';
   templateUrl: './technical-table.component.html',
   styleUrls: ['./technical-table.component.scss']
 })
-export class TechnicalTableComponent implements OnInit {
+export class TechnicalTableComponent implements OnInit, OnDestroy {
   users: iUserTable[] = [];
+
+  usersSubscription: Subscription = Subscription.EMPTY;
 
   constructor(private usersService: UsersService, private translate: TranslateService) {
     this.translate.addLangs(['en', 'es']);
@@ -27,7 +30,7 @@ export class TechnicalTableComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    this.usersService.getTechnicians().subscribe({
+    this.usersSubscription = this.usersService.getTechnicians().subscribe({
       next: (response: iUser[]) => {
         const users: iUserTable[] = response.map((value: iUserTable) => {
           return {
@@ -43,5 +46,9 @@ export class TechnicalTableComponent implements OnInit {
         console.error(error);
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.usersSubscription.unsubscribe();
   }
 }

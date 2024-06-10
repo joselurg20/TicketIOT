@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ChartBarComponent } from 'src/app/components/graphics/chart-bar/chart-bar.component';
 import { ChartDoughnutComponent } from 'src/app/components/graphics/chart-doughnut/chart-doughnut.component';
 import { ChartPieComponent } from 'src/app/components/graphics/chart-pie/chart-pie.component';
@@ -28,10 +28,12 @@ import { LoadingComponent } from "../../components/shared/loading/loading.compon
     styleUrls: ['./support-technical.component.scss']
 
 })
-export class SupportTechnicalComponent implements OnInit {
+export class SupportTechnicalComponent implements OnInit, OnDestroy {
 
     tickets: iTicketTable[] = [];
     loading$: Observable<boolean>;
+
+    ticketsSubscription: Subscription = Subscription.EMPTY;
 
     constructor(private loginService: LoginService, private router: Router, private ticketsService: TicketDataService,
                 private loadingService: LoadingService, private usersService: UsersService) {
@@ -41,10 +43,14 @@ export class SupportTechnicalComponent implements OnInit {
     ngOnInit(): void {
 
         this.ticketsService.getTickets(false);
-        this.ticketsService.tickets$.subscribe(tickets => {
+        this.ticketsSubscription = this.ticketsService.tickets$.subscribe(tickets => {
             this.loadingService.showLoading();
             this.tickets = tickets;
             this.loadingService.hideLoading();
         });
+    }
+
+    ngOnDestroy() {
+        this.ticketsSubscription.unsubscribe();
     }
 }

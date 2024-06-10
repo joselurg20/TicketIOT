@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { iUserGraph } from 'src/app/models/users/iUserGraph';
 import { ComponentLoadService } from 'src/app/services/componentLoad.service';
 import { LoadingService } from 'src/app/services/loading.service';
@@ -23,7 +24,7 @@ import { Utils } from 'src/app/utilities/utils';
   templateUrl: './data.component.html',
   styleUrls: ['./data.component.scss']
 })
-export class DataComponent implements OnInit {
+export class DataComponent implements OnInit, OnDestroy {
   
   users: iUserGraph[] = [];
   selectedUserId: number = -1;
@@ -33,6 +34,9 @@ export class DataComponent implements OnInit {
   priorities: Priorities[] = Object.values(Priorities).filter(value => typeof value === 'number') as Priorities[];
   status: Status[] = Object.values(Status).filter(value => typeof value === 'number') as Status[];
   isSupportManager: boolean = false;
+
+  usersSubscription: Subscription = Subscription.EMPTY;
+  componentLoadSubscription: Subscription = Subscription.EMPTY;
 
   constructor(
               private ticketDataService: TicketDataService, private usersService: UsersService,
@@ -49,13 +53,12 @@ export class DataComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
     this.userDataService.getTechnicians();
-    this.componentLoadService.loadComponent$.subscribe(() => {
+    this.componentLoadSubscription = this.componentLoadService.loadComponent$.subscribe(() => {
       
       if (this.usersService.currentUser?.role === Roles.managerRole) {
         this.isSupportManager = true;
-        this.userDataService.usersFN$.subscribe({
+        this.usersSubscription = this.userDataService.usersFN$.subscribe({
           next: (response: iUserGraph[]) => {
             const users = response.map((value: iUserGraph) => ({
               id: value.id,
@@ -73,6 +76,11 @@ export class DataComponent implements OnInit {
       }
       
     });
+  }
+
+  ngOnDestroy() {
+    this.componentLoadSubscription.unsubscribe();
+    this.usersSubscription.unsubscribe();
   }
 
   /**

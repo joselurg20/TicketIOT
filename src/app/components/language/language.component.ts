@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { LocalStorageKeys } from 'src/app/utilities/literals';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-language',
@@ -11,10 +12,12 @@ import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
   templateUrl: './language.component.html',
   styleUrls: ['./language.component.scss']
 })
-export class LanguageComponent implements OnInit {
+export class LanguageComponent implements OnInit, OnDestroy {
 
   esButtonPressed: boolean = true;
   enButtonPressed: boolean = false;
+
+  translateSubscription: Subscription = Subscription.EMPTY;
 
   constructor(private translate: TranslateService, private languageUpdateService: LanguageUpdateService) {
     this.translate.addLangs(['en', 'es']);
@@ -28,10 +31,14 @@ export class LanguageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.translate.onLangChange.subscribe((event) => {
+    this.translateSubscription = this.translate.onLangChange.subscribe((event) => {
       this.updateButtonState(event.lang);
       localStorage.setItem(LocalStorageKeys.selectedLanguage, event.lang);
     });
+  }
+
+  ngOnDestroy() {
+    this.translateSubscription.unsubscribe();
   }
 
   /**

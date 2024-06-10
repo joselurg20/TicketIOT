@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { iTicket } from 'src/app/models/tickets/iTicket';
 import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
 import { iUserGraph } from 'src/app/models/users/iUserGraph';
@@ -25,7 +25,7 @@ import { MessageComponent } from "../message/message.component";
   templateUrl: './comunication.component.html',
   styleUrls: ['./comunication.component.scss']
 })
-export class ComunicationComponent implements OnInit {
+export class ComunicationComponent implements OnInit, OnDestroy {
 
   public messageForm!: FormGroup;
   public ticket: iTicketDescriptor = {} as iTicketDescriptor;
@@ -36,6 +36,9 @@ export class ComunicationComponent implements OnInit {
   durationInSeconds = 3;
   public selectFilesNames: string[] = [];
   currentIndex: number = 0;
+
+  ticketsSubscription: Subscription = Subscription.EMPTY;
+  usersSubscription: Subscription = Subscription.EMPTY;
 
 
 
@@ -63,7 +66,7 @@ export class ComunicationComponent implements OnInit {
     });
     const selectedTicket = localStorage.getItem(LocalStorageKeys.selectedTicket);
     if (selectedTicket != null) {
-      this.ticketsService.getTicketById(+selectedTicket).subscribe({
+      this.ticketsSubscription = this.ticketsService.getTicketById(+selectedTicket).subscribe({
         next: (response: iTicket) => {
           this.ticket = {
             id: response.id,
@@ -83,7 +86,7 @@ export class ComunicationComponent implements OnInit {
       });
     }
 
-    this.usersService.getUserById(+localStorage.getItem("loggedUser")!).subscribe({
+    this.usersSubscription = this.usersService.getUserById(+localStorage.getItem("loggedUser")!).subscribe({
       next: (response: iUserGraph) => {
         this.userName = response.fullName;
       },
@@ -91,6 +94,11 @@ export class ComunicationComponent implements OnInit {
         console.error('Error al obtener el usuario', error);
       }
     })
+  }
+
+  ngOnDestroy() {
+    this.ticketsSubscription.unsubscribe();
+    this.usersSubscription.unsubscribe();
   }
 
   openSnackBar() {

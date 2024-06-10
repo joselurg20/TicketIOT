@@ -21,15 +21,12 @@ import { LoadingComponent } from "../../components/shared/loading/loading.compon
     styleUrls: ['./manager-incidence.component.scss']
     
 })
-export class ManagerIncidenceComponent implements OnInit {
+export class ManagerIncidenceComponent {
 
     loading$: Observable<boolean>;
 
     constructor(private router: Router, private loadingService: LoadingService,
                 private usersService: UsersService) {
         this.loading$ = this.loadingService.loading$;
-    }
-
-    ngOnInit(): void {
     }
 }

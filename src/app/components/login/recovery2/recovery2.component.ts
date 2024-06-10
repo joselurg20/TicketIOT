@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -11,6 +11,7 @@ import { Routes } from 'src/app/utilities/routes';
 import { LanguageComponent } from "../../language/language.component";
 import { AlertComponent } from '../../snackbars/alert/alert.component';
 import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/snackbar-incidence.component';
+import { Subscription } from 'rxjs';
 
 function passwordValidator(control: FormControl): { [key: string]: any } | null {
   const hasUppercase = /[A-Z]/.test(control.value); // Verifica si hay al menos una letra mayúscula
@@ -31,7 +32,7 @@ function passwordValidator(control: FormControl): { [key: string]: any } | null 
   templateUrl: './recovery2.component.html',
   styleUrls: ['./recovery2.component.scss']
 })
-export class Recovery2Component implements OnInit {
+export class Recovery2Component implements OnInit, OnDestroy {
 
   recoveryForm!: FormGroup;
   username: string = '';
@@ -40,6 +41,8 @@ export class Recovery2Component implements OnInit {
   email: string = '';
   hash: string = '';
   durationInSeconds = 5;
+
+  routeParamsSubscription: Subscription = Subscription.EMPTY;
 
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private _snackBar: MatSnackBar,
     private router: Router, private usersService: UsersService, private translate: TranslateService) {
@@ -58,7 +61,7 @@ export class Recovery2Component implements OnInit {
       Password: new FormControl('', [Validators.required, passwordValidator]),
       RepeatPassword: new FormControl('', [Validators.required, passwordValidator])
     });
-    this.route.params.subscribe(params => {
+    this.routeParamsSubscription = this.route.params.subscribe(params => {
       this.username = params['username'];
       this.domain = params['domain'];
       this.tld = params['tld'];
@@ -69,6 +72,10 @@ export class Recovery2Component implements OnInit {
         this.router.navigate([Routes.notFound]);
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.routeParamsSubscription.unsubscribe();
   }
 
   /**

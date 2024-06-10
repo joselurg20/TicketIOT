@@ -1,6 +1,6 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
@@ -38,7 +38,7 @@ import { ComponentLoadService } from 'src/app/services/componentLoad.service';
   templateUrl: './incidence-table.component.html',
   styleUrls: ['./incidence-table.component.scss']
 })
-export class IncidenceTableComponent implements AfterViewInit, OnInit {
+export class IncidenceTableComponent implements AfterViewInit, OnInit, OnDestroy {
 
   //Formulario
   range!: FormGroup;
@@ -58,8 +58,12 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
   tickets: iTicketTableSM[] = [];
   users: iUserGraph[] = [];
 
-  //Subscripción para triggers de cambio de idioma
-  private langUpdateSubscription: Subscription = {} as Subscription;
+  //Subscripciones
+  private langUpdateSubscription: Subscription = Subscription.EMPTY;
+  componentLoadSubscription: Subscription = Subscription.EMPTY;
+  usersSubscription: Subscription = Subscription.EMPTY;
+  ticketsSubscription: Subscription = Subscription.EMPTY;
+  
 
   //Valores seleccionados en el formulario de filtros
   selectedStatusFilter: number = -1;
@@ -116,7 +120,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
 
   ngOnInit(): void {
     this.loadingService.showLoading();
-    this.componentLoadService.loadComponent$.subscribe(() => {
+    this.componentLoadSubscription = this.componentLoadService.loadComponent$.subscribe(() => {
       this.range = new FormGroup({
         start: new FormControl(),
         end: new FormControl()
@@ -134,7 +138,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
       }
       if (this.usersService.currentUser?.role === Roles.managerRole) {
         this.isSupportManager = true;
-        this.usersService.getTechnicians().subscribe({
+        this.usersSubscription = this.usersService.getTechnicians().subscribe({
           next: (response: iUser[]) => {
             this.users = response.map((value: iUser) => {
               return {
@@ -159,12 +163,12 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
       }
 
     });
-    this.ticketDataService.tickets$.subscribe(tickets => {
+    this.ticketsSubscription = this.ticketDataService.tickets$.subscribe(tickets => {
       this.dataSource.data = tickets;
       this.loadingService.hideLoading();
       this.cdr.detectChanges();
     });
-    this.langUpdateService.langUpdated$.subscribe(() => {
+    this.langUpdateSubscription = this.langUpdateService.langUpdated$.subscribe(() => {
       this.setLocale(localStorage.getItem(LocalStorageKeys.selectedLanguage)!);
       this.ticketDataService.getTickets(this.isSupportManager);
     });
@@ -204,6 +208,13 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit {
       this.isFirstLoad = false;
       this.ngAfterViewInit();
     }
+  }
+
+  ngOnDestroy() {
+    this.componentLoadSubscription.unsubscribe();
+    this.ticketsSubscription.unsubscribe();
+    this.langUpdateSubscription.unsubscribe();
+    this.usersSubscription.unsubscribe();
   }
 
   /**

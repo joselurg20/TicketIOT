@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
 import { iTicketGraph } from 'src/app/models/tickets/iTicketsGraph';
@@ -21,7 +21,7 @@ import { ComponentLoadService } from 'src/app/services/componentLoad.service';
     templateUrl: './chart-doughnut.component.html',
     styleUrls: ['./chart-doughnut.component.scss']
 })
-export class ChartDoughnutComponent {
+export class ChartDoughnutComponent implements OnInit, OnDestroy {
 
   tickets: iTicketGraph[] = [];
   myChart: any;
@@ -35,8 +35,11 @@ export class ChartDoughnutComponent {
   labelEn: string = 'Tickets';
   label: string = this.labelEs;
   loading$: Observable<boolean>;
-  private langUpdateSubscription: Subscription = {} as Subscription;
+  private langUpdateSubscription: Subscription = Subscription.EMPTY;
   isFirstLoad: boolean = true;
+
+  componentLoadSubscription: Subscription = Subscription.EMPTY;
+  ticketsSubscription: Subscription = Subscription.EMPTY;
 
   constructor(private langUpdateService: LanguageUpdateService, private ticketsService: TicketDataService,
               private loadingService: LoadingService, private usersService: UsersService,
@@ -47,7 +50,7 @@ export class ChartDoughnutComponent {
   ngOnInit() {
     this.loadingService.showLoading();
     this.switchLanguage();
-    this.componentLoadService.loadComponent$.subscribe(() => {
+    this.componentLoadSubscription =this.componentLoadService.loadComponent$.subscribe(() => {
     
     if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
       this.title = this.titleEn;
@@ -68,7 +71,7 @@ export class ChartDoughnutComponent {
     }  
     this.createChart();
     });
-    this.ticketsService.ticketGraphs$.subscribe(tickets => {
+    this.ticketsSubscription =this.ticketsService.ticketGraphs$.subscribe(tickets => {
       this.loadingService.showLoading();
       this.tickets = tickets;
       this.createChart();
@@ -79,6 +82,12 @@ export class ChartDoughnutComponent {
       this.switchLanguage();
       this.loadingService.hideLoading();
     });
+  }
+
+  ngOnDestroy() {
+    this.componentLoadSubscription.unsubscribe();
+    this.ticketsSubscription.unsubscribe();
+    this.langUpdateSubscription.unsubscribe();
   }
 
   /**

@@ -53,3 +53,22 @@ body, html {
 ::-webkit-scrollbar-corner {
   background-color: #141416;
 }
+
+.mdc-text-field--no-label:not(.mdc-text-field--textarea)
+.mat-mdc-form-field-input-control.mdc-text-field__input,
+.mat-mdc-text-field-wrapper .mat-mdc-form-field-input-control {
+  margin-top: -8px;
+  margin-bottom: 6px;
+}
+
+mat-form-field[_ngcontent-ng-c1993642876] {
+  width: 97%;
+}
+
+.mat-mdc-form-field-has-icon-suffix .mat-mdc-text-field-wrapper {
+  width: 100%;
+}
+
+.mat-mdc-form-field-icon-suffix, [dir=rtl] .mat-mdc-form-field-icon-prefix {
+  margin-top: -12px;
+}

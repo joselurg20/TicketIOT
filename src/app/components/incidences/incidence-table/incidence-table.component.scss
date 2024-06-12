@@ -71,7 +71,11 @@ select {
 .filter-button {
   grid-area: filter-button;
   margin-top: -46px;
-  margin-left: 20px;
+  margin-left: 17px;
+}
+
+.filter-button a{
+  width: 100%;
 }
 
 .search-bar {

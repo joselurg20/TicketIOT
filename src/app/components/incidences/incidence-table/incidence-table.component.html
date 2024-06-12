@@ -62,7 +62,7 @@
                     <input type="text" name="search" class="form-control" class="search"
                         [(ngModel)]="searchString" placeholder="{{'incidence-table.search' | translate}}" [ngClass]="{'search-tech': !isSupportManager}">
                 </div>   
-                <div class="filter-button">
+                <div class="filter-button" [ngClass]="{'filter-tech-div': !isSupportManager}">
                     <a class="btn-l" type="submit" (click)="filterTickets();" [ngClass]="{'filter-tech': !isSupportManager}">{{"incidence-table.filterButton" | translate}}</a>
                 </div>  
             </form>

@@ -74,8 +74,19 @@ select {
   margin-left: 17px;
 }
 
+.filter-tech-div {
+  grid-area: filter-button;
+  margin-top: -46px;
+  margin-left: 17px;
+  padding-right: 10px;
+}
+
 .filter-button a{
   width: 100%;
+}
+
+.filter-tech {
+  margin-left: 2px;
 }
 
 .search-bar {
@@ -97,11 +108,7 @@ select {
   margin-top: -50px;
   margin-left: 1vw;
   font-size: 16px;
-  width: 85.5%;
-}
-
-.filter-tech {
-  margin-left: -10vw;
+  width: 100%;
 }
 
 .filters {
@@ -122,14 +129,15 @@ select {
 .filter-form-tech {
   display: grid;
   grid-template-areas:
-    "status-label prio-label date-label ."
-    "status-select prio-select date-select ."
-    "search-bar search-bar search-bar filter-button";
+    "status-label prio-label date-label"
+    "status-select prio-select date-select"
+    "search-bar search-bar filter-button";
 }
 
 mat-form-field {
   margin-top: -5px;
   height: 70%;
+  width: 97%;
 }
 
 ::ng-deep .mat-mdc-form-field-has-icon-suffix .mat-mdc-text-field-wrapper {

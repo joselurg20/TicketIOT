@@ -8,8 +8,10 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="fa-solid fa-comments"></i> {{"message.title" | translate}}</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+        <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="fa-solid fa-comments"></i> {{"message.title" |
+          translate}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i
+            class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="modal-body">
         <hr>
@@ -21,26 +23,29 @@
           <p>{{message.content}}</p>
           <div *ngIf="message.attachmentPaths && message.attachmentPaths.length > 0">
             <div id="carouselExample{{message.id}}" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div *ngFor="let attachment of message.attachments; let i = index" class="carousel-item" [ngClass]="{'active': i === 0}">
-                        <div class="d-flex flex-column align-items-center">
-                            <img [src]="attachment.previewUrl" class="d-block w-100 img-fluid" alt="Image preview">
-                            <button class="custom-file-button btn-lg mt-3" (click)="downloadAttachment(attachment.path)">
-                                <i class="fa-solid fa-download"></i> {{ 'message.download' | translate }}
-                            </button>
-                        </div>
-                    </div>
+              <div class="carousel-inner">
+                <div *ngFor="let attachment of message.attachments; let i = index" class="carousel-item"
+                  [ngClass]="{'active': i === 0}">
+                  <div class="d-flex flex-column align-items-center">
+                    <img [src]="attachment.previewUrl" class="d-block w-100 img-fluid" alt="Image preview">
+                    <button class="custom-file-button btn-lg mt-3" (click)="downloadAttachment(attachment.path)">
+                      <i class="fa-solid fa-download"></i> {{ 'message.download' | translate }}
+                    </button>
+                  </div>
                 </div>
-                <button class="carousel-control-prev" *ngIf="message.attachmentPaths.length > 1" type="button" attr.data-bs-target="#carouselExample{{message.id}}" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" *ngIf="message.attachmentPaths.length > 1" type="button" attr.data-bs-target="#carouselExample{{message.id}}" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
+              </div>
+              <button class="carousel-control-prev" *ngIf="message.attachmentPaths.length > 1" type="button"
+                attr.data-bs-target="#carouselExample{{message.id}}" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" *ngIf="message.attachmentPaths.length > 1" type="button"
+                attr.data-bs-target="#carouselExample{{message.id}}" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
             </div>
-        </div>
+          </div>
         </div>
         <hr>
       </div>

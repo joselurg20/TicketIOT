@@ -4,15 +4,19 @@
   padding: 5px;
 }
 
-
 label {
-  font-size: 20px;
+  font-size: 16px;
+}
+
+.form-label {
+  text-align: left !important;
 }
 
 .form-select {
-  border-radius: 10px;
+  border-radius: 5px !important;
   background-color: $bg-color-light;
   color: $text-color-primary !important;
+  font-size: 14px;
 
   &:focus {
     outline: none !important;
@@ -20,34 +24,14 @@ label {
     box-shadow: none !important;
     border-color: $color-warning;
   }
-
-  &::-webkit-input-placeholder {
-    color: $text-color-primary;
-  }
-
-  &::-moz-placeholder {
-    color: $text-color-primary;
-  }
-
-  &:-ms-input-placeholder {
-    color: $text-color-primary;
-  }
-
-  &::-ms-input-placeholder {
-    color: $text-color-primary;
-  }
-
-  &::placeholder {
-    color: $text-color-primary;
-  }
 }
 
 .btn {
   border-radius: 5px;
   color: $color-dark;
   background-color: $bg-color-warning;
-  height: 40px;
-
+  height: 2rem;
+  font-size: 14px;
 
   &:hover {
     color: $color-light;
@@ -56,154 +40,60 @@ label {
   }
 }
 
-.prio-status-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
+.priority-status-container {
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 20px;
 }
 
-.option-item:hover {
-  background-color: $bg-color-dark;
-}
-
-.prio-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  width: 100%;
-}
-
-.prio-container label {
-  -ms-flex-item-align: start;
-  -ms-grid-row-align: start;
-  align-self: start;
-  width: 17rem;
-}
-
-.prio-container select {
-  width: 17rem;
-}
-
-.prio-container button {
-  height: 40px;
-  width: 17rem;
-}
-
+.prio-container,
 .status-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
   flex-direction: column;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  width: 100%;
+  width: 48%;
 }
 
-.status-container label {
-  -ms-flex-item-align: start;
-  -ms-grid-row-align: start;
-  align-self: start;
-  width: 17rem;
-}
-
-.status-container select {
-  width: 17rem;
-}
-
-.status-container button {
-  width: 25rem;
-  width: 17rem;
-}
-
-.full-width {
-  width: 40vw;
-}
-
-.full-width select {
-  width: 39.3vw;
-}
-
-.full-width button {
-  width: 39.3vw;
+.equal-width {
+  width: 300px;
 }
 
 @media screen and (max-width: 990px) {
-
-  .prio-container label {
-    width: 17rem;
+  .priority-status-container {
+    flex-direction: column;
+    align-items: center;
   }
 
-  .prio-container select {
-    width: 17rem;
+  .prio-container,
+  .status-container {
+    width: 100%;
   }
 
-  .prio-container button {
-    width: 17rem;
-  }
-
-  .status-container label {
-    width: 17rem;
-  }
-
-  .status-container select {
-    width: 17rem;
-  }
-
-  .status-container button {
-    width: 17rem;
+  .prio-container:not(:last-child) {
+    margin-bottom: 20px;
   }
 }
 
 @media screen and (max-width: 767px) {
-
-  .prio-container label {
-    width: 15rem;
+  .container {
+    width: 90vw;
+    max-width: 700px;
+    margin-top: 30px;
+    padding: 15px;
   }
 
-  .prio-container select {
-    width: 15rem;
+  .priority-status-container {
+    flex-direction: column;
+    align-items: center;
   }
 
-  .prio-container button {
-    width: 15rem;
+  .prio-container,
+  .status-container {
+    width: 100%;
   }
 
-  .status-container label {
-    width: 15rem;
-  }
-
-  .status-container select {
-    width: 15rem;
-  }
-
-  .status-container button {
-    width: 15rem;
+  .prio-container:not(:last-child) {
+    margin-bottom: 20px;
   }
 }

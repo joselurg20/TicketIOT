@@ -1,37 +1,82 @@
 @import './../../../styles/imports.scss';
 
 .container {
+  margin: 1.5rem auto 1.5rem auto; /* Añadir margen inferior */
+  border-radius: 15px;
   background-color: $bg-color-mid;
-  color: $text-color-mid;
-  width: 600px;
-  height: 101rem;
-  margin: 30px auto;
-  border-radius: 25px;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+  width: 90vw;
+  max-width: 700px;
+  height: 212vh;
+  max-height: 1400px;
+  padding: 15px;
+  color: $color-light;
+  outline: none;
+  box-shadow: none;
+  font-size: 0.875rem;
+  box-sizing: border-box;
 }
 
 .logotipe {
   text-align: center;
 
   img {
-    width: 340px;
+    width: 80%; 
+    max-width: 300px; 
     height: auto;
     border-radius: 10px;
   }
 
   .preview-image {
-    width: 150px;
+    width: 60%;
+    max-width: 150px;
     height: auto;
     border-radius: 10px;
   }
 }
 
 .site-layout {
+  margin: 20px auto;
   width: 100vw;
   height: 100vh;
   position: relative;
   display: flex;
   justify-content: center;
+  font-size: 0.875rem;
+}
+
+.margin-bottom {
+  height: 25px;
+}
+
+
+@media screen and (max-width: 992px) {
+  .container {
+    margin: 1rem auto 1rem auto; /* Añadir margen inferior */
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 0.8125rem;
+  }
+
+  .logotipe img,
+  .logotipe .preview-image {
+    width: 90%;
+    max-width: 250px;
+    border-radius: 8px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .container {
+    margin: 0.5rem auto 0.5rem auto; /* Añadir margen inferior */
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 0.75rem; 
+  }
+
+  .logotipe img,
+  .logotipe .preview-image {
+    width: 100%;
+    max-width: 200px;
+    border-radius: 5px;
+  }
 }

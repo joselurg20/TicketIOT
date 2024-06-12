@@ -324,15 +324,15 @@ tr {
   margin-right: -4px;
   border-top: $bg-color-dark 1px solid;
   font-size: 14px;
-  height: 45px;
+  height: 40px;
 }
 
 ::ng-deep .pages .mat-mdc-form-field-type-mat-select:not(.mat-form-field-disabled) .mat-mdc-text-field-wrapper {
   cursor: pointer;
-  height: 40px;
+  height: 30px;
 }
 ::ng-deep .pages .mat-mdc-paginator-range-actions {
-  margin-top: -20px;
+  margin-top: -25px;
 }
 
 .mat-raised-button {

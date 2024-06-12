@@ -44,7 +44,7 @@ th {
   background-color: $bg-color-warning;
   padding: 4px;  // Reducir el padding
   margin: 0 5px;  // Reducir los márgenes
-  font-size: 18px;  // Reducir el tamaño de fuente
+  font-size: 14px;  // Reducir el tamaño de fuente
 }
 
 tr {
@@ -52,6 +52,10 @@ tr {
   background-color: $bg-color-warning;
   padding: 4px 10px;
   margin: 0 5px;  // Reducir los márgenes
+}
+
+td {
+  font-size: 14px;
 }
 
 tbody td {

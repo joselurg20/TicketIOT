@@ -72,3 +72,21 @@ mat-form-field[_ngcontent-ng-c1993642876] {
 .mat-mdc-form-field-icon-suffix, [dir=rtl] .mat-mdc-form-field-icon-prefix {
   margin-top: -12px;
 }
+
+.mat-mdc-button.mat-mdc-button-base,
+.mat-mdc-raised-button.mat-mdc-button-base,
+.mat-mdc-unelevated-button.mat-mdc-button-base,
+.mat-mdc-outlined-button.mat-mdc-button-base {
+  height: 30px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+tr[_ngcontent-ng-c1993642876] {
+  height: 30px;
+}
+
+.pages .mat-mdc-paginator-page-size {
+  margin-top: -21px;
+}
+

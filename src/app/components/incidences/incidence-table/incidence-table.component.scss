@@ -331,13 +331,8 @@ tr {
   cursor: pointer;
   height: 40px;
 }
-
-::ng-deep .pages .mat-mdc-paginator-page-size {
-  margin-top: -15px;
-}
-
 ::ng-deep .pages .mat-mdc-paginator-range-actions {
-  margin-top: -15px;
+  margin-top: -20px;
 }
 
 .mat-raised-button {

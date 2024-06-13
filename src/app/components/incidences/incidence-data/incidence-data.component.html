@@ -4,42 +4,42 @@
 <h1 class="my-4" *ngIf="!(loading$ | async)" >{{"incidence-data.title" | translate}}</h1>
 <form *ngIf="!(loading$ | async)">
     <div class="row gy-1">
-        <div class="col-6">
+        <div class="col-4">
             <div class="p-3">
                 <label class="ticket-data"><i class="fa-solid fa-pen-nib"></i> {{"incidence-data.name" |
                     translate}}</label>
                 <p class="font">{{ticket.title}}</p>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col-4">
             <div class="p-3">
                 <label class="ticket-data"><i class="fa-solid fa-calendar-days"></i> {{"incidence-data.date" |
                     translate}}</label>
                 <p class="font"> {{ticket.timestamp}} </p>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col-4">
             <div class="p-3">
                 <label class="ticket-data"><i class="fa-solid fa-user"></i> {{"incidence-data.username" |
                     translate}}</label>
                 <p class="font">{{ticket.name}}</p>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col-4">
             <div class="p-3">
                 <label class="ticket-data"><i class="fa-solid fa-envelope"></i> {{"incidence-data.email" |
                     translate}}</label>
                 <p class="font">{{ticket.email}}</p>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col-4">
             <div class="p-3">
                 <label class="ticket-data"><i class="fa-solid fa-chart-simple"></i> {{"incidence-data.priority" |
                     translate}}</label>
                 <p class="font">{{ticketPrio}}</p>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col-4">
             <div class="p-3">
                 <label class="ticket-data"><i class="fa-solid fa-traffic-light"></i> {{"incidence-data.status" |
                     translate}}</label>

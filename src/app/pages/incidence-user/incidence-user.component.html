@@ -1,4 +1,4 @@
-<div class="grid-container">
+<div class="top-grid-container">
   <div id="loading" *ngIf="loading$ | async" class="w-100 h-100">
     <app-loading></app-loading>
   </div>
@@ -7,6 +7,8 @@
   <h2 class="title">{{"incidence-data.reviewTitle" | translate}} <i class="fa-solid fa-arrow-right"></i>
     {{ticket.title}}</h2>
   <div class="language"><app-language class="d-flex justify-content-end"></app-language></div>
+</div>
+<div class="grid-container">
   <div class="history"><app-history></app-history></div>
   <div class="status">
     <div class="row gy-1">

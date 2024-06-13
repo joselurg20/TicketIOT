@@ -58,10 +58,19 @@ h2 {
   margin-top: 28px;
 }
 
+.top-grid-container {
+  display: grid;
+  grid-template-areas:
+    'iso title title title title leng';
+  grid-gap: 10px;
+  border-radius: 20px;
+  padding: 10px;
+  height: 14%;
+}
+
 .grid-container {
   display: grid;
   grid-template-areas:
-    'iso title title title title leng'
     'hist hist hist hist status status'
     'hist hist hist hist msg msg'
     'hist hist hist hist msg msg'
@@ -69,7 +78,7 @@ h2 {
   grid-gap: 10px;
   border-radius: 20px;
   padding: 10px;
-  height: 100%;
+  height: 86%;
 }
 
 .grid-container>div {

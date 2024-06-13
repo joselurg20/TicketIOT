@@ -15,7 +15,8 @@
             <p>{{message.content}}</p>
             <div class="attachments">
                 <div class="attachment-item" *ngFor="let attachment of message.attachments">
-                    <img [src]="attachment.previewUrl" class="img-fluid" matTooltip="{{attachment.name}}" alt="Image preview">
+                    <img [src]="attachment.previewUrl" class="img-fluid" matTooltip="{{attachment.name}}"
+                        alt="Image preview">
                     <button class="custom-file-button btn-lg mt-3" (click)="downloadAttachment(attachment.path)">
                         <i class="fa-solid fa-download"></i> {{ 'message.download' | translate }}
                     </button>

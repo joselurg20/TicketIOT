@@ -1,14 +1,14 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
-import { iTicketGraph } from 'src/app/models/tickets/iTicketsGraph';
-import { TicketDataService } from 'src/app/services/tickets/ticketData.service';
-import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { Observable, Subscription } from 'rxjs';
-import { Priorities } from 'src/app/utilities/enum';
-import { LoadingComponent } from "../../shared/loading/loading.component";
+import { iTicketGraph } from 'src/app/models/tickets/iTicketsGraph';
+import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { LoadingService } from 'src/app/services/loading.service';
+import { TicketDataService } from 'src/app/services/tickets/ticketData.service';
+import { Priorities } from 'src/app/utilities/enum';
 import { LocalStorageKeys } from 'src/app/utilities/literals';
+import { LoadingComponent } from "../../shared/loading/loading.component";
 
 @Component({
   selector: 'app-chart-pie',
@@ -37,7 +37,7 @@ export class ChartPieComponent implements OnInit, OnDestroy {
   ticketsSubscription: Subscription = Subscription.EMPTY;
 
   constructor(private ticketsService: TicketDataService, private langUpdateService: LanguageUpdateService,
-              private loadingService: LoadingService) {
+    private loadingService: LoadingService) {
     this.loading$ = this.loadingService.loading$;
   }
 
@@ -47,7 +47,7 @@ export class ChartPieComponent implements OnInit, OnDestroy {
       this.title = this.titleEn;
       this.labels = this.labelsEn;
       this.label = this.labelEn;
-    }else if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es'){
+    } else if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es') {
       this.title = this.titleEs;
       this.labels = this.labelsEs;
       this.label = this.labelEs;
@@ -56,7 +56,7 @@ export class ChartPieComponent implements OnInit, OnDestroy {
       this.tickets = tickets;
       this.createChart();
       this.loadingService.hideLoading();
-      });
+    });
     this.langUpdateSubscription = this.langUpdateService.langUpdated$.subscribe(() => {
       this.switchLanguage();
     });
@@ -76,7 +76,7 @@ export class ChartPieComponent implements OnInit, OnDestroy {
       this.title = this.titleEn;
       this.labels = this.labelsEn;
       this.label = this.labelEn;
-    }else if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es'){
+    } else if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es') {
       this.title = this.titleEs;
       this.labels = this.labelsEs;
       this.label = this.labelEs;
@@ -89,9 +89,9 @@ export class ChartPieComponent implements OnInit, OnDestroy {
   */
   createChart(): void {
     var chartExist = Chart.getChart("technicianChart");
-    if(chartExist != undefined)
+    if (chartExist != undefined)
       chartExist.destroy();
-    if(this.myChart)
+    if (this.myChart)
       this.myChart.destroy();
 
     const priorities: Priorities[] = [5, 4, 3, 2, 1, 0];

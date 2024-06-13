@@ -18,11 +18,11 @@ import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/s
 
 
 @Component({
-    selector: 'app-helpdesk',
-    standalone: true,
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, MatSnackBarModule, TranslateModule, MatButtonModule, MatTooltipModule, SnackbarIncidenceComponent],
-    templateUrl: './helpdesk.component.html',
-    styleUrls: ['./helpdesk.component.scss']
+  selector: 'app-helpdesk',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatSnackBarModule, TranslateModule, MatButtonModule, MatTooltipModule, SnackbarIncidenceComponent],
+  templateUrl: './helpdesk.component.html',
+  styleUrls: ['./helpdesk.component.scss']
 })
 export class HelpdeskComponent implements OnInit, OnDestroy {
 
@@ -127,12 +127,12 @@ export class HelpdeskComponent implements OnInit, OnDestroy {
         next: (response) => {
           this.messagesUpdateService.triggerMessagesUpdate();
           this.messageForm.reset();
-          this._snackBar.openFromComponent(SnackbarIncidenceComponent , {
+          this._snackBar.openFromComponent(SnackbarIncidenceComponent, {
             duration: this.durationInSeconds * 1000,
           });
         },
         error: (error) => {
-          this._snackBar.openFromComponent(AlertComponent , {
+          this._snackBar.openFromComponent(AlertComponent, {
             duration: this.durationInSeconds * 1000,
           })
           console.error('Error en la solicitud', error);
@@ -198,12 +198,12 @@ export class HelpdeskComponent implements OnInit, OnDestroy {
     this.isFileSelected = files.length > 0;
     this.previewUrls = [];
     this.selectFilesNames = [];
-  
+
     for (let file of files) {
       const reader = new FileReader();
       reader.onload = () => {
         let previewUrl: string | ArrayBuffer | null = reader.result;
-  
+
         switch (file.type) {
           case 'image/jpeg':
           case 'image/png':
@@ -250,11 +250,11 @@ export class HelpdeskComponent implements OnInit, OnDestroy {
             previewUrl = 'assets/images/file-previews/unknown_file.png';
             break;
         }
-  
+
         this.previewUrls.push(previewUrl);
         this.selectFilesNames.push(file.name);
       };
-  
+
       reader.readAsDataURL(file);
     }
   }

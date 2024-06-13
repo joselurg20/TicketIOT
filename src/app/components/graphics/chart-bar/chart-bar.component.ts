@@ -1,19 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Chart, registerables } from 'chart.js';
 import { Observable, Subscription } from 'rxjs';
 import { iTicketGraph } from 'src/app/models/tickets/iTicketsGraph';
-import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
-import { TicketDataService } from 'src/app/services/tickets/ticketData.service';
-import { LoadingComponent } from "../../shared/loading/loading.component";
-import { LoadingService } from 'src/app/services/loading.service';
-import { LocalStorageKeys , Roles } from 'src/app/utilities/literals';
-import { iUser } from 'src/app/models/users/iUser';
 import { iUserGraph } from 'src/app/models/users/iUserGraph';
-import { UserDataService } from 'src/app/services/users/userData.service';
 import { ComponentLoadService } from 'src/app/services/componentLoad.service';
-import { Router } from '@angular/router';
+import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
+import { LoadingService } from 'src/app/services/loading.service';
+import { TicketDataService } from 'src/app/services/tickets/ticketData.service';
+import { UserDataService } from 'src/app/services/users/userData.service';
+import { LocalStorageKeys } from 'src/app/utilities/literals';
 import { Routes } from 'src/app/utilities/routes';
+import { LoadingComponent } from "../../shared/loading/loading.component";
 
 @Component({
   selector: 'app-chart-bar',
@@ -23,8 +22,6 @@ import { Routes } from 'src/app/utilities/routes';
   styleUrls: ['./chart-bar.component.scss']
 })
 export class ChartBarComponent implements OnInit, OnDestroy {
-
-  
 
   users: iUserGraph[] = [];
   tickets: iTicketGraph[] = [];
@@ -41,40 +38,40 @@ export class ChartBarComponent implements OnInit, OnDestroy {
   usersGraphSubscription: Subscription = Subscription.EMPTY;
 
   constructor(private ticketsService: TicketDataService, private langUpdateService: LanguageUpdateService,
-              private loadingService: LoadingService, private userDataService: UserDataService,
-              private componentLoadService: ComponentLoadService, private router: Router) {
+    private loadingService: LoadingService, private userDataService: UserDataService,
+    private componentLoadService: ComponentLoadService, private router: Router) {
     this.loading$ = this.loadingService.loading$;
   }
 
   ngOnInit() {
     this.componentLoadSubscription = this.componentLoadService.loadComponent$.subscribe(() => {
-        
-      if(this.router.url == '/' + Routes.supportManager) {
-    
-        if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en'){
+
+      if (this.router.url == '/' + Routes.supportManager) {
+
+        if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
           this.title = this.titleEn;
-        }else if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es'){
+        } else if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es') {
           this.title = this.titleEs;
-        }  
-          this.usersSubscription = this.userDataService.usersFN$.subscribe(users => {
-            this.users = users;
-            if(!this.isFirstLoad && this.router.url == '/' + Routes.supportManager){
-              this.createChart();
-              this.loadingService.hideLoading();
-            }
-            this.isFirstLoad = false
-          });
-          this.usersGraphSubscription =this.ticketsService.usersGraph$.subscribe(usersGraph => {
-            this.tickets = usersGraph;
-            if(!this.isFirstLoad && this.router.url == '/' + Routes.supportManager){
-              this.createChart();
-              this.loadingService.hideLoading();
-            }
-            this.isFirstLoad = false
-          });
-          this.langUpdateSubscription = this.langUpdateService.langUpdated$.subscribe(() => {
-            this.switchLanguage();
-          });
+        }
+        this.usersSubscription = this.userDataService.usersFN$.subscribe(users => {
+          this.users = users;
+          if (!this.isFirstLoad && this.router.url == '/' + Routes.supportManager) {
+            this.createChart();
+            this.loadingService.hideLoading();
+          }
+          this.isFirstLoad = false
+        });
+        this.usersGraphSubscription = this.ticketsService.usersGraph$.subscribe(usersGraph => {
+          this.tickets = usersGraph;
+          if (!this.isFirstLoad && this.router.url == '/' + Routes.supportManager) {
+            this.createChart();
+            this.loadingService.hideLoading();
+          }
+          this.isFirstLoad = false
+        });
+        this.langUpdateSubscription = this.langUpdateService.langUpdated$.subscribe(() => {
+          this.switchLanguage();
+        });
       }
     });
   }
@@ -90,14 +87,14 @@ export class ChartBarComponent implements OnInit, OnDestroy {
    * Cambia el idioma del gráfico
    */
   switchLanguage() {
-    if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en'){
+    if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
       this.title = this.titleEn;
-    }else if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es'){
+    } else if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es') {
       this.title = this.titleEs;
     }
     this.createChart();
 
-    
+
   }
 
   ngAfterViewInit(): void {
@@ -112,9 +109,9 @@ export class ChartBarComponent implements OnInit, OnDestroy {
    */
   createChart(): void {
     var chartExist = Chart.getChart("myChart");
-    if(chartExist != undefined)
+    if (chartExist != undefined)
       chartExist.destroy();
-    if(this.myChart)
+    if (this.myChart)
       this.myChart.destroy();
 
     const technicianNames = this.users.map(user => user.userName); // Obtener nombres de los técnicos
@@ -125,7 +122,7 @@ export class ChartBarComponent implements OnInit, OnDestroy {
     });
 
 
-    
+
 
     Chart.register(...registerables);
 

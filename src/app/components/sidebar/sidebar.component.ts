@@ -77,11 +77,11 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
 
   constructor(private loginService: LoginService, private router: Router, private translate: TranslateService,
-              private langUpdateService: LanguageUpdateService, private usersService: UsersService,
-              private componentLoadService: ComponentLoadService) {
+    private langUpdateService: LanguageUpdateService, private usersService: UsersService,
+    private componentLoadService: ComponentLoadService) {
     this.translate.addLangs(['en', 'es']);
     var lang = '';
-    switch(localStorage.getItem(LocalStorageKeys.userLanguageKey)) {
+    switch (localStorage.getItem(LocalStorageKeys.userLanguageKey)) {
       case '1':
         lang = 'en';
         break;
@@ -139,7 +139,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.componentLoadSubscription = this.componentLoadService.loadComponent$.subscribe(() => {
-    
+
       this.screenWidth = window.innerWidth;
       const selectedLanguage = localStorage.getItem(LocalStorageKeys.selectedLanguage);
       if (selectedLanguage) {
@@ -152,7 +152,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
       }
       if (this.usersService.currentUser?.role === Roles.managerRole) {
         this.isSupportManager = true;
-      }  
+      }
     });
   }
 
@@ -185,7 +185,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     if (this.usersService.currentUser?.role === Roles.managerRole) {
       this.router.navigate([Routes.supportManager]);
     } else {
-      this.router.navigate([Routes.supportTechnician]); 
+      this.router.navigate([Routes.supportTechnician]);
     }
 
   }

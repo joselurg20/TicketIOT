@@ -2,19 +2,18 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
-import { iTicket } from 'src/app/models/tickets/iTicket';
 import { iTicketDescriptor } from 'src/app/models/tickets/iTicketDescription';
+import { iTicketUserDto } from 'src/app/models/tickets/iTicketUserDto';
 import { iUser } from 'src/app/models/users/iUser';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { LoadingService } from 'src/app/services/loading.service';
 import { TicketUpdateService } from 'src/app/services/tickets/ticketUpdate.service';
-import { ButtonComponent } from "../../button/button.component";
-import { LoadingComponent } from "../../shared/loading/loading.component";
 import { TicketsService } from 'src/app/services/tickets/tickets.service';
 import { UsersService } from 'src/app/services/users/users.service';
 import { LocalStorageKeys } from 'src/app/utilities/literals';
-import { iTicketUserDto } from 'src/app/models/tickets/iTicketUserDto';
 import { Utils } from 'src/app/utilities/utils';
+import { ButtonComponent } from "../../button/button.component";
+import { LoadingComponent } from "../../shared/loading/loading.component";
 
 @Component({
   selector: 'app-incidence-data',
@@ -46,9 +45,9 @@ export class IncidenceDataComponent implements OnInit, OnDestroy {
   ticketSubscription: Subscription = Subscription.EMPTY;
 
   constructor(private ticketsService: TicketsService, private ticketUpdateService: TicketUpdateService,
-              private loadingService: LoadingService, private cdr: ChangeDetectorRef,
-              private translate: TranslateService, private languageUpdateService: LanguageUpdateService,
-              private usersService: UsersService) {
+    private loadingService: LoadingService, private cdr: ChangeDetectorRef,
+    private translate: TranslateService, private languageUpdateService: LanguageUpdateService,
+    private usersService: UsersService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -86,7 +85,7 @@ export class IncidenceDataComponent implements OnInit, OnDestroy {
     this.ticketUpdateSubscription = this.ticketUpdateService.ticketUpdated$.subscribe(() => {
       this.refreshTicketData();
     });
-    this.languageUpdateSubscription =this.languageUpdateService.langUpdated$.subscribe(() => {
+    this.languageUpdateSubscription = this.languageUpdateService.langUpdated$.subscribe(() => {
       this.ticketPrio = this.getPriorityString(this.ticket.priority);
       this.ticketStatus = this.getStatusString(this.ticket.status);
     })

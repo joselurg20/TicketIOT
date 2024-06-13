@@ -34,9 +34,10 @@
             </div>
 
             <div class="form-group">
-                <label for="Attachments"><i class="fa-solid fa-folder"></i> {{"comunication.upload" | translate}}</label> <br>
-                <input type="file" id="Attachments" formControlName="Attachments" multiple (change)="onFileChange($event)"
-                    style="display: none;">
+                <label for="Attachments"><i class="fa-solid fa-folder"></i> {{"comunication.upload" |
+                    translate}}</label> <br>
+                <input type="file" id="Attachments" formControlName="Attachments" multiple
+                    (change)="onFileChange($event)" style="display: none;">
                 <button type="button" onclick="document.getElementById('Attachments').click()"
                     class="custom-file-button btn btn-lg"><i class="fa-solid fa-arrow-up-from-bracket"></i>
                     {{"comunication.select" | translate}}</button>
@@ -51,7 +52,8 @@
                                 <button class="btn-trahs" (click)="deleteFile(i)" *ngIf="isImage(previewUrl)"><i
                                         class="fa-solid fa-x"></i></button>
                                 <div *ngIf="!isImage(previewUrl)" class="d-block justify-content-center">
-                                    <img [src]="previewUrl" class="preview-file" alt="..." matTooltip="{{selectFilesNames}}">
+                                    <img [src]="previewUrl" class="preview-file" alt="..."
+                                        matTooltip="{{selectFilesNames}}">
                                     <div class="carousel-caption d-none d-md-block">
                                         <h5>{{truncateFileName(selectFilesNames[i], 20)}}</h5>
                                         <button class="btn-trahs" *ngIf="!isImage(previewUrl)" (click)="deleteFile(i)">
@@ -60,11 +62,13 @@
                                 </div>
                             </div>
                         </div>
-                        <button *ngIf="previewUrls.length > 1" class="carousel-control-prev" type="button" (click)="prevFile()">
+                        <button *ngIf="previewUrls.length > 1" class="carousel-control-prev" type="button"
+                            (click)="prevFile()">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="visually-hidden"></span>
                         </button>
-                        <button *ngIf="previewUrls.length > 1" class="carousel-control-next" type="button" (click)="nextFile()">
+                        <button *ngIf="previewUrls.length > 1" class="carousel-control-next" type="button"
+                            (click)="nextFile()">
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden"></span>
                         </button>
@@ -73,7 +77,8 @@
             </div>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <button [disabled]="!ticketForm.valid" (click)="openSnackBar()" type="submit" class="btn btn-lg"
-                    id="liveToastBtn"><i class="fa-regular fa-paper-plane"></i> {{'incidence-index.send' | translate}}</button>
+                    id="liveToastBtn"><i class="fa-regular fa-paper-plane"></i> {{'incidence-index.send' |
+                    translate}}</button>
             </div>
         </form>
         <div class="logotipe">

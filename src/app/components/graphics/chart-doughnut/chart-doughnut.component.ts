@@ -1,25 +1,23 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
-import { iTicketGraph } from 'src/app/models/tickets/iTicketsGraph';
-import { iUserGraph } from 'src/app/models/users/iUserGraph';
-import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { Observable, Subscription } from 'rxjs';
-import { TicketDataService } from 'src/app/services/tickets/ticketData.service';
-import { LoadingComponent } from "../../shared/loading/loading.component";
+import { iTicketGraph } from 'src/app/models/tickets/iTicketsGraph';
+import { ComponentLoadService } from 'src/app/services/componentLoad.service';
+import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { LoadingService } from 'src/app/services/loading.service';
-import { LocalStorageKeys , Roles } from 'src/app/utilities/literals';
-import { iUser } from 'src/app/models/users/iUser';
+import { TicketDataService } from 'src/app/services/tickets/ticketData.service';
 import { UsersService } from 'src/app/services/users/users.service';
 import { Status } from 'src/app/utilities/enum';
-import { ComponentLoadService } from 'src/app/services/componentLoad.service';
+import { LocalStorageKeys, Roles } from 'src/app/utilities/literals';
+import { LoadingComponent } from "../../shared/loading/loading.component";
 
 @Component({
-    selector: 'app-chart-doughnut',
-    standalone: true,
-    imports: [CommonModule, LoadingComponent],
-    templateUrl: './chart-doughnut.component.html',
-    styleUrls: ['./chart-doughnut.component.scss']
+  selector: 'app-chart-doughnut',
+  standalone: true,
+  imports: [CommonModule, LoadingComponent],
+  templateUrl: './chart-doughnut.component.html',
+  styleUrls: ['./chart-doughnut.component.scss']
 })
 export class ChartDoughnutComponent implements OnInit, OnDestroy {
 
@@ -42,36 +40,36 @@ export class ChartDoughnutComponent implements OnInit, OnDestroy {
   ticketsSubscription: Subscription = Subscription.EMPTY;
 
   constructor(private langUpdateService: LanguageUpdateService, private ticketsService: TicketDataService,
-              private loadingService: LoadingService, private usersService: UsersService,
-              private componentLoadService: ComponentLoadService) {
+    private loadingService: LoadingService, private usersService: UsersService,
+    private componentLoadService: ComponentLoadService) {
     this.loading$ = this.loadingService.loading$;
-   }
+  }
 
   ngOnInit() {
     this.loadingService.showLoading();
     this.switchLanguage();
-    this.componentLoadSubscription =this.componentLoadService.loadComponent$.subscribe(() => {
-    
-    if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
-      this.title = this.titleEn;
-      this.label = this.labelEn;
-      if(this.usersService.currentUser?.role === Roles.managerRole) {
-        this.labels = this.labelsEn;
-      }else{
-        this.labels = ['OPENED', 'PAUSED'];
+    this.componentLoadSubscription = this.componentLoadService.loadComponent$.subscribe(() => {
+
+      if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
+        this.title = this.titleEn;
+        this.label = this.labelEn;
+        if (this.usersService.currentUser?.role === Roles.managerRole) {
+          this.labels = this.labelsEn;
+        } else {
+          this.labels = ['OPENED', 'PAUSED'];
+        }
+      } else if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es') {
+        this.title = this.titleEs;
+        this.label = this.labelEs;
+        if (this.usersService.currentUser?.role === Roles.managerRole) {
+          this.labels = this.labelsEs;
+        } else {
+          this.labels = ['ABIERTA', 'PAUSADA'];
+        }
       }
-    }else if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es'){
-      this.title = this.titleEs;
-      this.label = this.labelEs;
-      if(this.usersService.currentUser?.role === Roles.managerRole) {
-        this.labels = this.labelsEs;
-      }else{
-        this.labels = ['ABIERTA', 'PAUSADA'];
-      }
-    }  
-    this.createChart();
+      this.createChart();
     });
-    this.ticketsSubscription =this.ticketsService.ticketGraphs$.subscribe(tickets => {
+    this.ticketsSubscription = this.ticketsService.ticketGraphs$.subscribe(tickets => {
       this.loadingService.showLoading();
       this.tickets = tickets;
       this.createChart();
@@ -97,17 +95,17 @@ export class ChartDoughnutComponent implements OnInit, OnDestroy {
     if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'en') {
       this.title = this.titleEn;
       this.label = this.labelEn;
-      if(this.usersService.currentUser?.role === Roles.managerRole) {
+      if (this.usersService.currentUser?.role === Roles.managerRole) {
         this.labels = this.labelsEn;
-      }else{
+      } else {
         this.labels = ['OPENED', 'PAUSED'];
       }
-    }else if(localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es'){
+    } else if (localStorage.getItem(LocalStorageKeys.selectedLanguage) == 'es') {
       this.title = this.titleEs;
       this.label = this.labelEs;
-      if(this.usersService.currentUser?.role === Roles.managerRole) {
+      if (this.usersService.currentUser?.role === Roles.managerRole) {
         this.labels = this.labelsEs;
-      }else{
+      } else {
         this.labels = ['ABIERTA', 'PAUSADA'];
       }
     }
@@ -119,15 +117,15 @@ export class ChartDoughnutComponent implements OnInit, OnDestroy {
    */
   createChart(): void {
     var chartExist = Chart.getChart("technicianChart2");
-    if(chartExist != undefined)
+    if (chartExist != undefined)
       chartExist.destroy();
-    if(this.myChart)
+    if (this.myChart)
       this.myChart.destroy();
 
     var status: Status[] = [];
-    if(this.usersService.currentUser?.role === Roles.managerRole) {
+    if (this.usersService.currentUser?.role === Roles.managerRole) {
       status = [1, 2, 0];
-    }else{
+    } else {
       status = [1, 2];
     }
 
@@ -160,7 +158,7 @@ export class ChartDoughnutComponent implements OnInit, OnDestroy {
       },
       options: {
         responsive: true,
-        plugins: {   
+        plugins: {
           legend: {
             labels: {
               color: 'white',
@@ -198,7 +196,7 @@ export class ChartDoughnutComponent implements OnInit, OnDestroy {
             }
           }
         },
-        
+
       }
     });
   }

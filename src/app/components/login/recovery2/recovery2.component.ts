@@ -6,12 +6,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import * as CryptoJS from 'crypto-js';
+import { Subscription } from 'rxjs';
 import { UsersService } from 'src/app/services/users/users.service';
 import { Routes } from 'src/app/utilities/routes';
 import { LanguageComponent } from "../../language/language.component";
 import { AlertComponent } from '../../snackbars/alert/alert.component';
 import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/snackbar-incidence.component';
-import { Subscription } from 'rxjs';
 
 function passwordValidator(control: FormControl): { [key: string]: any } | null {
   const hasUppercase = /[A-Z]/.test(control.value); // Verifica si hay al menos una letra mayúscula
@@ -126,5 +126,5 @@ export class Recovery2Component implements OnInit, OnDestroy {
       });
     }
   }
-  
+
 }

@@ -8,7 +8,7 @@ export class AlertsDto {
     clearAfterMilliseconds: number | undefined = undefined;
     color: string = "green";
 
-    constructor(init?:Partial<AlertsDto>) {
+    constructor(init?: Partial<AlertsDto>) {
         Object.assign(this, init);
     }
 }

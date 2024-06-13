@@ -1,9 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { LocalStorageKeys } from 'src/app/utilities/literals';
-import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { Subscription } from 'rxjs';
+import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
+import { LocalStorageKeys } from 'src/app/utilities/literals';
 
 @Component({
   selector: 'app-language',
@@ -61,7 +61,7 @@ export class LanguageComponent implements OnInit, OnDestroy {
     this.translate.use(language);
     setTimeout(() => {
       this.languageUpdateService.triggerGraphUpdate();
-    },100)
+    }, 100)
   }
 
   /**

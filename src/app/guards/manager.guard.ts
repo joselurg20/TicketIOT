@@ -1,10 +1,10 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
+import { ComponentLoadService } from '../services/componentLoad.service';
 import { LoginService } from '../services/users/login.service';
 import { UsersService } from '../services/users/users.service';
 import { Roles } from '../utilities/literals';
 import { Routes } from '../utilities/routes';
-import { ComponentLoadService } from '../services/componentLoad.service';
 
 export const managerGuard: CanActivateFn = (route, state) => {
   const loginService = inject(LoginService)

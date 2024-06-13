@@ -15,7 +15,7 @@ import { TranslateModule } from '@ngx-translate/core';
 export class SnackbarIncidenceComponent {
   snackBarRef = inject(MatSnackBarRef<SnackbarIncidenceComponent>);
 
-  constructor() { 
+  constructor() {
 
   }
 }

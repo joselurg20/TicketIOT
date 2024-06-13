@@ -21,7 +21,7 @@ import { MessageComponent } from "../message/message.component";
 @Component({
   selector: 'app-comunication',
   standalone: true,
-  imports: [CommonModule, MessageComponent, FormsModule, ReactiveFormsModule, TranslateModule , MatTooltipModule],
+  imports: [CommonModule, MessageComponent, FormsModule, ReactiveFormsModule, TranslateModule, MatTooltipModule],
   templateUrl: './comunication.component.html',
   styleUrls: ['./comunication.component.scss']
 })
@@ -204,12 +204,12 @@ export class ComunicationComponent implements OnInit, OnDestroy {
     this.isFileSelected = files.length > 0;
     this.previewUrls = [];
     this.selectFilesNames = [];
-  
+
     for (let file of files) {
       const reader = new FileReader();
       reader.onload = () => {
         let previewUrl: string | ArrayBuffer | null = reader.result;
-  
+
         switch (file.type) {
           case 'image/jpeg':
           case 'image/png':
@@ -256,11 +256,11 @@ export class ComunicationComponent implements OnInit, OnDestroy {
             previewUrl = 'assets/images/file-previews/unknown_file.png';
             break;
         }
-  
+
         this.previewUrls.push(previewUrl);
         this.selectFilesNames.push(file.name);
       };
-  
+
       reader.readAsDataURL(file);
     }
   }

@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { TicketsService } from 'src/app/services/tickets/tickets.service';
+import { LoginService } from 'src/app/services/users/login.service';
+import { UserDataService } from 'src/app/services/users/userData.service';
 import { UsersService } from 'src/app/services/users/users.service';
 import { Routes } from 'src/app/utilities/routes';
 import { ButtonComponent } from "../../button/button.component";
@@ -18,13 +20,11 @@ import { LanguageComponent } from "../../language/language.component";
 import { SidebarComponent } from '../../sidebar/sidebar.component';
 import { AlertComponent } from '../../snackbars/alert/alert.component';
 import { SnackbarIncidenceComponent } from '../../snackbars/snackbar-incidence/snackbar-incidence.component';
-import { LoginService } from 'src/app/services/users/login.service';
-import { UserDataService } from 'src/app/services/users/userData.service';
 
 @Component({
   selector: 'app-incidence-index',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatFormFieldModule, MatTooltipModule, SidebarComponent, MatSelectModule, MatInputModule, 
+  imports: [CommonModule, MatButtonModule, MatFormFieldModule, MatTooltipModule, SidebarComponent, MatSelectModule, MatInputModule,
     ReactiveFormsModule, LanguageComponent, ButtonComponent, TranslateModule, MatSnackBarModule, SnackbarIncidenceComponent, AlertComponent],
   templateUrl: './incidence-index.component.html',
   styleUrls: ['./incidence-index.component.scss']
@@ -43,8 +43,8 @@ export class IncidenceIndexComponent implements OnInit {
   currentIndex: number = 0;
 
   constructor(private _snackBar: MatSnackBar, private ticketsService: TicketsService,
-              private translate: TranslateService, private usersService: UsersService,
-              private router: Router, private loginService: LoginService, private usersDataService: UserDataService) {
+    private translate: TranslateService, private usersService: UsersService,
+    private router: Router, private loginService: LoginService, private usersDataService: UserDataService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -55,16 +55,16 @@ export class IncidenceIndexComponent implements OnInit {
   }
 
   openSnackBar(message: string = '', durationInSeconds: number = this.durationInSeconds) {
-  if (this.ticketForm.valid && message === '') {
-    this._snackBar.openFromComponent(SnackbarIncidenceComponent, {
-      duration: durationInSeconds * 1000,
-    });
-  } else {
-    this._snackBar.openFromComponent(AlertComponent, {
-      duration: durationInSeconds * 1000,
-    });
+    if (this.ticketForm.valid && message === '') {
+      this._snackBar.openFromComponent(SnackbarIncidenceComponent, {
+        duration: durationInSeconds * 1000,
+      });
+    } else {
+      this._snackBar.openFromComponent(AlertComponent, {
+        duration: durationInSeconds * 1000,
+      });
+    }
   }
-}
 
 
   ngOnInit() {
@@ -75,7 +75,7 @@ export class IncidenceIndexComponent implements OnInit {
       Name: new FormControl('', [Validators.required, Validators.maxLength(45)]),
       Email: new FormControl('', [Validators.required, Validators.email])
     });
-    if(this.loginService.isLogged()) {
+    if (this.loginService.isLogged()) {
       this.isLogged = true;
       this.usersDataService.getTechnicians();
     } else {
@@ -91,7 +91,7 @@ export class IncidenceIndexComponent implements OnInit {
         .subscribe({
           next: () => {
             this.ticketForm.reset();
-          
+
             setTimeout(() => {
               this.clearAttachments();
               this._snackBar.openFromComponent(SnackbarIncidenceComponent, {
@@ -137,12 +137,12 @@ export class IncidenceIndexComponent implements OnInit {
     this.isFileSelected = files.length > 0;
     this.previewUrls = [];
     this.selectFilesNames = [];
-  
+
     for (let file of files) {
       const reader = new FileReader();
       reader.onload = () => {
         let previewUrl: string | ArrayBuffer | null = reader.result;
-  
+
         switch (file.type) {
           case 'image/jpeg':
           case 'image/png':
@@ -189,15 +189,15 @@ export class IncidenceIndexComponent implements OnInit {
             previewUrl = 'assets/images/file-previews/unknown_file.png';
             break;
         }
-  
+
         this.previewUrls.push(previewUrl);
         this.selectFilesNames.push(file.name);
       };
-  
+
       reader.readAsDataURL(file);
     }
   }
-  
+
   isImage(previewUrl: string | ArrayBuffer | null): boolean {
     if (typeof previewUrl === 'string' && previewUrl.startsWith('data:image')) {
       return true;

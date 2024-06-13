@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -19,14 +19,14 @@ import { LoadingComponent } from "../../components/shared/loading/loading.compon
         ComunicationComponent, ButtonComponent, SidebarComponent, MatProgressSpinnerModule, LoadingComponent],
     templateUrl: './manager-incidence.component.html',
     styleUrls: ['./manager-incidence.component.scss']
-    
+
 })
 export class ManagerIncidenceComponent {
 
     loading$: Observable<boolean>;
 
     constructor(private router: Router, private loadingService: LoadingService,
-                private usersService: UsersService) {
+        private usersService: UsersService) {
         this.loading$ = this.loadingService.loading$;
     }
 }

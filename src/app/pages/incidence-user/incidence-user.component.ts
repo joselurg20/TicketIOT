@@ -66,7 +66,7 @@ export class IncidenceUserComponent implements OnInit, OnDestroy {
         this.router.navigate([Routes.notFound]);
       }
     });
-    this.ticketsSubscription =this.ticketsService.getTicketById(this.ticketId).subscribe({
+    this.ticketsSubscription = this.ticketsService.getTicketById(this.ticketId).subscribe({
       next: (response: iTicket) => {
         this.ticket = {
           id: response.id,

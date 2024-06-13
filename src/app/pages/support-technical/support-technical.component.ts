@@ -36,7 +36,7 @@ export class SupportTechnicalComponent implements OnInit, OnDestroy {
     ticketsSubscription: Subscription = Subscription.EMPTY;
 
     constructor(private loginService: LoginService, private router: Router, private ticketsService: TicketDataService,
-                private loadingService: LoadingService, private usersService: UsersService) {
+        private loadingService: LoadingService, private usersService: UsersService) {
         this.loading$ = this.loadingService.loading$;
     }
 

@@ -27,8 +27,8 @@ export class MessageComponent implements OnInit, OnDestroy {
   messageSubscription: Subscription = Subscription.EMPTY;
 
   constructor(private messagesService: MessagesService, private translate: TranslateService,
-              private messagesUpdateService: MessagesUpdateService, private ticketsService: TicketsService,
-              private usersService: UsersService, private messageDataService: MessageDataService) {
+    private messagesUpdateService: MessagesUpdateService, private ticketsService: TicketsService,
+    private usersService: UsersService, private messageDataService: MessageDataService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -48,7 +48,7 @@ export class MessageComponent implements OnInit, OnDestroy {
       this.messageDataService.getMessages(this.ticketId);
 
       this.messagesUpdateSubscription = this.messagesUpdateService.messagesUpdated$.subscribe(() => {
-        
+
         this.messageDataService.getMessages(this.ticketId);
       });
       this.messageSubscription = this.messageDataService.messages$.subscribe((messages: iMessageDto[]) => {
@@ -76,8 +76,8 @@ export class MessageComponent implements OnInit, OnDestroy {
           newMessagesCount: 0
         }
         this.ticket = ticket;
-        if(this.usersService.currentUser?.role === Roles.technicianRole){
-          
+        if (this.usersService.currentUser?.role === Roles.technicianRole) {
+
           this.ticketsService.updateTicket(this.ticketId, this.ticket).subscribe({
             next: (response: any) => {
             },

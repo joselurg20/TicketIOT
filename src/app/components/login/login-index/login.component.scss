@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 0.875rem; 
+  font-size: 0.875rem;
 
   input {
     border-color: $text-color-warning;
@@ -50,9 +50,9 @@
     h1 {
       color: $text-color-dark;
       text-align: center;
-      padding: 5px;  
+      padding: 5px;
       margin-bottom: 20px;
-      font-size:1.6rem;  
+      font-size: 1.6rem;
     }
 
     .eye {
@@ -72,12 +72,12 @@
     .error-msg {
       color: $color-danger;
       text-align: center;
-      font-size: 0.875rem;  
+      font-size: 0.875rem;
     }
 
     .margin-bottom {
       height: 25px;
-    }    
+    }
 
     .btn {
       background-color: $bg-color-warning;
@@ -86,7 +86,7 @@
       border: none;
       color: $color-dark;
       padding: 8px;
-      font-size: 0.875rem; 
+      font-size: 0.875rem;
 
       &:hover {
         color: $color-light;
@@ -125,7 +125,7 @@
     max-width: 700px;
     margin-top: 30px;
     padding: 15px;
-    font-size: 0.8125rem; 
+    font-size: 0.8125rem;
   }
 }
 
@@ -139,11 +139,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: 0.75rem; 
+    font-size: 0.75rem;
   }
 
   .row {
-    .logotipe, img {
+
+    .logotipe,
+    img {
       width: 90%;
       max-width: 250px;
       margin: 20px 0;

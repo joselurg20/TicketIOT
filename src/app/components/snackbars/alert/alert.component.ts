@@ -14,7 +14,7 @@ export class AlertComponent {
 
   snackBarRef = inject(MatSnackBarRef<AlertComponent>);
 
-  constructor() { 
+  constructor() {
 
   }
 

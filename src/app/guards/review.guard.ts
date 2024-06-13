@@ -9,7 +9,7 @@ export const reviewGuard: CanActivateFn = (route, state) => {
 
   let response = true;
 
-  if(!loginService.isLogged()){
+  if (!loginService.isLogged()) {
     response = false;
     router.navigate([Routes.login]);
   }

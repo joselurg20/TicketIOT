@@ -25,7 +25,7 @@ import { Utils } from 'src/app/utilities/utils';
   styleUrls: ['./data.component.scss']
 })
 export class DataComponent implements OnInit, OnDestroy {
-  
+
   users: iUserGraph[] = [];
   selectedUserId: number = -1;
   selectedPriorityValue: number = -1;
@@ -39,10 +39,10 @@ export class DataComponent implements OnInit, OnDestroy {
   componentLoadSubscription: Subscription = Subscription.EMPTY;
 
   constructor(
-              private ticketDataService: TicketDataService, private usersService: UsersService,
-              private ticketUpdateService: TicketUpdateService, private loadingService: LoadingService,
-              private translate: TranslateService, private ticketsService: TicketsService,
-              private router: Router, private userDataService: UserDataService, private componentLoadService: ComponentLoadService) {
+    private ticketDataService: TicketDataService, private usersService: UsersService,
+    private ticketUpdateService: TicketUpdateService, private loadingService: LoadingService,
+    private translate: TranslateService, private ticketsService: TicketsService,
+    private router: Router, private userDataService: UserDataService, private componentLoadService: ComponentLoadService) {
     this.translate.addLangs(['en', 'es']);
     const lang = this.translate.getBrowserLang();
     if (lang !== 'en' && lang !== 'es') {
@@ -55,7 +55,7 @@ export class DataComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.userDataService.getTechnicians();
     this.componentLoadSubscription = this.componentLoadService.loadComponent$.subscribe(() => {
-      
+
       if (this.usersService.currentUser?.role === Roles.managerRole) {
         this.isSupportManager = true;
         this.usersSubscription = this.userDataService.usersFN$.subscribe({
@@ -74,7 +74,7 @@ export class DataComponent implements OnInit, OnDestroy {
       } else {
         this.isSupportManager = false;
       }
-      
+
     });
   }
 

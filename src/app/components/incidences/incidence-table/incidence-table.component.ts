@@ -19,8 +19,10 @@ import { TicketFilterRequestDto } from 'src/app/models/tickets/TicketFilterReque
 import { iTicketTableSM } from 'src/app/models/tickets/iTicketTableSM';
 import { iUser } from 'src/app/models/users/iUser';
 import { iUserGraph } from 'src/app/models/users/iUserGraph';
+import { ComponentLoadService } from 'src/app/services/componentLoad.service';
 import { LanguageUpdateService } from 'src/app/services/languageUpdateService';
 import { LoadingService } from 'src/app/services/loading.service';
+import { CustomMatPaginatorIntl } from 'src/app/services/paginator.service';
 import { TicketDataService } from 'src/app/services/tickets/ticketData.service';
 import { UsersService } from 'src/app/services/users/users.service';
 import { Priorities, Status } from 'src/app/utilities/enum';
@@ -28,8 +30,6 @@ import { LocalStorageKeys, Roles } from 'src/app/utilities/literals';
 import { Routes } from 'src/app/utilities/routes';
 import { Utils } from 'src/app/utilities/utils';
 import { LoadingComponent } from '../../shared/loading/loading.component';
-import { ComponentLoadService } from 'src/app/services/componentLoad.service';
-import { CustomMatPaginatorIntl } from 'src/app/services/paginator.service';
 
 @Component({
   selector: 'app-incidence-table',
@@ -39,7 +39,7 @@ import { CustomMatPaginatorIntl } from 'src/app/services/paginator.service';
     LoadingComponent],
   templateUrl: './incidence-table.component.html',
   styleUrls: ['./incidence-table.component.scss'],
-  providers:[{ provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl }]
+  providers: [{ provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl }]
 })
 export class IncidenceTableComponent implements AfterViewInit, OnInit, OnDestroy {
 
@@ -66,7 +66,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit, OnDestroy
   componentLoadSubscription: Subscription = Subscription.EMPTY;
   usersSubscription: Subscription = Subscription.EMPTY;
   ticketsSubscription: Subscription = Subscription.EMPTY;
-  
+
 
   //Valores seleccionados en el formulario de filtros
   selectedStatusFilter: number = -1;
@@ -245,7 +245,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit, OnDestroy
     }
     this.filter.status = this.selectedStatusFilter;
     this.filter.priority = this.selectedPriorityFilter;
-    if(this.isSupportManager) {
+    if (this.isSupportManager) {
       this.filter.userId = this.selectedTechnicianFilter;
     } else {
       this.filter.userId = this.usersService.currentUser?.id!;
@@ -317,7 +317,7 @@ export class IncidenceTableComponent implements AfterViewInit, OnInit, OnDestroy
    */
   goToTickets() {
     if (localStorage.getItem(LocalStorageKeys.selectedTicket) != null) {
-        this.router.navigate([Routes.reviewManager]);
+      this.router.navigate([Routes.reviewManager]);
     }
 
   }

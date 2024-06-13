@@ -29,7 +29,7 @@ export class SupportManagerComponent implements OnInit {
     loading$: Observable<boolean>;
 
     constructor(private ticketsService: TicketDataService, private loadingService: LoadingService,
-                private usersService: UserDataService) {
+        private usersService: UserDataService) {
         this.loading$ = this.loadingService.loading$;
     }
 

@@ -18,6 +18,7 @@
     "optionS4": "FINALIZADA",
     "saveTech": "Asignar Incidencia",
     "savePrio": "Modificar Prioridad",
-    "saveStatus": "Modificar Estado"
+    "saveStatus": "Modificar Estado",
+    "title": "Acciones"
   }
 }

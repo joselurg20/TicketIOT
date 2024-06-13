@@ -1,18 +1,23 @@
 <form>
+    <h3>{{"data.title" | translate}}</h3>
     <div *ngIf="isSupportManager">
-        <label for="technical" class="form-label">
-            <i class="fa-solid fa-user-group"></i> {{"data.technic" | translate}}
-        </label>
-        <select class="form-select form-select-lg" id="technical" required [(ngModel)]="selectedUserId"
-            name="technical">
-            <option class="option-item" value="-1">{{"data.option1" | translate}}</option>
-            <option class="option-item" *ngFor="let user of users" [value]="user.id">{{user.userName}}</option>
-        </select>
+        <div class="tech-container">
+            <label for="technical" class="form-label">
+                <i class="fa-solid fa-user-group"></i> {{"data.technic" | translate}}
+            </label>
+            <select class="form-select form-select-lg" id="technical" required [(ngModel)]="selectedUserId"
+                name="technical">
+                <option class="option-item" value="-1">{{"data.option1" | translate}}</option>
+                <option class="option-item" *ngFor="let user of users" [value]="user.id">{{user.userName}}</option>
+            </select>
+        </div>
     </div>
     <div *ngIf="isSupportManager" class="d-grid gap-2">
-        <button type="submit" class="btn btn-lg" (click)="assignTicket()">
-            <i class="fa-solid fa-floppy-disk"></i> {{"data.saveTech" | translate}}
-        </button>
+        <div class="tech-container">
+            <button type="submit" class="btn btn-lg" (click)="assignTicket()">
+                <i class="fa-solid fa-floppy-disk"></i> {{"data.saveTech" | translate}}
+            </button>
+        </div>
     </div>
 
     <div class="priority-status-container">

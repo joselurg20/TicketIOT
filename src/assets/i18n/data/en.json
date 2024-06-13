@@ -18,6 +18,7 @@
     "optionS4": "FINISHED",
     "saveTech": "Assign Ticket",
     "savePrio": "Set Priority",
-    "saveStatus": "Set Status"
+    "saveStatus": "Set Status",
+    "title": "Actions"
   }
 }

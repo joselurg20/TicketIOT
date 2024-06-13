@@ -4,15 +4,19 @@
 <div>
     <app-sidebar *ngIf="!(loading$ | async)"></app-sidebar>
     <div class="container" *ngIf="!(loading$ | async)">
-        <form>
+        <div class="data">
             <app-incidence-data></app-incidence-data>
-            <hr>
-            <app-data></app-data>
+        </div>
+        <form>
+            <div class="selectors">
+                <app-data class="selectors-inner"></app-data>
+            </div>
         </form>
-        <hr>
         
         <form enctype="multipart/form-data">
-            <app-comunication></app-comunication>
+            <div class="messages">
+                <app-comunication></app-comunication>
+            </div>
         </form>
         
     </div>

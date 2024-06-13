@@ -4,7 +4,13 @@
   padding: 20px;
 }
 
-.logo { grid-area: header; }
+.logo {
+  grid-area: header;
+}
+
+.logo img {
+  width: 50%;
+}
 .image { grid-area: menu; }
 .title { grid-area: main; }
 .description { grid-area: footer; }
@@ -22,7 +28,6 @@
 .grid-container > div {
   color: white;  
   padding: 20px 0;
-  font-size: 30px;
   margin: 20px;
 }
 
@@ -36,12 +41,13 @@
 .title{
   color: $text-color-dark !important;
   font-weight: bold;
-  font-size: 50px;
+  font-size: 40px;
   text-align: left !important; 
 }
 
 .description{
   text-align: left !important;
+  font-size: 20px
 }
 
 img{
